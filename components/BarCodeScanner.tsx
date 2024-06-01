@@ -53,7 +53,7 @@ function BarCodeScanner({ withTitle = false, godMode = false }: BarCodeScannerPr
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(barcodeData)
+        body: JSON.stringify({barcodeData})
       })
       await response.json()
     } catch (error) {

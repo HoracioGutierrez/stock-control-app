@@ -17,6 +17,7 @@ function BarCodeScanner({ withTitle = false, godMode = false }: BarCodeScannerPr
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Enter") {
+        console.log(barcode)
         handleScan(barcode)
         return
       }
@@ -26,7 +27,6 @@ function BarCodeScanner({ withTitle = false, godMode = false }: BarCodeScannerPr
       }
 
       barcode += e.key
-
       setTimeout(() => {
         barcode = ""
       }, 100)

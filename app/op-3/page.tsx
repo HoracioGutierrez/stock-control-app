@@ -191,7 +191,7 @@ function inIframe() {
 
 
 
-function page() {
+function Page() {
   return (
     <div className="p-4">
       <BarcodeScanner
@@ -205,4 +205,4 @@ function page() {
     </div>
   )
 }
-export default page
+export default Page

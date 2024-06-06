@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { BarcodeScanner, DetectedBarcode } from 'react-barcode-scanner'
 import "react-barcode-scanner/polyfill"
 
-function page() {
+function Page() {
   
   const [scannedBarcode, setScannedBarcode] = useState("")
 
@@ -19,4 +19,4 @@ function page() {
     </div>
   )
 }
-export default page
+export default Page

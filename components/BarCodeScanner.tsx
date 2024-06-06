@@ -11,31 +11,43 @@ function BarCodeScanner({ withTitle = false, godMode = false }: BarCodeScannerPr
 
   const [scannedBarcode, setScannedBarcode] = useState("")
   const [error, setError] = useState("")
+  const [scanning, setScanning] = useState(false)
+  const [hasEvent, setHasEvent] = useState(false)
+
   let barcode = ""
 
   useEffect(() => {
 
+    if (hasEvent) return
+    setHasEvent(true)
+
     const handleKeyDown = (e: KeyboardEvent) => {
+      if(e.key !== "Enter" && e.key.length !== 1) return
+      if (scanning) return
+
+      const isScanning = true
+      setScanning(isScanning)
+
       if (e.key === "Enter") {
         console.log(barcode)
         handleScan(barcode)
+        setScanning(false)
         return
       }
 
-      if (e.shiftKey) {
-        return;
-      }
-
       barcode += e.key
+      console.log(e.key)
+
       setTimeout(() => {
+        console.log("timeout")
         barcode = ""
-      }, 100)
+      }, 600)
     }
 
     document.addEventListener("keydown", handleKeyDown)
 
     return () => {
-      document.removeEventListener("keydown", () => handleKeyDown)
+      document.removeEventListener("keydown", handleKeyDown)
     }
 
   }, [])
@@ -53,7 +65,7 @@ function BarCodeScanner({ withTitle = false, godMode = false }: BarCodeScannerPr
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({barcodeData})
+        body: JSON.stringify({ barcodeData })
       })
       await response.json()
     } catch (error) {
@@ -64,8 +76,9 @@ function BarCodeScanner({ withTitle = false, godMode = false }: BarCodeScannerPr
   return (
     <div>
       {withTitle && <h2>Scanner de Código de Barras</h2>}
+      {scanning && <p>Escaneando...</p>}
+      {!scanning  && <p>Esperando...</p>}
       {scannedBarcode && <p>Codigo escaneado : {scannedBarcode}</p>}
-      {!scannedBarcode && <p>Esperando...</p>}
       {godMode && <button onClick={handleFetch}>Modo Dios Activado</button>}
       {error && <p className="text-red-500">{error}</p>}
     </div>

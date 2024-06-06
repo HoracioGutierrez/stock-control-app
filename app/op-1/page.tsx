@@ -1,10 +1,10 @@
 import BarCodeScanner from "@/components/BarCodeScanner"
 
-function page() {
+function Page() {
   return (
     <div className="p-4">
       <BarCodeScanner/>
     </div>
   )
 }
-export default page
+export default Page

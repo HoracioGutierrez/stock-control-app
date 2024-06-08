@@ -15,6 +15,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
       authorize: async (credentials) => {
         const { data, error } = await getUser(credentials.username as string)
+  
+        if(data?.password !== credentials.password) return null
 
         if (data === null) return null
 

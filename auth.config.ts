@@ -1,4 +1,4 @@
-import NextAuth, { NextAuthConfig } from "next-auth"
+import { NextAuthConfig } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 
 export default {
@@ -7,9 +7,6 @@ export default {
       credentials: {
         username: {},
         password: {}
-      },
-      authorize: async (credentials) => {
-        return {}
       }
     })
   ]

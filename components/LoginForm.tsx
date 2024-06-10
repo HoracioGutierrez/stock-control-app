@@ -7,19 +7,16 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import { loginSchema } from "@/lib/schemas"
 import { signIn } from "next-auth/react"
 import { useState } from "react"
-import { useFormStatus } from "react-dom"
-import { Loader, Loader2 } from "lucide-react"
+import { Loader } from "lucide-react"
+import { LoginInputValues } from "@/lib/types"
 
-type InputValues = {
-  username: string
-  password: string
-}
+
 
 function LoginForm() {
 
   const [loginError, setLoginError] = useState<string | null>(null)
   const [pending, setPending] = useState<boolean>(false)
-  const { register, handleSubmit, formState: { errors } } = useForm<InputValues>({
+  const { register, handleSubmit, formState: { errors } } = useForm<LoginInputValues>({
     defaultValues: {
       username: "",
       password: ""
@@ -27,7 +24,7 @@ function LoginForm() {
     resolver: yupResolver(loginSchema)
   })
 
-  const onSubmit: SubmitHandler<InputValues> = (data: InputValues) => {
+  const onSubmit: SubmitHandler<LoginInputValues> = (data: LoginInputValues) => {
     setPending(true)
     setLoginError(null)
     signIn("credentials", {
@@ -64,9 +61,7 @@ function LoginForm() {
         {errors.username && <p className="text-red-500">{errors.username.message}</p>}
       </div>
       <div className="grid gap-2">
-        <div className="flex items-center">
-          <Label htmlFor="password">Password</Label>
-        </div>
+        <Label htmlFor="password">Password</Label>
         <Input type="password" placeholder="********" {...register("password")} />
         {errors.password && <p className="text-red-500">{errors.password.message}</p>}
       </div>

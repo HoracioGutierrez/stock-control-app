@@ -1,10 +1,8 @@
+import { LoginContentProps } from "@/lib/types"
 import { cn } from "@/lib/utils"
 
-type Props = {
-  children: React.ReactNode,
-  className?: string
-}
-function Content({ children, className }: Props) {
+
+function Content({ children, className }: LoginContentProps) {
   return (
     <main className={cn("p-4 grow", className)}>
       {children}

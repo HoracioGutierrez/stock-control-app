@@ -13,7 +13,7 @@ async function PageLayout({ children }: PageLayoutProps) {
 
   return (
     <main className="grid grid-cols-1 md:grid-cols-[300px_1fr] grow">
-      <div id="sidebar" className={cn("hidden md:flex flex-col justify-between h-full", session && "border-r border-slate-400 bg-primary-foreground")}>
+      <div id="sidebar" className={cn("hidden md:flex flex-col justify-between h-full", session && "border-r border-accent bg-primary-foreground")}>
         <div>
           <Link href="/order" className="flex items-center gap-2 p-4 hover:bg-accent hover:text-accent-foreground transition-colors hover:cursor-pointer">
             <ShoppingBasket />
@@ -23,7 +23,7 @@ async function PageLayout({ children }: PageLayoutProps) {
             <ComputerIcon />
             <span>caja</span>
           </Link>
-          <div className="h-[1px] w-full bg-slate-400" />
+          <div className="h-[1px] w-full bg-accent" />
           <Link href="/products" className="flex flex-center gap-2 p-4 hover:bg-accent hover:text-accent-foreground transition-colors hover:cursor-pointer">
             <Barcode />
             <span>productos</span>
@@ -36,7 +36,7 @@ async function PageLayout({ children }: PageLayoutProps) {
             <Truck />
             <span>proveedores</span>
           </Link>
-          <div className="h-[1px] w-full bg-slate-400" />
+          <div className="h-[1px] w-full bg-accent" />
           <Link href="/sales" className="flex flex-center gap-2 p-4 hover:bg-accent hover:text-accent-foreground transition-colors hover:cursor-pointer">
             <LineChart />
             <span>ventas</span>

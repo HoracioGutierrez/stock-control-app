@@ -1,3 +1,5 @@
+import { User } from "next-auth"
+
 export type LoginInputValues = {
   username: string
   password: string
@@ -10,11 +12,31 @@ export type LoginContentProps = {
 
 export type ProductInputValues = {
   name: string
-  description: string
+  description?: string 
+  price: number
+  barcode: string
+  stock: number
+  variants?: any[]
+}
+
+export type ProductVariantInputValues = {
+  name: string
   price: number
   stock: number
+  barcode: string
 }
 
 export type PageTitleProps = {
   title: string
+  backButton?: boolean
+}
+
+export type NewProductFormProps = {
+  userId: string
+}
+
+export type GeneralResponse = {
+  data: User | null | any
+  error: string | null
+  message: string
 }

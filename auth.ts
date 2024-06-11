@@ -39,6 +39,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       session.user.username = data.username as string
       session.user.isAdmin = data.isAdmin as boolean
       session.user.name = data.name as string
+      session.user.id = data.id as string
       return session
     }
   },

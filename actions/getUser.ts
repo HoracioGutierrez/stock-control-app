@@ -1,14 +1,8 @@
+import { GeneralResponse } from "@/lib/types"
 import { db, users } from "@/schema"
 import { eq, or } from "drizzle-orm"
-import { User } from "next-auth"
 
-type GetUserResponse = {
-  data: User | null
-  error: string | null
-  message: string
-}
-
-export const getUser = async (username: string) : Promise<GetUserResponse> => {
+export const getUser = async (username: string) : Promise<GeneralResponse> => {
   try {
     const usersFromDb = await db.select().from(users).where(or(eq(users.username, username), eq(users.email, username)))
     if (usersFromDb.length === 0) throw new Error("User not found")

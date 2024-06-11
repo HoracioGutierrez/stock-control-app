@@ -5,6 +5,7 @@ import {
   text,
   primaryKey,
   integer,
+  numeric
 } from "drizzle-orm/pg-core"
 import postgres from "postgres"
 import { drizzle } from "drizzle-orm/postgres-js"
@@ -98,3 +99,33 @@ export const authenticators = pgTable(
     }),
   })
 )
+
+export const products: any = pgTable(
+  tablePrefix + "product",
+  {
+    id: text("id")
+      .notNull()
+      .unique()
+      .$defaultFn(() => crypto.randomUUID()),
+    name: text("name").notNull(),
+    description: text("description"),
+    price: numeric("price").notNull(),
+    quantity: numeric("quantity"),
+    barcode: text("barcode").notNull(),
+    stock: numeric("stock").notNull(),
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    createdAt: timestamp("createdAt", { mode: "date" }).defaultNow(),
+    updatedAt: timestamp("updatedAt", { mode: "date" }).defaultNow(),
+    isVariant: boolean("isVariant").notNull(),
+    productId: text("productId")
+  },
+  (product) => ({
+    compositePK: primaryKey({
+      columns: [product.userId, product.id],
+    }),
+  })
+)
+
+export type ProductType = typeof products.$inferInsert

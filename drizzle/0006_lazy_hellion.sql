@@ -1,0 +1,1 @@
+ALTER TABLE "stock-control-app_product" ADD CONSTRAINT "stock-control-app_product_id_unique" UNIQUE("id");

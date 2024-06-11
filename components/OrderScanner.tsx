@@ -4,7 +4,6 @@ import { useEffect, useState } from "react"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table"
 import { Button } from "./ui/button"
-import { ProductType } from "@/schema"
 import { ArrowDown, ArrowUp, Trash2 } from "lucide-react"
 import { useOrderStore } from "@/stores/orderStore"
 
@@ -14,9 +13,7 @@ function OrderScanner() {
   const [scannedBarcode, setScannedBarcode] = useState<string>("")
   const [error, setError] = useState<string>("")
   const [scanning, setScanning] = useState<boolean>(false)
-  const [scannedProduct, setScannedProduct] = useState<ProductType | null>(null)
-  const [products, setProducts] = useState<ProductType[]>([])
-  const [total, setTotal] = useState<number>(0)
+  const { products, setScannedProduct, increment, decrement, total, remove, setProduct, scannedProduct } = useOrderStore((state: any) => state)
 
   let barcode = ""
 
@@ -66,29 +63,9 @@ function OrderScanner() {
         setError("")
         setScanning(false)
         setScannedProduct(data.data)
-        setTotal((total) => total + Number(data.data.price))
-        setProducts((products) => {
-
-          const productIndex = products.findIndex((p: any) => p.barcode === data.data.barcode)
-
-          if (productIndex === -1) {
-            data.data.count = 1
-            return [data.data, ...products]
-          } else {
-            return [
-              ...products.slice(0, productIndex),
-              {
-                ...products[productIndex],
-                count: products[productIndex].count + 1
-              },
-              ...products.slice(productIndex + 1)
-            ]
-          }
-
-
-        })
       })
       .catch((error) => {
+        setProduct(null)
         if (error instanceof Error) {
           if (error.message === "Producto no encontrado") {
             setError("El producto no existe en nuestro inventario")
@@ -97,41 +74,6 @@ function OrderScanner() {
         }
         setError("Error al obtener el producto, intente nuevamente o contacte al desarrollador.")
       })
-  }
-
-  const handleIncrease = (product: any, index: number) => {
-    const productsCopy = [...products]
-    const productCopy = productsCopy[index]
-    const newTotal = total + Number(productCopy.price)
-    setTotal(newTotal)
-    productCopy.count = productCopy.count ? productCopy.count + 1 : 2
-    productsCopy[index] = productCopy
-    setProducts(productsCopy)
-  }
-
-  const handleDecrease = (product: any, index: number) => {
-
-    const productsCopy = [...products]
-    const productCopy = productsCopy[index]
-    const newTotal = total - Number(productCopy.price)
-
-    if (newTotal < 0) return
-    if (productCopy.count === 1) return
-
-    setTotal(newTotal)
-    productCopy.count = productCopy.count - 1
-    productsCopy[index] = productCopy
-    setProducts(productsCopy)
-  }
-
-  const handleRemove = (product: any, index: number) => {
-    const productsCopy = [...products]
-    const productCopy = productsCopy[index]
-    const productTotal = productCopy.count * productCopy.price
-    const newTotal = total - productTotal
-    productsCopy.splice(index, 1)
-    setTotal(newTotal)
-    setProducts(productsCopy)
   }
 
   return (
@@ -147,7 +89,7 @@ function OrderScanner() {
         </Card>
         <Card className="bg-accent">
           <CardHeader>
-            <CardTitle className="text-muted-foreground text-md">Detalles</CardTitle>
+            <CardTitle className="text-muted-foreground text-md">Ultimo Producto</CardTitle>
           </CardHeader>
           <CardContent>
             {scannedProduct && (
@@ -155,6 +97,7 @@ function OrderScanner() {
                 {scannedProduct.name} x ${scannedProduct.price}
               </p>
             )}
+            {error && <p className="text-red-500">{error}</p>}
             <p className="text-muted-foreground">
               {scannedProduct && scannedProduct.description ? scannedProduct.description : "No hay descripción"}
             </p>
@@ -197,15 +140,15 @@ function OrderScanner() {
                 <TableCell>{product.barcode}</TableCell>
                 <TableCell className="flex items-center gap-2">
                   {product.count || 1}
-                  <Button variant={"outline"} className="aspect-square p-0" onClick={() => handleIncrease(product, i)}>
+                  <Button variant={"outline"} className="aspect-square p-0" onClick={() => increment(product, i)}>
                     <ArrowUp className="aspect-square p-0" />
                   </Button>
-                  <Button variant={"outline"} className="aspect-square p-0" onClick={() => handleDecrease(product, i)}>
+                  <Button variant={"outline"} className="aspect-square p-0" onClick={() => decrement(product, i)}>
                     <ArrowDown className="aspect-square p-0" />
                   </Button>
                 </TableCell>
                 <TableCell>
-                  <Button variant={"outline"} className="aspect-square p-0" onClick={() => { handleRemove(product, i) }}>
+                  <Button variant={"outline"} className="aspect-square p-0" onClick={() => { remove(product, i) }}>
                     <Trash2 className="aspect-square p-0" />
                   </Button>
                 </TableCell>

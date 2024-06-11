@@ -119,7 +119,8 @@ export const products: any = pgTable(
     createdAt: timestamp("createdAt", { mode: "date" }).defaultNow(),
     updatedAt: timestamp("updatedAt", { mode: "date" }).defaultNow(),
     isVariant: boolean("isVariant").notNull(),
-    productId: text("productId")
+    productId: text("productId"),
+    active: boolean("active").notNull(),
   },
   (product) => ({
     compositePK: primaryKey({

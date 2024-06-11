@@ -1,6 +1,7 @@
 "use server"
 import { GeneralResponse, ProductInputValues } from "@/lib/types";
 import { ProductType, db, products } from "@/schema";
+import { revalidatePath } from "next/cache";
 
 export const createNewProduct = async (userId: string, data: ProductType, variants: any[] | undefined): Promise<GeneralResponse> => {
   "use server"
@@ -37,6 +38,7 @@ export const createNewProduct = async (userId: string, data: ProductType, varian
 
     if (product.length === 0) throw new Error("Error al crear el producto")
 
+    revalidatePath("/products")
     return {
       data: product[0],
       error: null,

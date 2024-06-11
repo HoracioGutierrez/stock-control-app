@@ -57,6 +57,13 @@
       "when": 1718056221341,
       "tag": "0007_cloudy_randall",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1718147351043,
+      "tag": "0008_public_misty_knight",
+      "breakpoints": true
     }
   ]
 }

@@ -4,15 +4,10 @@ import { Button } from "./ui/button"
 
 function CancelOrderButton() {
 
-  const { setProducts, setTotal, products } = useOrderStore((state: any) => ({ products: state.products, setProducts: state.setProducts, setTotal: state.setTotal }))
-
-  const handleCancel = () => {
-    setProducts([])
-    setTotal(0)
-  }
+  const { cancelOrder , products } = useOrderStore((state: any) => state)
 
   return (
-    <Button onClick={handleCancel} disabled={products.length === 0}>
+    <Button onClick={cancelOrder} disabled={products.length === 0}>
       Cancelar la orden
     </Button>
   )

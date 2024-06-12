@@ -137,7 +137,7 @@ function ProductsTable({ data }: ProductsTableProps) {
                     <TableCell key={cell.id} className="flex items-center gap-2">
                       <DeleteProductButton active={row.original.active} barcode={row.original.barcode} />
                       <EditProductButton barcode={row.original.barcode} />
-                      <EditVariantButton />
+                      <EditVariantButton barcode={row.original.barcode} />
                     </TableCell>
                   )
                 }

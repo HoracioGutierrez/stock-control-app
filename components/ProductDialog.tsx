@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react"
 import DeleteProductConfirmationForm from "./DeleteProductConfirmationForm"
 import { cn } from "@/lib/utils"
 import EditProductForm from "./EditProductForm"
+import EditProductVariantsForm from "./EditProductVariantsForm"
 
 function ProductDialog() {
 
@@ -15,7 +16,7 @@ function ProductDialog() {
 
   return (
     <Dialog open={isOpen} onOpenChange={close}>
-      <DialogContent className={cn((type === "new" || type === "edit") && "max-w-screen-lg")}>
+      <DialogContent className={cn((type === "new" || type === "edit" || type === "variant") && "max-w-screen-lg")}>
         <DialogHeader>
           <DialogTitle className="text-2xl">
             {type === "new" && "Nuevo Producto"}
@@ -28,6 +29,7 @@ function ProductDialog() {
         {type === "new" && <NewProductForm userId={session?.data?.user.id as string} />}
         {(type === "delete" || type === "activate") && <DeleteProductConfirmationForm barcode={barcode} type={type} />}
         {type === "edit" && <EditProductForm barcode={barcode} />}
+        {type === "variant" && <EditProductVariantsForm barcode={barcode} />}
       </DialogContent>
     </Dialog>
   )

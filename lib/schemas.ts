@@ -20,3 +20,11 @@ export const productSchema = yup.object().shape({
     })
   )
 })
+
+export const editProductSchema = yup.object().shape({
+  name: yup.string().required("El nombre del producto es obligatorio"),
+  description: yup.string(),
+  price: yup.number().required("El precio del producto es obligatorio").positive("El precio del producto debe ser mayor a cero"),
+  barcode: yup.string().required("El código de barras del producto es obligatorio").min(1, "El código de barras del producto debe tener al menos un caracter"),
+  stock: yup.number().required("El stock del producto es obligatorio").positive("El stock del producto debe ser mayor a cero"),
+})

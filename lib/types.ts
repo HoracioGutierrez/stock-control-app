@@ -19,6 +19,14 @@ export type ProductInputValues = {
   variants?: any[]
 }
 
+export type EditProductInputValues = {
+  name: string
+  description?: string 
+  price: number
+  barcode: string
+  stock: number
+}
+
 export type ProductVariantInputValues = {
   name: string
   price: number

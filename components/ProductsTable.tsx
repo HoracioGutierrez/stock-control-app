@@ -1,18 +1,17 @@
 "use client"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { ProductType } from "@/schema"
-import { SortingState, getSortedRowModel, ColumnDef, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table"
-import { ArrowUpDown, Edit, ListTreeIcon, Loader, MoreHorizontal, Trash2, UndoDot } from "lucide-react"
+import { SortingState, getSortedRowModel, ColumnDef, flexRender, getCoreRowModel, useReactTable, RowSelectionState } from "@tanstack/react-table"
+import { ArrowUpDown } from "lucide-react"
 import { useState } from "react"
 import { Button } from "./ui/button"
-import { deleteProduct } from "@/actions/deleteProduct"
-import { toast } from "./ui/use-toast"
-import { reactivateProduct } from "@/actions/reactivateProduct"
+import DeleteProductButton from "./DeleteProductButton"
+import EditProductButton from "./EditProductButton"
+import EditVariantButton from "./EditVariantButton"
 
 type ProductsTableProps = {
   data: any[]
 }
-
 
 const columns: ColumnDef<ProductType>[] = [
   {
@@ -79,97 +78,26 @@ function ProductsTable({ data }: ProductsTableProps) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [selectedBarcode, setSelectedBarcode] = useState<string>("")
   const [isDeleting, setIsDeleting] = useState<boolean>(false)
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
+  const [products, setProducts] = useState<ProductType[]>(data)
   const table = useReactTable({
     columns,
-    data,
+    data: products,
     getCoreRowModel: getCoreRowModel(),
-    onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onRowSelectionChange: setRowSelection,
+    onSortingChange: setSorting,
     state: {
       sorting,
     },
+    meta: {
+      updateData: (rowIndex: number, columnId: string, value: any) => {
+        const productsCopy = [...data]
+        productsCopy[rowIndex][columnId] = value
+        setProducts(productsCopy)
+      },
+    },
   })
-
-  const handleDelete = (barcode: string) => {
-    setIsDeleting(true)
-    setSelectedBarcode(barcode)
-    deleteProduct(barcode)
-      .then((data) => {
-        if (data?.error) {
-          throw new Error(data.error)
-        }
-        toast({
-          title: "Producto eliminado correctamente",
-          description: "El producto se ha eliminado correctamente de la base de datos",
-        })
-      })
-      .catch((error) => {
-        if (error instanceof Error) {
-          if (error.message === "Producto no encontrado") {
-            toast({
-              variant: "destructive",
-              title: "Producto no encontrado",
-              description: "El producto no existe en nuestro inventario",
-            })
-          }
-          return toast({
-            variant: "destructive",
-            title: "Error al eliminar el producto",
-            description: error.message
-          })
-        }
-        return toast({
-          variant: "destructive",
-          title: "Error al eliminar el producto",
-          description: "Error al eliminar el producto",
-        })
-      })
-      .finally(() => {
-        setIsDeleting(false)
-        setSelectedBarcode("")
-      })
-  }
-
-  const handleReactivate = (barcode: string) => {
-    setIsDeleting(true)
-    setSelectedBarcode(barcode)
-    reactivateProduct(barcode)
-      .then((data) => {
-        if (data?.error) {
-          throw new Error(data.error)
-        }
-        toast({
-          title: "Producto reactivado correctamente",
-          description: "El producto se ha reactivado correctamente de la base de datos",
-        })
-      })
-      .catch((error) => {
-        if (error instanceof Error) {
-          if (error.message === "Producto no encontrado") {
-            toast({
-              variant: "destructive",
-              title: "Producto no encontrado",
-              description: "El producto no existe en nuestro inventario",
-            })
-          }
-          return toast({
-            variant: "destructive",
-            title: "Error al reactivar el producto",
-            description: error.message
-          })
-        }
-        return toast({
-          variant: "destructive",
-          title: "Error al reactivar el producto",
-          description: "Error al reactivar el producto",
-        })
-      })
-      .finally(() => {
-        setIsDeleting(false)
-        setSelectedBarcode("")
-      })
-  }
-
 
   return (
     <Table>
@@ -207,29 +135,19 @@ function ProductsTable({ data }: ProductsTableProps) {
                 if (cell.column.id === "actions") {
                   return (
                     <TableCell key={cell.id} className="flex items-center gap-2">
-                      <Button variant={"outline"} className="aspect-square p-0" onClick={() => {
-                        if (row.original.active) {
-                          handleDelete(row.original.barcode)
-                        } else {
-                          handleReactivate(row.original.barcode)
-                        }
-                      }}>
-                        {isDeleting && selectedBarcode === row.original.barcode ? <Loader className="animate-spin" /> : row.original.active ? <Trash2 className="aspect-square p-0" /> : <UndoDot className="aspect-square p-0" />}
-                      </Button>
-                      <Button variant={"outline"} className="aspect-square p-0" onClick={() => { console.log(row.original) }} disabled>
-                        <Edit className="aspect-square p-0" />
-                      </Button>
-                      <Button variant={"outline"} className="aspect-square p-0" onClick={() => { console.log(row.original) }} disabled>
-                        <ListTreeIcon className="aspect-square p-0" />
-                      </Button>
+                      <DeleteProductButton active={row.original.active} barcode={row.original.barcode} />
+                      <EditProductButton barcode={row.original.barcode} />
+                      <EditVariantButton />
                     </TableCell>
                   )
                 }
                 return (
-                  <TableCell key={cell.id} className="">
-                    {cell.column.id === "price" && "$"}
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    {cell.column.id === "stock" && " unidades"}
+                  <TableCell key={cell.id} className="" onDoubleClick={() => { console.log(cell) }}>
+                    <div className="grid grid-cols-[max-content_1fr] gap-2 place-content-center">
+                      {cell.column.id === "price" && <span>$</span>}
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      {cell.column.id === "stock" && <span className="grow w-full"> unidades</span>}
+                    </div>
                   </TableCell>
                 )
               })}

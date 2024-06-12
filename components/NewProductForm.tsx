@@ -20,7 +20,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Button } from "./ui/button"
-import { PlusCircle } from "lucide-react"
+import { Loader, PlusCircle } from "lucide-react"
 import ProductVariantForm from "./ProductVariantForm"
 import { toast } from "./ui/use-toast"
 
@@ -93,8 +93,8 @@ function NewProductForm({ userId }: NewProductFormProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-2 gap-8" id="new-product-form">
-      <div>
-        <Card className="bg-accent">
+      <div className="self-stretch">
+        <Card className="bg-accent h-full">
           <CardHeader>
             <CardTitle>Detalles</CardTitle>
             <CardDescription>Estos detalles son obligatorios para que el producto pueda crearse correctamente.</CardDescription>
@@ -116,10 +116,25 @@ function NewProductForm({ userId }: NewProductFormProps) {
       <div>
         <Card className="bg-accent">
           <CardHeader>
-            <CardTitle>Categoría</CardTitle>
+            <CardTitle>Precio</CardTitle>
             <CardDescription>Estos datos son opcionales para que el producto pueda crearse correctamente.</CardDescription>
           </CardHeader>
           <CardContent className="grid gap-4">
+            <div className="grid gap-2">
+              <Label htmlFor="price">Precio</Label>
+              <Input type="number" placeholder="Precio" {...register("price")} disabled={isLoading} />
+              {errors.price && <p className="text-red-500">{errors.price.message}</p>}
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="stock">Stock</Label>
+              <Input type="number" placeholder="Stock" {...register("stock")} disabled={isLoading} />
+              {errors.stock && <p className="text-red-500">{errors.stock.message}</p>}
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="barcode">Código de barras</Label>
+              <Input type="text" placeholder="Código de barras" {...register("barcode")} disabled={isLoading} />
+              {errors.barcode && <p className="text-red-500">{errors.barcode.message}</p>}
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -130,51 +145,42 @@ function NewProductForm({ userId }: NewProductFormProps) {
             <CardDescription>Estos datos son opcionales para que el producto pueda crearse correctamente.</CardDescription>
           </CardHeader>
           <CardContent className="grid gap-4">
-            <Table>
-              <TableCaption>
-                <Button type="button" className="flex items-center gap-2" variant={"outline"} onClick={handleAddVariant}>
-                  <PlusCircle />
-                  Agregar Variante
-                </Button>
-              </TableCaption>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Nombre</TableHead>
-                  <TableHead>Precio</TableHead>
-                  <TableHead>Stock</TableHead>
-                  <TableHead>Código de barras</TableHead>
-                  {fields.length > 0 && <TableHead>Eliminar</TableHead>}
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                <TableRow>
-                  <TableCell>{mainName || "Nombre de producto"}</TableCell>
-                  <TableCell>
-                    <div className="grid gap-2">
-                      <Input type="number" placeholder="Precio" {...register("price")} disabled={isLoading} />
-                      {errors.price && <p className="text-red-500">{errors.price.message}</p>}
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="grid gap-2">
-                      <Input type="number" placeholder="Stock" {...register("stock")} disabled={isLoading} />
-                      {errors.stock && <p className="text-red-500">{errors.stock.message}</p>}
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="grid gap-2">
-                      <Input type="text" placeholder="Código de barras" {...register("barcode")} disabled={isLoading} />
-                      {errors.barcode && <p className="text-red-500">{errors.barcode.message}</p>}
-                    </div>
-                  </TableCell>
-                </TableRow>
-                {fields.map((field, index) => (
-                  <ProductVariantForm key={field.id} index={index} register={register} field={field} error={errors.variants?.[index]} remove={remove} isLoading={isLoading} />
-                ))}
-              </TableBody>
-            </Table>
+            {fields.length > 0 && (
+              <Table>
+                <TableCaption>
+                  <Button type="button" className="flex items-center gap-2" variant={"outline"} onClick={handleAddVariant}>
+                    <PlusCircle />
+                    Agregar Variante
+                  </Button>
+                </TableCaption>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Nombre</TableHead>
+                    <TableHead>Precio</TableHead>
+                    <TableHead>Stock</TableHead>
+                    <TableHead>Código de barras</TableHead>
+                    {fields.length > 0 && <TableHead>Eliminar</TableHead>}
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {fields.map((field, index) => (
+                    <ProductVariantForm key={field.id} index={index} register={register} field={field} error={errors.variants?.[index]} remove={remove} isLoading={isLoading} />
+                  ))}
+                </TableBody>
+              </Table>
+            )}
+            {fields.length === 0 && (
+              <Button type="button" className="flex items-center gap-2" variant={"outline"} onClick={handleAddVariant}>
+                <PlusCircle />
+                Agregar Variante
+              </Button>
+            )}
           </CardContent>
         </Card>
+        <Button form="new-product-form" disabled={isLoading} className="flex items-center gap-2 mx-auto mt-8">
+          {isLoading && <Loader className="animate-spin" />}
+          <span>Guardar producto</span>
+        </Button>
       </div>
     </form>
   )

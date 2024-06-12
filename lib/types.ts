@@ -40,3 +40,14 @@ export type GeneralResponse = {
   error: string | null
   message: string
 }
+
+export type ClientInputValues = {
+  name: string
+  lastName: string
+  phone?: string
+  email?: string
+  address?: string
+  legalName?: string
+  cuitCuil?: string  
+}
+

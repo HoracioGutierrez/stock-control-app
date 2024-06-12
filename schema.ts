@@ -33,6 +33,8 @@ export const users = pgTable(tablePrefix + "user", {
   updatedAt: timestamp("updatedAt", { mode: "date" }),
 })
 
+
+
 export const accounts = pgTable(
   tablePrefix + "account",
   {
@@ -100,6 +102,24 @@ export const authenticators = pgTable(
   })
 )
 
+export const clients: any = pgTable(
+  tablePrefix + "client",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    name: text("name").notNull(),
+    lastName: text("lastName").notNull(),
+    phone: text("phone"),
+    email: text("email"),
+    address: text("address"),
+    legalName: text("legalName"),
+    cuitCuil: text("cuitCuil"),
+    createdAt: timestamp("createdAt", { mode: "date" }).defaultNow(),
+    updatedAt: timestamp("updatedAt", { mode: "date" }).defaultNow(),
+  }
+)
+
 export const products: any = pgTable(
   tablePrefix + "product",
   {
@@ -128,4 +148,8 @@ export const products: any = pgTable(
   })
 )
 
+
+
 export type ProductType = typeof products.$inferInsert
+
+export type ClientType = typeof clients.$inferInsert

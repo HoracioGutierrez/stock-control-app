@@ -1,12 +1,12 @@
 "use server"
 
 import { GeneralResponse } from "@/lib/types"
-import { ClientType, db, clients } from "@/schema"
+import { CustomerType, db, customers } from "@/schema"
 
-export const createNewClient = async (data: ClientType): Promise<GeneralResponse> => {
+export const createNewCustomer = async (data: CustomerType): Promise<GeneralResponse> => {
     "use server"
-    try {
-        const client = await db.insert(clients).values({
+    try {   
+        const customer = await db.insert(customers).values({
             name: data.name,
             lastName: data.lastName,
             phone: data.phone,
@@ -15,13 +15,13 @@ export const createNewClient = async (data: ClientType): Promise<GeneralResponse
             legalName: data.legalName,
             cuitCuil: data.cuitCuil,
         }).returning({
-            insertedId: clients.id
+            insertedId: customers.id
         })
 
-        if (client.length === 0) throw new Error("Error al crear el cliente")
+        if (customer.length === 0) throw new Error("Error al crear el cliente")
 
         return {
-            data: client[0],
+            data: customer[0],
             error: null,
             message: "Cliente creado correctamente"
         }

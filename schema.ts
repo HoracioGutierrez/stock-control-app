@@ -102,8 +102,8 @@ export const authenticators = pgTable(
   })
 )
 
-export const clients: any = pgTable(
-  tablePrefix + "client",
+export const customers: any = pgTable(
+  tablePrefix + "customer",
   {
     id: text("id")
       .primaryKey()
@@ -152,4 +152,4 @@ export const products: any = pgTable(
 
 export type ProductType = typeof products.$inferInsert
 
-export type ClientType = typeof clients.$inferInsert
+export type CustomerType = typeof customers.$inferInsert

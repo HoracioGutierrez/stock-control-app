@@ -8,7 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import { clientSchema } from "@/lib/schemas"
 import { ClientInputValues } from "@/lib/types"
 import { useNewProductStore } from "@/stores/newProductStore"
-import { createNewClient } from "@/actions/createNewClient"
+import { createNewCustomer } from "@/actions/createNewCustomer"
 import { toast } from "./ui/use-toast"
 
 function NewClientForm() {
@@ -31,7 +31,7 @@ function NewClientForm() {
     const onSubmit: SubmitHandler<ClientInputValues> = (data: ClientInputValues) => {
         setIsLoading(true)
         console.log(data)
-        createNewClient({
+        createNewCustomer({
             name: data.name,
             lastName: data.lastName,
             phone: data.phone,

@@ -11,6 +11,7 @@ import postgres from "postgres"
 import { drizzle } from "drizzle-orm/postgres-js"
 import type { AdapterAccountType } from "next-auth/adapters"
 import { act } from "react"
+import { sql } from "drizzle-orm"
 
 const connectionString = process.env.DATABASE_URL || ""
 const pool = postgres(connectionString, { max: 1 })
@@ -149,6 +150,27 @@ export const products: any = pgTable(
       columns: [product.userId, product.id],
     }),
   })
+)
+
+export const history: any = pgTable(
+  tablePrefix + "history",
+  {
+    id: text("id")
+      .notNull()
+      .unique()
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    createdAt: timestamp("createdAt", { mode: "date" }).defaultNow(),
+    actionType : text("actionType").notNull(),
+    products : text("products").array().notNull().default(sql`'{}'::text[]`),
+    orderId : text("orderId"),
+    customerId : text("customerId"),
+    ip : text("ip"),
+    userAgent : text("userAgent"),
+  }
 )
 
 

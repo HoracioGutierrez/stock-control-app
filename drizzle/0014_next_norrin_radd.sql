@@ -1,0 +1,1 @@
+ALTER TABLE "stock-control-app_history" ADD PRIMARY KEY ("id");

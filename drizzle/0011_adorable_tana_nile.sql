@@ -1,0 +1,1 @@
+ALTER TABLE "stock-control-app_client" RENAME TO "stock-control-app_customer";

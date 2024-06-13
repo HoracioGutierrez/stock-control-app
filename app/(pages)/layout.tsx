@@ -28,7 +28,7 @@ async function PageLayout({ children }: PageLayoutProps) {
             <Barcode />
             <span>productos</span>
           </Link>
-          <Link href="/clients" className="flex flex-center gap-2 p-4 hover:bg-accent hover:text-accent-foreground transition-colors hover:cursor-pointer">
+          <Link href="/customers" className="flex flex-center gap-2 p-4 hover:bg-accent hover:text-accent-foreground transition-colors hover:cursor-pointer">
             <UserRound />
             <span>clientes</span>
           </Link>

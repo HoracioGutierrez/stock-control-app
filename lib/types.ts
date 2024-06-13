@@ -1,5 +1,6 @@
 import { ProductType } from "@/schema"
 import { User } from "next-auth"
+import { CustomerType } from "@/schema"
 
 export type LoginInputValues = {
   username: string
@@ -13,7 +14,7 @@ export type LoginContentProps = {
 
 export type ProductInputValues = {
   name: string
-  description?: string 
+  description?: string
   price: number
   barcode: string
   stock: number
@@ -22,7 +23,7 @@ export type ProductInputValues = {
 
 export type EditProductInputValues = {
   name: string
-  description?: string 
+  description?: string
   price: number
   barcode: string
   stock: number
@@ -52,4 +53,19 @@ export type GeneralResponse = {
 
 export type ProductsTableProps = {
   data: ProductType[]
+}
+
+export type CustomerInputValues = {
+  name: string
+  lastName: string
+  phone?: string
+  email?: string
+  address?: string
+  legalName?: string
+  cuitCuil?: string
+  active?: boolean
+}
+
+export type CustomerTableProps = {
+  data: CustomerType[]
 }

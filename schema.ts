@@ -10,6 +10,7 @@ import {
 import postgres from "postgres"
 import { drizzle } from "drizzle-orm/postgres-js"
 import type { AdapterAccountType } from "next-auth/adapters"
+import { act } from "react"
 
 const connectionString = process.env.DATABASE_URL || ""
 const pool = postgres(connectionString, { max: 1 })
@@ -32,6 +33,8 @@ export const users = pgTable(tablePrefix + "user", {
   createdAt: timestamp("createdAt", { mode: "date" }),
   updatedAt: timestamp("updatedAt", { mode: "date" }),
 })
+
+
 
 export const accounts = pgTable(
   tablePrefix + "account",
@@ -100,6 +103,25 @@ export const authenticators = pgTable(
   })
 )
 
+export const customers: any = pgTable(
+  tablePrefix + "customer",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    name: text("name").notNull(),
+    lastName: text("lastName").notNull(),
+    phone: text("phone"),
+    email: text("email"),
+    address: text("address"),
+    legalName: text("legalName"),
+    cuitCuil: text("cuitCuil"),
+    createdAt: timestamp("createdAt", { mode: "date" }).defaultNow(),
+    updatedAt: timestamp("updatedAt", { mode: "date" }).defaultNow(),
+    active: boolean("active").notNull(),
+  }
+)
+
 export const products: any = pgTable(
   tablePrefix + "product",
   {
@@ -129,4 +151,8 @@ export const products: any = pgTable(
   })
 )
 
+
+
 export type ProductType = typeof products.$inferInsert
+
+export type CustomerType = typeof customers.$inferInsert

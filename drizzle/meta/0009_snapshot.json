@@ -1,10 +1,6 @@
 {
-<<<<<<< HEAD
-  "id": "5589703e-6bee-4ab7-bbcf-85787bd293d2",
-=======
-  "id": "14159ac5-a2cf-4f53-9707-bdc116348490",
->>>>>>> origin/f/client
-  "prevId": "111c9378-5079-4efa-b259-fed04ea2b757",
+  "id": "65b35d66-b865-459f-8d33-b718fa9d37ac",
+  "prevId": "14159ac5-a2cf-4f53-9707-bdc116348490",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -271,15 +267,6 @@
           "type": "text",
           "primaryKey": false,
           "notNull": false
-<<<<<<< HEAD
-        },
-        "active": {
-          "name": "active",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": true
-=======
->>>>>>> origin/f/client
         }
       },
       "indexes": {},
@@ -359,18 +346,84 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-<<<<<<< HEAD
-=======
     "public.stock-control-app_supplier": {
       "name": "stock-control-app_supplier",
       "schema": "",
-      "columns": {},
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "lastName": {
+          "name": "lastName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "phone": {
+          "name": "phone",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "address": {
+          "name": "address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "legalName": {
+          "name": "legalName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cuitCuil": {
+          "name": "cuitCuil",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "clientId": {
+          "name": "clientId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
->>>>>>> origin/f/client
     "public.stock-control-app_user": {
       "name": "stock-control-app_user",
       "schema": "",

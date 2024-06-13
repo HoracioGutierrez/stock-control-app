@@ -9,8 +9,6 @@ async function CustomersPage() {
 
   if (error) return <p>Error al obtener los clientes</p>
 
-  console
-
   return (
     <>
       <div className="flex justify-between">

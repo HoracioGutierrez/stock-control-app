@@ -61,10 +61,6 @@
     {
       "idx": 8,
       "version": "7",
-<<<<<<< HEAD
-      "when": 1718147351043,
-      "tag": "0008_public_misty_knight",
-=======
       "when": 1718211819688,
       "tag": "0008_polite_wendell_rand",
       "breakpoints": true
@@ -95,7 +91,6 @@
       "version": "7",
       "when": 1718242786168,
       "tag": "0012_slow_luminals",
->>>>>>> origin/f/client
       "breakpoints": true
     }
   ]

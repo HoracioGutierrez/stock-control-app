@@ -1,3 +1,4 @@
+import { ProductType } from "@/schema"
 import { User } from "next-auth"
 
 export type LoginInputValues = {
@@ -47,4 +48,8 @@ export type GeneralResponse = {
   data: User | null | any
   error: string | null
   message: string
+}
+
+export type ProductsTableProps = {
+  data: ProductType[]
 }

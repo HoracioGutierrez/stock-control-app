@@ -21,7 +21,7 @@ export const productSchema = yup.object().shape({
   )
 })
 
-export const clientSchema = yup.object().shape({
+export const customerSchema = yup.object().shape({
   name: yup.string().required("El nombre del cliente es obligatorio"),
   lastName: yup.string().required("El apellido del cliente es obligatorio")
 })

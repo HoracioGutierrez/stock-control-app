@@ -10,6 +10,7 @@ import {
 import postgres from "postgres"
 import { drizzle } from "drizzle-orm/postgres-js"
 import type { AdapterAccountType } from "next-auth/adapters"
+import { act } from "react"
 
 const connectionString = process.env.DATABASE_URL || ""
 const pool = postgres(connectionString, { max: 1 })
@@ -117,6 +118,7 @@ export const customers: any = pgTable(
     cuitCuil: text("cuitCuil"),
     createdAt: timestamp("createdAt", { mode: "date" }).defaultNow(),
     updatedAt: timestamp("updatedAt", { mode: "date" }).defaultNow(),
+    active: boolean("active").notNull(),
   }
 )
 

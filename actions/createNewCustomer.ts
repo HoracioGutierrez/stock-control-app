@@ -14,6 +14,7 @@ export const createNewCustomer = async (data: CustomerType): Promise<GeneralResp
             address: data.address,
             legalName: data.legalName,
             cuitCuil: data.cuitCuil,
+            active: true
         }).returning({
             insertedId: customers.id
         })

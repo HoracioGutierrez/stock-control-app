@@ -5,17 +5,17 @@ import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { clientSchema } from "@/lib/schemas"
-import { ClientInputValues } from "@/lib/types"
+import { customerSchema } from "@/lib/schemas"
+import { CustomerInputValues } from "@/lib/types"
 import { useNewProductStore } from "@/stores/newProductStore"
 import { createNewCustomer } from "@/actions/createNewCustomer"
 import { toast } from "./ui/use-toast"
 
-function NewClientForm() {
+function NewCustomerForm() {
 
     const [error, setError] = useState<string | null>(null)
     const { setIsLoading, isLoading } = useNewProductStore((state: any) => ({ isLoading: state.isLoading, setIsLoading: state.setIsLoading }))
-    const {  register, handleSubmit, formState: { errors }, reset } = useForm<ClientInputValues>({
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<CustomerInputValues>({
         defaultValues: {
             name: "",
             lastName: "",
@@ -25,10 +25,10 @@ function NewClientForm() {
             legalName: "",
             cuitCuil: ""
         },
-        resolver: yupResolver(clientSchema)
+        resolver: yupResolver(customerSchema)
     })
 
-    const onSubmit: SubmitHandler<ClientInputValues> = (data: ClientInputValues) => {
+    const onSubmit: SubmitHandler<CustomerInputValues> = (data: CustomerInputValues) => {
         setIsLoading(true)
         console.log(data)
         createNewCustomer({
@@ -68,7 +68,7 @@ function NewClientForm() {
 
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-2 gap-8" id="new-client-form">
+        <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-2 gap-8" id="new-customer-form">
             <div>
                 <Card className="bg-accent">
                     <CardHeader>
@@ -78,10 +78,10 @@ function NewClientForm() {
                     <CardContent>
                         <Label htmlFor="name">Nombre De Cliente</Label>
                         <Input type="text" disabled={isLoading} placeholder="Nombre" {...register("name")} />
-                        {errors.name && <p className="text-error">{errors.name.message}</p>}
+                        {errors.name && <p className="text-error text-red-500">{errors.name.message}</p>}
                         <Label htmlFor="lastName">Apellidos</Label>
                         <Input type="text" disabled={isLoading} placeholder="Apellidos" {...register("lastName")} />
-                        {errors.lastName && <p className="text-error">{errors.lastName.message}</p>}
+                        {errors.lastName && <p className="text-error text-red-500">{errors.lastName.message}</p>}
                     </CardContent>
                 </Card>
             </div>
@@ -110,4 +110,4 @@ function NewClientForm() {
     )
 }
 
-export default NewClientForm
+export default NewCustomerForm

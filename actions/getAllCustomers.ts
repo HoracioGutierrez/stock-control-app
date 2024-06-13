@@ -1,5 +1,5 @@
 import { GeneralResponse } from "@/lib/types"
-import { db, customers} from "@/schema"
+import { db, customers } from "@/schema"
 import { asc } from "drizzle-orm"
 
 export const getAllCustomers = async (): Promise<GeneralResponse> => {
@@ -18,7 +18,8 @@ export const getAllCustomers = async (): Promise<GeneralResponse> => {
                 message: "Error getting customers"
             }
         }
-        
+
+
         return {
             data: null,
             error: "Error getting customers",

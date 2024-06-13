@@ -1,18 +1,18 @@
-import NewClientButton from "@/components/NewClientButton"
-import NewClientForm from "@/components/NewClientForm"
+import NewCustomerButton from "@/components/NewCustomerButton"
+import NewCustomerForm from "@/components/NewCustomerForm"
 import PageTitle from "@/components/PageTitle"
 
-function NewClientPage() {
+function NewCustomerPage() {
 
     return (
         <>
             <div className="flex justify-between">
                 <PageTitle title="Nuevo Cliente" backButton/>
-                <NewClientButton />
+                <NewCustomerButton />
             </div>
-            <NewClientForm />
+            <NewCustomerForm />
         </>
     )
 }
 
-export default NewClientPage
+export default NewCustomerPage

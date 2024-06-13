@@ -3,13 +3,13 @@ import PageTitle from "@/components/PageTitle"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
-async function ClientsPage() {
+async function CustomersPage() {
 
   const { data, error } = await getAllCustomers()
 
   if (error) return <p>Error al obtener los clientes</p>
 
-  console.log(data)
+  console
 
   return (
     <>
@@ -23,11 +23,11 @@ async function ClientsPage() {
       </div>
       {data.length === 0 && (
         <div className="grow rounded border border-dashed border-slate-400 grid place-items-center">
-       
-    {/*       <div className="max-w-sm text-center">
+
+          {/*<div className="max-w-sm text-center">
             <p className="font-bold text-xl">No hay clientes creados todavía</p>
             <Button asChild>
-              <Link href="/products/new">
+              <Link href="/customers/new">
                 Crear producto
               </Link>
             </Button>
@@ -37,4 +37,5 @@ async function ClientsPage() {
     </>
   )
 }
-export default ClientsPage
+
+export default CustomersPage

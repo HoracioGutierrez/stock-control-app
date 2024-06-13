@@ -1,4 +1,5 @@
 import { User } from "next-auth"
+import { CustomerType } from "@/schema"
 
 export type LoginInputValues = {
   username: string
@@ -41,13 +42,17 @@ export type GeneralResponse = {
   message: string
 }
 
-export type ClientInputValues = {
+export type CustomerInputValues = {
   name: string
   lastName: string
   phone?: string
   email?: string
   address?: string
   legalName?: string
-  cuitCuil?: string  
+  cuitCuil?: string
+  active?: boolean
 }
 
+export type CustomerTableProps = {
+  data: CustomerType[]
+}

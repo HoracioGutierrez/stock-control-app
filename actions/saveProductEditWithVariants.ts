@@ -2,6 +2,7 @@
 
 import { db, products } from "@/schema"
 import { eq } from "drizzle-orm"
+import { revalidatePath } from "next/cache"
 
 export const saveProductEditWithVariants = async (barcode: string, data: any): Promise<any> => {
   "use server"
@@ -25,7 +26,7 @@ export const saveProductEditWithVariants = async (barcode: string, data: any): P
         barcode: variant.barcode
       }).where(eq(products.barcode, variant.barcode))
     })
-
+    revalidatePath("/products")
     return {
       data: product[0],
       error: null,

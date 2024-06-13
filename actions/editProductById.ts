@@ -2,6 +2,7 @@
 import { GeneralResponse } from "@/lib/types";
 import { db, products } from "@/schema";
 import { eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 
 export const editProductById = async (productId: string, data: any): Promise<GeneralResponse> => {
   "use server"
@@ -11,6 +12,8 @@ export const editProductById = async (productId: string, data: any): Promise<Gen
       insertedId: products.id
     })
     if (product.length === 0) throw new Error("Producto no encontrado")
+
+    revalidatePath("/products")
     return {
       data: product[0],
       error: null,

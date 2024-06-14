@@ -1,8 +1,10 @@
 import { getAllCustomers } from "@/actions/getAllCustomers"
+import CustomerDialog from "@/components/CustomerDialog"
 import CustomersTable from "@/components/CustomersTable"
 import PageTitle from "@/components/PageTitle"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { UserRoundPlusIcon } from "lucide-react"
 
 async function CustomersPage() {
 
@@ -16,23 +18,13 @@ async function CustomersPage() {
         <PageTitle title="Clientes" />
         <Button asChild>
           <Link href="/customers/new">
+            <UserRoundPlusIcon className="h-6 w-6 " />
             Crear Cliente
           </Link>
         </Button>
       </div>
       <CustomersTable data={data} />
-      {data.length === 0 && (
-        <div className="grow rounded border border-dashed border-slate-400 grid place-items-center">
-          {/*<div className="max-w-sm text-center">
-            <p className="font-bold text-xl">No hay clientes creados todavía</p>
-            <Button asChild>
-              <Link href="/customers/new">
-                Crear producto
-              </Link>
-            </Button>
-          </div> */}
-        </div>
-      )}
+      <CustomerDialog />
     </>
   )
 }

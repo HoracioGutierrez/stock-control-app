@@ -64,8 +64,19 @@ export type CustomerInputValues = {
   legalName?: string
   cuitCuil?: string
   active?: boolean
+  id?: string
 }
 
 export type CustomerTableProps = {
   data: CustomerType[]
+}
+
+export type DeleteCustomerProps = {
+  id: string
+  type?: string
+}
+
+export type DeleteCustomerButtonProps = {
+  active: boolean
+  id: string
 }

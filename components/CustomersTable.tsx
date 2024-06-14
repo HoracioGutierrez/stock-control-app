@@ -1,19 +1,19 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { User } from "lucide-react"
+import { User, UserRoundXIcon } from "lucide-react"
 import { Button } from "./ui/button"
 import { CustomerType } from "@/schema"
 import { Input } from "@/components/ui/input"
 import { CustomerTableProps } from "@/lib/types"
 import EditVariantButton from "./EditVariantButton"
 import EditProductButton from "./EditProductButton"
-import DeleteProductButton from "./DeleteProductButton"
 import { productsColumns } from "@/lib/columnDefinitions"
 import { customersColumns } from "@/lib/columnDefinitions"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { ColumnFiltersState, SortingState, flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table"
+import DeleteCustomerButton from "./DeleteCustomerButton"
 
 function CustomersTable({ data }: CustomerTableProps) {
 
@@ -22,6 +22,7 @@ function CustomersTable({ data }: CustomerTableProps) {
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
     const [pageSize, setPageSize] = useState<number>(7)
     const [pageIndex, setPageIndex] = useState<number>(0)
+
 
     const table = useReactTable({
         columns: customersColumns,
@@ -109,23 +110,23 @@ function CustomersTable({ data }: CustomerTableProps) {
                                     if (cell.column.id === "active") {
                                         return (
                                             <TableCell key={cell.id}>
-                                                {row.original.active ? "Sin Deuda" : "Con Deuda"}
+                                                {row.original.active ? "Cliente Habilitado" : "Cliente Bloqueado"}
                                             </TableCell>
                                         )
                                     }
-                              /*       if (cell.column.id === "actions") {
+                                    if (cell.column.id === "actions") {
                                         return (
                                             <TableCell key={cell.id} className="flex items-center gap-2">
-                                                <DeleteProductButton active={row.original.active} barcode={row.original.barcode} />
-                                                <EditProductButton barcode={row.original.barcode} />
-                                                {!row.original.isVariant && <EditVariantButton barcode={row.original.barcode} />}
+                                                <DeleteCustomerButton active={row.original.active} id={row.original.id} />
+                                                {/* <EditProductButton barcode={row.original.barcode} /> */}
                                             </TableCell>
                                         )
-                                    } */
+                                    }
                                     return (
-                                        <TableCell key={cell.id} className="" onDoubleClick={() => { console.log(cell) }}>
+                                        <TableCell key={cell.id} className="">
                                             <div className="grid grid-cols-[max-content_1fr] gap-2 place-content-center">
-                                                {cell.column.id === "name" && <User className="h-6 w-6" />}
+                                                {cell.column.id === "name" && row.original.active === true && <User className="h-6 w-6" />}
+                                                {cell.column.id === "name" && row.original.active === false && <UserRoundXIcon className="h-6 w-6" />}
                                                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                                 {cell.column.id === "lastName"}
                                             </div>

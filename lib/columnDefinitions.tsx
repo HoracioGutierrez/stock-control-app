@@ -107,7 +107,7 @@ export const customersColumns: ColumnDef<CustomerType>[] = [
           }
           className="p-0"
         >
-          Estado de Deuda
+          Estado
           < ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )

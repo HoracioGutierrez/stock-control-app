@@ -2,10 +2,11 @@
 
 import { GeneralResponse } from "@/lib/types"
 import { CustomerType, db, customers } from "@/schema"
+import { revalidatePath } from "next/cache"
 
 export const createNewCustomer = async (data: CustomerType): Promise<GeneralResponse> => {
     "use server"
-    try {   
+    try {
         const customer = await db.insert(customers).values({
             name: data.name,
             lastName: data.lastName,
@@ -21,6 +22,8 @@ export const createNewCustomer = async (data: CustomerType): Promise<GeneralResp
 
         if (customer.length === 0) throw new Error("Error al crear el cliente")
 
+        revalidatePath("/customers")
+        
         return {
             data: customer[0],
             error: null,

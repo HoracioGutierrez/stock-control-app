@@ -1,4 +1,5 @@
 import { getAllCustomers } from "@/actions/getAllCustomers"
+import CustomersTable from "@/components/CustomersTable"
 import PageTitle from "@/components/PageTitle"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -19,9 +20,9 @@ async function CustomersPage() {
           </Link>
         </Button>
       </div>
+      <CustomersTable data={data} />
       {data.length === 0 && (
         <div className="grow rounded border border-dashed border-slate-400 grid place-items-center">
-
           {/*<div className="max-w-sm text-center">
             <p className="font-bold text-xl">No hay clientes creados todavía</p>
             <Button asChild>

@@ -1,0 +1,29 @@
+import { GeneralResponse } from "@/lib/types";
+import { db, history } from "@/schema";
+import { eq } from "drizzle-orm";
+
+export const getAllHistoryMovements = async (userId: string): Promise<GeneralResponse> => {
+  try {
+    const movements = await db.select().from(history).where(eq(history.userId, userId))
+    if (movements.length === 0) throw new Error("History no encontrado")
+    return {
+      data: movements,
+      error: null,
+      message: "History encontrado"
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      return {
+        data: null,
+        error: error.message,
+        message: "Error al obtener el historial"
+      }
+    }
+
+    return {
+      data: null,
+      error: "Error al obtener el historial",
+      message: "Error al obtener el historial"
+    }
+  }
+}

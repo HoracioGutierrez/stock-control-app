@@ -178,3 +178,5 @@ export const history: any = pgTable(
 export type ProductType = typeof products.$inferInsert
 
 export type CustomerType = typeof customers.$inferInsert
+
+export type HistoryType = typeof history.$inferInsert

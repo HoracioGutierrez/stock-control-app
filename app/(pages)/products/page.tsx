@@ -1,8 +1,12 @@
 import { getAllProducts } from "@/actions/getAllProducts"
 import CreateProductButton from "@/components/CreateProductButton"
+import CustomDataTable from "@/components/CustomDataTable"
+import DeleteProductButton from "@/components/DeleteProductButton"
+import EditProductButton from "@/components/EditProductButton"
+import EditVariantButton from "@/components/EditVariantButton"
 import PageTitle from "@/components/PageTitle"
 import ProductDialog from "@/components/ProductDialog"
-import ProductsTable from "@/components/ProductsTable"
+import ProductsTable from "@/components/NewProductsTable"
 
 async function ProductsPage() {
 

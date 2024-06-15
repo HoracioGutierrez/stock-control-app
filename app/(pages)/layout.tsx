@@ -51,7 +51,7 @@ async function PageLayout({ children }: PageLayoutProps) {
           <p className="text-muted-foreground">Desarrollado por @horagutierrez</p>
         </div>
       </div>
-      <div id="content" className="p-4 md:p-8 flex flex-col">
+      <div id="content" className="p-4 md:p-8 flex flex-col overflow-auto">
         {children}
       </div>
     </main>

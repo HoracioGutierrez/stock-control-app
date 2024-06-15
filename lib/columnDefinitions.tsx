@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { ProductType } from "@/schema"
+import { HistoryType, ProductType } from "@/schema"
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown } from "lucide-react"
 
@@ -61,6 +61,44 @@ export const productsColumns: ColumnDef<ProductType>[] = [
   },
   {
     header: "Acciones",
+    accessorKey: "actions",
+  }
+]
+
+export const historyColumns: ColumnDef<HistoryType>[] = [
+  {
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="link"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="p-0"
+        >
+          Fecha
+          < ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+    accessorKey: "createdAt",
+  },
+  {
+    header: "Tipo de movimiento",
+    accessorKey: "actionType",
+  },
+  {
+    header: "Productos",
+    accessorKey: "products",
+  },
+  {
+    header: "Orden",
+    accessorKey: "orderId",
+  },
+  {
+    header: "Cliente",
+    accessorKey: "customerId",
+  },
+  {
+    header : "Acciones",
     accessorKey: "actions",
   }
 ]

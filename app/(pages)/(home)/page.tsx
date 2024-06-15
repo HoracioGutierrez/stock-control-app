@@ -13,6 +13,7 @@ export default async function Home() {
     <>
       <div className="flex justify-between">
         <PageTitle title="Inicio" />
+        <meta name="au"/>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Card className="bg-accent">

@@ -13,9 +13,9 @@ function NavLink({ href, children, activeClassName, className = "", ...props }: 
 
   return (
     <Link href={href} {...props} className={cn(
-      "flex items-center gap-2 p-4 hover:bg-accent hover:text-accent-foreground transition-colors hover:cursor-pointer text-muted-foreground",
+      "flex items-center gap-2 p-4 hover:bg-accent hover:font-bold hover:text-accent-foreground transition-colors hover:cursor-pointer text-muted-foreground",
       className,
-      active && "bg-accent text-primary",
+      active && "bg-accent text-primary font-bold",
       (activeClassName && active) && activeClassName
     )} >
       {children}

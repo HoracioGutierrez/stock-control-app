@@ -9,15 +9,10 @@ type ProductVariantFormProps = {
   register: any
   field: any
   error?: any
-  remove?: any
   isLoading?: boolean
 }
 
-function ProductVariantForm({ field, index, register, error, remove, isLoading }: ProductVariantFormProps) {
-
-  const handleRemove = () => {
-    remove(index)
-  }
+function ProductVariantForm({ field, index, register, error, isLoading }: ProductVariantFormProps) {
 
   return (
     <TableRow>
@@ -44,11 +39,6 @@ function ProductVariantForm({ field, index, register, error, remove, isLoading }
           <Input type="text" placeholder="Código de barras" {...register(`variants.${index}.barcode`)} disabled={isLoading} />
           {error && error.barcode && <p className="text-red-500">{error.barcode.message}</p>}
         </div>
-      </TableCell>
-      <TableCell>
-        <Button variant={"outline"} className="aspect-square p-1" onClick={handleRemove}>
-          <Trash2 />
-        </Button>
       </TableCell>
     </TableRow>
   )

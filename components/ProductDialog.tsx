@@ -16,7 +16,7 @@ function ProductDialog() {
 
   return (
     <Dialog open={isOpen} onOpenChange={close}>
-      <DialogContent className={cn((type === "new" || type === "edit" || type === "variant") && "max-w-screen-lg")}>
+      <DialogContent className={cn((type === "new" || type === "edit" || type === "variant") && "max-w-screen-lg max-h-[calc(100dvh_-_4rem)] overflow-auto scrollbar-default")}>  
         <DialogHeader>
           <DialogTitle className="text-2xl">
             {type === "new" && "Nuevo Producto"}

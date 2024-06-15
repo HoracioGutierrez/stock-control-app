@@ -105,7 +105,7 @@ function EditProductVariantsForm({ barcode }: EditProductVariantsFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-2 gap-8" id="new-product-form">
+    <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-2 gap-8 overflow-auto" id="new-product-form">
       <div className="self-stretch">
         <Card className="bg-accent h-full">
           <CardHeader>
@@ -160,24 +160,17 @@ function EditProductVariantsForm({ barcode }: EditProductVariantsFormProps) {
           <CardContent className="grid gap-4">
             {fields.length > 0 && (
               <Table>
-                <TableCaption>
-                  <Button type="button" className="flex items-center gap-2" variant={"outline"} onClick={handleAddVariant}>
-                    <PlusCircle />
-                    Agregar Variante
-                  </Button>
-                </TableCaption>
                 <TableHeader>
                   <TableRow>
                     <TableHead>Nombre</TableHead>
                     <TableHead>Precio</TableHead>
                     <TableHead>Stock</TableHead>
                     <TableHead>Código de barras</TableHead>
-                    {fields.length > 0 && <TableHead>Eliminar</TableHead>}
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {fields.map((field, index) => (
-                    <ProductVariantForm key={field.id} index={index} register={register} field={field} error={errors.variants?.[index]} remove={remove} isLoading={loading} />
+                    <ProductVariantForm key={field.id} index={index} register={register} field={field} error={errors.variants?.[index]} isLoading={loading} />
                   ))}
                 </TableBody>
               </Table>

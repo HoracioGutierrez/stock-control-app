@@ -6,4 +6,4 @@ function LogoutButton() {
     <button onClick={() => signOut()}>Logout</button>
   )
 }
-export default LogoutButton
+export default LogoutButton 

@@ -173,8 +173,28 @@ export const history: any = pgTable(
   }
 )
 
+export const cashRegister: any = pgTable(
+  tablePrefix + "cashRegister",
+  {
+    id: text("id")
+      .notNull()
+      .unique()
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    createdAt: timestamp("createdAt", { mode: "date" }).defaultNow(),
+    label: text("label").notNull(),
+    currentAmount: numeric("currentAmount").notNull(),
+    totalAmount: numeric("totalAmount").notNull(),
+  }
+)
+
 
 
 export type ProductType = typeof products.$inferInsert
 
 export type CustomerType = typeof customers.$inferInsert
+
+export type CashRegisterType = typeof cashRegister.$inferInsert

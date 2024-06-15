@@ -2,10 +2,12 @@ import { getAllCashRegisters } from "@/actions/getAllCashRegisters"
 import { getCashRegisterByUserId } from "@/actions/getCashRegisterByUserId"
 import { auth } from "@/auth"
 import CancelOrderButton from "@/components/CancelOrderButton"
+import CloseCashRegisterButton from "@/components/CloseCashRegisterButton"
 import CustomDialog from "@/components/CustomDialog"
 import OpenCashRegisterButton from "@/components/OpenCashRegisterButton"
 import OpenCashRegisterForm from "@/components/OpenCashRegisterForm"
 import OrderButton from "@/components/OrderButton"
+import OrderDialog from "@/components/OrderDialog"
 import OrderScanner from "@/components/OrderScanner"
 import PageTitle from "@/components/PageTitle"
 
@@ -25,11 +27,16 @@ async function OrderPage() {
       <div className="flex justify-between">
         <PageTitle title="Nueva orden" />
         <div className="flex items-center gap-2">
-          {/* <OrderButton />
-          <CancelOrderButton /> */}
+          {data && (
+            <>
+              <OrderButton />
+              <CancelOrderButton />
+              <CloseCashRegisterButton />
+            </>
+          )}
         </div>
       </div>
-      {/* <OrderScanner /> */}
+      {data && <OrderScanner />}
       {!data && (
         <div className="grow rounded border border-dashed border-slate-400 grid place-items-center">
           <div className="max-w-sm text-center">
@@ -39,11 +46,7 @@ async function OrderPage() {
           </div>
         </div>
       )}
-      {!data && (
-        <CustomDialog title="Abrir Caja" userId={session?.user.id as string}>
-          <OpenCashRegisterForm userId={session?.user.id as string} data={cashRegisters} />
-        </CustomDialog>
-      )}
+      <OrderDialog userId={session?.user.id as string} data={cashRegisters} cashRegisters={data} />
     </>
   )
 }

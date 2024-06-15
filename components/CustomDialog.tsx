@@ -6,14 +6,15 @@ import { cn } from "@/lib/utils"
 
 type CustomDialogProps = {
   fullWidth?: boolean
-  title? : string,
-  children? : any,
-  userId : string
+  title?: string,
+  children?: any,
+  render?: any,
+  userId: string
 }
 
-function CustomDialog({ fullWidth = false , title = "Custom Dialog" , children , userId }: CustomDialogProps) {
+function CustomDialog({ fullWidth = false, title = "Custom Dialog", children, userId, render }: CustomDialogProps) {
 
-  const { isOpen, setClose } = useDialogStore((state: any) => state)
+  const { isOpen, setClose, type } = useDialogStore((state: any) => state)
 
   return (
     <Dialog open={isOpen} onOpenChange={setClose}>
@@ -23,7 +24,8 @@ function CustomDialog({ fullWidth = false , title = "Custom Dialog" , children ,
             {title}
           </DialogTitle>
         </DialogHeader>
-        {children}
+        {!render && children}
+        {render && render(type)}
       </DialogContent>
     </Dialog>
   )

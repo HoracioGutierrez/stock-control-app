@@ -1,0 +1,1 @@
+ALTER TABLE "stock-control-app_cashRegister" ALTER COLUMN "openedById" DROP NOT NULL;

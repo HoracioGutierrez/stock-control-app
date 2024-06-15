@@ -188,6 +188,8 @@ export const cashRegister: any = pgTable(
     label: text("label").notNull(),
     currentAmount: numeric("currentAmount").notNull(),
     totalAmount: numeric("totalAmount").notNull(),
+    openedById: text("openedById")
+      .references(() => users.id, { onDelete: "cascade" }),
   }
 )
 

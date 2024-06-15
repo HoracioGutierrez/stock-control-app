@@ -1,10 +1,10 @@
 import { GeneralResponse } from "@/lib/types";
 import { db, history } from "@/schema";
-import { eq } from "drizzle-orm";
+import { asc, desc, eq } from "drizzle-orm";
 
 export const getAllHistoryMovements = async (userId: string): Promise<GeneralResponse> => {
   try {
-    const movements = await db.select().from(history).where(eq(history.userId, userId))
+    const movements = await db.select().from(history).where(eq(history.userId, userId)).orderBy(desc(history.createdAt))
     if (movements.length === 0) throw new Error("History no encontrado")
     return {
       data: movements,

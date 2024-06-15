@@ -17,9 +17,10 @@ import { useProductDialogStore } from "@/stores/productDialogStore"
 
 type EditProductFormProps = {
   barcode: string
+  userId: string
 }
 
-function EditProductForm({ barcode }: EditProductFormProps) {
+function EditProductForm({ barcode, userId }: EditProductFormProps) {
 
   const [error, setError] = useState<string | null>(null)
   const [mainName, setMainName] = useState<string>("")
@@ -54,7 +55,7 @@ function EditProductForm({ barcode }: EditProductFormProps) {
 
   const onSubmit: SubmitHandler<ProductInputValues> = (data: ProductInputValues) => {
     setLoading(true)
-    editProductById(productId, data)
+    editProductById(productId, data, userId)
       .then((data) => {
         if (data?.error) {
           throw new Error(data.error)

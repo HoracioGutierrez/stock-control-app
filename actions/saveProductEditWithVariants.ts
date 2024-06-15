@@ -1,10 +1,10 @@
 "use server"
 
-import { db, products } from "@/schema"
+import { db, history, products } from "@/schema"
 import { eq } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 
-export const saveProductEditWithVariants = async (barcode: string, data: any): Promise<any> => {
+export const saveProductEditWithVariants = async (barcode: string, data: any, userId: string): Promise<any> => {
   "use server"
   try {
     const product = await db.select().from(products).where(eq(products.barcode, barcode))
@@ -17,14 +17,36 @@ export const saveProductEditWithVariants = async (barcode: string, data: any): P
       barcode: data.barcode
     }).where(eq(products.barcode, barcode))
 
+    await db.insert(history).values({
+      userId: userId,
+      actionType: "edit-product",
+      products: [product[0].id],
+      orderId: null,
+      customerId: null,
+      ip: null,
+      userAgent: null,
+    })
+
     data.variants.forEach(async (variant: any) => {
-      await db.update(products).set({
+      const productVariant = await db.update(products).set({
         name: variant.name,
         description: variant.description,
         price: variant.price,
         stock: variant.stock,
         barcode: variant.barcode
-      }).where(eq(products.barcode, variant.barcode))
+      }).where(eq(products.barcode, variant.barcode)).returning({
+        insertedId: products.id
+      })
+
+      await db.insert(history).values({
+        userId: userId,
+        actionType: "edit-product-variant",
+        products: [productVariant[0].insertedId],
+        orderId: null,
+        customerId: null,
+        ip: null,
+        userAgent: null,
+      })
     })
     revalidatePath("/products")
     return {

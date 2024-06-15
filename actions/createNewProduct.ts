@@ -1,6 +1,6 @@
 "use server"
 import { GeneralResponse, ProductInputValues } from "@/lib/types";
-import { ProductType, db, products } from "@/schema";
+import { ProductType, db, history, products } from "@/schema";
 import { revalidatePath } from "next/cache";
 
 export const createNewProduct = async (userId: string, data: ProductType, variants: any[] | undefined): Promise<GeneralResponse> => {
@@ -20,9 +20,8 @@ export const createNewProduct = async (userId: string, data: ProductType, varian
     })
 
     if (variants) {
-      console.log(product)
       for (const variant of variants) {
-        await db.insert(products).values({
+        const productVariant = await db.insert(products).values({
           name: variant.name,
           description: data.description,
           price: variant.price,
@@ -32,11 +31,34 @@ export const createNewProduct = async (userId: string, data: ProductType, varian
           userId: userId,
           productId: product[0].insertedId,
           isVariant: true
+        }).returning({
+          insertedId: products.id
+        })
+
+        await db.insert(history).values({
+          userId: userId,
+          actionType: "create-product-variant",
+          products: [productVariant[0].insertedId],
+          orderId: null,
+          customerId: null,
+          ip: null,
+          userAgent: null,
         })
       }
     }
 
     if (product.length === 0) throw new Error("Error al crear el producto")
+
+    await db.insert(history).values({
+      userId: userId,
+      actionType: "create-product",
+      products: [product[0].insertedId],
+      orderId: null,
+      customerId: null,
+      ip: null,
+      userAgent: null,
+    })
+
 
     revalidatePath("/products")
     return {

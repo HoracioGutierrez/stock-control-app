@@ -27,9 +27,9 @@ function ProductDialog() {
           </DialogTitle>
         </DialogHeader>
         {type === "new" && <NewProductForm userId={session?.data?.user.id as string} />}
-        {(type === "delete" || type === "activate") && <DeleteProductConfirmationForm barcode={barcode} type={type} />}
-        {type === "edit" && <EditProductForm barcode={barcode} />}
-        {type === "variant" && <EditProductVariantsForm barcode={barcode} />}
+        {(type === "delete" || type === "activate") && <DeleteProductConfirmationForm userId={session?.data?.user.id as string} barcode={barcode} type={type} />}
+        {type === "edit" && <EditProductForm barcode={barcode} userId={session?.data?.user.id as string} />}
+        {type === "variant" && <EditProductVariantsForm barcode={barcode} userId={session?.data?.user.id as string} />}
       </DialogContent>
     </Dialog>
   )

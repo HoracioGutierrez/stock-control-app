@@ -10,9 +10,10 @@ import { useProductDialogStore } from "@/stores/productDialogStore"
 type DeleteProductConfirmationFormProps = {
   barcode: string
   type: string
+  userId: string
 }
 
-function DeleteProductConfirmationForm({ barcode, type }: DeleteProductConfirmationFormProps) {
+function DeleteProductConfirmationForm({ barcode, type , userId }: DeleteProductConfirmationFormProps) {
 
   const [loading, setLoading] = useState<boolean>(false)
   const { close } = useProductDialogStore((state: any) => state)
@@ -21,7 +22,7 @@ function DeleteProductConfirmationForm({ barcode, type }: DeleteProductConfirmat
     setLoading(true)
     let request: any
     if (type === "delete") {
-      request = deleteProduct(barcode)
+      request = deleteProduct(barcode,userId)
         .then((data) => {
           if (data?.error) {
             throw new Error(data.error)
@@ -46,7 +47,7 @@ function DeleteProductConfirmationForm({ barcode, type }: DeleteProductConfirmat
           })
         })
     } else {
-      request = reactivateProduct(barcode)
+      request = reactivateProduct(barcode,userId) 
         .then((data) => {
           if (data?.error) {
             throw new Error(data.error)

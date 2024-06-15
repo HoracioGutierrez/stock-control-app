@@ -25,9 +25,10 @@ import { saveProductEditWithVariants } from "@/actions/saveProductEditWithVarian
 
 type EditProductVariantsFormProps = {
   barcode: string
+  userId: string
 }
 
-function EditProductVariantsForm({ barcode }: EditProductVariantsFormProps) {
+function EditProductVariantsForm({ barcode , userId }: EditProductVariantsFormProps) {
 
   const [error, setError] = useState<string | null>(null)
   const [mainName, setMainName] = useState<string>("")
@@ -68,7 +69,7 @@ function EditProductVariantsForm({ barcode }: EditProductVariantsFormProps) {
 
   const onSubmit: SubmitHandler<ProductInputValues> = (data: ProductInputValues) => {
     setLoading(true)
-    saveProductEditWithVariants(barcode, data)
+    saveProductEditWithVariants(barcode, data, userId)
       .then((data) => {
         if (data?.error) {
           throw new Error(data.error)

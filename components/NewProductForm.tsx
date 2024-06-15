@@ -164,7 +164,7 @@ function NewProductForm({ userId }: NewProductFormProps) {
                 </TableHeader>
                 <TableBody>
                   {fields.map((field, index) => (
-                    <ProductVariantForm key={field.id} index={index} register={register} field={field} error={errors.variants?.[index]} remove={remove} isLoading={isLoading} />
+                    <ProductVariantForm key={field.id} index={index} register={register} field={field} error={errors.variants?.[index]} isLoading={isLoading} />
                   ))}
                 </TableBody>
               </Table>

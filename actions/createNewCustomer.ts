@@ -21,7 +21,7 @@ export const createNewCustomer = async (data: CustomerType, userId: string): Pro
 
         if (customer.length === 0) throw new Error("Error al crear el cliente")
 
-        const t = await db.insert(history).values({
+        await db.insert(history).values({
             userId: userId,
             actionType: "create-customer",
             products: [],
@@ -32,8 +32,6 @@ export const createNewCustomer = async (data: CustomerType, userId: string): Pro
         }).returning({
             insertedId: history.id
         })
-
-        console.log(t)
 
         return {
             data: customer[0],

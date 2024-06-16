@@ -4,7 +4,7 @@ import { Button } from "./ui/button"
 import { reactivateProduct } from "@/actions/reactivateProduct"
 import { toast } from "./ui/use-toast"
 import { useState } from "react"
-import { Loader } from "lucide-react"
+import { Check, Loader } from "lucide-react"
 import { useProductDialogStore } from "@/stores/productDialogStore"
 import { DeleteProductConfirmationFormProps } from "@/lib/types"
 
@@ -81,7 +81,7 @@ function DeleteProductConfirmationForm({ barcode, type , userId }: DeleteProduct
         <p>¿Está seguro de que desea continuar?</p>
       </div>
       <Button className="self-center" onClick={handleClick} disabled={loading}>
-        {loading && <Loader className="animate-spin" />}
+        {loading ? <Loader className="animate-spin" /> : <Check />}
         Confirmar
       </Button>
     </div>

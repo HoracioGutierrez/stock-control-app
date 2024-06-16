@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 import { Button } from "./ui/button"
-import { Loader } from "lucide-react"
+import { Check, Loader } from "lucide-react"
 import { entityConfig, formVariants } from "@/lib/formConfig"
 
 
@@ -72,7 +72,7 @@ function EditForm({ entity, loading, register, errors }: any, { data }: any) {
             )}
 
             <Button form={entityConfig[entity].formId} className="flex items-center gap-2 mx-auto mt-8" disabled={loading}>
-                {loading && <Loader className="animate-spin" />}
+                {loading ? <Loader className="animate-spin" /> : <Check />}
                 <span>Guardar {variant.formFor}</span>
             </Button>
         </>

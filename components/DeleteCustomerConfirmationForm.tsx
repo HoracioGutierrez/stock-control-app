@@ -4,7 +4,7 @@ import { deleteCustomerById } from "@/actions/deleteCustomerById"
 import { Button } from "./ui/button"
 import { toast } from "./ui/use-toast"
 import { useState } from "react"
-import { Loader } from "lucide-react"
+import { Check, Loader } from "lucide-react"
 import { reactivateCustomerById } from "@/actions/reactivateCustomerById"
 import { useCustomerDialogStore } from "@/stores/useCustomerDialogStore"
 import { DeleteCustomerProps } from "@/lib/types"
@@ -83,7 +83,7 @@ function DeleteCustomerConfirmationForm({ id, type }: DeleteCustomerProps) {
                 <p>¿Está seguro de que desea continuar?</p>
             </div>
             <Button className="self-center" onClick={handleClick} disabled={loading}>
-                {loading && <Loader className="animate-spin" />}
+                {loading ? <Loader className="animate-spin" /> : <Check />}
                 Confirmar
             </Button>
         </div>

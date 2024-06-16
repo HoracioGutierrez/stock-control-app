@@ -101,14 +101,18 @@ function NewProductForm({ userId }: NewProductFormProps) {
           </CardHeader>
           <CardContent className="grid gap-4">
             <div className="grid gap-2">
-              <Label htmlFor="name" className="text-muted-foreground">Nombre</Label>
+              <div>
+                <Label htmlFor="name" className="text-muted-foreground">Nombre</Label>
+                {errors.name && <p className="text-red-500 font-bold text-sm">{errors.name.message}</p>}
+              </div>
               <Input type="text" disabled={isLoading} placeholder="Producto" {...register("name", { onChange: handleMainNameChange })} />
-              {errors.name && <p className="text-red-500">{errors.name.message}</p>}
             </div>
             <div className="grid gap-2">
+              <div>
+                {errors.description && <p className="text-red-500 font-bold text-sm">{errors.description.message}</p>}
+              </div>
               <Label htmlFor="description" className="text-muted-foreground">Descripción</Label>
               <Textarea disabled={isLoading} placeholder="Descripción" {...register("description")} />
-              {errors.description && <p className="text-red-500">{errors.description.message}</p>}
             </div>
           </CardContent>
         </Card>
@@ -121,19 +125,25 @@ function NewProductForm({ userId }: NewProductFormProps) {
           </CardHeader>
           <CardContent className="grid gap-4">
             <div className="grid gap-2">
-              <Label htmlFor="price" className="text-muted-foreground">Precio</Label>
+              <div>
+                <Label htmlFor="price" className="text-muted-foreground">Precio</Label>
+                {errors.price && <p className="text-red-500 font-bold text-sm">{errors.price.message}</p>}
+              </div>
               <Input type="number" placeholder="Precio" {...register("price")} disabled={isLoading} />
-              {errors.price && <p className="text-red-500">{errors.price.message}</p>}
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="stock" className="text-muted-foreground">Stock</Label>
+              <div>
+                <Label htmlFor="stock" className="text-muted-foreground">Stock</Label>
+                {errors.stock && <p className="text-red-500 font-bold text-sm">{errors.stock.message}</p>}
+              </div>
               <Input type="number" placeholder="Stock" {...register("stock")} disabled={isLoading} />
-              {errors.stock && <p className="text-red-500">{errors.stock.message}</p>}
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="barcode" className="text-muted-foreground">Código de barras</Label>
+              <div>
+                <Label htmlFor="barcode" className="text-muted-foreground">Código de barras</Label>
+                {errors.barcode && <p className="text-red-500 font-bold text-sm">{errors.barcode.message}</p>}
+              </div>
               <Input type="text" placeholder="Código de barras" {...register("barcode")} disabled={isLoading} />
-              {errors.barcode && <p className="text-red-500">{errors.barcode.message}</p>}
             </div>
           </CardContent>
         </Card>

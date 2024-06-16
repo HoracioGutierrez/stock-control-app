@@ -104,19 +104,19 @@ function EditProductVariantsForm({ barcode, userId }: EditProductVariantsFormPro
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-2 gap-8 overflow-auto" id="new-product-form">
       <div className="self-stretch">
-        <Card className="bg-accent h-full">
+        <Card className="bg-primary-foreground h-full">
           <CardHeader>
             <CardTitle>Detalles</CardTitle>
             <CardDescription>Estos detalles son obligatorios para que el producto pueda crearse correctamente.</CardDescription>
           </CardHeader>
           <CardContent className="grid gap-4">
             <div className="grid gap-2">
-              <Label htmlFor="name">Nombre</Label>
+              <Label htmlFor="name" className="text-muted-foreground">Nombre</Label>
               <Input type="text" disabled={loading} placeholder="Producto" {...register("name", { onChange: handleMainNameChange })} />
               {errors.name && <p className="text-red-500">{errors.name.message}</p>}
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="description">Descripción</Label>
+              <Label htmlFor="description" className="text-muted-foreground">Descripción</Label>
               <Textarea disabled={loading} placeholder="Descripción" {...register("description")} />
               {errors.description && <p className="text-red-500">{errors.description.message}</p>}
             </div>
@@ -124,24 +124,24 @@ function EditProductVariantsForm({ barcode, userId }: EditProductVariantsFormPro
         </Card>
       </div>
       <div>
-        <Card className="bg-accent">
+        <Card className="bg-primary-foreground">
           <CardHeader>
             <CardTitle>Precio</CardTitle>
             <CardDescription>Estos datos son opcionales para que el producto pueda crearse correctamente.</CardDescription>
           </CardHeader>
           <CardContent className="grid gap-4">
             <div className="grid gap-2">
-              <Label htmlFor="price">Precio</Label>
+              <Label htmlFor="price" className="text-muted-foreground">Precio</Label>
               <Input type="number" placeholder="Precio" {...register("price")} disabled={loading} />
               {errors.price && <p className="text-red-500">{errors.price.message}</p>}
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="stock">Stock</Label>
+              <Label htmlFor="stock" className="text-muted-foreground">Stock</Label>
               <Input type="number" placeholder="Stock" {...register("stock")} disabled={loading} />
               {errors.stock && <p className="text-red-500">{errors.stock.message}</p>}
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="barcode">Código de barras</Label>
+              <Label htmlFor="barcode" className="text-muted-foreground">Código de barras</Label>
               <Input type="text" placeholder="Código de barras" {...register("barcode")} disabled={loading} />
               {errors.barcode && <p className="text-red-500">{errors.barcode.message}</p>}
             </div>
@@ -149,7 +149,7 @@ function EditProductVariantsForm({ barcode, userId }: EditProductVariantsFormPro
         </Card>
       </div>
       <div className="col-span-full">
-        <Card className="bg-accent">
+        <Card className="bg-primary-foreground">
           <CardHeader>
             <CardTitle>Variantes</CardTitle>
             <CardDescription>Estos datos son opcionales para que el producto pueda crearse correctamente.</CardDescription>

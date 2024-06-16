@@ -6,7 +6,7 @@ import Link from "next/link"
 
 import { cn } from "@/lib/utils"
 
-function NavLink({ href, children, activeClassName, className = "", ...props }: any) {
+function NavLink({ href, children, activeClassName, className = "", onClick, ...props }: any) {
   const pathname = usePathname()
 
   const active = pathname === href
@@ -17,7 +17,7 @@ function NavLink({ href, children, activeClassName, className = "", ...props }: 
       className,
       active && "bg-accent text-primary font-bold",
       (activeClassName && active) && activeClassName
-    )} >
+    )}  onClick={onClick}>
       {children}
     </Link>
   )

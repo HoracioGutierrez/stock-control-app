@@ -76,7 +76,7 @@ function DeleteProductConfirmationForm({ barcode, type , userId }: DeleteProduct
 
   return (
     <div className="flex flex-col gap-8">
-      <div>
+      <div className="text-muted-foreground">
         <p>Esto {type === "delete" ? "eliminará" : "activará"} el producto en su inventario.</p>
         <p>¿Está seguro de que desea continuar?</p>
       </div>

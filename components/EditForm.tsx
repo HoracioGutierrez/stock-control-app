@@ -13,7 +13,7 @@ function EditForm({ entity, loading, register, errors }: any, { data }: any) {
     return (
         <>
             <div className="self-stretch">
-                <Card className="bg-accent h-full">
+                <Card className="bg-primary-foreground h-full">
                     <CardHeader>
                         <CardTitle>Detalles de {variant.formFor}</CardTitle>
                         <CardDescription>Estos detalles son obligatorios para que el {variant.formFor} pueda crearse correctamente.</CardDescription>
@@ -21,8 +21,8 @@ function EditForm({ entity, loading, register, errors }: any, { data }: any) {
                     <CardContent className="grid gap-4">
                         {
                             variant.requiredFormFor.map((input, index) => (
-                                <div key={index}>
-                                    <Label htmlFor={input}>{variant.requieredFormLabel[index]}</Label>
+                                <div key={index} className="grid gap-2">
+                                    <Label htmlFor={input} className="text-muted-foreground">{variant.requieredFormLabel[index]}</Label>
                                     <Input type={variant.requiredVariantInput[index]} placeholder={variant.requieredFormLabel[index]} {...register(input, { disabled: loading })} />
                                     {errors[input] && <p className="text-red-500">{errors[input].message}</p>}
                                 </div>
@@ -32,7 +32,7 @@ function EditForm({ entity, loading, register, errors }: any, { data }: any) {
                 </Card>
             </div>
             <div>
-                <Card className="bg-accent">
+                <Card className="bg-primary-foreground">
                     <CardHeader>
                         <CardTitle>Detalles Adicionales</CardTitle>
                         <CardDescription>Estos datos son opcionales para crear el {variant.formFor}.</CardDescription>
@@ -40,8 +40,8 @@ function EditForm({ entity, loading, register, errors }: any, { data }: any) {
                     <CardContent className="grid gap-4">
                         {
                             variant.detailsFormFor.map((input, index) => (
-                                <div key={index}>
-                                    <Label htmlFor={input}>{input}</Label>
+                                <div key={index} className="grid gap-2">
+                                    <Label htmlFor={input} className="text-muted-foreground">{input}</Label>
                                     <Input type={variant.detailsVariantInput[index]} placeholder={input} {...register(input, { disabled: loading })} />
                                 </div>
                             ))
@@ -51,7 +51,7 @@ function EditForm({ entity, loading, register, errors }: any, { data }: any) {
             </div>
             {data?.variants && (
                 <div>
-                    <Card className="bg-accent">
+                    <Card className="bg-primary-foreground">
                         <CardHeader>
                             <CardTitle>Variantes</CardTitle>
                             <CardDescription>Estos datos son opcionales para crear el {variant.formFor}.</CardDescription>
@@ -60,7 +60,7 @@ function EditForm({ entity, loading, register, errors }: any, { data }: any) {
                             {
                                 variant.variantsFormFor?.map((input, index) => (
                                     <div key={index}>
-                                        <Label htmlFor={input}>{input}</Label>
+                                        <Label htmlFor={input} className="text-muted-foreground">{input}</Label>
                                         <Input type={variant?.variantsVariantInput?.[index]} placeholder={input} {...register(input, { disabled: loading })} />
                                         {errors[input] && <p className="text-red-500">{errors[input].message}</p>}
                                     </div>
@@ -71,7 +71,7 @@ function EditForm({ entity, loading, register, errors }: any, { data }: any) {
                 </div>
             )}
 
-            <Button form={entityConfig[entity].formId} className="flex items-center gap-2 mx-auto mt-8" disabled={loading}>
+            <Button form={entityConfig[entity].formId} className="flex items-center gap-2 mx-auto col-span-2" disabled={loading}>
                 {loading ? <Loader className="animate-spin" /> : <Check />}
                 <span>Guardar {variant.formFor}</span>
             </Button>

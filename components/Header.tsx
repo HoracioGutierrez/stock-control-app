@@ -10,7 +10,7 @@ async function Header() {
 
   return (
     <header className={cn("justify-between grid grid-cols-1 md:grid-cols-[300px_1fr]", session && "bg-primary-foreground border-b border-accent")}>
-      <div className={cn("items-center gap-2 hidden md:flex p-4", session && "border-r border-accent")}>
+      <div className={cn("items-center gap-2 hidden md:flex p-4", session && "border-r border-accent justify-center flex-col")}>
         <PackageOpen className="h-6 w-6 " />
         <h1 className="text-2xl font-bold">Control de Stock</h1>
       </div>

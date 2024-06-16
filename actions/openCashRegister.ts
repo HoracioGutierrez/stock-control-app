@@ -14,7 +14,15 @@ export const openCashRegister = async (cashRegisterId: string, userId: string): 
 
     await db.update(cashRegister).set({ openedById: userId }).where(eq(cashRegister.id, cashRegisterId))
 
-    await db.update(history).set({ actionType: "open-cash-register" }).where(eq(history.userId, userId))
+    await db.insert(history).values({
+      userId: userId,
+      actionType: "open-cash-register",
+      products: [],
+      orderId: null,
+      customerId: null,
+      ip: null,
+      userAgent: null,
+    })
 
     revalidatePath("/order")
     return {

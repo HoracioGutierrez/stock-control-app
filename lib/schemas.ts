@@ -33,3 +33,9 @@ export const customerSchema = yup.object().shape({
   name: yup.string().required("El nombre del cliente es obligatorio"),
   lastName: yup.string().required("El apellido del cliente es obligatorio")
 })
+
+export const cashRegisterSchema = yup.object().shape({
+  label: yup.string().required("El idenfiticador de la caja es obligatorio"),
+  currentAmount: yup.number().required("El monto actual del caja es obligatorio").moreThan(-1, "El monto actual del caja debe ser cero o  mayor a cero").typeError("El monto actual del caja debe ser un número"),
+  totalAmount: yup.number().required("El monto total del caja es obligatorio").moreThan(-1, "El monto total del caja debe ser cero o  mayor a cero").typeError("El monto total del caja debe ser un número"),
+})

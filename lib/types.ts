@@ -69,3 +69,9 @@ export type CustomerInputValues = {
 export type CustomerTableProps = {
   data: CustomerType[]
 }
+
+export type CashRegisterInputValues = {
+  label: string
+  currentAmount: number
+  totalAmount: number
+}

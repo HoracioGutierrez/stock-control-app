@@ -11,7 +11,7 @@ import { useDialogStore } from "@/stores/generalDialog"
 import { toast } from "./ui/use-toast"
 import { createNewCashRegister } from "@/actions/createNewCashRegister"
 import { Button } from "./ui/button"
-import { Loader } from "lucide-react"
+import { Loader, Plus, PlusIcon } from "lucide-react"
 
 type NewCashRegisterFormProps = {
   userId: string
@@ -93,8 +93,8 @@ function NewCashRegisterForm({ userId }: NewCashRegisterFormProps) {
           </CardContent>
         </Card>
       </div>
-      <Button className="flex items-center gap-2 mx-auto mt-8">
-        {loading && <Loader className="animate-spin" />}
+      <Button className="flex items-center gap-2 mx-auto mt-8 text-white dark:text-primary-foreground" disabled={loading}>
+        {loading ? <Loader className="animate-spin" /> : <PlusIcon />}
         <span>Guardar caja</span>
       </Button>
     </form>

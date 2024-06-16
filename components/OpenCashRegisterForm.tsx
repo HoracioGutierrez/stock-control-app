@@ -5,7 +5,7 @@ import { Button } from "./ui/button"
 import { useDialogStore } from "@/stores/generalDialog"
 import { openCashRegister } from "@/actions/openCashRegister"
 import { toast } from "./ui/use-toast"
-import { Loader } from "lucide-react"
+import { Loader, ShoppingBasket } from "lucide-react"
 
 type OpenCashRegisterFormProps = {
   userId: string
@@ -66,8 +66,8 @@ function OpenCashRegisterForm({ userId, data }: OpenCashRegisterFormProps) {
             ))}
           </SelectContent>
         </Select>
-        <Button className="w-full" disabled={cashRegisterId === ""} onClick={handleSubmit}>
-          {loading && <Loader className="animate-spin" />}
+        <Button className="w-full flex gap-2 text-white dark:text-primary-foreground" disabled={cashRegisterId === ""} onClick={handleSubmit}>
+          {loading ? <Loader className="animate-spin" /> : <ShoppingBasket />}
           Abrir Caja
         </Button>
       </div>

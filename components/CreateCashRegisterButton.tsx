@@ -1,5 +1,5 @@
 "use client"
-import { PlusCircle } from "lucide-react"
+import { PlusCircle, PlusIcon } from "lucide-react"
 import { Button } from "./ui/button"
 import { useDialogStore } from "@/stores/generalDialog"
 
@@ -13,8 +13,8 @@ function CreateCashRegisterButton({ }: Props) {
   }
 
   return (
-    <Button className="flex items-center gap-2" onClick={handleClick}>
-      <PlusCircle />
+    <Button className="flex items-center gap-2 text-white dark:text-primary-foreground" onClick={handleClick}>
+      <PlusIcon />
       <span>Crear Caja</span>
     </Button>
   )

@@ -3,7 +3,7 @@ import { useDialogStore } from "@/stores/generalDialog"
 import { Button } from "./ui/button"
 import { closeCashRegister } from "@/actions/closeCashRegister"
 import { useState } from "react"
-import { Loader } from "lucide-react"
+import { Loader, Trash2, X } from "lucide-react"
 import { toast } from "./ui/use-toast"
 
 type ConfirmCloseCashRegisterButtonProps = {
@@ -50,8 +50,8 @@ const ConfirmCloseCashRegisterButton = ({ cashRegisters, userId }: ConfirmCloseC
   }
 
   return (
-    <Button onClick={handleClick}>
-      {loading && <Loader className="animate-spin" />}
+    <Button onClick={handleClick} className="flex gap-2 text-white dark:text-primary-foreground">
+      {loading ? <Loader className="animate-spin" /> : <X />}
       Confirmar
     </Button>
   )

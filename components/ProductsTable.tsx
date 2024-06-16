@@ -120,7 +120,7 @@ function ProductsTable({ data }: ProductsTableProps) {
                       )
                     }
                     return (
-                      <TableCell key={cell.id} className="" onDoubleClick={() => { console.log(cell) }}>
+                      <TableCell key={cell.id} className="">
                         <div className="grid grid-cols-[max-content_1fr] gap-2 place-content-center">
                           {cell.column.id === "price" && <span>$</span>}
                           {flexRender(cell.column.columnDef.cell, cell.getContext())}

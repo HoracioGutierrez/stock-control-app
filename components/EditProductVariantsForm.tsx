@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import { productSchema } from "@/lib/schemas"
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form"
 import { Label } from "./ui/label"
-import { ProductInputValues } from "@/lib/types"
+import { EditProductVariantsFormProps, ProductInputValues } from "@/lib/types"
 import { Textarea } from "./ui/textarea"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
 import { useState } from "react"
@@ -23,12 +23,8 @@ import { toast } from "./ui/use-toast"
 import { getProductWithVariantsByBarcode } from "@/actions/getProductWithVariantsByBarcode"
 import { saveProductEditWithVariants } from "@/actions/saveProductEditWithVariants"
 
-type EditProductVariantsFormProps = {
-  barcode: string
-  userId: string
-}
 
-function EditProductVariantsForm({ barcode , userId }: EditProductVariantsFormProps) {
+function EditProductVariantsForm({ barcode, userId }: EditProductVariantsFormProps) {
 
   const [error, setError] = useState<string | null>(null)
   const [mainName, setMainName] = useState<string>("")
@@ -171,7 +167,7 @@ function EditProductVariantsForm({ barcode , userId }: EditProductVariantsFormPr
                 </TableHeader>
                 <TableBody>
                   {fields.map((field, index) => (
-                    <ProductVariantForm key={field.id} index={index} register={register} field={field} error={errors.variants?.[index]} isLoading={loading} />
+                    <ProductVariantForm key={field.id} index={index} register={register} error={errors.variants?.[index]} isLoading={loading} />
                   ))}
                 </TableBody>
               </Table>

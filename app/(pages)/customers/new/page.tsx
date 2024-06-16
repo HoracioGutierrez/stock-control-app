@@ -7,7 +7,7 @@ function NewCustomerPage() {
     return (
         <>
             <div className="flex justify-between">
-                <PageTitle title="Nuevo Cliente" backButton/>
+                <PageTitle title="Nuevo Cliente" backButton />
                 <NewCustomerButton />
             </div>
             <NewCustomerForm />

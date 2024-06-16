@@ -72,7 +72,7 @@ async function PageLayout({ children }: PageLayoutProps) {
           <p className="text-muted-foreground">Desarrollado por @horagutierrez</p>
         </div>
       </div>
-      <div id="content" className="p-4 md:p-8 flex flex-col bg-secondary">
+      <div id="content" className="p-4 md:p-8 flex flex-col dark:bg-transparent dark:from-transparent dark:via-transparent dark:to-transparent bg-gradient-to-br from-accent via-accent to-primary-foreground">
         {children}
       </div>
     </main>

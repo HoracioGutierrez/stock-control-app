@@ -13,7 +13,6 @@ import { toast } from "./ui/use-toast"
 import { useSession } from "next-auth/react"
 
 function NewCustomerForm() {
-
     const { data : session } = useSession()
     const [error, setError] = useState<string | null>(null)
     const { setIsLoading, isLoading } = useNewProductStore((state: any) => ({ isLoading: state.isLoading, setIsLoading: state.setIsLoading }))
@@ -32,7 +31,6 @@ function NewCustomerForm() {
 
     const onSubmit: SubmitHandler<CustomerInputValues> = (data: CustomerInputValues) => {
         setIsLoading(true)
-        console.log(data)
         createNewCustomer({
             name: data.name,
             lastName: data.lastName,
@@ -41,6 +39,7 @@ function NewCustomerForm() {
             address: data.address,
             legalName: data.legalName,
             cuitCuil: data.cuitCuil,
+
         }, session?.user.id as string).then((data) => {
             if (data?.error) {
                 throw new Error(data.error)

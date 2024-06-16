@@ -2,6 +2,7 @@
 
 import { GeneralResponse } from "@/lib/types"
 import { CustomerType, db, customers, history } from "@/schema"
+import { revalidatePath } from "next/cache"
 
 export const createNewCustomer = async (data: CustomerType, userId: string): Promise<GeneralResponse> => {
     "use server"
@@ -33,6 +34,8 @@ export const createNewCustomer = async (data: CustomerType, userId: string): Pro
             insertedId: history.id
         })
 
+        revalidatePath("/customers")
+        
         return {
             data: customer[0],
             error: null,

@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { HistoryType, ProductType } from "@/schema"
+import { HistoryType, ProductType, CustomerType } from "@/schema"
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown } from "lucide-react"
 
@@ -98,7 +98,69 @@ export const historyColumns: ColumnDef<HistoryType>[] = [
     accessorKey: "customerId",
   },
   {
-    header : "Acciones",
+    header: "Acciones",
+    accessorKey: "actions",
+  }
+]
+
+export const customersColumns: ColumnDef<CustomerType>[] = [
+  {
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="link"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="p-0"
+        >
+          Nombre
+          < ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+    accessorKey: "name",
+  },
+  {
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="link"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")
+          }
+          className="p-0"
+        >
+          Apellido
+          < ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+    accessorKey: "lastName",
+  },
+  {
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="link"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")
+          }
+          className="p-0"
+        >
+          Estado
+          < ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+    accessorKey: "active",
+  },
+  {
+    header: "Teléfono",
+    accessorKey: "phone",
+  },
+  {
+    header: "Correo",
+    accessorKey: "email",
+  },
+  {
+    header: "Acciones",
     accessorKey: "actions",
   }
 ]

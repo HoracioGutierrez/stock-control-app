@@ -64,6 +64,7 @@ export type CustomerInputValues = {
   legalName?: string
   cuitCuil?: string
   active?: boolean
+  id?: string
 }
 
 export type CustomerTableProps = {
@@ -74,4 +75,14 @@ export type CashRegisterInputValues = {
   label: string
   currentAmount: number
   totalAmount: number
+}
+
+export type DeleteCustomerProps = {
+  id: string
+  type?: string
+}
+
+export type DeleteCustomerButtonProps = {
+  active: boolean
+  id: string
 }

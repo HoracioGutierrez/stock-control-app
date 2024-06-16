@@ -14,16 +14,6 @@ function MovementsTable({ data }: MovementsTableProps) {
       type="history"
       filterColumn="tipo de movimiento"
       filterKey="actionType"
-      actions={(rowData: any) => {
-        {/* <DeleteProductButton active={row.original.active} barcode={row.original.barcode} />
-                          <EditProductButton barcode={row.original.barcode} />
-                          {!row.original.isVariant && <EditVariantButton barcode={row.original.barcode} />} */}
-        return (
-          <>
-            <Button>test</Button>
-          </>
-        )
-      }}
     />
   )
 }

@@ -17,7 +17,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Button } from "./ui/button"
-import { Loader, PlusCircle } from "lucide-react"
+import { Check, Loader, PlusCircle } from "lucide-react"
 import ProductVariantForm from "./ProductVariantForm"
 import { toast } from "./ui/use-toast"
 import { getProductWithVariantsByBarcode } from "@/actions/getProductWithVariantsByBarcode"
@@ -181,7 +181,7 @@ function EditProductVariantsForm({ barcode, userId }: EditProductVariantsFormPro
           </CardContent>
         </Card>
         <Button form="new-product-form" disabled={loading} className="flex items-center gap-2 mx-auto mt-8">
-          {loading && <Loader className="animate-spin" />}
+          {loading ? <Loader className="animate-spin" /> : <Check /> }
           <span>Guardar producto</span>
         </Button>
       </div>

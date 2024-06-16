@@ -20,7 +20,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Button } from "./ui/button"
-import { Loader, PlusCircle } from "lucide-react"
+import { Barcode, Check, Loader, PlusCircle } from "lucide-react"
 import ProductVariantForm from "./ProductVariantForm"
 import { toast } from "./ui/use-toast"
 
@@ -178,7 +178,7 @@ function NewProductForm({ userId }: NewProductFormProps) {
           </CardContent>
         </Card>
         <Button form="new-product-form" disabled={isLoading} className="flex items-center gap-2 mx-auto mt-8">
-          {isLoading && <Loader className="animate-spin" />}
+          {isLoading ? <Loader className="animate-spin" /> : <Check />}
           <span>Guardar producto</span>
         </Button>
       </div>

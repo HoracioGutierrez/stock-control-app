@@ -15,7 +15,7 @@ const EditVariantButton = ({ barcode }: EditVariantButtonProps) => {
   }
 
   return (
-    <Button onClick={handleClick} variant={"outline"} className="aspect-square p-0">
+    <Button onClick={handleClick} variant={"ghost"} className="aspect-square p-0 text-muted-foreground hover:text-yellow-200">
       <ListTreeIcon className="aspect-square p-0" />
     </Button>
   )

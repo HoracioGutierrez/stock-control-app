@@ -1,7 +1,7 @@
 "use client"
 import { useNewProductStore } from "@/stores/newProductStore"
 import { Button } from "./ui/button"
-import { Loader } from "lucide-react"
+import { Check, Loader } from "lucide-react"
 
 function NewProductButton() {
 
@@ -9,7 +9,7 @@ function NewProductButton() {
 
   return (
     <Button form="new-product-form" disabled={isLoading} className="flex items-center gap-2">
-      {isLoading && <Loader className="animate-spin" />}
+      {isLoading ? <Loader className="animate-spin" /> : <Check />}
       <span>Guardar producto</span>
     </Button>
   )

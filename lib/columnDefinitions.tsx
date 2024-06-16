@@ -96,10 +96,6 @@ export const historyColumns: ColumnDef<HistoryType>[] = [
   {
     header: "Cliente",
     accessorKey: "customerId",
-  },
-  {
-    header: "Acciones",
-    accessorKey: "actions",
   }
 ]
 

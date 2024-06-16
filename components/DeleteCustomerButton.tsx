@@ -15,10 +15,10 @@ const DeleteCustomerButton = ({ active, id }: DeleteCustomerButtonProps) => {
     }
 
     return (
-        <Button variant={"outline"} className="aspect-square p-0" onClick={handleClick}>
+        <Button variant={"ghost"} className="aspect-square p-0" onClick={handleClick}>
             {active
-                ? <Ban className="aspect-square p-0" />
-                : <UserRoundCheck className="aspect-square p-0" />}
+                ? <Ban className="aspect-square p-0 text-muted-foreground hover:text-red-400" />
+                : <UserRoundCheck className="aspect-square p-0 text-muted-foreground hover:text-green-400" />}
         </Button>
     )
 }

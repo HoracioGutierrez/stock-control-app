@@ -117,7 +117,7 @@ function CustomersTable({ data }: CustomerTableProps) {
                                         return (
                                             <TableCell key={cell.id} className="flex items-center gap-2">
                                                 <DeleteCustomerButton active={row.original.active} id={row.original.id} />
-                                                 <EditProductButton barcode={row.original.barcode} /> 
+                                                <EditProductButton barcode={row.original.barcode} />
                                             </TableCell>
                                         )
                                     }

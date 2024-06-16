@@ -16,7 +16,7 @@ async function CustomersPage() {
     <>
       <div className="flex justify-between">
         <PageTitle title="Clientes" />
-        <Button asChild>
+        <Button asChild className="flex items-center gap-2 text-white dark:text-primary-foreground">
           <Link href="/customers/new">
             <UserRoundPlusIcon className="h-6 w-6 " />
             Crear Cliente

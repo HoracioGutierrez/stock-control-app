@@ -6,13 +6,15 @@ import NewProductForm from "./NewProductForm"
 import { useSession } from "next-auth/react"
 import DeleteProductConfirmationForm from "./DeleteProductConfirmationForm"
 import { cn } from "@/lib/utils"
-import EditProductForm from "./EditProductForm"
 import EditProductVariantsForm from "./EditProductVariantsForm"
+import EditFormContainer from "./EditFormContainer"
 
 function ProductDialog() {
 
   const { isOpen, close, type, barcode } = useProductDialogStore((state: any) => state)
   const session = useSession()
+  const entity = "product"
+  const entityProps = { entity, barcode }
 
   return (
     <Dialog open={isOpen} onOpenChange={close}>
@@ -28,7 +30,7 @@ function ProductDialog() {
         </DialogHeader>
         {type === "new" && <NewProductForm userId={session?.data?.user.id as string} />}
         {(type === "delete" || type === "activate") && <DeleteProductConfirmationForm barcode={barcode} type={type} />}
-        {type === "edit" && <EditProductForm barcode={barcode} />}
+        {type === "edit" && <EditFormContainer {...entityProps} />}
         {type === "variant" && <EditProductVariantsForm barcode={barcode} />}
       </DialogContent>
     </Dialog>

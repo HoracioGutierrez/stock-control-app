@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import { productSchema } from "@/lib/schemas"
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form"
 import { Label } from "./ui/label"
-import { ProductInputValues } from "@/lib/types"
+import { EditProductVariantsFormProps, ProductInputValues } from "@/lib/types"
 import { Textarea } from "./ui/textarea"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
 import { useState } from "react"
@@ -23,9 +23,6 @@ import { toast } from "./ui/use-toast"
 import { getProductWithVariantsByBarcode } from "@/actions/getProductWithVariantsByBarcode"
 import { saveProductEditWithVariants } from "@/actions/saveProductEditWithVariants"
 
-type EditProductVariantsFormProps = {
-  barcode: string
-}
 
 function EditProductVariantsForm({ barcode }: EditProductVariantsFormProps) {
 

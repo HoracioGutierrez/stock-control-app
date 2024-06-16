@@ -3,15 +3,8 @@ import { TableCell, TableRow } from "./ui/table"
 import { Input } from "./ui/input"
 import { Button } from "./ui/button"
 import { Trash2 } from "lucide-react"
+import { ProductVariantFormProps } from "@/lib/types"
 
-type ProductVariantFormProps = {
-  index: number
-  register: any
-  field: any
-  error?: any
-  remove?: any
-  isLoading?: boolean
-}
 
 function ProductVariantForm({ field, index, register, error, remove, isLoading }: ProductVariantFormProps) {
 

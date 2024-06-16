@@ -6,11 +6,8 @@ import { toast } from "./ui/use-toast"
 import { useState } from "react"
 import { Loader } from "lucide-react"
 import { useProductDialogStore } from "@/stores/productDialogStore"
+import { DeleteProductConfirmationFormProps } from "@/lib/types"
 
-type DeleteProductConfirmationFormProps = {
-  barcode: string
-  type: string
-}
 
 function DeleteProductConfirmationForm({ barcode, type }: DeleteProductConfirmationFormProps) {
 

@@ -1,11 +1,8 @@
 "use client"
 
+import { BarCodeScannerProps } from "@/lib/types"
 import { useEffect, useState } from "react"
 
-type BarCodeScannerProps = {
-  withTitle?: boolean,
-  godMode?: boolean
-}
 
 function BarCodeScanner({ withTitle = false, godMode = false }: BarCodeScannerProps) {
 
@@ -22,7 +19,7 @@ function BarCodeScanner({ withTitle = false, godMode = false }: BarCodeScannerPr
     setHasEvent(true)
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if(e.key !== "Enter" && e.key.length !== 1) return
+      if (e.key !== "Enter" && e.key.length !== 1) return
       if (scanning) return
 
       const isScanning = true
@@ -77,7 +74,7 @@ function BarCodeScanner({ withTitle = false, godMode = false }: BarCodeScannerPr
     <div>
       {withTitle && <h2>Scanner de Código de Barras</h2>}
       {scanning && <p>Escaneando...</p>}
-      {!scanning  && <p>Esperando...</p>}
+      {!scanning && <p>Esperando...</p>}
       {scannedBarcode && <p>Codigo escaneado : {scannedBarcode}</p>}
       {godMode && <button onClick={handleFetch}>Modo Dios Activado</button>}
       {error && <p className="text-red-500">{error}</p>}

@@ -3,11 +3,8 @@
 import { useProductDialogStore } from "@/stores/productDialogStore"
 import { Button } from "./ui/button"
 import { Trash2, UndoDot } from "lucide-react"
+import { DeleteProductButtonProps } from "@/lib/types"
 
-type DeleteProductButtonProps = {
-  active: boolean
-  barcode: string
-}
 
 const DeleteProductButton = ({ active, barcode }: DeleteProductButtonProps) => {
 

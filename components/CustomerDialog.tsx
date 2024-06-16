@@ -2,15 +2,20 @@
 
 import { useCustomerDialogStore } from "@/stores/useCustomerDialogStore"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog"
-import NewCustomerForm from "./NewCustomerForm"
-/* import { useSession } from "next-auth/react" */
 import DeleteCustomerConfirmationForm from "./DeleteCustomerConfirmationForm"
 import { cn } from "@/lib/utils"
+import EditFormContainer from "./EditFormContainer"
 
 function CustomerDialog() {
 
 
     const { isOpen, handleClose, type, customer } = useCustomerDialogStore((state: any) => state)
+
+    const entityProps = {
+        entity: "customer",
+        barcode: undefined,
+        customerId: customer.id,
+    }
 
     return (
         <Dialog open={isOpen} onOpenChange={handleClose}>
@@ -22,7 +27,8 @@ function CustomerDialog() {
                     </DialogTitle>
                 </DialogHeader>
                 {(type === "delete" || type === "activate") && <DeleteCustomerConfirmationForm id={customer} type={type} />}
-               
+                {type === "edit" && <EditFormContainer {...entityProps} />}
+
             </DialogContent>
         </Dialog>
     )

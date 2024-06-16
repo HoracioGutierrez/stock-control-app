@@ -1,4 +1,4 @@
-"use client"
+/* "use client"
 import { Input } from "./ui/input"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { editProductSchema } from "@/lib/schemas"
@@ -12,7 +12,7 @@ import { Button } from "./ui/button"
 import { Loader } from "lucide-react"
 import { toast } from "./ui/use-toast"
 import { getProductByBarcode } from "@/actions/getProductByBarcode"
-import { editProductById } from "@/actions/editProductById"
+import { editById } from "@/actions/editById"
 import { useProductDialogStore } from "@/stores/productDialogStore"
 
 type EditProductFormProps = {
@@ -22,7 +22,6 @@ type EditProductFormProps = {
 function EditProductForm({ barcode }: EditProductFormProps) {
 
   const [error, setError] = useState<string | null>(null)
-  const [mainName, setMainName] = useState<string>("")
   const [loading, setLoading] = useState<boolean>(false)
   const [productId, setProductId] = useState<string>("")
   const { close } = useProductDialogStore((state: any) => state)
@@ -54,7 +53,8 @@ function EditProductForm({ barcode }: EditProductFormProps) {
 
   const onSubmit: SubmitHandler<ProductInputValues> = (data: ProductInputValues) => {
     setLoading(true)
-    editProductById(productId, data)
+    const entityType = "product"
+    editById(entityType, barcode, data)
       .then((data) => {
         if (data?.error) {
           throw new Error(data.error)
@@ -137,4 +137,4 @@ function EditProductForm({ barcode }: EditProductFormProps) {
     </form>
   )
 }
-export default EditProductForm
+export default EditProductForm */

@@ -3,10 +3,8 @@
 import { useProductDialogStore } from "@/stores/productDialogStore"
 import { Button } from "./ui/button"
 import { Edit } from "lucide-react"
+import { EditProductButtonProps } from "@/lib/types"
 
-type EditProductButtonProps = {
-  barcode: string
-}
 
 const EditProductButton = ({ barcode }: EditProductButtonProps) => {
 

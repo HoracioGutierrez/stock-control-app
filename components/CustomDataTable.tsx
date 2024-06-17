@@ -1,6 +1,6 @@
 "use client"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { HistoryType, ProductType } from "@/schema"
+import { HistoryType, ProductType, ProviderType } from "@/schema"
 import { SortingState, getSortedRowModel, flexRender, getCoreRowModel, useReactTable, ColumnFiltersState, getFilteredRowModel, getPaginationRowModel, ColumnDef } from "@tanstack/react-table"
 import { useEffect, useState } from "react"
 import { Button } from "./ui/button"
@@ -10,19 +10,20 @@ import EditVariantButton from "./EditVariantButton"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ProductsTableProps } from "@/lib/types"
-import { historyColumns, productsColumns } from "@/lib/columnDefinitions"
+import { historyColumns, productsColumns, providersColumns } from "@/lib/columnDefinitions"
 
 type CustomDataTableProps = {
-  data: ProductType[] | HistoryType[] | null,
-  type: "products" | "history"
+  data: ProductType[] | HistoryType[] | ProviderType[] | null,
+  type: "products" | "history" | "providers"
   filterColumn?: string
   filterKey?: string
   actions? : (rowData: any) => JSX.Element
 }
 
-const columns: Record<"products" | "history", ColumnDef<unknown | any>[]> = {
+const columns: Record<"products" | "history" | "providers", ColumnDef<unknown | any>[]> = {
   "products": productsColumns,
-  "history": historyColumns
+  "history": historyColumns,
+  "providers": providersColumns
 }
 
 function CustomDataTable({ data, type, filterColumn, filterKey , actions }: CustomDataTableProps) {

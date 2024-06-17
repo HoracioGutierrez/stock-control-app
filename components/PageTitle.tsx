@@ -11,7 +11,7 @@ function PageTitle({ title = "Demo Title", backButton = false }: PageTitleProps)
         <GoBackButton />
       )}
       <DrawerToggleButton />
-      <h2 className="text-2xl font-bold">{title}</h2>
+      <h2 className="text-4xl font-bold text-muted-foreground">{title}</h2>
     </div>
   )
 }

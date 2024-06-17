@@ -14,9 +14,7 @@ async function MovementsPage() {
   return (
     <>
       <PageHeader title="Movimientos" />
-      <div>
-        <MovementsTable data={data} />
-      </div>
+      <MovementsTable data={data} />
     </>
   )
 }

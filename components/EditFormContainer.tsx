@@ -9,7 +9,7 @@ import { SubmitHandler, useForm } from "react-hook-form"
 import { useProductDialogStore } from "@/stores/productDialogStore"
 import EditForm from "./EditForm"
 import { getById } from "@/actions/getById"
-import { entityConfig } from "@/lib/formConfig"
+import { entityConfig, formVariants, formNamesVariants, formDetailsVariants } from "@/lib/formConfig"
 
 
 function EditFormContainer({ entity, barcode, customerId }: any) {
@@ -18,6 +18,12 @@ function EditFormContainer({ entity, barcode, customerId }: any) {
     const [idResolve, setIdResolve] = useState<string>("")
     const { handleClose } = useCustomerDialogStore((state: any) => state)
     const { close } = useProductDialogStore((state: any) => state)
+
+    const conditionalEntity = entity === "customer" ? "cliente" : "producto"
+
+    const formForName = formNamesVariants[entity]
+    const formForDetails = formDetailsVariants[entity]
+    const formForVariant = formVariants[entity]
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormValues>({
         defaultValues: async () => {
@@ -54,11 +60,11 @@ function EditFormContainer({ entity, barcode, customerId }: any) {
                 price: data.price as number,
                 barcode: data.barcode as string,
                 stock: data.stock as number,
+                variants: data.variants as any[]
             }
         },
         resolver: yupResolver(entityConfig[entity].schema),
     })
-
 
     const onSubmit: SubmitHandler<InputValues> = async (data: InputValues) => {
         setLoading(true)
@@ -68,8 +74,8 @@ function EditFormContainer({ entity, barcode, customerId }: any) {
                     throw new Error(data.error)
                 }
                 toast({
-                    title: `${entity.charAt(0).toUpperCase() + entity.slice(1)} editado correctamente`,
-                    description: `${entity.charAt(0).toUpperCase() + entity.slice(1)} editado correctamente`,
+                    title: `${conditionalEntity} editado correctamente`,
+                    description: `${conditionalEntity} editado correctamente`,
                 })
                 close()
             })
@@ -77,10 +83,10 @@ function EditFormContainer({ entity, barcode, customerId }: any) {
                 if (error instanceof Error) {
                     return setError(error.message)
                 }
-                setError(`Error al editar el ${entity}, intente nuevamente o contacte al desarrollador.`)
+                setError(`Error al editar el ${conditionalEntity}, intente nuevamente o contacte al desarrollador.`)
                 toast({
                     variant: "destructive",
-                    title: `Error al editar el ${entity}`,
+                    title: `Error al editar el ${conditionalEntity}`,
                     description: error.message
                 })
             })
@@ -89,10 +95,23 @@ function EditFormContainer({ entity, barcode, customerId }: any) {
             })
     }
 
+    const formProps = {
+        entity,
+        loading,
+        register,
+        errors,
+        data: idResolve,
+        formForName,
+        formForDetails,
+        formForVariant,
+        entityConfig,
+        conditionalEntity,
+    }
+
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-2 gap-8" id="new-product-form">
-                <EditForm entity={entity} loading={loading} register={register} errors={errors} data={idResolve} />
+                <EditForm {...formProps} />
             </form>
         </>
     )

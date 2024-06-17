@@ -4,29 +4,31 @@ import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 import { Button } from "./ui/button"
 import { Loader } from "lucide-react"
-import { entityConfig, formVariants } from "@/lib/formConfig"
+import { FormEditProps } from "@/lib/types"
 
 
-function EditForm({ entity, loading, register, errors }: any, { data }: any) {
-    const variant = formVariants[entity]
+
+function EditForm({ entity, loading, register, errors, data, formForVariant, formForName, formForDetails, entityConfig, conditionalEntity }: FormEditProps) {
+
 
     return (
         <>
             <div className="self-stretch">
                 <Card className="bg-accent h-full">
                     <CardHeader>
-                        <CardTitle>Detalles de {variant.formFor}</CardTitle>
-                        <CardDescription>Estos detalles son obligatorios para que el {variant.formFor} pueda crearse correctamente.</CardDescription>
+                        <CardTitle>Detalles de {formForName.name.name}</CardTitle>
+                        <CardDescription>Estos detalles son obligatorios para que el {conditionalEntity} pueda crearse correctamente.</CardDescription>
                     </CardHeader>
                     <CardContent className="grid gap-4">
-                        {
-                            variant.requiredFormFor.map((input, index) => (
+                        {Object.keys(formForName).map((key, index) => {
+                            return (
                                 <div key={index}>
-                                    <Label htmlFor={input}>{variant.requieredFormLabel[index]}</Label>
-                                    <Input type={variant.requiredVariantInput[index]} placeholder={variant.requieredFormLabel[index]} {...register(input, { disabled: loading })} />
-                                    {errors[input] && <p className="text-red-500">{errors[input].message}</p>}
+                                    <Label htmlFor={formForName[key].name}>{formForName[key].label}</Label>
+                                    <Input type={formForName[key].inputType} placeholder={formForName[key].label} {...register(formForName[key].name, { disabled: loading })} />
+                                    {errors[formForName[key].name] && (<p className="text-red-500">{errors[formForName[key].name].message}</p>)}
                                 </div>
-                            ))
+                            )
+                        })
                         }
                     </CardContent>
                 </Card>
@@ -35,45 +37,48 @@ function EditForm({ entity, loading, register, errors }: any, { data }: any) {
                 <Card className="bg-accent">
                     <CardHeader>
                         <CardTitle>Detalles Adicionales</CardTitle>
-                        <CardDescription>Estos datos son opcionales para crear el {variant.formFor}.</CardDescription>
+                        <CardDescription>Estos datos son opcionales para crear el {conditionalEntity}.</CardDescription>
                     </CardHeader>
                     <CardContent className="grid gap-4">
-                        {
-                            variant.detailsFormFor.map((input, index) => (
+                        {Object.keys(formForDetails).map((key, index) => {
+                            return (
                                 <div key={index}>
-                                    <Label htmlFor={input}>{input}</Label>
-                                    <Input type={variant.detailsVariantInput[index]} placeholder={input} {...register(input, { disabled: loading })} />
+                                    <Label htmlFor={formForDetails[key].name}>{formForDetails[key].label}</Label>
+                                    <Input type={formForDetails[key].inputType} placeholder={formForDetails[key].label} {...register(formForDetails[key].name, { disabled: loading })} />
+                                    {errors[formForDetails[key].name] && (<p className="text-red-500">{errors[formForDetails[key].name].message}</p>)}
                                 </div>
-                            ))
+                            )
+                        })
                         }
                     </CardContent>
                 </Card>
             </div>
-            {data?.variants && (
-                <div>
+            <div>
+                {entity === "product" && <div>
                     <Card className="bg-accent">
                         <CardHeader>
                             <CardTitle>Variantes</CardTitle>
-                            <CardDescription>Estos datos son opcionales para crear el {variant.formFor}.</CardDescription>
+                            <CardDescription>Variantes de {conditionalEntity}.</CardDescription>
                         </CardHeader>
                         <CardContent className="grid gap-4">
-                            {
-                                variant.variantsFormFor?.map((input, index) => (
+                            {Object.keys(formForVariant).map((key, index) => {
+                                return (
                                     <div key={index}>
-                                        <Label htmlFor={input}>{input}</Label>
-                                        <Input type={variant?.variantsVariantInput?.[index]} placeholder={input} {...register(input, { disabled: loading })} />
-                                        {errors[input] && <p className="text-red-500">{errors[input].message}</p>}
+                                        <Label htmlFor={formForVariant[key].name}>{formForVariant[key].label}</Label>
+                                        <Input type={formForVariant[key].inputType} placeholder={formForVariant[key].label} {...register(formForVariant[key].name, { disabled: loading })} />
+                                        {errors[formForVariant[key].name] && (<p className="text-red-500">{errors[formForVariant[key].name].message}</p>)}
                                     </div>
-                                ))
+                                )
+                            })
                             }
                         </CardContent>
                     </Card>
-                </div>
-            )}
+                </div>}
+            </div>
 
             <Button form={entityConfig[entity].formId} className="flex items-center gap-2 mx-auto mt-8" disabled={loading}>
                 {loading && <Loader className="animate-spin" />}
-                <span>Guardar {variant.formFor}</span>
+                {<span>Guardar {conditionalEntity}</span>}
             </Button>
         </>
     )

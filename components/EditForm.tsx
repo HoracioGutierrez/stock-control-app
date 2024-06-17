@@ -16,7 +16,7 @@ function EditForm({ entity, loading, register, errors, data, formForVariant, for
             <div className="self-stretch">
                 <Card className="bg-accent h-full">
                     <CardHeader>
-                        <CardTitle>Detalles de {formForName.name.name}</CardTitle>
+                        <CardTitle>Detalles de {conditionalEntity}</CardTitle>
                         <CardDescription>Estos detalles son obligatorios para que el {conditionalEntity} pueda crearse correctamente.</CardDescription>
                     </CardHeader>
                     <CardContent className="grid gap-4">

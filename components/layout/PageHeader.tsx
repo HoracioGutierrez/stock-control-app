@@ -9,7 +9,7 @@ type PageHeaderProps = {
 
 const PageHeader = ({ title = "Demo Title", actions }: PageHeaderProps) => {
   return (
-    <div className="flex justify-between">
+    <div className="flex justify-between mb-8">
       <PageTitle title={title} />
       {actions && actions}
     </div>

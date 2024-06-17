@@ -8,6 +8,7 @@ import OrderButton from "@/components/OrderButton"
 import OrderDialog from "@/components/OrderDialog"
 import PageTitle from "@/components/PageTitle"
 import { auth } from "@/auth"
+import PageHeader from "@/components/layout/PageHeader"
 
 async function OrderPage() {
 
@@ -22,8 +23,7 @@ async function OrderPage() {
 
   return (
     <>
-      <div className="flex justify-between">
-        <PageTitle title="Nueva orden" />
+      <PageHeader title="Nueva orden" actions={
         <div className="flex items-center gap-2">
           {data && (
             <>
@@ -33,7 +33,7 @@ async function OrderPage() {
             </>
           )}
         </div>
-      </div>
+      }/>
       {data && <OrderScanner />}
       {!data && (
         <div className="grow rounded border border-dashed border-slate-400 grid place-items-center">

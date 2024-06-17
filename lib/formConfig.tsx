@@ -65,11 +65,6 @@ export const formDetailsVariants: {
             label: "Código de barras",
             inputType: "text"
         },
-        variant: {
-            name: "variant",
-            label: "Variante",
-            inputType: "text"
-        }
     },
     customer: {
         phone: {
@@ -104,11 +99,26 @@ export const formVariants: {
     [key: string]: FormSchemaVariants
 } = {
     product: {
-        variant: {
-            name: "variant",
+        name: {
+            name: "name",
             label: "Variante",
             inputType: "text"
-        }
+        },
+        price: {
+            name: "price",
+            label: "Precio",
+            inputType: "number"
+        },
+        stock: {
+            name: "stock",
+            label: "Stock",
+            inputType: "number"
+        },
+        barcode: {
+            name: "barcode",
+            label: "Código de barras",
+            inputType: "text"
+        },
     },
 }
 

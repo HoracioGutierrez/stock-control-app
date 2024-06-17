@@ -61,6 +61,7 @@ export type DeleteProductButtonProps = {
 export type EditCustomerInputValues = CustomerInputValues & {
   active?: boolean
   id?: string
+  variants?: any[]
 }
 
 export type EditProductButtonProps = {
@@ -89,12 +90,16 @@ export type FormEditProps = {
   loading: boolean
   register: any
   errors: any
+  isVariant?: boolean
   data: string
   formForName: FormSchemaVariants
   formForDetails: FormSchemaVariants
   formForVariant: FormSchemaVariants
   entityConfig: any
-  conditionalEntity: string
+  conditionalEntity?: string
+  handleMainNameChange?: any
+  handleAddVariant?: any
+  fields: any
 }
 
 export type FormValues = EditCustomerInputValues | EditProductInputValues

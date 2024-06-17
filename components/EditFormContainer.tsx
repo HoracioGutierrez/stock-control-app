@@ -5,7 +5,7 @@ import { toast } from "./ui/use-toast"
 import { editById } from "@/actions/editById"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { FormValues, InputValues } from "@/lib/types"
-import { SubmitHandler, useForm } from "react-hook-form"
+import { SubmitHandler, useForm, useFieldArray } from "react-hook-form"
 import { useProductDialogStore } from "@/stores/productDialogStore"
 import EditForm from "./EditForm"
 import { getById } from "@/actions/getById"
@@ -14,18 +14,22 @@ import { entityConfig, formVariants, formNamesVariants, formDetailsVariants } fr
 
 function EditFormContainer({ entity, barcode, customerId }: any) {
     const [error, setError] = useState<string | null>(null)
+    const [mainName, setMainName] = useState<string>("")
     const [loading, setLoading] = useState<boolean>(false)
     const [idResolve, setIdResolve] = useState<string>("")
-    const { handleClose } = useCustomerDialogStore((state: any) => state)
-    const { close } = useProductDialogStore((state: any) => state)
+    const [isVariant, setIsVariant] = useState<boolean>(false)
+    /*   const { handleClose } = useCustomerDialogStore((state: any) => state)
+      const { close } = useProductDialogStore((state: any) => state) */
 
     const conditionalEntity = entity === "customer" ? "cliente" : "producto"
+
+
 
     const formForName = formNamesVariants[entity]
     const formForDetails = formDetailsVariants[entity]
     const formForVariant = formVariants[entity]
 
-    const { register, handleSubmit, formState: { errors }, reset } = useForm<FormValues>({
+    const { control, register, handleSubmit, formState: { errors }, reset, getValues } = useForm<FormValues>({
         defaultValues: async () => {
             const { data, error } = await getById(entity, customerId, barcode)
             if (error) {
@@ -46,6 +50,8 @@ function EditFormContainer({ entity, barcode, customerId }: any) {
                 }
             }
             setIdResolve(data.id as string)
+            setIsVariant(data.isVariant as boolean)
+            console.log(data)
             return entity === "customer" ? {
                 name: data.name as string,
                 lastName: data.lastName as string,
@@ -60,10 +66,15 @@ function EditFormContainer({ entity, barcode, customerId }: any) {
                 price: data.price as number,
                 barcode: data.barcode as string,
                 stock: data.stock as number,
-                variants: data.variants as any[]
+                isVariant: data.isVariant as boolean,
             }
         },
         resolver: yupResolver(entityConfig[entity].schema),
+    })
+
+    const { fields, append } = useFieldArray({
+        control,
+        name: "variants"
     })
 
     const onSubmit: SubmitHandler<InputValues> = async (data: InputValues) => {
@@ -77,7 +88,7 @@ function EditFormContainer({ entity, barcode, customerId }: any) {
                     title: `${conditionalEntity} editado correctamente`,
                     description: `${conditionalEntity} editado correctamente`,
                 })
-                close()
+                reset()
             })
             .catch((error) => {
                 if (error instanceof Error) {
@@ -95,22 +106,37 @@ function EditFormContainer({ entity, barcode, customerId }: any) {
             })
     }
 
+
+    const handleMainNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newName = e.target.value
+        setMainName(newName)
+    }
+
+    const handleAddVariant = () => {
+        append({ name: getValues("name"), price: getValues("price"), stock: 0, barcode: "" })
+    }
+
+
     const formProps = {
         entity,
         loading,
         register,
         errors,
+        isVariant,
         data: idResolve,
         formForName,
         formForDetails,
         formForVariant,
         entityConfig,
         conditionalEntity,
+        handleMainNameChange,
+        handleAddVariant,
+        fields
     }
 
     return (
         <>
-            <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-2 gap-8" id="new-product-form">
+            <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-2 gap-8 overflow-auto" id={entityConfig[entity].formId}>
                 <EditForm {...formProps} />
             </form>
         </>

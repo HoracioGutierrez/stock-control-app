@@ -136,7 +136,7 @@ function CreateProviderForm({ userId }: CreateProviderFormProps) {
             </div>
           </CardContent>
         </Card>
-        <Button disabled={isLoading} className="flex items-center gap-2 mx-auto col-span-2">
+        <Button disabled={isLoading} className="flex items-center gap-2 mx-auto md:col-span-2">
           {isLoading ? <Loader className="animate-spin" /> : <Check />}
           <span>Guardar proveedor</span>
         </Button>

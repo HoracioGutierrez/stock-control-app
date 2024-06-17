@@ -1,12 +1,8 @@
-import { getAllProducts } from "@/actions/getAllProducts"
 import CreateProductButton from "@/components/CreateProductButton"
-import CustomDataTable from "@/components/CustomDataTable"
-import DeleteProductButton from "@/components/DeleteProductButton"
-import EditProductButton from "@/components/EditProductButton"
-import EditVariantButton from "@/components/EditVariantButton"
-import PageTitle from "@/components/PageTitle"
-import ProductDialog from "@/components/ProductDialog"
 import ProductsTable from "@/components/NewProductsTable"
+import { getAllProducts } from "@/actions/getAllProducts"
+import PageHeader from "@/components/layout/PageHeader"
+import ProductDialog from "@/components/ProductDialog"
 
 async function ProductsPage() {
 
@@ -16,10 +12,7 @@ async function ProductsPage() {
 
   return (
     <>
-      <div className="flex justify-between">
-        <PageTitle title="Productos" />
-        <CreateProductButton />
-      </div>
+      <PageHeader title="Productos" actions={<CreateProductButton />} />
       {data.length == 0 && (
         <div className="grow rounded border border-dashed border-slate-400 grid place-items-center">
           <div className="max-w-sm text-center">

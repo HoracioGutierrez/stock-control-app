@@ -1,9 +1,7 @@
 import { getAllHistoryMovements } from "@/actions/getAllHistoryMovements"
-import { auth } from "@/auth"
-import CustomDataTable from "@/components/CustomDataTable"
 import MovementsTable from "@/components/MovementsTable"
-import PageTitle from "@/components/PageTitle"
-import { Button } from "@/components/ui/button"
+import PageHeader from "@/components/layout/PageHeader"
+import { auth } from "@/auth"
 
 async function MovementsPage() {
 
@@ -15,9 +13,7 @@ async function MovementsPage() {
 
   return (
     <>
-      <div className="flex justify-between">
-        <PageTitle title="Movimientos" />
-      </div>
+      <PageHeader title="Movimientos" />
       <div>
         <MovementsTable data={data} />
       </div>

@@ -180,7 +180,7 @@ function EditProductVariantsForm({ barcode, userId }: EditProductVariantsFormPro
             )}
           </CardContent>
         </Card>
-        <Button form="new-product-form" disabled={loading} className="flex items-center gap-2 mx-auto mt-8">
+        <Button disabled={loading} className="flex items-center gap-2 mx-auto mt-8">
           {loading ? <Loader className="animate-spin" /> : <Check /> }
           <span>Guardar producto</span>
         </Button>

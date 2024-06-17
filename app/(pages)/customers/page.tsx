@@ -1,10 +1,10 @@
 import { getAllCustomers } from "@/actions/getAllCustomers"
 import CustomerDialog from "@/components/CustomerDialog"
 import CustomersTable from "@/components/CustomersTable"
-import PageTitle from "@/components/PageTitle"
+import PageHeader from "@/components/layout/PageHeader"
+import { UserRoundPlusIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { UserRoundPlusIcon } from "lucide-react"
 
 async function CustomersPage() {
 
@@ -14,15 +14,14 @@ async function CustomersPage() {
 
   return (
     <>
-      <div className="flex justify-between">
-        <PageTitle title="Clientes" />
+      <PageHeader title="Clientes" actions={
         <Button asChild className="flex items-center gap-2 text-white dark:text-primary-foreground">
           <Link href="/customers/new">
             <UserRoundPlusIcon className="h-6 w-6 " />
             Crear Cliente
           </Link>
         </Button>
-      </div>
+      } />
       <CustomersTable data={data} />
       <CustomerDialog />
     </>

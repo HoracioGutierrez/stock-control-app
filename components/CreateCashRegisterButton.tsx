@@ -1,5 +1,5 @@
 "use client"
-import { PlusCircle, PlusIcon } from "lucide-react"
+import { PlusIcon } from "lucide-react"
 import { Button } from "./ui/button"
 import { useDialogStore } from "@/stores/generalDialog"
 

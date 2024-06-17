@@ -83,7 +83,17 @@ export type GeneralResponse = {
   message: string
 }
 
-export type InputValues = CustomerInputValues | ProductInputValues
+export type ProviderInputValues = {
+  name: string
+  lastName: string
+  companyName: string
+  address: string
+  phone: string
+  email: string
+  cuitCuil: string
+}
+
+export type InputValues = CustomerInputValues | ProductInputValues | ProviderInputValues
 
 export type LoginContentProps = {
   children: React.ReactNode,
@@ -125,3 +135,4 @@ export type ProductVariantInputValues = {
 export type NewProductFormProps = {
   userId: string
 }
+

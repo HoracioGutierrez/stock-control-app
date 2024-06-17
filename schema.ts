@@ -193,11 +193,28 @@ export const cashRegister: any = pgTable(
   }
 )
 
+export const providers: any = pgTable(
+  tablePrefix + "provider",
+  {
+    id: text("id")
+      .notNull()
+      .unique()
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    name: text("name").notNull(),
+    lastName: text("lastName").notNull(),
+    companyName: text("companyName").notNull(),
+    address: text("address").notNull(),
+    phone: text("phone").notNull(),
+    email: text("email").notNull(),
+    cuitCuil: text("cuitCuil").notNull(),
+  }
+)
+
 
 
 export type ProductType = typeof products.$inferInsert
-
 export type CustomerType = typeof customers.$inferInsert
-
 export type HistoryType = typeof history.$inferInsert
 export type CashRegisterType = typeof cashRegister.$inferInsert
+export type ProviderType = typeof providers.$inferInsert

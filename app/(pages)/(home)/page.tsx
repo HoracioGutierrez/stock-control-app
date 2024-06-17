@@ -1,20 +1,14 @@
-import { getStats } from "@/actions/getStats";
-import { auth } from "@/auth";
-import PageTitle from "@/components/PageTitle";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useReducer, useState } from "react";
+import PageHeader from "@/components/layout/PageHeader";
+import { getStats } from "@/actions/getStats";
 
 export default async function Home() {
 
-  const session = await auth()
   const { data, error } = await getStats()
 
   return (
     <>
-      <div className="flex justify-between">
-        <PageTitle title="Inicio" />
-        <meta name="au"/>
-      </div>
+      <PageHeader title="Inicio" />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Card className="bg-accent">
           <CardHeader>

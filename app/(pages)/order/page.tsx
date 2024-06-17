@@ -1,15 +1,13 @@
-import { getAllCashRegisters } from "@/actions/getAllCashRegisters"
 import { getCashRegisterByUserId } from "@/actions/getCashRegisterByUserId"
-import { auth } from "@/auth"
-import CancelOrderButton from "@/components/CancelOrderButton"
 import CloseCashRegisterButton from "@/components/CloseCashRegisterButton"
-import CustomDialog from "@/components/CustomDialog"
 import OpenCashRegisterButton from "@/components/OpenCashRegisterButton"
-import OpenCashRegisterForm from "@/components/OpenCashRegisterForm"
+import { getAllCashRegisters } from "@/actions/getAllCashRegisters"
+import CancelOrderButton from "@/components/CancelOrderButton"
+import OrderScanner from "@/components/OrderScanner"
 import OrderButton from "@/components/OrderButton"
 import OrderDialog from "@/components/OrderDialog"
-import OrderScanner from "@/components/OrderScanner"
 import PageTitle from "@/components/PageTitle"
+import { auth } from "@/auth"
 
 async function OrderPage() {
 

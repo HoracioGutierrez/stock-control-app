@@ -5,8 +5,7 @@
     {
       "src": "/icons/android-chrome-192x192.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     },
     {
       "src": "/icons/icon-512x512.png",
@@ -18,5 +17,19 @@
   "background_color": "#FFFFFF",
   "start_url": "/",
   "display": "standalone",
-  "orientation": "portrait"
+  "orientation": "portrait",
+  "screenshots": [
+    {
+      "src": "/screenshots/screenshot-1.png",
+      "type": "image/png",
+      "sizes": "1920x1080",
+      "form_factor" : "wide"
+    },
+    {
+      "src": "/screenshots/screenshot-2.png",
+      "type": "image/png",
+      "sizes": "760x900",
+      "form_factor" : "narrow"
+    }
+  ]
 }

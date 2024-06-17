@@ -7,3 +7,7 @@ import { type ThemeProviderProps } from "next-themes/dist/types"
 export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
   return <NextThemesProvider {...props}>{children}</NextThemesProvider>
 }
+
+if (typeof navigator !== undefined && navigator.serviceWorker) {
+  navigator.serviceWorker.register("/sw.js");
+}

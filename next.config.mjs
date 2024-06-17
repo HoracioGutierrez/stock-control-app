@@ -9,10 +9,52 @@ const withPWAWrapper = withPWA({
   cacheOnFrontEndNav : true,
   runtimeCaching : [
     {
-      urlPattern : /\/products\/(.*)/,
+      urlPattern : /\/(products)\/(.*)/,
       handler : "CacheFirst",
       options : {
         cacheName : "products-cache"
+      }
+    },
+    {
+      urlPattern : /\/(customers)\/(.*)/,
+      handler : "CacheFirst",
+      options : {
+        cacheName : "customers-cache"
+      }
+    },
+    {
+      urlPattern : /\/(providers)\/(.*)/,
+      handler : "CacheFirst",
+      options : {
+        cacheName : "providers-cache"
+      }
+    },
+    {
+      urlPattern : /\/(sales)\/(.*)/,
+      handler : "CacheFirst",
+      options : {
+        cacheName : "sales-cache"
+      }
+    },
+    {
+      urlPattern : /\/(movements)\/(.*)/,
+      handler : "CacheFirst",
+      options : {
+        cacheName : "movements-cache"
+      }
+    },
+    {
+      urlPattern : /\/(stock)\/(.*)/,
+      handler : "CacheFirst",
+      options : {
+        cacheName : "stock-cache"
+      }
+    },
+    {
+      urlPattern : /^\/$/,
+      handler : "CacheFirst",
+      options : {
+        cacheName : "static-cache"
       }
     },
     {

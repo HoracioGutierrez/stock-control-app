@@ -11,7 +11,7 @@ export const getCashRegisterByUserId = async (userId: string): Promise<GeneralRe
     if (cashRegistersFromDb.length === 0) throw new Error("El usuario no tiene cajas abiertas")
 
     return {
-      data: cashRegistersFromDb,
+      data: cashRegistersFromDb[0],
       error: null,
       message: "Cajas encontradas"
     }

@@ -18,7 +18,7 @@ const ConfirmCloseCashRegisterButton = ({ cashRegisters, userId }: ConfirmCloseC
 
   const handleClick = () => {
     setLoading(true)
-    closeCashRegister(cashRegisters[0].id, userId)
+    closeCashRegister(cashRegisters.id, userId)
       .then((data) => {
         if (data?.error) {
           throw new Error(data.error)

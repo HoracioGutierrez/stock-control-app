@@ -7,7 +7,11 @@ import { Button } from "./ui/button"
 import { ArrowDown, ArrowUp, Trash2 } from "lucide-react"
 import { useOrderStore } from "@/stores/orderStore"
 
-function OrderScanner() {
+type OrderScannerProps = {
+  data: any
+}
+
+function OrderScanner({ data }: OrderScannerProps) {
 
   const [hasEvent, setHasEvent] = useState<boolean>(false)
   const [scannedBarcode, setScannedBarcode] = useState<string>("")
@@ -30,17 +34,17 @@ function OrderScanner() {
       setScanning(isScanning)
 
       if (e.key === "Enter") {
-        console.log(barcode)
+        //console.log(barcode)
         handleScan(barcode)
         setScanning(false)
         return
       }
 
       barcode += e.key
-      console.log(e.key)
+      //console.log(e.key)
 
       setTimeout(() => {
-        console.log("timeout")
+        //console.log("timeout")
         barcode = ""
       }, 600)
     }

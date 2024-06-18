@@ -6,6 +6,7 @@ import OpenCashRegisterForm from "./OpenCashRegisterForm"
 import { Button } from "./ui/button"
 import { useDialogStore } from "@/stores/generalDialog"
 import ConfirmCloseCashRegisterButton from "./ConfirmCloseCashRegisterButton"
+import ConfirmSaveOrderButton from "./order/ConfirmSaveOrderButton"
 
 type Props = {
   userId: string
@@ -18,8 +19,14 @@ const OrderDialog = ({ userId, data , cashRegisters }: Props) => {
   const [title, setTitle] = useState<string>("Abrir Caja")
   const { type } = useDialogStore((state: any) => state)
 
+  const titles: Record<string, string> = { 
+    "open-cash-register": "Abrir Caja",
+    "close-cash-register": "Cerrar Caja",
+    "save-order": "Guardar Orden"
+  }
+
   useEffect(() => {
-    setTitle(type === "close-cash-register" ? "Cerrar Caja" : "Abrir Caja")
+    setTitle(titles[type])
   }, [type])
 
   return (
@@ -29,6 +36,11 @@ const OrderDialog = ({ userId, data , cashRegisters }: Props) => {
       )}
       {type === "open-cash-register" && (
         <OpenCashRegisterForm userId={userId as string} data={data} />
+      )}
+      {type === "save-order" && (
+        <>
+          <ConfirmSaveOrderButton userId={userId} cashRegisters={cashRegisters}/>
+        </>
       )}
     </CustomDialog>
   )

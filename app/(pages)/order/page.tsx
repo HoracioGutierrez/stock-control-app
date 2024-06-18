@@ -3,12 +3,12 @@ import CloseCashRegisterButton from "@/components/CloseCashRegisterButton"
 import OpenCashRegisterButton from "@/components/OpenCashRegisterButton"
 import { getAllCashRegisters } from "@/actions/getAllCashRegisters"
 import CancelOrderButton from "@/components/CancelOrderButton"
+import PageHeader from "@/components/layout/PageHeader"
 import OrderScanner from "@/components/OrderScanner"
 import OrderButton from "@/components/OrderButton"
 import OrderDialog from "@/components/OrderDialog"
 import PageTitle from "@/components/PageTitle"
 import { auth } from "@/auth"
-import PageHeader from "@/components/layout/PageHeader"
 
 async function OrderPage() {
 
@@ -23,7 +23,7 @@ async function OrderPage() {
 
   return (
     <>
-      <PageHeader title="Nueva orden" actions={
+      <PageHeader title={`Nueva Orden ${data ? `: ${data.label}` : ""}`} actions={
         <div className="flex items-center gap-2">
           {data && (
             <>
@@ -33,8 +33,8 @@ async function OrderPage() {
             </>
           )}
         </div>
-      }/>
-      {data && <OrderScanner />}
+      } />
+      {data && <OrderScanner data={data} />}
       {!data && (
         <div className="grow rounded border border-dashed border-slate-400 grid place-items-center">
           <div className="max-w-sm text-center">

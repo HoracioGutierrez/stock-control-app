@@ -164,12 +164,12 @@ export const history: any = pgTable(
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
     createdAt: timestamp("createdAt", { mode: "date" }).defaultNow(),
-    actionType : text("actionType").notNull(),
-    products : text("products").array().notNull().default(sql`'{}'::text[]`),
-    orderId : text("orderId"),
-    customerId : text("customerId"),
-    ip : text("ip"),
-    userAgent : text("userAgent"),
+    actionType: text("actionType").notNull(),
+    products: text("products").array().notNull().default(sql`'{}'::text[]`),
+    orderId: text("orderId"),
+    customerId: text("customerId"),
+    ip: text("ip"),
+    userAgent: text("userAgent"),
   }
 )
 
@@ -211,6 +211,44 @@ export const providers: any = pgTable(
   }
 )
 
+export const orders: any = pgTable(
+  tablePrefix + "order",
+  {
+    id: text("id")
+      .notNull()
+      .unique()
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    createdAt: timestamp("createdAt", { mode: "date" }).defaultNow(),
+    total: numeric("total").notNull(),
+    status: text("status").notNull(),
+    customerId: text("customerId"),
+    ip: text("ip"),
+    userAgent: text("userAgent"),
+  }
+)
+
+export const productOrders: any = pgTable(
+  tablePrefix + "productOrder",
+  {
+    id: text("id")
+      .notNull()
+      .unique()
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    orderId: text("orderId")
+      .notNull()
+      .references(() => orders.id, { onDelete: "cascade" }),
+    productId: text("productId")
+      .notNull()
+      .references(() => products.id, { onDelete: "cascade" }),
+    quantity: numeric("quantity").notNull(),
+  }
+)
+
 
 
 export type ProductType = typeof products.$inferInsert
@@ -218,3 +256,4 @@ export type CustomerType = typeof customers.$inferInsert
 export type HistoryType = typeof history.$inferInsert
 export type CashRegisterType = typeof cashRegister.$inferInsert
 export type ProviderType = typeof providers.$inferInsert
+export type OrderType = typeof orders.$inferInsert

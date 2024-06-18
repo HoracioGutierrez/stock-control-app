@@ -11,10 +11,12 @@ import { useNewProductStore } from "@/stores/newProductStore"
 import { createNewCustomer } from "@/actions/createNewCustomer"
 import { toast } from "./ui/use-toast"
 import { useSession } from "next-auth/react"
+import { Button } from "./ui/button"
+import { Loader } from "lucide-react"
 
 function NewCustomerForm() {
 
-    const { data : session } = useSession()
+    const { data: session } = useSession()
     const [error, setError] = useState<string | null>(null)
     const { setIsLoading, isLoading } = useNewProductStore((state: any) => ({ isLoading: state.isLoading, setIsLoading: state.setIsLoading }))
     const { register, handleSubmit, formState: { errors }, reset } = useForm<CustomerInputValues>({
@@ -32,7 +34,6 @@ function NewCustomerForm() {
 
     const onSubmit: SubmitHandler<CustomerInputValues> = (data: CustomerInputValues) => {
         setIsLoading(true)
-        console.log(data)
         createNewCustomer({
             name: data.name,
             lastName: data.lastName,
@@ -70,23 +71,25 @@ function NewCustomerForm() {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-2 gap-8" id="new-customer-form">
-            <div>
-                <Card className="bg-accent">
+            <div className="self-stretch">
+                <Card className="bg-accent h-full">
                     <CardHeader>
                         <CardTitle>Detalles Del Cliente</CardTitle>
                         <CardDescription>Estos detalles son obligatorios para que el cliente pueda crearse correctamente.</CardDescription>
                     </CardHeader>
-                    <CardContent>
-                        <Label htmlFor="name">Nombre De Cliente</Label>
-                        <Input type="text" disabled={isLoading} placeholder="Nombre" {...register("name")} />
-                        {errors.name && <p className="text-error text-red-500">{errors.name.message}</p>}
-                        <Label htmlFor="lastName">Apellidos</Label>
-                        <Input type="text" disabled={isLoading} placeholder="Apellidos" {...register("lastName")} />
-                        {errors.lastName && <p className="text-error text-red-500">{errors.lastName.message}</p>}
+                    <CardContent className="grid gap-4">
+                        <div className="grid gap-2">
+                            <Label htmlFor="name">Nombre De Cliente</Label>
+                            <Input type="text" disabled={isLoading} placeholder="Nombre" {...register("name")} />
+                            {errors.name && <p className="text-error text-red-500">{errors.name.message}</p>}
+                            <Label htmlFor="lastName">Apellidos</Label>
+                            <Input type="text" disabled={isLoading} placeholder="Apellidos" {...register("lastName")} />
+                            {errors.lastName && <p className="text-error text-red-500">{errors.lastName.message}</p>}
+                        </div>
                     </CardContent>
                 </Card>
             </div>
-            <div>
+            <div className="">
                 <Card className="bg-accent">
                     <CardHeader>
                         <CardTitle>Datos Adicionales</CardTitle>
@@ -106,6 +109,10 @@ function NewCustomerForm() {
                         {errors.cuitCuil && <p className="text-error">{errors.cuitCuil.message}</p>}
                     </CardContent>
                 </Card>
+                <Button form="new-customer-form" disabled={isLoading} className="flex items-center justify-center gap-2 mx-auto mt-8">
+                    {isLoading && <Loader className="animate-spin" />}
+                    <span>Guardar cliente</span>
+                </Button>
             </div>
         </form>
     )

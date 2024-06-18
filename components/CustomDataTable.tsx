@@ -1,31 +1,28 @@
 "use client"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { HistoryType, ProductType } from "@/schema"
+import { CustomerType, HistoryType, ProductType } from "@/schema"
 import { SortingState, getSortedRowModel, flexRender, getCoreRowModel, useReactTable, ColumnFiltersState, getFilteredRowModel, getPaginationRowModel, ColumnDef } from "@tanstack/react-table"
 import { useEffect, useState } from "react"
 import { Button } from "./ui/button"
-import DeleteProductButton from "./DeleteProductButton"
-import EditProductButton from "./EditProductButton"
-import EditVariantButton from "./EditVariantButton"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { ProductsTableProps } from "@/lib/types"
-import { historyColumns, productsColumns } from "@/lib/columnDefinitions"
+import { customersColumns, historyColumns, productsColumns } from "@/lib/columnDefinitions"
 
 type CustomDataTableProps = {
-  data: ProductType[] | HistoryType[] | null,
-  type: "products" | "history"
+  data: ProductType[] | HistoryType[] | CustomerType[] | null,
+  type: "products" | "history" | "customers"
   filterColumn?: string
   filterKey?: string
-  actions? : (rowData: any) => JSX.Element
+  actions?: (rowData: any) => JSX.Element
 }
 
-const columns: Record<"products" | "history", ColumnDef<unknown | any>[]> = {
+const columns: Record<"products" | "history" | "customers", ColumnDef<unknown | any>[]> = {
   "products": productsColumns,
-  "history": historyColumns
+  "history": historyColumns,
+  "customers": customersColumns
 }
 
-function CustomDataTable({ data, type, filterColumn, filterKey , actions }: CustomDataTableProps) {
+function CustomDataTable({ data, type, filterColumn, filterKey, actions }: CustomDataTableProps) {
 
   const [sorting, setSorting] = useState<SortingState>([])
   const [tableData, setTableData] = useState<ProductType | HistoryType[]>(data)

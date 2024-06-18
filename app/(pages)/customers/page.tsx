@@ -2,9 +2,7 @@ import { getAllCustomers } from "@/actions/getAllCustomers"
 import CustomerDialog from "@/components/CustomerDialog"
 import CustomersTable from "@/components/CustomersTable"
 import PageHeader from "@/components/layout/PageHeader"
-import { UserRoundPlusIcon } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
+import CreateCustomerButton from "@/components/CreateCustomerButton"
 
 async function CustomersPage() {
 
@@ -14,16 +12,17 @@ async function CustomersPage() {
 
   return (
     <>
-      <PageHeader title="Clientes" actions={
-        <Button asChild className="flex items-center gap-2 text-white dark:text-primary-foreground">
-          <Link href="/customers/new">
-            <UserRoundPlusIcon className="h-6 w-6 " />
-            Crear Cliente
-          </Link>
-        </Button>
-      } />
-      <CustomersTable data={data} />
-      <CustomerDialog />
+      <PageHeader title="Clientes" actions={<CreateCustomerButton />} />
+      {data.length == 0 && (
+        <div className="grow rounded border border-dashed border-slate-400 grid place-items-center">
+          <div className="max-w-sm text-center">
+            <p className="font-bold text-xl">No hay clientes creados todavía</p>
+            <p className="text-sm text-muted-foreground mb-6">Podrás comenzar a operar en cuanto tengas al menos un cliente en tu lista de clientes</p>
+          </div>
+        </div>
+      )}
+      {data.length > 0 && <CustomersTable data={data} />}
+      <CustomerDialog userId={data.id as string} />
     </>
   )
 }

@@ -55,7 +55,8 @@ export type EditCustomerInputValues = CustomerInputValues & {
 }
 
 export type EditProductButtonProps = {
-  barcode: string
+  barcode?: string
+  id?: string
 }
 
 export type EditProductInputValues = {

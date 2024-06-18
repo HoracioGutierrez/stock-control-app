@@ -91,7 +91,7 @@ function EditFormContainer({ entity, barcode, customerId }: any) {
 
     return (
         <>
-            <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-2 gap-8" id="new-product-form">
+            <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-2 gap-8" id={entityConfig[entity].formId}>
                 <EditForm entity={entity} loading={loading} register={register} errors={errors} data={idResolve} />
             </form>
         </>

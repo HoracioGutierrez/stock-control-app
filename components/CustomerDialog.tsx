@@ -5,32 +5,32 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog"
 import DeleteCustomerConfirmationForm from "./DeleteCustomerConfirmationForm"
 import { cn } from "@/lib/utils"
 import EditFormContainer from "./EditFormContainer"
+import { useState } from "react"
+import NewCustomerForm from "./NewCustomerForm"
+import CustomDialog from "./CustomDialog"
+import { useDialogStore } from "@/stores/generalDialog"
 
-function CustomerDialog() {
 
+type CustomerDialogProps = {
+    userId: string
+}
 
-    const { isOpen, handleClose, type, customer } = useCustomerDialogStore((state: any) => state)
+function CustomerDialog({ userId }: CustomerDialogProps) {
+
+    const { type , id } = useDialogStore((state: any) => state)
 
     const entityProps = {
         entity: "customer",
         barcode: undefined,
-        customerId: customer.id,
+        customerId: id,
     }
 
     return (
-        <Dialog open={isOpen} onOpenChange={handleClose}>
-            <DialogContent className={cn((type === "new" || type === "edit" || type === "delete") && "max-w-screen-lg")}>
-                <DialogHeader>
-                    <DialogTitle className="text-2xl">
-                        {type === "delete" && "Bloquear Cliente"}
-                        {type === "activate" && "Habilitar Cliente"}
-                    </DialogTitle>
-                </DialogHeader>
-                {(type === "delete" || type === "activate") && <DeleteCustomerConfirmationForm id={customer} type={type} />}
-                {type === "edit" && <EditFormContainer {...entityProps} />}
-
-            </DialogContent>
-        </Dialog>
+        <CustomDialog fullWidth title={type === "create-customer" ? "Crear Cliente" : "Editar Cliente"} userId={userId}>
+            {type === "create-customer" && <NewCustomerForm />}
+            {type === "edit-customer" && <EditFormContainer {...entityProps} />}
+            {type === "delete-customer" && <DeleteCustomerConfirmationForm id={id} type={type} />}
+        </CustomDialog>
     )
 }
 

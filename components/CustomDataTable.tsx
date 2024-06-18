@@ -1,32 +1,30 @@
 "use client"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { HistoryType, ProductType, ProviderType } from "@/schema"
+import { CustomerType, HistoryType, ProductType, ProviderType } from "@/schema"
 import { SortingState, getSortedRowModel, flexRender, getCoreRowModel, useReactTable, ColumnFiltersState, getFilteredRowModel, getPaginationRowModel, ColumnDef } from "@tanstack/react-table"
 import { useEffect, useState } from "react"
 import { Button } from "./ui/button"
-import DeleteProductButton from "./DeleteProductButton"
-import EditProductButton from "./EditProductButton"
-import EditVariantButton from "./EditVariantButton"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { historyColumns, productsColumns, providersColumns, customersColumns } from "@/lib/columnDefinitions"
 import { ProductsTableProps } from "@/lib/types"
-import { historyColumns, productsColumns, providersColumns } from "@/lib/columnDefinitions"
 
 type CustomDataTableProps = {
-  data: ProductType[] | HistoryType[] | ProviderType[] | null,
-  type: "products" | "history" | "providers"
+  data: ProductType[] | HistoryType[] | CustomerType[] | ProviderType[] | null,
+  type: "products" | "history" | "customers" | "providers"
   filterColumn?: string
   filterKey?: string
-  actions? : (rowData: any) => JSX.Element
+  actions?: (rowData: any) => JSX.Element
 }
 
-const columns: Record<"products" | "history" | "providers", ColumnDef<unknown | any>[]> = {
+const columns: Record<"products" | "history" | "providers" | "customers", ColumnDef<unknown | any>[]> = {
   "products": productsColumns,
   "history": historyColumns,
-  "providers": providersColumns
+  "providers": providersColumns,
+  "customers": customersColumns
 }
 
-function CustomDataTable({ data, type, filterColumn, filterKey , actions }: CustomDataTableProps) {
+function CustomDataTable({ data, type, filterColumn, filterKey, actions }: CustomDataTableProps) {
 
   const [sorting, setSorting] = useState<SortingState>([])
   const [tableData, setTableData] = useState<ProductType | HistoryType[]>(data)

@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
@@ -12,6 +12,7 @@ import { toast } from "./ui/use-toast"
 import { createNewCashRegister } from "@/actions/createNewCashRegister"
 import { Button } from "./ui/button"
 import { Check, Loader, Plus, PlusIcon } from "lucide-react"
+import { getAllCashRegisters } from "@/actions/getAllCashRegisters"
 
 type NewCashRegisterFormProps = {
   userId: string
@@ -64,6 +65,10 @@ function NewCashRegisterForm({ userId }: NewCashRegisterFormProps) {
         setLoading(false)
       })
   }
+
+  /* useEffect(()=>{
+    getAllCashRegisters()
+  },[]) */
 
 
   return (

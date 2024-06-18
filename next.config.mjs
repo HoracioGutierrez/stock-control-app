@@ -182,7 +182,7 @@ const withSerwist = withSerwistInit({
   swDest: "public/sw.js",
   cacheOnNavigation: true,
   //aggressiveFrontEndNavCaching: true,
-  
+  disable : false,
   exclude: [
     ({ asset }) => {
       return true;

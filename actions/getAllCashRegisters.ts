@@ -19,8 +19,6 @@ export const getAllCashRegisters = async (): Promise<GeneralResponse> => {
         message: "Error al obtener las cajas"
       }
     }
-
-
     return {
       data: null,
       error: "Error al obtener las cajas",

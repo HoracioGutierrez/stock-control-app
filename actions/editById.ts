@@ -1,20 +1,23 @@
 "use server"
 
 import { GeneralResponse } from "@/lib/types"
-import { db, products, customers } from "@/schema"
+import { entitiesPropsById } from "@/lib/queryConfig"
+import { Entity } from "@/lib/types"
 import { eq } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
+import { db } from "@/schema"
+
 
 export const editById = async (entityType: string, entityId: string, data: any): Promise<GeneralResponse> => {
     "use server"
     try {
-        const entity = entityType === 'product' ? products : customers;
-        const updatedEntity = await db.update(entity).set(data).where(eq(entity.id, entityId)).returning({
-            insertedId: entity.id
+        const entitySchema = entitiesPropsById[entityType as keyof Entity]
+        const idResolve = entityType === "product" ? "barcode" : "id"
+        const updatedEntity = await db.update(entitySchema).set(data).where(eq(entitySchema[idResolve], entityId)).returning({
+            insertedId: entitySchema.id
         })
         if (updatedEntity.length === 0) throw new Error(`${entityType.charAt(0).toUpperCase() + entityType.slice(1)} no encontrado`)
 
-        revalidatePath(`/${entityType}s`)
         return {
             data: updatedEntity[0],
             error: null,
@@ -28,7 +31,6 @@ export const editById = async (entityType: string, entityId: string, data: any):
                 message: `Error al editar el ${entityType}`
             }
         }
-
         return {
             data: null,
             error: `Error al editar el ${entityType}`,

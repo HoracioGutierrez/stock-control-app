@@ -7,7 +7,6 @@ import { Button } from "./ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { historyColumns, productsColumns, providersColumns, customersColumns } from "@/lib/columnDefinitions"
-import { ProductsTableProps } from "@/lib/types"
 
 type CustomDataTableProps = {
   data: ProductType[] | HistoryType[] | CustomerType[] | ProviderType[] | null,

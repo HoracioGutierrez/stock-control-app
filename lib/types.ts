@@ -1,4 +1,4 @@
-import { ProductType } from "@/schema"
+import { CashRegisterType, HistoryType, ProductType, ProviderType } from "@/schema"
 import { User } from "next-auth"
 import { CustomerType } from "@/schema"
 
@@ -85,6 +85,15 @@ export type EditProductVariantsFormProps = {
 export type EditVariantButtonProps = {
   barcode: string
 }
+
+export type Entity = {
+  product: ProductType,
+  customer: CustomerType,
+  provider: ProviderType,
+  history: HistoryType,
+  cashRegister: CashRegisterType
+}
+
 
 export type FormEditProps = {
   entity: string

@@ -16,7 +16,7 @@ function EditFormContainer({ entity, barcode, customerId, hasVariants }: any) {
     const [loading, setLoading] = useState<boolean>(false)
     const [idResolve, setIdResolve] = useState<string>("")
     const [isVariant, setIsVariant] = useState<boolean>(false)
-    const conditionalEntity = entity === "customer" ? "cliente" : "producto"
+    const conditionalEntity = entity === "customer" ? "Cliente" : "Producto"
 
     const formForName = formNamesVariants[entity]
     const formForDetails = formDetailsVariants[entity]

@@ -208,7 +208,7 @@ export const providersColumns: ColumnDef<ProviderType>[] = [
       )
     },
     accessorKey: "active",
-  },  
+  },
   {
     header: "Acciones",
     accessorKey: "actions",

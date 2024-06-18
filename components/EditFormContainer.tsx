@@ -1,27 +1,32 @@
 "use client"
-import { useCustomerDialogStore } from "@/stores/useCustomerDialogStore"
-import { useState } from "react"
-import { toast } from "./ui/use-toast"
-import { editById } from "@/actions/editById"
+import { entityConfig, formVariants, formNamesVariants, formDetailsVariants } from "@/lib/formConfig"
+import { SubmitHandler, useForm, useFieldArray } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { FormValues, InputValues } from "@/lib/types"
-import { SubmitHandler, useForm } from "react-hook-form"
-import { useProductDialogStore } from "@/stores/productDialogStore"
-import EditForm from "./EditForm"
+import { editById } from "@/actions/editById"
 import { getById } from "@/actions/getById"
-import { entityConfig } from "@/lib/formConfig"
+import { toast } from "./ui/use-toast"
+import EditForm from "./EditForm"
+import { useState } from "react"
 
 
-function EditFormContainer({ entity, barcode, customerId }: any) {
+function EditFormContainer({ entity, barcode, customerId, hasVariants }: any) {
     const [error, setError] = useState<string | null>(null)
+    const [mainName, setMainName] = useState<string>("")
     const [loading, setLoading] = useState<boolean>(false)
     const [idResolve, setIdResolve] = useState<string>("")
-    const { handleClose } = useCustomerDialogStore((state: any) => state)
-    const { close } = useProductDialogStore((state: any) => state)
+    const [isVariant, setIsVariant] = useState<boolean>(false)
+    const conditionalEntity = entity === "customer" ? "cliente" : "producto"
 
-    const { register, handleSubmit, formState: { errors }, reset } = useForm<FormValues>({
+    const formForName = formNamesVariants[entity]
+    const formForDetails = formDetailsVariants[entity]
+    const formForVariant = formVariants[entity]
+
+    const { control, register, handleSubmit, formState: { errors }, reset, getValues } = useForm<FormValues>({
         defaultValues: async () => {
+            setLoading(true)
             const { data, error } = await getById(entity, customerId, barcode)
+            setLoading(false)
             if (error) {
                 return entity === "customer" ? {
                     name: "",
@@ -40,6 +45,8 @@ function EditFormContainer({ entity, barcode, customerId }: any) {
                 }
             }
             setIdResolve(data.id as string)
+            setIsVariant(data.isVariant as boolean)
+            console.log(data)
             return entity === "customer" ? {
                 name: data.name as string,
                 lastName: data.lastName as string,
@@ -54,11 +61,16 @@ function EditFormContainer({ entity, barcode, customerId }: any) {
                 price: data.price as number,
                 barcode: data.barcode as string,
                 stock: data.stock as number,
+                isVariant: data.isVariant as boolean,
             }
         },
         resolver: yupResolver(entityConfig[entity].schema),
     })
 
+    const { fields, append } = useFieldArray({
+        control,
+        name: "variants"
+    })
 
     const onSubmit: SubmitHandler<InputValues> = async (data: InputValues) => {
         setLoading(true)
@@ -68,19 +80,19 @@ function EditFormContainer({ entity, barcode, customerId }: any) {
                     throw new Error(data.error)
                 }
                 toast({
-                    title: `${entity.charAt(0).toUpperCase() + entity.slice(1)} editado correctamente`,
-                    description: `${entity.charAt(0).toUpperCase() + entity.slice(1)} editado correctamente`,
+                    title: `${conditionalEntity} editado correctamente`,
+                    description: `${conditionalEntity} editado correctamente`,
                 })
-                close()
+                reset()
             })
             .catch((error) => {
                 if (error instanceof Error) {
                     return setError(error.message)
                 }
-                setError(`Error al editar el ${entity}, intente nuevamente o contacte al desarrollador.`)
+                setError(`Error al editar el ${conditionalEntity}, intente nuevamente o contacte al desarrollador.`)
                 toast({
                     variant: "destructive",
-                    title: `Error al editar el ${entity}`,
+                    title: `Error al editar el ${conditionalEntity}`,
                     description: error.message
                 })
             })
@@ -89,10 +101,39 @@ function EditFormContainer({ entity, barcode, customerId }: any) {
             })
     }
 
+
+    const handleMainNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newName = e.target.value
+        setMainName(newName)
+    }
+
+    const handleAddVariant = () => {
+        append({ name: getValues("name"), price: getValues("price"), stock: 0, barcode: "" })
+    }
+
+
+    const formProps = {
+        entity,
+        loading,
+        register,
+        errors,
+        isVariant,
+        data: idResolve,
+        formForName,
+        formForDetails,
+        formForVariant,
+        entityConfig,
+        conditionalEntity,
+        handleMainNameChange,
+        handleAddVariant,
+        fields,
+        hasVariants
+    }
+
     return (
         <>
-            <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-2 gap-8" id={entityConfig[entity].formId}>
-                <EditForm entity={entity} loading={loading} register={register} errors={errors} data={idResolve} />
+            <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-2 gap-8 overflow-auto" id={entityConfig[entity].formId}>
+                <EditForm {...formProps} />
             </form>
         </>
     )

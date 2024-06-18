@@ -23,6 +23,7 @@ function CustomerDialog({ userId }: CustomerDialogProps) {
         entity: "customer",
         barcode: undefined,
         customerId: id,
+        hasVariants: false,
     }
 
     return (

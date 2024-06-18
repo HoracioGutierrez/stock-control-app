@@ -2,6 +2,15 @@ import { ProductType } from "@/schema"
 import { User } from "next-auth"
 import { CustomerType } from "@/schema"
 
+
+export interface FormSchemaVariants {
+  [key: string]: {
+    name: string
+    label: string
+    inputType: string
+  }
+}
+
 export type BarCodeScannerProps = {
   withTitle?: boolean,
   godMode?: boolean
@@ -52,6 +61,7 @@ export type DeleteProductButtonProps = {
 export type EditCustomerInputValues = CustomerInputValues & {
   active?: boolean
   id?: string
+  variants?: any[]
 }
 
 export type EditProductButtonProps = {
@@ -74,6 +84,24 @@ export type EditProductVariantsFormProps = {
 
 export type EditVariantButtonProps = {
   barcode: string
+}
+
+export type FormEditProps = {
+  entity: string
+  loading: boolean
+  register: any
+  errors: any
+  isVariant?: boolean
+  data: string
+  formForName: FormSchemaVariants
+  formForDetails: FormSchemaVariants
+  formForVariant: FormSchemaVariants
+  entityConfig: any
+  conditionalEntity?: string
+  handleMainNameChange?: any
+  handleAddVariant?: any
+  fields: any
+  hasVariants: boolean
 }
 
 export type FormValues = EditCustomerInputValues | EditProductInputValues

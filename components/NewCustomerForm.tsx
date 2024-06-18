@@ -15,8 +15,7 @@ import { Button } from "./ui/button"
 import { Loader } from "lucide-react"
 
 function NewCustomerForm() {
-
-    const { data: session } = useSession()
+    const { data : session } = useSession()
     const [error, setError] = useState<string | null>(null)
     const { setIsLoading, isLoading } = useNewProductStore((state: any) => ({ isLoading: state.isLoading, setIsLoading: state.setIsLoading }))
     const { register, handleSubmit, formState: { errors }, reset } = useForm<CustomerInputValues>({
@@ -42,6 +41,7 @@ function NewCustomerForm() {
             address: data.address,
             legalName: data.legalName,
             cuitCuil: data.cuitCuil,
+
         }, session?.user.id as string).then((data) => {
             if (data?.error) {
                 throw new Error(data.error)

@@ -13,6 +13,7 @@ import { createNewCashRegister } from "@/actions/createNewCashRegister"
 import { Button } from "./ui/button"
 import { Check, Loader, Plus, PlusIcon } from "lucide-react"
 import { getAllCashRegisters } from "@/actions/getAllCashRegisters"
+import PouchDb from "pouchdb-browser"
 
 type NewCashRegisterFormProps = {
   userId: string
@@ -32,44 +33,46 @@ function NewCashRegisterForm({ userId }: NewCashRegisterFormProps) {
     resolver: yupResolver(cashRegisterSchema)
   })
 
-  const onSubmit: SubmitHandler<CashRegisterInputValues> = (data: CashRegisterInputValues) => {
+  const saveCashRegister = async (data: any) => {
     setLoading(true)
-    createNewCashRegister({
-      label: data.label,
-      currentAmount: data.currentAmount,
-      totalAmount: data.totalAmount,
-    }, userId)
-      .then((data) => {
-        if (data?.error) {
-          throw new Error(data.error)
+    try {
+      const response = await fetch("/api/stock", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data: data, userId: userId })
+      })
+      const body = await response.json()
+      if (body.error) {
+        throw new Error("refetch")
+      }
+      toast({
+        title: "Caja creada correctamente",
+        description: "La caja se ha creado correctamente, puedes verla en la sección de cajas"
+      })
+      reset()
+    } catch (error) {
+      if (error instanceof Error) {
+        if (error.message === "refetch") {
+          const db = new PouchDb('cashRegisters');
+          const response = await db.allDocs({ include_docs: true });
+          const data = response.rows.map((row) => row.doc)
         }
-        toast({
-          title: "Caja creada correctamente",
-          description: "La caja se ha creado correctamente, puedes verla en la sección de cajas"
-        })
-        reset()
+      }
+      setError("Error al crear la caja, intente nuevamente o contacte al desarrollador.")
+      toast({
+        variant: "destructive",
+        title: "Error al crear la caja",
+        description: "Error al crear la caja"
       })
-      .catch((error) => {
-        if (error instanceof Error) {
-          return setError(error.message)
-        }
-        setError("Error al crear la caja, intente nuevamente o contacte al desarrollador.")
-        toast({
-          variant: "destructive",
-          title: "Error al crear la caja",
-          description: error.message
-        })
-      })
-      .finally(() => {
-        setClose(false)
-        setLoading(false)
-      })
+    }
+    setLoading(false)
   }
 
-  /* useEffect(()=>{
-    getAllCashRegisters()
-  },[]) */
 
+  const onSubmit: SubmitHandler<CashRegisterInputValues> = (data: CashRegisterInputValues) => {
+    setLoading(true)
+    saveCashRegister(data)
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4">

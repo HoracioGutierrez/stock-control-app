@@ -1,6 +1,7 @@
 import { getAllCashRegisters } from "@/actions/getAllCashRegisters"
 import { auth } from "@/auth"
 import CreateCashRegisterButton from "@/components/CreateCashRegisterButton"
+import CustomDataTable from "@/components/CustomDataTable"
 import CustomDialog from "@/components/CustomDialog"
 import DialogTriggerButton from "@/components/DialogTriggerButton"
 import NewCashRegisterForm from "@/components/NewCashRegisterForm"
@@ -19,6 +20,12 @@ async function StockPage() {
         ? <DialogTriggerButton dialogType="new-cash-register" text="Crear Caja" icon={<PlusIcon />} />
         : null
       } />
+      <CustomDataTable
+        data={data}
+        type="cash-registers"
+        filterColumn="label"
+        filterKey="label"
+      />
       <CustomDialog title="Crear Caja" userId={session?.user.id as string}>
         <NewCashRegisterForm userId={session?.user.id as string} />
       </CustomDialog>

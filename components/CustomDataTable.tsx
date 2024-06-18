@@ -6,22 +6,23 @@ import { useEffect, useState } from "react"
 import { Button } from "./ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { historyColumns, productsColumns, providersColumns, customersColumns } from "@/lib/columnDefinitions"
+import { historyColumns, productsColumns, providersColumns, customersColumns, cashRegistersColumns } from "@/lib/columnDefinitions"
 import { ProductsTableProps } from "@/lib/types"
 
 type CustomDataTableProps = {
   data: ProductType[] | HistoryType[] | CustomerType[] | ProviderType[] | null,
-  type: "products" | "history" | "customers" | "providers"
+  type: "products" | "history" | "customers" | "providers" | "cash-registers"
   filterColumn?: string
   filterKey?: string
   actions?: (rowData: any) => JSX.Element
 }
 
-const columns: Record<"products" | "history" | "providers" | "customers", ColumnDef<unknown | any>[]> = {
+const columns: Record<"products" | "history" | "providers" | "customers" | "cash-registers", ColumnDef<unknown | any>[]> = {
   "products": productsColumns,
   "history": historyColumns,
   "providers": providersColumns,
-  "customers": customersColumns
+  "customers": customersColumns,
+  "cash-registers": cashRegistersColumns
 }
 
 function CustomDataTable({ data, type, filterColumn, filterKey, actions }: CustomDataTableProps) {

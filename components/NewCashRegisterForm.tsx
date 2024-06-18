@@ -51,19 +51,21 @@ function NewCashRegisterForm({ userId }: NewCashRegisterFormProps) {
       })
       reset()
     } catch (error) {
-      if (error instanceof Error) {
-        if (error.message === "refetch") {
-          const db = new PouchDb('cashRegisters');
-          const response = await db.allDocs({ include_docs: true });
-          const data = response.rows.map((row) => row.doc)
-        }
+      try {
+        const db = new PouchDb('cashRegisters');
+        const response = await db.allDocs({ include_docs: true });
+        const data = response.rows.map((row) => row.doc)
+        toast({
+          title: "Cajas creadas correctamente",
+          description: "Las cajas se han creado correctamente, puedes verlas en la sección de cajas"
+        })
+      } catch (error) {
+        toast({
+          variant: "destructive",
+          title: "Error al crear la caja",
+          description: "Error al crear la caja"
+        })
       }
-      setError("Error al crear la caja, intente nuevamente o contacte al desarrollador.")
-      toast({
-        variant: "destructive",
-        title: "Error al crear la caja",
-        description: "Error al crear la caja"
-      })
     }
     setLoading(false)
   }

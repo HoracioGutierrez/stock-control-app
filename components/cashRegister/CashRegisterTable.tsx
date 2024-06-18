@@ -30,22 +30,19 @@ function CashRegisterTable() {
       try {
         const response = await fetch("/api/stock")
         const body = await response.json()
-        if(body.error){
+        if (body.error) {
           throw new Error("refetch")
         }
         setCashRegisters(body.data)
       } catch (error) {
-        if(error instanceof Error){
-          if(error.message === "refetch"){
-            const db = new PouchDb('cashRegisters');
-            const response = await db.allDocs({include_docs: true});
-            const data = response.rows.map((row) => row.doc)
-            setCashRegisters(data)
-          } else {
-            console.log(error)
-          }
+        try {
+          const db = new PouchDb('cashRegisters');
+          const response = await db.allDocs({ include_docs: true });
+          const data = response.rows.map((row) => row.doc)
+          setCashRegisters(data)
+        } catch (error) {
+          console.log(error)
         }
-        console.log(error)
       }
     }
 

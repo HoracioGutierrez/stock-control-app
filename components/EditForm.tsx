@@ -92,7 +92,7 @@ function EditForm({ entity, loading, register, errors, data, formForVariant, for
                             <div className="flex items-center justify-end">
                                 {formForVariant && Object.keys(formForVariant).map((key, index) => {
                                     return (
-                                        <TableRow>
+                                        <TableRow key={index}>
                                             <TableCell>
                                                 <div key={index} className="grid gap-2">
                                                     <TableHead >

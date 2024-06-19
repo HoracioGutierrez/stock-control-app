@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import Content from "@/components/Content"
+import Content from "@/components/layout/Content"
 import LoginForm from "@/components/LoginForm"
 import { PackageOpen } from "lucide-react"
 

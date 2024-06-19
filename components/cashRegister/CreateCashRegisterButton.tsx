@@ -1,7 +1,7 @@
 "use client"
-import { PlusIcon } from "lucide-react"
-import { Button } from "./ui/button"
 import { useDialogStore } from "@/stores/generalDialog"
+import { PlusIcon } from "lucide-react"
+import { Button } from "../ui/button"
 
 type Props = {}
 function CreateCashRegisterButton({ }: Props) {

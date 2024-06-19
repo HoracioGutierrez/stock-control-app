@@ -1,11 +1,11 @@
 "use client"
-import { getProductByBarcode } from "@/actions/getProductByBarcode"
-import { useEffect, useState } from "react"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table"
-import { Button } from "./ui/button"
+import { getProductByBarcode } from "@/actions/getProductByBarcode"
 import { ArrowDown, ArrowUp, Trash2 } from "lucide-react"
 import { useOrderStore } from "@/stores/orderStore"
+import { useEffect, useState } from "react"
+import { Button } from "./ui/button"
 
 type OrderScannerProps = {
   data: any

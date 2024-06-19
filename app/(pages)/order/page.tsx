@@ -1,13 +1,12 @@
 import { getCashRegisterByUserId } from "@/actions/getCashRegisterByUserId"
-import CloseCashRegisterButton from "@/components/CloseCashRegisterButton"
+import CloseCashRegisterButton from "@/components/cashRegister/CloseCashRegisterButton"
 import OpenCashRegisterButton from "@/components/OpenCashRegisterButton"
 import { getAllCashRegisters } from "@/actions/getAllCashRegisters"
-import CancelOrderButton from "@/components/CancelOrderButton"
+import CancelOrderButton from "@/components/order/CancelOrderButton"
+import OrderButton from "@/components/order/OrderButton"
 import PageHeader from "@/components/layout/PageHeader"
 import OrderScanner from "@/components/OrderScanner"
-import OrderButton from "@/components/OrderButton"
 import OrderDialog from "@/components/OrderDialog"
-import PageTitle from "@/components/PageTitle"
 import { auth } from "@/auth"
 
 async function OrderPage() {

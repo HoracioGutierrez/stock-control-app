@@ -1,6 +1,6 @@
 "use client"
 import { useOrderStore } from "@/stores/orderStore"
-import { Button } from "./ui/button"
+import { Button } from "../ui/button"
 import { useDialogStore } from "@/stores/generalDialog"
 
 function OrderButton() {

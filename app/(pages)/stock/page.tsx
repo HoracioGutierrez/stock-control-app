@@ -1,13 +1,11 @@
 import { getAllCashRegisters } from "@/actions/getAllCashRegisters"
-import { auth } from "@/auth"
-import CreateCashRegisterButton from "@/components/CreateCashRegisterButton"
 import CustomDataTable from "@/components/CustomDataTable"
 import CustomDialog from "@/components/CustomDialog"
 import DialogTriggerButton from "@/components/DialogTriggerButton"
 import NewCashRegisterForm from "@/components/NewCashRegisterForm"
-import PageTitle from "@/components/PageTitle"
 import PageHeader from "@/components/layout/PageHeader"
 import { PlusIcon } from "lucide-react"
+import { auth } from "@/auth"
 
 async function StockPage() {
 

@@ -1,10 +1,10 @@
 "use client"
 import { useOrderStore } from "@/stores/orderStore"
-import { Button } from "./ui/button"
+import { Button } from "../ui/button"
 
 function CancelOrderButton() {
 
-  const { cancelOrder , products } = useOrderStore((state: any) => state)
+  const { cancelOrder, products } = useOrderStore((state: any) => state)
 
   return (
     <Button onClick={cancelOrder} disabled={products.length === 0}>

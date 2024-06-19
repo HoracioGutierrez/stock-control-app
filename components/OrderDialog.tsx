@@ -5,7 +5,7 @@ import CustomDialog from "./CustomDialog"
 import OpenCashRegisterForm from "./OpenCashRegisterForm"
 import { Button } from "./ui/button"
 import { useDialogStore } from "@/stores/generalDialog"
-import ConfirmCloseCashRegisterButton from "./ConfirmCloseCashRegisterButton"
+import ConfirmCloseCashRegisterButton from "./cashRegister/ConfirmCloseCashRegisterButton"
 import ConfirmSaveOrderButton from "./order/ConfirmSaveOrderButton"
 
 type Props = {

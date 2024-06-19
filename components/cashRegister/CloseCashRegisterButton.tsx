@@ -1,6 +1,6 @@
 "use client"
 import { useDialogStore } from "@/stores/generalDialog"
-import { Button } from "./ui/button"
+import { Button } from "../ui/button"
 import { X } from "lucide-react"
 
 type CloseCashRegisterButtonProps = {

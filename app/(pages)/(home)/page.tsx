@@ -5,7 +5,7 @@ import { getStats } from "@/actions/getStats";
 export default async function Home() {
 
   const { data, error } = await getStats()
-  console.log(data)
+
   return (
     <>
       <PageHeader title="Inicio" />

@@ -5,7 +5,7 @@ import { getStats } from "@/actions/getStats";
 export default async function Home() {
 
   const { data, error } = await getStats()
-
+  console.log(data)
   return (
     <>
       <PageHeader title="Inicio" />
@@ -18,10 +18,13 @@ export default async function Home() {
             {!error && (
               <>
                 <p className="text-muted-foreground">
-                  <span className="text-primary font-bold text-2xl">{data?.productsLength}</span> productos en tu inventario
+                  <span className="text-primary font-bold text-2xl">{data?.productsCount.count}</span> productos en tu inventario
                 </p>
                 <p className="text-muted-foreground">
-                  <span className="text-primary font-bold text-2xl">{data?.ordersLength}</span> ordenes en tu inventario
+                  <span className="text-primary font-bold text-2xl">{data?.salesStats.count}</span> ordenes en tu inventario
+                </p>
+                <p className="text-muted-foreground">
+                  <span className="text-primary font-bold text-2xl">${data?.salesStats.value}</span> total de ventas
                 </p>
               </>
             )}

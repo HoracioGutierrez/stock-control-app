@@ -11,7 +11,6 @@ import { useState } from "react"
 import {
   Table,
   TableBody,
-  TableCaption,
   TableHead,
   TableHeader,
   TableRow,
@@ -167,7 +166,7 @@ function EditProductVariantsForm({ barcode, userId }: EditProductVariantsFormPro
                 </TableHeader>
                 <TableBody>
                   {fields.map((field, index) => (
-                    <ProductVariantForm key={field.id} index={index} register={register} error={errors.variants?.[index]} isLoading={loading} />
+                    <ProductVariantForm key={field.id} index={index} register={register} error={errors.variants?.[index]} isLoading={loading} canRemove={false}/>
                   ))}
                 </TableBody>
               </Table>

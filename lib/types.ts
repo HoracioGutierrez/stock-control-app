@@ -152,6 +152,8 @@ export type ProductVariantFormProps = {
   register: any
   error?: any
   isLoading?: boolean
+  onRemove?: any
+  canRemove?: boolean
 }
 
 export type ProductVariantInputValues = {

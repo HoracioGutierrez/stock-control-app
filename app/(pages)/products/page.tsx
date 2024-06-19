@@ -3,9 +3,11 @@ import ProductsTable from "@/components/NewProductsTable"
 import { getAllProducts } from "@/actions/getAllProducts"
 import PageHeader from "@/components/layout/PageHeader"
 import ProductDialog from "@/components/ProductDialog"
+import { auth } from "@/auth"
 
 async function ProductsPage() {
 
+  const session = await auth()
   const { data, error } = await getAllProducts()
 
   if (error) return <p>Error al obtener los productos</p>
@@ -23,7 +25,7 @@ async function ProductsPage() {
         </div>
       )}
       {data.length > 0 && <ProductsTable data={data} />}
-      <ProductDialog />
+      <ProductDialog userId={session?.user.id as string} />
     </>
   )
 }

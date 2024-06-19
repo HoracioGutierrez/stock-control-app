@@ -97,7 +97,6 @@ function NewProductForm({ userId }: NewProductFormProps) {
         <Card className="bg-primary-foreground h-full">
           <CardHeader>
             <CardTitle>Detalles</CardTitle>
-            {/* <CardDescription>Estos detalles son obligatorios para que el producto pueda crearse correctamente.</CardDescription> */}
           </CardHeader>
           <CardContent className="grid gap-4">
             <div className="grid gap-2">
@@ -121,7 +120,6 @@ function NewProductForm({ userId }: NewProductFormProps) {
         <Card className="bg-primary-foreground">
           <CardHeader>
             <CardTitle>Precio</CardTitle>
-            {/* <CardDescription>Estos datos son opcionales para que el producto pueda crearse correctamente.</CardDescription> */}
           </CardHeader>
           <CardContent className="grid gap-4">
             <div className="grid gap-2">
@@ -152,7 +150,6 @@ function NewProductForm({ userId }: NewProductFormProps) {
         <Card className="bg-primary-foreground">
           <CardHeader>
             <CardTitle>Variantes</CardTitle>
-            {/* <CardDescription>Estos datos son opcionales para que el producto pueda crearse correctamente.</CardDescription> */}
           </CardHeader>
           <CardContent className="grid gap-4">
             {fields.length > 0 && (
@@ -174,7 +171,7 @@ function NewProductForm({ userId }: NewProductFormProps) {
                 </TableHeader>
                 <TableBody>
                   {fields.map((field, index) => (
-                    <ProductVariantForm key={field.id} index={index} register={register} error={errors.variants?.[index]} isLoading={isLoading} />
+                    <ProductVariantForm key={field.id} index={index} register={register} error={errors.variants?.[index]} isLoading={isLoading} onRemove={remove} />
                   ))}
                 </TableBody>
               </Table>

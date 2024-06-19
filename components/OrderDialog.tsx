@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react"
 import CustomDialog from "./CustomDialog"
 import OpenCashRegisterForm from "./OpenCashRegisterForm"
-import { Button } from "./ui/button"
 import { useDialogStore } from "@/stores/generalDialog"
 import ConfirmCloseCashRegisterButton from "./cashRegister/ConfirmCloseCashRegisterButton"
 import ConfirmSaveOrderButton from "./order/ConfirmSaveOrderButton"
@@ -30,7 +29,7 @@ const OrderDialog = ({ userId, data , cashRegisters }: Props) => {
   }, [type])
 
   return (
-    <CustomDialog title={title} userId={userId as string}>
+    <CustomDialog title={title} >
       {type === "close-cash-register" && (
         <ConfirmCloseCashRegisterButton cashRegisters={cashRegisters} userId={userId as string} />
       )}

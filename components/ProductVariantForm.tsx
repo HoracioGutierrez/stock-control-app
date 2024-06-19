@@ -2,8 +2,10 @@
 import { TableCell, TableRow } from "./ui/table"
 import { Input } from "./ui/input"
 import { ProductVariantFormProps } from "@/lib/types"
+import { Button } from "./ui/button"
+import { Trash2 } from "lucide-react"
 
-function ProductVariantForm({ index, register, error, isLoading }: ProductVariantFormProps) {
+function ProductVariantForm({ index, register, error, isLoading, onRemove, canRemove = true }: ProductVariantFormProps) {
 
   return (
     <TableRow>
@@ -31,6 +33,13 @@ function ProductVariantForm({ index, register, error, isLoading }: ProductVarian
           {error && error.barcode && <p className="text-red-500">{error.barcode.message}</p>}
         </div>
       </TableCell>
+      {canRemove && (
+        <TableCell>
+          <Button variant={"outline"} className="aspect-square p-1" onClick={onRemove}>
+            <Trash2 />
+          </Button>
+        </TableCell>
+      )}
     </TableRow>
   )
 }

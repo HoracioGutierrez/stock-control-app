@@ -1,15 +1,15 @@
 "use client"
 
-import { useProductDialogStore } from "@/stores/productDialogStore"
 import { Button } from "./ui/button"
 import { Plus } from "lucide-react"
+import { useDialogStore } from "@/stores/generalDialog"
 
 const CreateProductButton = () => {
 
-  const { open } = useProductDialogStore((state: any) => state)
+  const { setOpen } = useDialogStore((state: any) => state)
 
   const handleClick = () => {
-    open(true, "new")
+    setOpen("new-product")
   }
 
   return (

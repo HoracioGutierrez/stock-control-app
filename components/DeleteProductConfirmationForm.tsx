@@ -5,20 +5,20 @@ import { reactivateProduct } from "@/actions/reactivateProduct"
 import { toast } from "./ui/use-toast"
 import { useState } from "react"
 import { Check, Loader } from "lucide-react"
-import { useProductDialogStore } from "@/stores/productDialogStore"
 import { DeleteProductConfirmationFormProps } from "@/lib/types"
+import { useDialogStore } from "@/stores/generalDialog"
 
 
-function DeleteProductConfirmationForm({ barcode, type , userId }: DeleteProductConfirmationFormProps) {
+function DeleteProductConfirmationForm({ barcode, type, userId }: DeleteProductConfirmationFormProps) {
 
   const [loading, setLoading] = useState<boolean>(false)
-  const { close } = useProductDialogStore((state: any) => state)
+  const { setClose } = useDialogStore((state: any) => state)
 
   const handleClick = () => {
     setLoading(true)
     let request: any
-    if (type === "delete") {
-      request = deleteProduct(barcode,userId)
+    if (type === "delete-product") {
+      request = deleteProduct(barcode, userId)
         .then((data) => {
           if (data?.error) {
             throw new Error(data.error)
@@ -43,7 +43,7 @@ function DeleteProductConfirmationForm({ barcode, type , userId }: DeleteProduct
           })
         })
     } else {
-      request = reactivateProduct(barcode,userId) 
+      request = reactivateProduct(barcode, userId)
         .then((data) => {
           if (data?.error) {
             throw new Error(data.error)
@@ -70,14 +70,14 @@ function DeleteProductConfirmationForm({ barcode, type , userId }: DeleteProduct
     }
     request.finally(() => {
       setLoading(false)
-      close()
+      setClose()
     })
   }
 
   return (
     <div className="flex flex-col gap-8">
       <div className="text-muted-foreground">
-        <p>Esto {type === "delete" ? "eliminará" : "activará"} el producto en su inventario.</p>
+        <p>Esto {type === "delete-product" ? "eliminará" : "activará"} el producto en su inventario.</p>
         <p>¿Está seguro de que desea continuar?</p>
       </div>
       <Button className="self-center" onClick={handleClick} disabled={loading}>

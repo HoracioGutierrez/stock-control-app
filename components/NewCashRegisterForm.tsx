@@ -69,12 +69,12 @@ function NewCashRegisterForm({ userId }: NewCashRegisterFormProps) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4">
       <div className="self-stretch">
-        <Card className="bg-accent h-full">
-          <CardHeader>
-            <CardTitle>Detalles</CardTitle>
+        <Card className="bg-transparent border-none h-full">
+          <CardHeader className="p-0 pb-8">
+            {/* <CardTitle>Detalles</CardTitle> */}
             <CardDescription>Estos detalles son obligatorios para que la caja pueda crearse correctamente.</CardDescription>
           </CardHeader>
-          <CardContent className="grid gap-4">
+          <CardContent className="grid gap-4 p-0">
             <div className="grid gap-2">
               <Label htmlFor="label">Label</Label>
               <Input type="text" placeholder="Label" {...register("label")} />

@@ -165,3 +165,6 @@ export type NewProductFormProps = {
   userId: string
 }
 
+export type CustomLoaderProps = {
+  title: string,
+}

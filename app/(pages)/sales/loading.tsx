@@ -1,5 +1,5 @@
 import CustomLoader from "@/components/layout/CustomLoader";
 
 export default function Loading() {
-  return <CustomLoader title="Inicio" />
+  return <CustomLoader title="Ventas" />
 }

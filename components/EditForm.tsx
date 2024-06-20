@@ -92,7 +92,7 @@ function EditForm({ entity, loading, register, errors, data, formForVariant, for
                         <div className="flex items-center justify-end">
                             {Object.keys(formForVariant).map((key, index) => {
                                 return (
-                                    <TableRow key={index}>F
+                                    <TableRow key={index}>
                                         <TableCell>
                                             <div className="grid gap-2">
                                                 <TableHead >
@@ -119,7 +119,7 @@ function EditForm({ entity, loading, register, errors, data, formForVariant, for
                                 </TableBody>
                             </Table>
                         )}
-                        {fields.length >= 0 && (
+                        {fields.length >= 0 &&(
                             <Button type="button" className="flex items-center gap-2" variant={"outline"} onClick={handleAddVariant}>
                                 <PlusCircle />
                                 Agregar Variante

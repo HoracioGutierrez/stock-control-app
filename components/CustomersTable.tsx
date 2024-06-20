@@ -19,7 +19,13 @@ function CustomersTable({ data }: CustomerTableProps) {
                 return (
                     <>
                         {/* <DeleteCustomerButton active={rowData.active as boolean} id={rowData.id} /> */}
-                        <DeleteResourceButton type="customer" data={rowData.id} active={rowData.active as boolean} activeIcon={<Ban className="aspect-square p-0 text-muted-foreground hover:text-red-400" />} />
+                        <DeleteResourceButton
+                            type="customer"
+                            data={rowData.id}
+                            active={rowData.active as boolean}
+                            activeIcon={<Ban className="aspect-square p-0 text-muted-foreground hover:text-red-400" />}
+                            tooltip={rowData.active ? "Bloquear cliente" : "Reactivar cliente"}
+                        />
                         <EditProductButton id={rowData.id} />
                     </>
                 )

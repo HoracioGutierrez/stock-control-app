@@ -131,6 +131,15 @@ export const customersColumns: ColumnDef<CustomerType>[] = [
     },
     accessorKey: "lastName",
   },
+
+  {
+    header: "Teléfono",
+    accessorKey: "phone",
+  },
+  {
+    header: "Correo",
+    accessorKey: "email",
+  },
   {
     header: ({ column }) => {
       return (
@@ -140,20 +149,12 @@ export const customersColumns: ColumnDef<CustomerType>[] = [
           }
           className="p-0"
         >
-          Estado
+          Activo
           < ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )
     },
     accessorKey: "active",
-  },
-  {
-    header: "Teléfono",
-    accessorKey: "phone",
-  },
-  {
-    header: "Correo",
-    accessorKey: "email",
   },
   {
     header: "Acciones",

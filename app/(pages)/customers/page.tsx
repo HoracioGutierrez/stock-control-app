@@ -27,7 +27,7 @@ async function CustomersPage() {
         </div>
       )}
       {data.length > 0 && <CustomersTable data={data} />}
-      <CustomDialog fullWidth title="Crear Cliente" userId={data.id as string}>
+      <CustomDialog fullWidth title="Crear Cliente">
         <NewCustomerForm />
       </CustomDialog>
       <CustomerDialog />

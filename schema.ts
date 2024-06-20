@@ -230,6 +230,8 @@ export const orders: any = pgTable(
     customerId: text("customerId"),
     ip: text("ip"),
     userAgent: text("userAgent"),
+    cashRegisterId: text("cashRegisterId")
+      .references(() => cashRegister.id, { onDelete: "cascade" }),
   }
 )
 

@@ -169,6 +169,13 @@
       "when": 1718844674096,
       "tag": "0023_mute_wolfpack",
       "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "7",
+      "when": 1718845040799,
+      "tag": "0024_happy_christian_walker",
+      "breakpoints": true
     }
   ]
 }

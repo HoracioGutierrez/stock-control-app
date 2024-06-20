@@ -94,7 +94,7 @@ function EditForm({ entity, loading, register, errors, data, formForVariant, for
                                     return (
                                         <TableRow key={index}>
                                             <TableCell>
-                                                <div key={index} className="grid gap-2">
+                                                <div className="grid gap-2">
                                                     <TableHead >
                                                         <Label htmlFor={formForVariant[key].name}>{formForVariant[key].label}</Label>
                                                     </TableHead>

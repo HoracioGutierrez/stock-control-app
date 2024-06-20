@@ -6,15 +6,15 @@ import { toast } from "./ui/use-toast"
 import { useState } from "react"
 import { Check, Loader } from "lucide-react"
 import { reactivateCustomerById } from "@/actions/reactivateCustomerById"
-import { useCustomerDialogStore } from "@/stores/useCustomerDialogStore"
+import { useDialogStore } from "@/stores/generalDialog"
 import { DeleteCustomerProps } from "@/lib/types"
 
 function DeleteCustomerConfirmationForm({ id, type }: DeleteCustomerProps) {
 
     const [loading, setLoading] = useState(false)
-    
-    const { handleClose } = useCustomerDialogStore((state: any) => state)
 
+    const { setClose } = useDialogStore((state: any) => state)
+    
     const handleClick = () => {
         setLoading(true)
         let request: any
@@ -72,7 +72,7 @@ function DeleteCustomerConfirmationForm({ id, type }: DeleteCustomerProps) {
         }
         request.finally(() => {
             setLoading(false)
-            handleClose()
+            setClose()
         })
     }
 

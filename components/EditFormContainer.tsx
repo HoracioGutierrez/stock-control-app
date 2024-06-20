@@ -1,6 +1,6 @@
 "use client"
 import { entityConfig, formVariants, formNamesVariants, formDetailsVariants } from "@/lib/formConfig"
-import { SubmitHandler, useForm, useFieldArray } from "react-hook-form"
+import { SubmitHandler, useForm, useFieldArray, set } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { FormValues, InputValues } from "@/lib/types"
 import { editById } from "@/actions/editById"
@@ -8,6 +8,7 @@ import { getById } from "@/actions/getById"
 import { toast } from "./ui/use-toast"
 import EditForm from "./EditForm"
 import { useState } from "react"
+import { useDialogStore } from "@/stores/generalDialog"
 
 
 function EditFormContainer({ entity, barcode, customerId, hasVariants }: any) {
@@ -22,7 +23,9 @@ function EditFormContainer({ entity, barcode, customerId, hasVariants }: any) {
     const formForDetails = formDetailsVariants[entity]
     const formForVariant = formVariants[entity]
 
-    const { control, register, handleSubmit, formState: { errors }, reset, getValues } = useForm<FormValues>({
+    const { setClose } = useDialogStore((state: any) => state)
+
+    const { control, register, handleSubmit, formState: { errors }, getValues } = useForm<FormValues>({
         defaultValues: async () => {
             setLoading(true)
             const { data, error } = await getById(entity, customerId, barcode)
@@ -81,9 +84,9 @@ function EditFormContainer({ entity, barcode, customerId, hasVariants }: any) {
                 }
                 toast({
                     title: `${conditionalEntity} editado correctamente`,
-                    description: `${conditionalEntity} editado correctamente`,
+                    description: `${conditionalEntity} actualizado correctamente en la base de datos`,
                 })
-                reset()
+                setClose()
             })
             .catch((error) => {
                 if (error instanceof Error) {

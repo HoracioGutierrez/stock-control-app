@@ -7,11 +7,9 @@ import CustomDialog from "./CustomDialog"
 import { useDialogStore } from "@/stores/generalDialog"
 
 
-type CustomerDialogProps = {
-    userId: string
-}
 
-function CustomerDialog({ userId }: CustomerDialogProps) {
+
+function CustomerDialog() {
 
     const { type, id } = useDialogStore((state: any) => state)
 
@@ -23,7 +21,7 @@ function CustomerDialog({ userId }: CustomerDialogProps) {
     }
 
     return (
-        <CustomDialog fullWidth title={type === "create-customer" ? "Crear Cliente" : "Editar Cliente"} userId={userId}>
+        <CustomDialog fullWidth title={type === "create-customer" ? "Crear Cliente" : "Editar Cliente"}>
             {type === "create-customer" && <NewCustomerForm />}
             {type === "edit-customer" && <EditFormContainer {...entityProps} />}
             {type === "delete-customer" && <DeleteCustomerConfirmationForm id={id} type={type} />}

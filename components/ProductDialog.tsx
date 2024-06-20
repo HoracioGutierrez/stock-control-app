@@ -14,7 +14,12 @@ function ProductDialog() {
   const { isOpen, close, type, barcode } = useProductDialogStore((state: any) => state)
   const session = useSession()
   const entity = "product"
-  const entityProps = { entity, barcode }
+  const entityProps = {
+    entity,
+    barcode,
+    customerId: undefined,
+    hasVariants: true,
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={close}>
@@ -30,7 +35,7 @@ function ProductDialog() {
         </DialogHeader>
         {type === "new" && <NewProductForm userId={session?.data?.user.id as string} />}
         {(type === "delete" || type === "activate") && <DeleteProductConfirmationForm userId={session?.data?.user.id as string} barcode={barcode} type={type} />}
-        {type === "edit" && <EditFormContainer {...entityProps} userId={session?.data?.user.id as string} />}
+        {type === "edit" && <EditFormContainer {...entityProps} />}
         {type === "variant" && <EditProductVariantsForm barcode={barcode} userId={session?.data?.user.id as string} />}
       </DialogContent>
     </Dialog>

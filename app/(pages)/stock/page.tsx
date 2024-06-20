@@ -21,7 +21,7 @@ async function StockPage() {
       {/* 
       Aca va la CustomTable
       */}
-      <CustomDialog title="Crear Caja" userId={session?.user.id as string}> 
+      <CustomDialog title="Crear Caja"> 
         <NewCashRegisterForm userId={session?.user.id as string} />
       </CustomDialog>
     </>

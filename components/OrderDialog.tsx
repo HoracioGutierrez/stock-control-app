@@ -13,7 +13,7 @@ type Props = {
   cashRegisters?: any
 }
 
-const OrderDialog = ({ userId, data , cashRegisters }: Props) => {
+const OrderDialog = ({ userId, data, cashRegisters }: Props) => {
 
   const [title, setTitle] = useState<string>("Abrir Caja")
   const { type } = useDialogStore((state: any) => state)
@@ -23,7 +23,7 @@ const OrderDialog = ({ userId, data , cashRegisters }: Props) => {
   }, [type])
 
   return (
-    <CustomDialog title={title} userId={userId as string}>
+    <CustomDialog title={title}>
       {type === "close-cash-register" && (
         <ConfirmCloseCashRegisterButton cashRegisters={cashRegisters} userId={userId as string} />
       )}

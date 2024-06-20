@@ -190,6 +190,8 @@ export const cashRegister: any = pgTable(
     totalAmount: numeric("totalAmount").notNull(),
     openedById: text("openedById")
       .references(() => users.id, { onDelete: "cascade" }),
+    currentOpenningId: text("currentOpenningId")
+      .references(() => cashRegistersOpennings.id, { onDelete: "cascade" }),
   }
 )
 
@@ -249,6 +251,26 @@ export const productOrders: any = pgTable(
   }
 )
 
+export const cashRegistersOpennings: any = pgTable(
+  tablePrefix + "cashRegisterOpenning",
+  {
+    id: text("id")
+      .notNull()
+      .unique()
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    openedAt: timestamp("openedAt", { mode: "date" }).defaultNow(),
+    closedAt: timestamp("closedAt"),
+    cashRegisterId: text("cashRegisterId")
+      .notNull()
+      .references(() => cashRegister.id, { onDelete: "cascade" }),
+    startAmount: numeric("startAmount").notNull(),
+    endAmount: numeric("endAmount").notNull(),
+  }
+)
 
 
 export type ProductType = typeof products.$inferInsert
@@ -257,3 +279,4 @@ export type HistoryType = typeof history.$inferInsert
 export type CashRegisterType = typeof cashRegister.$inferInsert
 export type ProviderType = typeof providers.$inferInsert
 export type OrderType = typeof orders.$inferInsert
+export type CashRegisterOpenningType = typeof cashRegistersOpennings.$inferInsert

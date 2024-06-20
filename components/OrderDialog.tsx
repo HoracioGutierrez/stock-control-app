@@ -23,7 +23,7 @@ const OrderDialog = ({ userId, data , cashRegisters }: Props) => {
   }, [type])
 
   return (
-    <CustomDialog title={title} userId={userId as string}>
+    <CustomDialog title={title}>
       {type === "close-cash-register" && (
         <ConfirmCloseCashRegisterButton cashRegisters={cashRegisters} userId={userId as string} />
       )}

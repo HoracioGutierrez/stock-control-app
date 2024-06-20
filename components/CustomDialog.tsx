@@ -8,11 +8,10 @@ type CustomDialogProps = {
   fullWidth?: boolean
   title?: string,
   children?: any,
-  render?: any,
-  userId: string
+  render?: any
 }
 
-function CustomDialog({ fullWidth = false, title = "Custom Dialog", children, userId, render }: CustomDialogProps) {
+function CustomDialog({ fullWidth = false, title = "Custom Dialog", children, render }: CustomDialogProps) {
 
   const { isOpen, setClose, type } = useDialogStore((state: any) => state)
 

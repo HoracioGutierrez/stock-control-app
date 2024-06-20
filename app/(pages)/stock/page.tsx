@@ -6,6 +6,8 @@ import NewCashRegisterForm from "@/components/NewCashRegisterForm"
 import PageHeader from "@/components/layout/PageHeader"
 import { PlusIcon } from "lucide-react"
 import { auth } from "@/auth"
+import CashRegisterTable from "@/components/cashRegister/CashRegisterTable"
+import CashRegisterDialog from "@/components/cashRegister/CashRegisterDialog"
 
 async function StockPage() {
 
@@ -18,15 +20,8 @@ async function StockPage() {
         ? <DialogTriggerButton dialogType="new-cash-register" text="Crear Caja" icon={<PlusIcon />} />
         : null
       } />
-      <CustomDataTable
-        data={data}
-        type="cash-registers"
-        filterColumn="label"
-        filterKey="label"
-      />
-      <CustomDialog title="Crear Caja">
-        <NewCashRegisterForm userId={session?.user.id as string} />
-      </CustomDialog>
+      <CashRegisterTable data={data} />
+      <CashRegisterDialog userId={session?.user.id as string} />
     </>
   )
 }

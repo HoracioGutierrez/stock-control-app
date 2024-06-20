@@ -208,7 +208,7 @@ export const providersColumns: ColumnDef<ProviderType>[] = [
       )
     },
     accessorKey: "active",
-  },  
+  },
   {
     header: "Acciones",
     accessorKey: "actions",
@@ -224,11 +224,11 @@ export const cashRegistersColumns: ColumnDef<CashRegisterType>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           className="p-0"
         >
-          Label
+          Nombre de caja
           < ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )
-    },    
+    },
     accessorKey: "label",
   },
   {
@@ -240,7 +240,7 @@ export const cashRegistersColumns: ColumnDef<CashRegisterType>[] = [
           }
           className="p-0"
         >
-          Current Amount
+          Monto actual
           < ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )
@@ -256,12 +256,12 @@ export const cashRegistersColumns: ColumnDef<CashRegisterType>[] = [
           }
           className="p-0"
         >
-          Total Amount
+          Abierta
           < ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )
     },
-    accessorKey: "totalAmount",
+    accessorKey: "openedById",
   },
   {
     header: ({ column }) => {

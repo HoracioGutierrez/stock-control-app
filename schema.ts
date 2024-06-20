@@ -192,6 +192,7 @@ export const cashRegister: any = pgTable(
       .references(() => users.id, { onDelete: "cascade" }),
     currentOpenningId: text("currentOpenningId")
       .references(() => cashRegistersOpennings.id, { onDelete: "cascade" }),
+    active: boolean("active").notNull(),
   }
 )
 

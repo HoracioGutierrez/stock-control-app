@@ -118,6 +118,13 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions }: Custo
                 >
                   {row.getVisibleCells().map((cell) => {
 
+                    if (cell.column.id === "openedById") {
+                      return (
+                        <TableCell key={cell.id}>
+                          {row.original.openedById === null ? "No" : "Si"}
+                        </TableCell>
+                      )
+                    }
 
                     if (cell.column.id === "createdAt") {
                       return (

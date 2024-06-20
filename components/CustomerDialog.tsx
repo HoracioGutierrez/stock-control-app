@@ -27,7 +27,7 @@ function CustomerDialog({ userId }: CustomerDialogProps) {
     }
 
     return (
-        <CustomDialog fullWidth title={type === "create-customer" ? "Crear Cliente" : "Editar Cliente"} userId={userId}>
+        <CustomDialog fullWidth title={type === "create-customer" ? "Crear Cliente" : "Editar Cliente"}>
             {type === "create-customer" && <NewCustomerForm />}
             {type === "edit-customer" && <EditFormContainer {...entityProps} />}
             {type === "delete-customer" && <DeleteCustomerConfirmationForm id={id} type={type} />}

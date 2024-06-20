@@ -12,12 +12,11 @@ import { useDialogStore } from "@/stores/generalDialog"
 
 
 type CustomerDialogProps = {
-    userId: string
 }
 
-function CustomerDialog({ userId }: CustomerDialogProps) {
+function CustomerDialog({ }: CustomerDialogProps) {
 
-    const { type , id } = useDialogStore((state: any) => state)
+    const { type, id } = useDialogStore((state: any) => state)
 
     const entityProps = {
         entity: "customer",
@@ -27,7 +26,7 @@ function CustomerDialog({ userId }: CustomerDialogProps) {
     }
 
     return (
-        <CustomDialog fullWidth title={type === "create-customer" ? "Crear Cliente" : "Editar Cliente"} userId={userId}>
+        <CustomDialog fullWidth title={type === "create-customer" ? "Crear Cliente" : "Editar Cliente"}>
             {type === "create-customer" && <NewCustomerForm />}
             {type === "edit-customer" && <EditFormContainer {...entityProps} />}
             {type === "delete-customer" && <DeleteCustomerConfirmationForm id={id} type={type} />}

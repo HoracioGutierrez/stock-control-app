@@ -22,7 +22,7 @@ async function CustomersPage() {
         </div>
       )}
       {data.length > 0 && <CustomersTable data={data} />}
-      <CustomerDialog userId={data.id as string} />
+      <CustomerDialog />
     </>
   )
 }

@@ -13,12 +13,12 @@ type Props = {
   cashRegisters?: any
 }
 
-const OrderDialog = ({ userId, data , cashRegisters }: Props) => {
+const OrderDialog = ({ userId, data, cashRegisters }: Props) => {
 
   const [title, setTitle] = useState<string>("Abrir Caja")
   const { type } = useDialogStore((state: any) => state)
 
-  const titles: Record<string, string> = { 
+  const titles: Record<string, string> = {
     "open-cash-register": "Abrir Caja",
     "close-cash-register": "Cerrar Caja",
     "save-order": "Guardar Orden"
@@ -29,7 +29,7 @@ const OrderDialog = ({ userId, data , cashRegisters }: Props) => {
   }, [type])
 
   return (
-    <CustomDialog title={title} >
+    <CustomDialog title={title}>
       {type === "close-cash-register" && (
         <ConfirmCloseCashRegisterButton cashRegisters={cashRegisters} userId={userId as string} />
       )}
@@ -38,7 +38,7 @@ const OrderDialog = ({ userId, data , cashRegisters }: Props) => {
       )}
       {type === "save-order" && (
         <>
-          <ConfirmSaveOrderButton userId={userId} cashRegisters={cashRegisters}/>
+          <ConfirmSaveOrderButton userId={userId} cashRegisters={cashRegisters} />
         </>
       )}
     </CustomDialog>

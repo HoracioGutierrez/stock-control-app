@@ -8,7 +8,7 @@ type CustomDialogProps = {
   fullWidth?: boolean
   title?: string,
   children?: any,
-  render?: any,
+  render?: any
 }
 
 function CustomDialog({ fullWidth = false, title = "Custom Dialog", children, render }: CustomDialogProps) {

@@ -1,10 +1,10 @@
 "use client"
-import { closeCashRegister } from "@/actions/closeCashRegister"
 import { useDialogStore } from "@/stores/generalDialog"
 import { Check, Loader, Trash2, X } from "lucide-react"
 import { toast } from "../ui/use-toast"
 import { Button } from "../ui/button"
 import { useState } from "react"
+import { closeCashRegister } from "@/actions/closeCashRegister"
 
 type ConfirmCloseCashRegisterButtonProps = {
   cashRegisters: any

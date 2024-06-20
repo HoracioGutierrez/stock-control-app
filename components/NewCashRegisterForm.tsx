@@ -80,7 +80,7 @@ function NewCashRegisterForm({ userId }: NewCashRegisterFormProps) {
               <Input type="text" placeholder="Label" {...register("label")} />
               {errors.label && <p className="text-red-500">{errors.label.message}</p>}
             </div>
-            <div className="grid gap-2">
+            {/* <div className="grid gap-2">
               <Label htmlFor="currentAmount">Monto Actual</Label>
               <Input type="text" placeholder="Monto Actual" {...register("currentAmount")} />
               {errors.currentAmount && <p className="text-red-500">{errors.currentAmount.message}</p>}
@@ -89,7 +89,7 @@ function NewCashRegisterForm({ userId }: NewCashRegisterFormProps) {
               <Label htmlFor="totalAmount">Monto Total</Label>
               <Input type="text" placeholder="Monto Total" {...register("totalAmount")} />
               {errors.totalAmount && <p className="text-red-500">{errors.totalAmount.message}</p>}
-            </div>
+            </div> */}
           </CardContent>
         </Card>
       </div>

@@ -6,6 +6,12 @@ import { useDialogStore } from "@/stores/generalDialog"
 import { openCashRegister } from "@/actions/openCashRegister"
 import { toast } from "./ui/use-toast"
 import { Loader, ShoppingBasket } from "lucide-react"
+import { CashRegisterInputValues } from "@/lib/types"
+import { cashRegisterSchema } from "@/lib/schemas"
+import { useForm } from "react-hook-form"
+import { yupResolver } from "@hookform/resolvers/yup"
+import { Label } from "./ui/label"
+import { Input } from "./ui/input"
 
 type OpenCashRegisterFormProps = {
   userId: string
@@ -17,14 +23,22 @@ function OpenCashRegisterForm({ userId, data }: OpenCashRegisterFormProps) {
   const [cashRegisterId, setCashRegisterId] = useState<string>("")
   const [loading, setLoading] = useState<boolean>(false)
   const { setClose } = useDialogStore((state: any) => state)
+  const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<CashRegisterInputValues>({
+    defaultValues: {
+      label: "",
+      currentAmount: 0,
+      totalAmount: 0
+    },
+    resolver: yupResolver(cashRegisterSchema)
+  })
 
   const handleChange = (value: string) => {
-    setCashRegisterId(value)
+    setValue("label", value)
   }
 
-  const handleSubmit = () => {
+  const onSubmit = (data: CashRegisterInputValues) => {
     setLoading(true)
-    openCashRegister(cashRegisterId, userId)
+    openCashRegister(data.label,data.currentAmount, userId)
       .then((data) => {
         if (data?.error) {
           throw new Error(data.error)
@@ -53,24 +67,32 @@ function OpenCashRegisterForm({ userId, data }: OpenCashRegisterFormProps) {
   return (
     <div>
       <p className="text-sm text-muted-foreground mb-6">Selecciona la caja que deseas abrir</p>
-      <div className="flex flex-col gap-4">
-        <Select onValueChange={handleChange}>
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Selecciona una caja" />
-          </SelectTrigger>
-          <SelectContent>
-            {data.map((cashRegister: any) => (
-              <SelectItem key={cashRegister.id} value={cashRegister.id}>
-                {cashRegister.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        <Button className="w-full flex gap-2 text-white dark:text-primary-foreground" disabled={cashRegisterId === ""} onClick={handleSubmit}>
+      <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex flex-col gap-4">
+          <Label htmlFor="label">Label</Label>
+          <Select onValueChange={handleChange}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Selecciona una caja" />
+            </SelectTrigger>
+            <SelectContent>
+              {data.map((cashRegister: any) => (
+                <SelectItem key={cashRegister.id} value={cashRegister.id} disabled={cashRegister.openedById}>
+                  {cashRegister.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="flex flex-col gap-4">
+          <Label htmlFor="currentAmount">Monto de apertura</Label>
+          <Input type="text" placeholder="Monto Actual" {...register("currentAmount")} />
+          {errors.currentAmount && <p className="text-red-500">{errors.currentAmount.message}</p>}
+        </div>
+        <Button className="w-full flex gap-2 text-white dark:text-primary-foreground">
           {loading ? <Loader className="animate-spin" /> : <ShoppingBasket />}
           Abrir Caja
         </Button>
-      </div>
+      </form>
     </div>
   )
 }

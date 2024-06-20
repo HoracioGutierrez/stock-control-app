@@ -1,10 +1,10 @@
 "use server"
 import { GeneralResponse } from "@/lib/types"
-import { db, cashRegister, history } from "@/schema"
+import { db, cashRegister, history, cashRegistersOpennings } from "@/schema"
 import { eq } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 
-export const openCashRegister = async (cashRegisterId: string, userId: string): Promise<GeneralResponse> => {
+export const openCashRegister = async (cashRegisterId: string, currentAmount: number, userId: string): Promise<GeneralResponse> => {
   "use server"
   try {
     const cashRegisterFromDb = await db.select().from(cashRegister).where(eq(cashRegister.id, cashRegisterId))
@@ -12,7 +12,25 @@ export const openCashRegister = async (cashRegisterId: string, userId: string): 
 
     if (cashRegisterFromDb[0].openedById) throw new Error("La caja ya está abierta")
 
-    await db.update(cashRegister).set({ openedById: userId }).where(eq(cashRegister.id, cashRegisterId))
+
+    const openning = await db.insert(cashRegistersOpennings).values({
+      userId: userId,
+      openedAt: new Date(),
+      closedAt: null,
+      cashRegisterId: cashRegisterId,
+      startAmount: currentAmount,
+      endAmount: 0
+    }).returning({
+      insertedId: cashRegistersOpennings.id
+    })
+
+    if (openning.length === 0) throw new Error("Error al crear la caja")
+
+    await db.update(cashRegister).set({
+      openedById: userId,
+      currentAmount: currentAmount,
+      currentOpenningId: openning[0].insertedId
+    }).where(eq(cashRegister.id, cashRegisterId))
 
     await db.insert(history).values({
       userId: userId,

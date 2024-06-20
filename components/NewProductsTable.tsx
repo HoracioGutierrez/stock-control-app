@@ -4,6 +4,7 @@ import CustomDataTable from "./CustomDataTable"
 import DeleteProductButton from "./DeleteProductButton"
 import EditProductButton from "./EditProductButton"
 import EditVariantButton from "./EditVariantButton"
+import DeleteResourceButton from "./layout/DeleteResourceButton"
 import { Button } from "./ui/button"
 
 type ProductsTableProps = {
@@ -20,7 +21,8 @@ function ProductsTable({ data }: ProductsTableProps) {
       actions={(rowData: any) => {
         return (
           <>
-            <DeleteProductButton active={rowData.active} barcode={rowData.barcode} />
+            {/* <DeleteProductButton active={rowData.active} barcode={rowData.barcode} /> */}
+            <DeleteResourceButton type="product" data={rowData.barcode} active={rowData.active} />
             <EditProductButton barcode={rowData.barcode} />
             {!rowData.isVariant && <EditVariantButton barcode={rowData.barcode} />}
           </>

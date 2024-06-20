@@ -19,7 +19,7 @@ async function StockPage() {
         ? <DialogTriggerButton dialogType="new-cash-register" text="Crear Caja" icon={<PlusIcon />} />
         : null
       } />
-      <CustomDialog title="Crear Caja" userId={session?.user.id as string}>
+      <CustomDialog title="Crear Caja">
         <NewCashRegisterForm userId={session?.user.id as string} />
       </CustomDialog>
     </>

@@ -18,7 +18,7 @@ async function ProvidersPage() {
         <DialogTriggerButton dialogType="new-provider" text="Crear Proveedor" icon={<PlusIcon />} />
       } />
       <ProvidersTable data={data} />
-      <CustomDialog userId={session?.user.id as string} title="Crear Proveedor" fullWidth>
+      <CustomDialog title="Crear Proveedor" fullWidth>
         <CreateProviderForm userId={session?.user.id as string} />
       </CustomDialog>
     </>

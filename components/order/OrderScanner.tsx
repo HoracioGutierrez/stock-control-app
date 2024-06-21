@@ -95,6 +95,10 @@ function OrderScanner({ data }: OrderScannerProps) {
     setOpen("add-customer")
   }
 
+  const handlePayWith = () => {
+    setOpen("pay-with")
+  }
+
   return (
     <div className="flex flex-col h-full">
       <div className="gap-4 grid grid-cols-1 md:grid-cols-2 mt-4 mb-4">
@@ -195,6 +199,9 @@ function OrderScanner({ data }: OrderScannerProps) {
       </Table>
 
       <div className="flex justify-center gap-4">
+        <Button onClick={handlePayWith} disabled={products.length === 0}>
+          Paga con
+        </Button>
         <Button onClick={handleAddCustomer} disabled={products.length === 0}>
           Agregar Cliente
         </Button>

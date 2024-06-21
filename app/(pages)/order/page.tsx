@@ -20,19 +20,13 @@ async function OrderPage() {
     cashRegisters = data
   }
 
+  console.log(data)
   return (
     <>
-      <PageHeader title={`Nueva Orden ${data ? `: ${data.label}` : ""}`} /* actions={
-        <div className="flex items-center gap-2">
-          {data && (
-            <>
-              <OrderButton />
-              <CancelOrderButton />
-              <CloseCashRegisterButton />
-            </>
-          )}
-        </div>
-      } */ />
+      <PageHeader
+        title={`Nueva Orden ${data ? `: ${data.label}` : ""}`}
+        subtitle={data ? data.openedById : ""}
+      />
       {data && <OrderScanner data={data} />}
       {!data && (
         <div className="place-items-center border-slate-400 grid border border-dashed rounded grow">

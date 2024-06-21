@@ -8,6 +8,7 @@ import ConfirmCloseCashRegisterButton from "./cashRegister/ConfirmCloseCashRegis
 import ConfirmSaveOrderButton from "./order/ConfirmSaveOrderButton"
 import ManualScan from "./order/ManualScan"
 import AddCustomerForm from "./order/AddCustomerForm"
+import PayWithForm from "./order/PayWithForm"
 
 type Props = {
   userId: string
@@ -25,7 +26,8 @@ const OrderDialog = ({ userId, data, cashRegisters }: Props) => {
     "close-cash-register": "Cerrar Caja",
     "save-order": "Guardar Orden",
     "manual-scan": "Escaneo Manual",
-    "add-customer": "Agregar Cliente"
+    "add-customer": "Agregar Cliente",
+    "pay-with": "Pagar con"
   }
 
   useEffect(() => {
@@ -51,6 +53,11 @@ const OrderDialog = ({ userId, data, cashRegisters }: Props) => {
       {type === "add-customer" && (
         <AddCustomerForm />
       )}
+      {
+        type === "pay-with" && (
+          <PayWithForm />
+        )
+      }
     </CustomDialog>
   )
 }

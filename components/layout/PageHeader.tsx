@@ -4,13 +4,17 @@ import { Button } from "../ui/button"
 
 type PageHeaderProps = {
   title: string,
-  actions?: JSX.Element[] | JSX.Element | null
+  actions?: JSX.Element[] | JSX.Element | null,
+  subtitle?: string
 }
 
-const PageHeader = ({ title = "Demo Title", actions }: PageHeaderProps) => {
+const PageHeader = ({ title = "Demo Title", actions, subtitle }: PageHeaderProps) => {
   return (
     <div className="flex justify-between mb-8">
-      <PageTitle title={title} />
+      <div>
+        {subtitle && <p className="text-muted-foreground">Cajero : {subtitle}</p>}
+        <PageTitle title={title} />
+      </div>
       {actions && actions}
     </div>
   )

@@ -7,3 +7,11 @@ export const entitiesPropsById = {
   history: history,
   cashRegister: cashRegister
 }
+
+export const entityName= {
+  product: "producto",
+  customer: "cliente",
+  provider: "proveedor",
+  history: "historial",
+  cashRegister: "registro"
+}

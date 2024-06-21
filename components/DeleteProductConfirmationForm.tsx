@@ -13,12 +13,13 @@ function DeleteProductConfirmationForm({ barcode, type, userId }: DeleteProductC
 
   const [loading, setLoading] = useState<boolean>(false)
   const { setClose } = useDialogStore((state: any) => state)
+  const entityId = "product"
 
   const handleClick = () => {
     setLoading(true)
     let request: any
     if (type === "delete-product") {
-      request = deleteProduct(barcode, userId)
+      request = deleteProduct(entityId, barcode, userId)
         .then((data) => {
           if (data?.error) {
             throw new Error(data.error)

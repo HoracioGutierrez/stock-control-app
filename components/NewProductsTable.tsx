@@ -22,7 +22,7 @@ function ProductsTable({ data }: ProductsTableProps) {
         return (
           <>
             {/* <DeleteProductButton active={rowData.active} barcode={rowData.barcode} /> */}
-            <DeleteResourceButton type="product" data={rowData.barcode} active={rowData.active} tooltip={rowData.active ? "Borrar producto" : "Reactivar producto"} />
+            <DeleteResourceButton type="product" data={rowData.id} active={rowData.active} tooltip={rowData.active ? "Borrar producto" : "Reactivar producto"} />
             <EditProductButton barcode={rowData.barcode} />
             {!rowData.isVariant && <EditVariantButton barcode={rowData.barcode} />}
           </>

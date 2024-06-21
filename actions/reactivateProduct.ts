@@ -7,9 +7,9 @@ import { revalidatePath } from "next/cache"
 export const reactivateProduct = async (barcode: string, userId: string): Promise<GeneralResponse> => {
   "use server"
   try {
-    const product = await db.select().from(products).where(eq(products.barcode, barcode))
+    const product = await db.select().from(products).where(eq(products.id, barcode))
     if (product.length === 0) throw new Error("Producto no encontrado")
-    await db.update(products).set({ active: true }).where(eq(products.barcode, barcode))
+    await db.update(products).set({ active: true }).where(eq(products.id, barcode))
 
     await db.insert(history).values({
       userId: userId,

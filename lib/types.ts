@@ -94,6 +94,14 @@ export type Entity = {
   cashRegister: CashRegisterType
 }
 
+export type EntityName = {
+  product: string,
+  customer: string,
+  provider: string,
+  history: string,
+  cashRegister: string
+}
+
 
 export type FormEditProps = {
   entity: string

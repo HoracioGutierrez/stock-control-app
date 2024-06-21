@@ -8,6 +8,9 @@ import { useOrderStore } from "@/stores/orderStore"
 import { useEffect, useState } from "react"
 import { Button } from "../ui/button"
 import { useDialogStore } from "@/stores/generalDialog"
+import CloseCashRegisterButton from "../cashRegister/CloseCashRegisterButton"
+import CancelOrderButton from "./CancelOrderButton"
+import OrderButton from "./OrderButton"
 
 type OrderScannerProps = {
   data: any
@@ -20,7 +23,7 @@ function OrderScanner({ data }: OrderScannerProps) {
   const [error, setError] = useState<string>("")
   const [scanning, setScanning] = useState<boolean>(false)
   const { setOpen } = useDialogStore((state: any) => state)
-  const { products, setScannedProduct, increment, decrement, total, remove, setProduct, scannedProduct } = useOrderStore((state: any) => state)
+  const { products, setScannedProduct, increment, decrement, total, remove, setProduct, scannedProduct , clientId } = useOrderStore((state: any) => state)
 
   let barcode = ""
 
@@ -30,7 +33,7 @@ function OrderScanner({ data }: OrderScannerProps) {
     setHasEvent(true)
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if(!e.key) return
+      if (!e.key) return
       if (e.key !== "Enter" && e.key.length !== 1) return
       if (scanning) return
 
@@ -88,8 +91,12 @@ function OrderScanner({ data }: OrderScannerProps) {
     setOpen("manual-scan")
   }
 
+  const handleAddCustomer = () => {
+    setOpen("add-customer")
+  }
+
   return (
-    <div>
+    <div className="flex flex-col h-full">
       <div className="gap-4 grid grid-cols-1 md:grid-cols-2 mt-4 mb-4">
         <Card className="bg-accent">
           <CardHeader>
@@ -97,6 +104,9 @@ function OrderScanner({ data }: OrderScannerProps) {
           </CardHeader>
           <CardContent>
             <CardDescription className="font-bold text-5xl text-primary">${total}</CardDescription>
+            <CardDescription className="text-muted-foreground">
+              {clientId && <p>Cliente: {clientId.split("@")[1]}</p>}
+            </CardDescription>
           </CardContent>
         </Card>
         <Card className="bg-accent">
@@ -139,7 +149,8 @@ function OrderScanner({ data }: OrderScannerProps) {
           </CardFooter>
         </Card>
       </div>
-      <Table>
+
+      <Table className="grow">
         <TableHeader>
           <TableRow>
             <TableHead>Nombre</TableHead>
@@ -182,6 +193,15 @@ function OrderScanner({ data }: OrderScannerProps) {
           )}
         </TableBody>
       </Table>
+
+      <div className="flex justify-center gap-4">
+        <Button onClick={handleAddCustomer} disabled={products.length === 0}>
+          Agregar Cliente
+        </Button>
+        <OrderButton />
+        <CancelOrderButton />
+        <CloseCashRegisterButton />
+      </div>
     </div>
   )
 }

@@ -7,6 +7,7 @@ import { useDialogStore } from "@/stores/generalDialog"
 import ConfirmCloseCashRegisterButton from "./cashRegister/ConfirmCloseCashRegisterButton"
 import ConfirmSaveOrderButton from "./order/ConfirmSaveOrderButton"
 import ManualScan from "./order/ManualScan"
+import AddCustomerForm from "./order/AddCustomerForm"
 
 type Props = {
   userId: string
@@ -23,7 +24,8 @@ const OrderDialog = ({ userId, data, cashRegisters }: Props) => {
     "open-cash-register": "Abrir Caja",
     "close-cash-register": "Cerrar Caja",
     "save-order": "Guardar Orden",
-    "manual-scan": "Escaneo Manual"
+    "manual-scan": "Escaneo Manual",
+    "add-customer": "Agregar Cliente"
   }
 
   useEffect(() => {
@@ -45,6 +47,9 @@ const OrderDialog = ({ userId, data, cashRegisters }: Props) => {
       )}
       {type === "manual-scan" && (
         <ManualScan />
+      )}
+      {type === "add-customer" && (
+        <AddCustomerForm />
       )}
     </CustomDialog>
   )

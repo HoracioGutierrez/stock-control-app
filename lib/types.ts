@@ -48,9 +48,16 @@ export type DeleteProductConfirmationFormProps = {
   type: string
   userId: string
 }
-export type DeleteCustomerProps = {
-  id: string
-  type?: string
+
+export type DeleteByIdProps = {
+  entityType: string | keyof Entity
+  entityId: string
+  userId: string | undefined
+}
+
+export type DeleteCustomerProps = DeleteByIdProps & {
+  type: string
+  hasVariants?: boolean
 }
 
 export type DeleteProductButtonProps = {
@@ -104,7 +111,7 @@ export type EntityName = {
 
 
 export type FormEditProps = {
-  entity: string
+  entityType: string
   loading: boolean
   register: any
   errors: any

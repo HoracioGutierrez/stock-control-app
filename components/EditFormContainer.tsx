@@ -11,27 +11,27 @@ import { useState } from "react"
 import { useDialogStore } from "@/stores/generalDialog"
 
 
-function EditFormContainer({ entity, barcode, customerId, hasVariants }: any) {
+function EditFormContainer({ entityType, barcode, entityId, hasVariants }: any) {
     const [error, setError] = useState<string | null>(null)
     const [mainName, setMainName] = useState<string>("")
     const [loading, setLoading] = useState<boolean>(false)
     const [idResolve, setIdResolve] = useState<string>("")
     const [isVariant, setIsVariant] = useState<boolean>(false)
-    const conditionalEntity = entity === "customer" ? "Cliente" : "Producto"
+    const conditionalEntity = entityType === "customer" ? "Cliente" : "Producto"
 
-    const formForName = formNamesVariants[entity]
-    const formForDetails = formDetailsVariants[entity]
-    const formForVariant = formVariants[entity]
+    const formForName = formNamesVariants[entityType]
+    const formForDetails = formDetailsVariants[entityType]
+    const formForVariant = formVariants[entityType]
 
     const { setClose } = useDialogStore((state: any) => state)
 
     const { control, register, handleSubmit, formState: { errors }, getValues } = useForm<FormValues>({
         defaultValues: async () => {
             setLoading(true)
-            const { data, error } = await getById(entity, customerId, barcode)
+            const { data, error } = await getById(entityType, entityId, barcode)
             setLoading(false)
             if (error) {
-                return entity === "customer" ? {
+                return entityType === "customer" ? {
                     name: "",
                     lastName: "",
                     phone: "",
@@ -50,7 +50,7 @@ function EditFormContainer({ entity, barcode, customerId, hasVariants }: any) {
             setIdResolve(data.id as string)
             setIsVariant(data.isVariant as boolean)
             console.log(data)
-            return entity === "customer" ? {
+            return entityType === "customer" ? {
                 name: data.name as string,
                 lastName: data.lastName as string,
                 phone: data.phone as string,
@@ -67,7 +67,7 @@ function EditFormContainer({ entity, barcode, customerId, hasVariants }: any) {
                 isVariant: data.isVariant as boolean,
             }
         },
-        resolver: yupResolver(entityConfig[entity].schema),
+        resolver: yupResolver(entityConfig[entityType].schema),
     })
 
     const { fields, append } = useFieldArray({
@@ -77,7 +77,7 @@ function EditFormContainer({ entity, barcode, customerId, hasVariants }: any) {
 
     const onSubmit: SubmitHandler<InputValues> = async (data: InputValues) => {
         setLoading(true)
-        editById(entity, idResolve, data)
+        editById(entityType, idResolve, data)
             .then((data) => {
                 if (data?.error) {
                     throw new Error(data.error)
@@ -116,7 +116,7 @@ function EditFormContainer({ entity, barcode, customerId, hasVariants }: any) {
 
 
     const formProps = {
-        entity,
+        entityType,
         loading,
         register,
         errors,
@@ -135,7 +135,7 @@ function EditFormContainer({ entity, barcode, customerId, hasVariants }: any) {
 
     return (
         <>
-            <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-2 gap-8 overflow-auto" id={entityConfig[entity].formId}>
+            <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-2 gap-8 overflow-auto" id={entityConfig[entityType].formId}>
                 <EditForm {...formProps} />
             </form>
         </>

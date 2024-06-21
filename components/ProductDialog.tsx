@@ -18,8 +18,8 @@ function ProductDialog({ userId }: ProductDialogProps) {
 
 
   const session = useSession()
-  const entity = "product"
-  const entityProps = { entity, barcode: id }
+  const entityType = "product"
+  const entityProps = { entityType, barcode: id }
   const config: Record<string, { title: string, fullWidth?: boolean }> = {
     "new-product": {
       title: "Nuevo Producto",

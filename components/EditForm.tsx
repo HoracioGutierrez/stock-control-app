@@ -11,7 +11,7 @@ import { Key } from "react"
 
 
 
-function EditForm({ entity, loading, register, errors, data, formForVariant, formForName, formForDetails, entityConfig, conditionalEntity, isVariant, handleMainNameChange, handleAddVariant, fields, hasVariants = false }: FormEditProps) {
+function EditForm({ entityType, loading, register, errors, data, formForVariant, formForName, formForDetails, entityConfig, conditionalEntity, isVariant, handleMainNameChange, handleAddVariant, fields, hasVariants = false }: FormEditProps) {
 
     return (
         <>
@@ -128,7 +128,7 @@ function EditForm({ entity, loading, register, errors, data, formForVariant, for
                         </CardContent>
                     </Card>
                 )}
-                <Button form={entityConfig[entity].formId} className="flex items-center gap-2 mx-auto mt-8" disabled={loading}>
+                <Button form={entityConfig[entityType].formId} className="flex items-center gap-2 mx-auto mt-8" disabled={loading}>
                     {loading && <Loader className="animate-spin" />}
                     {<span>Guardar {conditionalEntity}</span>}
                 </Button>

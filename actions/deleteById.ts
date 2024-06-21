@@ -1,12 +1,13 @@
 "use server"
 import { entitiesPropsById, entityName } from "@/lib/queryConfig"
-import { Entity, EntityName } from "@/lib/types"
+import { DeleteByIdProps, Entity, EntityName } from "@/lib/types"
 import { GeneralResponse } from "@/lib/types"
 import { revalidatePath } from "next/cache"
 import { eq } from "drizzle-orm"
 import { db } from "@/schema"
 
-export const deleteProduct = async (entityType: string, entityId?: string, userId?: string): Promise<GeneralResponse> => {
+
+export const deleteById = async ({ entityType, entityId, userId }: DeleteByIdProps): Promise<GeneralResponse> => {
   console.log(entityType, entityId, userId)
   "use server"
   const entityNameResolve = entityName[entityType as keyof EntityName]
@@ -27,7 +28,7 @@ export const deleteProduct = async (entityType: string, entityId?: string, userI
       userAgent: null,
     })
 
-    revalidatePath("/")
+    revalidatePath(`/${entityType}s`)
     return {
       data: data[0],
       error: null,

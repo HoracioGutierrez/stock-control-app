@@ -1,6 +1,6 @@
 "use client"
 
-import { deleteCustomerById } from "@/actions/deleteCustomerById"
+import { deleteById } from "@/actions/deleteById"
 import { Button } from "./ui/button"
 import { toast } from "./ui/use-toast"
 import { useState } from "react"
@@ -9,18 +9,18 @@ import { reactivateCustomerById } from "@/actions/reactivateCustomerById"
 import { useDialogStore } from "@/stores/generalDialog"
 import { DeleteCustomerProps } from "@/lib/types"
 
-function DeleteCustomerConfirmationForm({ id, type }: DeleteCustomerProps) {
+function DeleteCustomerConfirmationForm({ entityType, entityId, type, userId, hasVariants }: DeleteCustomerProps) {
 
     const [loading, setLoading] = useState(false)
 
     const { setClose } = useDialogStore((state: any) => state)
-    
+
     const handleClick = () => {
         setLoading(true)
         let request: any
-        request = deleteCustomerById(id)
+        request = deleteById({ entityType, entityId, userId })
         if (type === "delete") {
-            request = deleteCustomerById(id)
+            request = deleteById({ entityType, entityId, userId })
                 .then((data) => {
                     if (data?.error) {
                         throw new Error(data.error)
@@ -45,7 +45,7 @@ function DeleteCustomerConfirmationForm({ id, type }: DeleteCustomerProps) {
                     })
                 })
         } else {
-            request = reactivateCustomerById(id)
+            request = reactivateCustomerById(entityId)
                 .then((data) => {
                     if (data?.error) {
                         throw new Error(data.error)

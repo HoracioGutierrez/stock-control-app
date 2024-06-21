@@ -1,5 +1,5 @@
 "use client"
-import { deleteProduct } from "@/actions/deleteProduct"
+import { deleteById } from "@/actions/deleteById"
 import { Button } from "./ui/button"
 import { reactivateProduct } from "@/actions/reactivateProduct"
 import { toast } from "./ui/use-toast"
@@ -13,13 +13,13 @@ function DeleteProductConfirmationForm({ barcode, type, userId }: DeleteProductC
 
   const [loading, setLoading] = useState<boolean>(false)
   const { setClose } = useDialogStore((state: any) => state)
-  const entityId = "product"
+  const entityType = "product"
 
   const handleClick = () => {
     setLoading(true)
     let request: any
     if (type === "delete-product") {
-      request = deleteProduct(entityId, barcode, userId)
+      request = deleteById({ entityType, entityId: barcode, userId })
         .then((data) => {
           if (data?.error) {
             throw new Error(data.error)

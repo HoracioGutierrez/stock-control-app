@@ -5,7 +5,7 @@ import { getAllCashRegisters } from "@/actions/getAllCashRegisters"
 import CancelOrderButton from "@/components/order/CancelOrderButton"
 import OrderButton from "@/components/order/OrderButton"
 import PageHeader from "@/components/layout/PageHeader"
-import OrderScanner from "@/components/OrderScanner"
+import OrderScanner from "@/components/order/OrderScanner"
 import OrderDialog from "@/components/OrderDialog"
 import { auth } from "@/auth"
 
@@ -35,10 +35,10 @@ async function OrderPage() {
       } />
       {data && <OrderScanner data={data} />}
       {!data && (
-        <div className="grow rounded border border-dashed border-slate-400 grid place-items-center">
+        <div className="place-items-center border-slate-400 grid border border-dashed rounded grow">
           <div className="max-w-sm text-center">
             <p className="font-bold text-xl">No hay cajas abiertas</p>
-            <p className="text-sm text-muted-foreground mb-6">Podrás comenzar a vender en cuanto tengas al menos una caja abierta</p>
+            <p className="mb-6 text-muted-foreground text-sm">Podrás comenzar a vender en cuanto tengas al menos una caja abierta</p>
             <OpenCashRegisterButton />
           </div>
         </div>

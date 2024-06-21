@@ -8,14 +8,12 @@ function OrderButton() {
   const { products } = useOrderStore((state: any) => state)
   const { setOpen } = useDialogStore((state: any) => state)
 
-  if (products.length === 0) return null
-
   const handleClick = () => {
     setOpen("save-order")
   }
 
   return (
-    <Button onClick={handleClick}>Guardar orden</Button>
+    <Button onClick={handleClick} disabled={products.length === 0}>Guardar orden</Button>
   )
 }
 export default OrderButton

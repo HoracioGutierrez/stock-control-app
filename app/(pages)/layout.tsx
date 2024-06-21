@@ -1,11 +1,5 @@
 import { auth } from "@/auth"
-import LogoutButton from "@/components/LogoutButton"
-import { ModeToggle } from "@/components/ModeToggle"
-import NavLink from "@/components/NavLink"
 import SideBar from "@/components/SideBar"
-import { cn } from "@/lib/utils"
-import { Barcode, ComputerIcon, History, Home, LineChart, PackageOpen, ShoppingBasket, Truck, UserRound } from "lucide-react"
-import Link from "next/link"
 
 type PageLayoutProps = {
   children: React.ReactNode
@@ -18,7 +12,7 @@ async function PageLayout({ children }: PageLayoutProps) {
   return (
     <main className="grid grid-cols-1 md:grid-cols-[300px_1fr] grow">
       <SideBar session={session} />
-      <div id="content" className="p-4 md:p-8 flex flex-col dark:bg-transparent dark:from-transparent dark:via-transparent dark:to-transparent bg-gradient-to-br from-accent via-accent to-primary-foreground overflow-auto">
+      <div id="content" className="flex flex-col dark:bg-transparent bg-gradient-to-br from-accent dark:from-transparent via-accent dark:via-transparent to-primary-foreground dark:to-transparent p-4 md:p-8 overflow-auto">
         {children}
       </div>
     </main>

@@ -8,7 +8,6 @@ import { db } from "@/schema"
 
 
 export const deleteById = async ({ entityType, entityId, userId }: DeleteByIdProps): Promise<GeneralResponse> => {
-  console.log(entityType, entityId, userId)
   "use server"
   const entityNameResolve = entityName[entityType as keyof EntityName]
   try {

@@ -49,7 +49,7 @@ function EditFormContainer({ entityType, barcode, entityId, hasVariants }: any) 
             }
             setIdResolve(data.id as string)
             setIsVariant(data.isVariant as boolean)
-            console.log(data)
+
             return entityType === "customer" ? {
                 name: data.name as string,
                 lastName: data.lastName as string,

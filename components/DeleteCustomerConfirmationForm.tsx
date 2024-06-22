@@ -19,7 +19,7 @@ function DeleteCustomerConfirmationForm({ entityType, entityId, type, userId, ha
         setLoading(true)
         let request: any
         request = deleteById({ entityType, entityId, userId })
-        if (type === "delete") {
+        if (type === "delete-customer") {
             request = deleteById({ entityType, entityId, userId })
                 .then((data) => {
                     if (data?.error) {
@@ -78,8 +78,8 @@ function DeleteCustomerConfirmationForm({ entityType, entityId, type, userId, ha
 
     return (
         <div className="flex flex-col gap-8">
-            <div>
-                <p>Esto {type === "delete" ? "bloqueará" : "habilitará"} el cliente.</p>
+            <div className="text-muted-foreground">
+                <p>Esto {type === "delete-customer" ? "bloqueará" : "habilitará"} el cliente.</p>
                 <p>¿Está seguro de que desea continuar?</p>
             </div>
             <Button className="self-center" onClick={handleClick} disabled={loading}>

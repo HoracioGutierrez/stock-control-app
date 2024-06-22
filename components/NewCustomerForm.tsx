@@ -12,13 +12,15 @@ import { createNewCustomer } from "@/actions/createNewCustomer"
 import { toast } from "./ui/use-toast"
 import { useSession } from "next-auth/react"
 import { Button } from "./ui/button"
-import { Loader } from "lucide-react"
+import { Check, Loader } from "lucide-react"
+import { useDialogStore } from "@/stores/generalDialog"
 
 function NewCustomerForm() {
-    const { data : session } = useSession()
+    const { data: session } = useSession()
     const [error, setError] = useState<string | null>(null)
     const { setIsLoading, isLoading } = useNewProductStore((state: any) => ({ isLoading: state.isLoading, setIsLoading: state.setIsLoading }))
-    const { register, handleSubmit, formState: { errors }, reset } = useForm<CustomerInputValues>({
+    const { setClose } = useDialogStore((state: any) => state)
+    const { register, handleSubmit, formState: { errors } } = useForm<CustomerInputValues>({
         defaultValues: {
             name: "",
             lastName: "",
@@ -32,6 +34,7 @@ function NewCustomerForm() {
     })
 
     const onSubmit: SubmitHandler<CustomerInputValues> = (data: CustomerInputValues) => {
+        console.log(data)
         setIsLoading(true)
         createNewCustomer({
             name: data.name,
@@ -50,7 +53,7 @@ function NewCustomerForm() {
                 title: "Cliente creado correctamente",
                 description: "El cliente se ha creado correctamente, puedes verlo en la sección de clientes"
             })
-            reset()
+            setClose()
         })
             .catch((error) => {
                 if (error instanceof Error) {
@@ -77,41 +80,73 @@ function NewCustomerForm() {
                         <CardTitle>Detalles Del Cliente</CardTitle>
                         <CardDescription>Estos detalles son obligatorios para que el cliente pueda crearse correctamente.</CardDescription>
                     </CardHeader>
-                    <CardContent className="grid gap-4">
-                        <div className="grid gap-2">
-                            <Label htmlFor="name">Nombre De Cliente</Label>
-                            <Input type="text" disabled={isLoading} placeholder="Nombre" {...register("name")} />
-                            {errors.name && <p className="text-error text-red-500">{errors.name.message}</p>}
-                            <Label htmlFor="lastName">Apellidos</Label>
-                            <Input type="text" disabled={isLoading} placeholder="Apellidos" {...register("lastName")} />
-                            {errors.lastName && <p className="text-error text-red-500">{errors.lastName.message}</p>}
+                    <CardContent className="grid gap-4 ">
+                        <div className="grid gap-4">
+                            <div className="grid gap-2">
+                                <div>
+                                    <Label htmlFor="name">Nombre De Cliente</Label>
+                                    <Input type="text" disabled={isLoading} placeholder="Nombre" {...register("name")} />
+                                    {errors.name && <p className="text-error text-red-500">{errors.name.message}</p>}
+                                </div>
+                            </div>
+                            <div className="grid gap-2">
+                                <div>
+                                    <Label htmlFor="lastName">Apellidos</Label>
+                                    <Input type="text" disabled={isLoading} placeholder="Apellidos" {...register("lastName")} />
+                                    {errors.lastName && <p className="text-error text-red-500">{errors.lastName.message}</p>}
+                                </div>
+                            </div>
                         </div>
                     </CardContent>
                 </Card>
             </div>
-            <div className="">
+            <div>
                 <Card className="bg-primary-foreground">
                     <CardHeader>
                         <CardTitle>Datos Adicionales</CardTitle>
                         <CardDescription>Estos datos son opcionales para que el cliente pueda crearse correctamente.</CardDescription>
                     </CardHeader>
-                    <CardContent>
-                        <Label htmlFor="phone">Teléfono</Label>
-                        <Input type="text" disabled={isLoading} placeholder="Teléfono" {...register("phone")} />
-                        {errors.phone && <p className="text-error">{errors.phone.message}</p>}
-                        <Label htmlFor="email">Email</Label> <Input type="email" disabled={isLoading} placeholder="Email" {...register("email")} />
-                        {errors.email && <p className="text-error">{errors.email.message}</p>}
-                        <Label htmlFor="address">Dirección</Label> <Input type="text" disabled={isLoading} placeholder="Dirección" {...register("address")} />
-                        {errors.address && <p className="text-error">{errors.address.message}</p>}
-                        <Label htmlFor="legalName">Nombre Legal</Label> <Input type="text" disabled={isLoading} placeholder="Nombre Legal" {...register("legalName")} />
-                        {errors.legalName && <p className="text-error">{errors.legalName.message}</p>}
-                        <Label htmlFor="cuitCuil">CUIT/CUIL</Label> <Input type="text" disabled={isLoading} placeholder="CUIT/CUIL" {...register("cuitCuil")} />
-                        {errors.cuitCuil && <p className="text-error">{errors.cuitCuil.message}</p>}
+                    <CardContent className="grid gap-4">
+                        <div className="grid gap-4">
+                            <div>
+                                <Label htmlFor="phone">Teléfono</Label>
+                                <Input type="text" disabled={isLoading} placeholder="Teléfono" {...register("phone")} />
+                                {errors.phone && <p className="text-error">{errors.phone.message}</p>}
+                            </div>
+                        </div>
+                        <div className="grid gap-4">
+                            <div>
+                                <Label htmlFor="email">Email</Label>
+                                <Input type="email" disabled={isLoading} placeholder="Email" {...register("email")} />
+                                {errors.email && <p className="text-error">{errors.email.message}</p>}
+                            </div>
+                        </div>
+                        <div className="grid gap-4">
+                            <div>
+                                <Label htmlFor="address">Dirección</Label>
+                                <Input type="text" disabled={isLoading} placeholder="Dirección" {...register("address")} />
+                                {errors.address && <p className="text-error">{errors.address.message}</p>}
+                            </div>
+                        </div>
+                        <div className="grid gap-4">
+                            <div>
+                                <Label htmlFor="legalName">Nombre Legal</Label>
+                                <Input type="text" disabled={isLoading} placeholder="Razón Social/Nombre Legal" {...register("legalName")} />
+                                {errors.legalName && <p className="text-error">{errors.legalName.message}</p>}
+                            </div>
+                        </div>
+                        <div className="grid gap-4">
+                            <div>
+                                <Label htmlFor="cuitCuil">CUIT/CUIL</Label>
+                                <Input type="text" disabled={isLoading} placeholder="CUIT/CUIL" {...register("cuitCuil")} />
+                                {errors.cuitCuil && <p className="text-error">{errors.cuitCuil.message}</p>}
+                            </div>
+                        </div>
                     </CardContent>
                 </Card>
                 <Button form="new-customer-form" disabled={isLoading} className="flex items-center justify-center gap-2 mx-auto mt-8">
-                    {isLoading && <Loader className="animate-spin" />}
-                    <span>Guardar cliente</span>
+                    {isLoading ? <Loader className="animate-spin" /> : <Check />}
+                    <span>Guardar Cliente</span>
                 </Button>
             </div>
         </form>

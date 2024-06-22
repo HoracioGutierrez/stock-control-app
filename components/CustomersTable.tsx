@@ -2,10 +2,8 @@
 
 import { CustomerTableProps } from "@/lib/types"
 import EditProductButton from "./EditProductButton"
-import DeleteCustomerButton from "./DeleteCustomerButton"
 import CustomDataTable from "./CustomDataTable"
-import DeleteResourceButton from "./layout/DeleteResourceButton"
-import { Ban, UserRoundCheck } from "lucide-react"
+import DeleteCustomerButton from "./DeleteCustomerButton"
 
 function CustomersTable({ data }: CustomerTableProps) {
 
@@ -18,15 +16,7 @@ function CustomersTable({ data }: CustomerTableProps) {
             actions={(rowData: any) => {
                 return (
                     <>
-                        {/* <DeleteCustomerButton active={rowData.active as boolean} id={rowData.id} /> */}
-                        <DeleteResourceButton
-                            type="delete-product"
-                            data={rowData.id}
-                            active={rowData.active as boolean}
-                            activeIcon={<Ban className="aspect-square p-0 text-muted-foreground hover:text-red-400" />}
-                            inactiveIcon={<UserRoundCheck className="aspect-square p-0 text-muted-foreground hover:text-green-400" />}
-                            tooltip={rowData.active ? "Bloquear cliente" : "Reactivar cliente"}
-                        />
+                        <DeleteCustomerButton active={rowData.active} id={rowData.id} />
                         <EditProductButton id={rowData.id} />
                     </>
                 )

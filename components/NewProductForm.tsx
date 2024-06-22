@@ -23,13 +23,15 @@ import { Button } from "./ui/button"
 import { Barcode, Check, Loader, PlusCircle } from "lucide-react"
 import ProductVariantForm from "./ProductVariantForm"
 import { toast } from "./ui/use-toast"
+import { useDialogStore } from "@/stores/generalDialog"
 
 function NewProductForm({ userId }: NewProductFormProps) {
 
   const [error, setError] = useState<string | null>(null)
   const [mainName, setMainName] = useState<string>("")
   const { setIsLoading, isLoading } = useNewProductStore((state: any) => ({ isLoading: state.isLoading, setIsLoading: state.setIsLoading }))
-  const { control, register, handleSubmit, formState: { errors }, reset, getValues } = useForm<ProductInputValues>({
+  const { setClose } = useDialogStore((state: any) => state)
+  const { control, register, handleSubmit, formState: { errors }, getValues } = useForm<ProductInputValues>({
     defaultValues: {
       name: "",
       description: "",
@@ -64,7 +66,7 @@ function NewProductForm({ userId }: NewProductFormProps) {
           title: "Producto creado correctamente",
           description: "El producto se ha creado correctamente, puedes verlo en la sección de productos"
         })
-        reset()
+        setClose()
       })
       .catch((error) => {
         if (error instanceof Error) {
@@ -184,9 +186,9 @@ function NewProductForm({ userId }: NewProductFormProps) {
             )}
           </CardContent>
         </Card>
-        <Button form="new-product-form" disabled={isLoading} className="flex items-center gap-2 mx-auto mt-8">
+        <Button form="new-product-form" disabled={isLoading} className="flex items-center gap-2 mx-auto mt-8" onClick={handleSubmit(onSubmit)}>
           {isLoading ? <Loader className="animate-spin" /> : <Check />}
-          <span>Guardar producto</span>
+          <span>Guardar Producto</span>
         </Button>
       </div>
     </form>

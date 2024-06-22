@@ -1,4 +1,5 @@
 "use client"
+import { getAllProviders } from "@/actions/getAllProviders"
 import CustomDataTable from "@/components/CustomDataTable"
 /* import DeleteProviderButton from "@/components/DeleteProviderButton"
 import EditProviderButton from "@/components/EditProviderButton" */
@@ -15,6 +16,8 @@ function ProvidersTable({ data }: ProvidersTableProps) {
       type="providers"
       filterColumn="nombre"
       filterKey="name"
+      manualFetch={true}
+      manualCallback={getAllProviders}
       actions={(rowData: any) => {
         return (
           <>

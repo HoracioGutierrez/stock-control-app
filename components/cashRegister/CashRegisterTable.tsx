@@ -2,6 +2,7 @@
 import { Ban } from "lucide-react"
 import CustomDataTable from "../CustomDataTable"
 import DeleteResourceButton from "../layout/DeleteResourceButton"
+import { getAllCashRegisters } from "@/actions/getAllCashRegisters"
 
 type Props = {
   data: any
@@ -14,6 +15,8 @@ function CashRegisterTable({ data }: Props) {
       type="cash-registers"
       filterColumn="label"
       filterKey="label"
+      manualFetch={true}
+      manualCallback={getAllCashRegisters}
       actions={(rowData: any) => {
         return (
           <>

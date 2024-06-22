@@ -1,0 +1,1 @@
+ALTER TABLE "stock-control-app_provider" ADD COLUMN "active" boolean NOT NULL;

@@ -12,6 +12,10 @@ export const openCashRegister = async (cashRegisterId: string, currentAmount: nu
 
     if (cashRegisterFromDb[0].openedById) throw new Error("La caja ya está abierta")
 
+    const hasCashRegister = await db.select().from(cashRegister).where(eq(cashRegister.openedById, userId))
+
+    if (hasCashRegister.length > 0) throw new Error("Ya tienes una caja abierta")
+
 
     const openning = await db.insert(cashRegistersOpennings).values({
       userId: userId,

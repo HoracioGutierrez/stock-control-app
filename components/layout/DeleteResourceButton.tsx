@@ -25,11 +25,11 @@ const DeleteResourceButton = ({ active, type, data, activeIcon, inactiveIcon , t
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger>
-          <Button variant={"ghost"} className="aspect-square p-0" onClick={handleClick}>
+        <TooltipTrigger asChild>
+          <Button variant={"ghost"} className="p-0 aspect-square" onClick={handleClick}>
             {active
-              ? activeIcon || <Trash2 className="aspect-square p-0 text-muted-foreground hover:text-red-400" />
-              : inactiveIcon || <UndoDot className="aspect-square p-0 text-muted-foreground hover:text-green-400" />
+              ? activeIcon || <Trash2 className="p-0 text-muted-foreground hover:text-red-400 aspect-square" />
+              : inactiveIcon || <UndoDot className="p-0 text-muted-foreground hover:text-green-400 aspect-square" />
             }
           </Button>
         </TooltipTrigger>

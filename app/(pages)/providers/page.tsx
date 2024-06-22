@@ -11,7 +11,7 @@ async function ProvidersPage() {
 
   const session = await auth()
   const { data, error } = await getAllProviders()
-
+  console.log(data)
   return (
     <>
       <PageHeader title="Proveedores" actions={

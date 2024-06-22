@@ -1,13 +1,18 @@
 "use client"
+import { historyColumns, productsColumns, providersColumns, customersColumns, cashRegistersColumns } from "@/lib/columnDefinitions"
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { SortingState, getSortedRowModel, flexRender, getCoreRowModel, useReactTable, ColumnFiltersState, getFilteredRowModel, getPaginationRowModel, ColumnDef, VisibilityState } from "@tanstack/react-table"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { CustomerType, HistoryType, ProductType, ProviderType } from "@/schema"
-import { SortingState, getSortedRowModel, flexRender, getCoreRowModel, useReactTable, ColumnFiltersState, getFilteredRowModel, getPaginationRowModel, ColumnDef } from "@tanstack/react-table"
+import { Input } from "@/components/ui/input"
 import { useEffect, useState } from "react"
 import { Button } from "./ui/button"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { historyColumns, productsColumns, providersColumns, customersColumns, cashRegistersColumns } from "@/lib/columnDefinitions"
-import { ProductsTableProps } from "@/lib/types"
+import { Eye, Filter } from "lucide-react"
+import { TooltipProvider } from "@radix-ui/react-tooltip"
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip"
+import { cn } from "@/lib/utils"
+import { getAllCashRegisters } from "@/actions/getAllCashRegisters"
 
 type CustomDataTableProps = {
   data: ProductType[] | HistoryType[] | CustomerType[] | ProviderType[] | null,
@@ -15,6 +20,8 @@ type CustomDataTableProps = {
   filterColumn?: string
   filterKey?: string
   actions?: (rowData: any) => JSX.Element
+  manualFetch?: boolean
+  manualCallback?: any
 }
 
 const columns: Record<"products" | "history" | "providers" | "customers" | "cash-registers", ColumnDef<unknown | any>[]> = {
@@ -25,13 +32,15 @@ const columns: Record<"products" | "history" | "providers" | "customers" | "cash
   "cash-registers": cashRegistersColumns
 }
 
-function CustomDataTable({ data, type, filterColumn, filterKey, actions }: CustomDataTableProps) {
+function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualFetch, manualCallback }: CustomDataTableProps) {
 
   const [sorting, setSorting] = useState<SortingState>([])
   const [tableData, setTableData] = useState<ProductType | HistoryType[]>(data)
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [pageSize, setPageSize] = useState<number>(5)
   const [pageIndex, setPageIndex] = useState<number>(0)
+  const [activeState, setActiveState] = useState<boolean>(false)
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const table = useReactTable({
     columns: columns[type],
     data: tableData,
@@ -41,6 +50,8 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions }: Custo
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
+    onColumnVisibilityChange: setColumnVisibility,
+    columnResizeMode: "onChange",
     initialState: {
       pagination: {
         pageSize: 5
@@ -49,6 +60,7 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions }: Custo
     state: {
       sorting,
       columnFilters,
+      columnVisibility,
       pagination: {
         pageIndex,
         pageSize
@@ -61,13 +73,30 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions }: Custo
     setTableData(data)
   }, [data])
 
+  useEffect(() => {
+
+    if (!manualFetch) return
+    if (activeState) {
+      manualCallback(true)
+        .then((data: any) => {
+          setTableData(data.data)
+        })
+    } else {
+      manualCallback()
+        .then((data: any) => {
+          setTableData(data.data)
+        })
+    }
+
+  }, [activeState])
+
   const handlePageChange = (pageIndex: string) => {
     setPageSize(Number(pageIndex))
   }
 
   return (
     <div className="flex flex-col grow">
-      <div className="flex items-center py-4 justify-between">
+      <div className="flex justify-between items-center py-4">
         <Input
           placeholder={`Filtrar por ${filterColumn ?? "nombre"}`}
           value={(table.getColumn(filterKey || "name")?.getFilterValue() as string) ?? ""}
@@ -76,20 +105,74 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions }: Custo
           }}
           className="max-w-sm"
         />
-        <Select onValueChange={handlePageChange}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Cant. de resultados" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="5">5</SelectItem>
-            <SelectItem value="10">10</SelectItem>
-            <SelectItem value="15">15</SelectItem>
-            <SelectItem value="20">20</SelectItem>
-            <SelectItem value="30">30</SelectItem>
-            <SelectItem value="50">50</SelectItem>
-            <SelectItem value="100">100</SelectItem>
-          </SelectContent>
-        </Select>
+
+        <div className="flex items-center gap-2">
+          <TooltipProvider>
+            <DropdownMenu>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="ml-auto">
+                      <Filter className="p-0 aspect-square" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Cambiar la visibilidad de las columnas</p>
+                </TooltipContent>
+              </Tooltip>
+              <DropdownMenuContent align="end">
+                {manualFetch && (<>
+                  <DropdownMenuLabel>Ver inactivos</DropdownMenuLabel>
+                  <DropdownMenuCheckboxItem
+                    className={cn("capitalize", activeState ? "" : "text-muted-foreground")}
+                    checked={activeState}
+                    onCheckedChange={(value) => setActiveState(!!value)}
+                  >
+                    ver inactivos
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuSeparator />
+                </>
+                )}
+                <DropdownMenuLabel>Ver columnas</DropdownMenuLabel>
+                {table
+                  .getAllColumns()
+                  .filter(
+                    (column) => column.getCanHide()
+                  )
+                  .map((column) => {
+                    return (
+                      <DropdownMenuCheckboxItem
+                        key={column.id}
+                        className={cn("capitalize", column.getIsVisible() ? "" : "text-muted-foreground")}
+                        checked={column.getIsVisible()}
+                        onCheckedChange={(value) =>
+                          column.toggleVisibility(!!value)
+                        }
+                      >
+                        {column.id}
+                      </DropdownMenuCheckboxItem>
+                    )
+                  })}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </TooltipProvider>
+
+          <Select onValueChange={handlePageChange}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Cant. de resultados" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="5">5</SelectItem>
+              <SelectItem value="10">10</SelectItem>
+              <SelectItem value="15">15</SelectItem>
+              <SelectItem value="20">20</SelectItem>
+              <SelectItem value="30">30</SelectItem>
+              <SelectItem value="50">50</SelectItem>
+              <SelectItem value="100">100</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
       <div className="grow">
         <Table>
@@ -97,8 +180,8 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions }: Custo
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
-                    <span key={header.id}>{header.isPlaceholder
+                  <TableHead key={header.id} colSpan={header.colSpan} style={{ width: `${header.getSize()}px` }} onMouseDown={header.getResizeHandler()} className="hover:cursor-col-resize">
+                    <span key={header.id} className="hover:cursor-pointer">{header.isPlaceholder
                       ? null
                       : flexRender(
                         header.column.columnDef.header,
@@ -145,9 +228,6 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions }: Custo
                     if (cell.column.id === "actions") {
                       return (
                         <TableCell key={cell.id} className="flex items-center gap-2">
-                          {/* <DeleteProductButton active={row.original.active} barcode={row.original.barcode} />
-                          <EditProductButton barcode={row.original.barcode} />
-                          {!row.original.isVariant && <EditVariantButton barcode={row.original.barcode} />} */}
                           {actions && actions(row.original)}
                         </TableCell>
                       )
@@ -155,10 +235,10 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions }: Custo
 
                     return (
                       <TableCell key={cell.id} className="" onDoubleClick={() => { console.log(cell) }}>
-                        <div className="grid grid-cols-[max-content_1fr] gap-2 place-content-center">
+                        <div className="place-content-center gap-2 grid grid-cols-[max-content_1fr]">
                           {cell.column.id === "price" && <span>$</span>}
                           {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                          {cell.column.id === "stock" && <span className="grow w-full"> unidades</span>}
+                          {cell.column.id === "stock" && <span className="w-full grow"> unidades</span>}
                         </div>
                       </TableCell>
                     )
@@ -175,7 +255,7 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions }: Custo
           </TableBody>
         </Table>
       </div >
-      <div className="flex items-center justify-end space-x-2 py-4">
+      <div className="flex justify-end items-center space-x-2 py-4">
         <Button
           variant="outline"
           size="sm"

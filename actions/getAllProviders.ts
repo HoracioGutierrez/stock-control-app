@@ -1,11 +1,20 @@
 "use server"
 import { GeneralResponse } from "@/lib/types"
 import { db, providers } from "@/schema"
+import { eq } from "drizzle-orm"
 
-export const getAllProviders = async (): Promise<GeneralResponse> => {
+export const getAllProviders = async (inactive = false): Promise<GeneralResponse> => {
   "use server"
   try {
-    const providersFromDb = await db.select().from(providers).orderBy(providers.name)
+    //const providersFromDb = await db.select().from(providers).orderBy(providers.name)
+
+    let providersFromDb: any
+    if (inactive) {
+      providersFromDb = await db.select().from(providers).orderBy(providers.name)
+    } else {
+      providersFromDb = await db.select().from(providers).where(eq(providers.active, true)).orderBy(providers.name)
+    }
+
     return {
       data: providersFromDb,
       error: null,

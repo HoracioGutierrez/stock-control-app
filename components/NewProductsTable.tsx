@@ -1,5 +1,6 @@
 "use client"
 
+import { getAllProducts } from "@/actions/getAllProducts"
 import CustomDataTable from "./CustomDataTable"
 import DeleteProductButton from "./DeleteProductButton"
 import EditProductButton from "./EditProductButton"
@@ -18,6 +19,8 @@ function ProductsTable({ data }: ProductsTableProps) {
       type="products"
       filterColumn="nombre"
       filterKey="name"
+      manualFetch={true}
+      manualCallback={getAllProducts}
       actions={(rowData: any) => {
         return (
           <>

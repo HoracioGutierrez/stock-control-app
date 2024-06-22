@@ -4,6 +4,7 @@ import { CustomerTableProps } from "@/lib/types"
 import EditProductButton from "./EditProductButton"
 import CustomDataTable from "./CustomDataTable"
 import DeleteCustomerButton from "./DeleteCustomerButton"
+import { getAllCustomers } from "@/actions/getAllCustomers"
 
 function CustomersTable({ data }: CustomerTableProps) {
 
@@ -13,6 +14,8 @@ function CustomersTable({ data }: CustomerTableProps) {
             type="customers"
             filterColumn="nombre"
             filterKey="name"
+            manualFetch={true}
+            manualCallback={getAllCustomers}
             actions={(rowData: any) => {
                 return (
                     <>

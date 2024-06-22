@@ -58,10 +58,12 @@ export const productsColumns: ColumnDef<ProductType>[] = [
   {
     header: "Activo",
     accessorKey: "active",
+    size : 1
   },
   {
     header: "Acciones",
     accessorKey: "actions",
+    size : 1
   }
 ]
 
@@ -141,24 +143,14 @@ export const customersColumns: ColumnDef<CustomerType>[] = [
     accessorKey: "email",
   },
   {
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="link"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")
-          }
-          className="p-0"
-        >
-          Activo
-          < ArrowUpDown className="ml-2 w-4 h-4" />
-        </Button>
-      )
-    },
+    header : "Activo",
     accessorKey: "active",
+    size : 1
   },
   {
     header: "Acciones",
     accessorKey: "actions",
+    size : 1
   }
 ]
 
@@ -195,24 +187,18 @@ export const providersColumns: ColumnDef<ProviderType>[] = [
     accessorKey: "lastName",
   },
   {
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="link"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")
-          }
-          className="p-0"
-        >
-          Estado
-          < ArrowUpDown className="ml-2 w-4 h-4" />
-        </Button>
-      )
-    },
+    header : "Teléfono",
+    accessorKey: "phone",
+  },
+  {
+    header : "Activo",
     accessorKey: "active",
+    size : 1
   },
   {
     header: "Acciones",
     accessorKey: "actions",
+    size : 1
   }
 ]
 
@@ -267,9 +253,11 @@ export const cashRegistersColumns: ColumnDef<CashRegisterType>[] = [
   {
     header : "Activo",
     accessorKey: "active",
+    size : 1
   },
   {
     header : "Acciones",
     accessorKey: "actions",
+    size : 1
   }
 ]

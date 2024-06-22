@@ -13,7 +13,7 @@ export const productsColumns: ColumnDef<ProductType>[] = [
           className="p-0"
         >
           Nombre
-          < ArrowUpDown className="ml-2 h-4 w-4" />
+          < ArrowUpDown className="ml-2 w-4 h-4" />
         </Button>
       )
     },
@@ -33,7 +33,7 @@ export const productsColumns: ColumnDef<ProductType>[] = [
           className="p-0"
         >
           Precio
-          < ArrowUpDown className="ml-2 h-4 w-4" />
+          < ArrowUpDown className="ml-2 w-4 h-4" />
         </Button>
       )
     },
@@ -49,7 +49,7 @@ export const productsColumns: ColumnDef<ProductType>[] = [
           className="p-0"
         >
           Stock
-          < ArrowUpDown className="ml-2 h-4 w-4" />
+          < ArrowUpDown className="ml-2 w-4 h-4" />
         </Button>
       )
     },
@@ -75,7 +75,7 @@ export const historyColumns: ColumnDef<HistoryType>[] = [
           className="p-0"
         >
           Fecha
-          < ArrowUpDown className="ml-2 h-4 w-4" />
+          < ArrowUpDown className="ml-2 w-4 h-4" />
         </Button>
       )
     },
@@ -109,7 +109,7 @@ export const customersColumns: ColumnDef<CustomerType>[] = [
           className="p-0"
         >
           Nombre
-          < ArrowUpDown className="ml-2 h-4 w-4" />
+          < ArrowUpDown className="ml-2 w-4 h-4" />
         </Button>
       )
     },
@@ -125,7 +125,7 @@ export const customersColumns: ColumnDef<CustomerType>[] = [
           className="p-0"
         >
           Apellido
-          < ArrowUpDown className="ml-2 h-4 w-4" />
+          < ArrowUpDown className="ml-2 w-4 h-4" />
         </Button>
       )
     },
@@ -150,7 +150,7 @@ export const customersColumns: ColumnDef<CustomerType>[] = [
           className="p-0"
         >
           Activo
-          < ArrowUpDown className="ml-2 h-4 w-4" />
+          < ArrowUpDown className="ml-2 w-4 h-4" />
         </Button>
       )
     },
@@ -172,7 +172,7 @@ export const providersColumns: ColumnDef<ProviderType>[] = [
           className="p-0"
         >
           Nombre
-          < ArrowUpDown className="ml-2 h-4 w-4" />
+          < ArrowUpDown className="ml-2 w-4 h-4" />
         </Button>
       )
     },
@@ -188,7 +188,7 @@ export const providersColumns: ColumnDef<ProviderType>[] = [
           className="p-0"
         >
           Apellido
-          < ArrowUpDown className="ml-2 h-4 w-4" />
+          < ArrowUpDown className="ml-2 w-4 h-4" />
         </Button>
       )
     },
@@ -204,7 +204,7 @@ export const providersColumns: ColumnDef<ProviderType>[] = [
           className="p-0"
         >
           Estado
-          < ArrowUpDown className="ml-2 h-4 w-4" />
+          < ArrowUpDown className="ml-2 w-4 h-4" />
         </Button>
       )
     },
@@ -226,7 +226,7 @@ export const cashRegistersColumns: ColumnDef<CashRegisterType>[] = [
           className="p-0"
         >
           Nombre de caja
-          < ArrowUpDown className="ml-2 h-4 w-4" />
+          < ArrowUpDown className="ml-2 w-4 h-4" />
         </Button>
       )
     },
@@ -242,7 +242,7 @@ export const cashRegistersColumns: ColumnDef<CashRegisterType>[] = [
           className="p-0"
         >
           Monto actual
-          < ArrowUpDown className="ml-2 h-4 w-4" />
+          < ArrowUpDown className="ml-2 w-4 h-4" />
         </Button>
       )
     },
@@ -258,26 +258,18 @@ export const cashRegistersColumns: ColumnDef<CashRegisterType>[] = [
           className="p-0"
         >
           Abierta
-          < ArrowUpDown className="ml-2 h-4 w-4" />
+          < ArrowUpDown className="ml-2 w-4 h-4" />
         </Button>
       )
     },
     accessorKey: "openedById",
   },
   {
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="link"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")
-          }
-          className="p-0"
-        >
-          Acciones
-          < ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
+    header : "Activo",
+    accessorKey: "active",
+  },
+  {
+    header : "Acciones",
     accessorKey: "actions",
   }
 ]

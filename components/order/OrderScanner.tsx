@@ -1,11 +1,16 @@
 "use client"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table"
 import { getProductByBarcode } from "@/actions/getProductByBarcode"
-import { ArrowDown, ArrowUp, Trash2 } from "lucide-react"
+import { ArrowDown, ArrowUp, Barcode, Trash2 } from "lucide-react"
 import { useOrderStore } from "@/stores/orderStore"
 import { useEffect, useState } from "react"
-import { Button } from "./ui/button"
+import { Button } from "../ui/button"
+import { useDialogStore } from "@/stores/generalDialog"
+import CloseCashRegisterButton from "../cashRegister/CloseCashRegisterButton"
+import CancelOrderButton from "./CancelOrderButton"
+import OrderButton from "./OrderButton"
 
 type OrderScannerProps = {
   data: any
@@ -17,7 +22,8 @@ function OrderScanner({ data }: OrderScannerProps) {
   const [scannedBarcode, setScannedBarcode] = useState<string>("")
   const [error, setError] = useState<string>("")
   const [scanning, setScanning] = useState<boolean>(false)
-  const { products, setScannedProduct, increment, decrement, total, remove, setProduct, scannedProduct } = useOrderStore((state: any) => state)
+  const { setOpen } = useDialogStore((state: any) => state)
+  const { products, setScannedProduct, increment, decrement, total, remove, setProduct, scannedProduct , clientId } = useOrderStore((state: any) => state)
 
   let barcode = ""
 
@@ -27,6 +33,7 @@ function OrderScanner({ data }: OrderScannerProps) {
     setHasEvent(true)
 
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (!e.key) return
       if (e.key !== "Enter" && e.key.length !== 1) return
       if (scanning) return
 
@@ -80,24 +87,40 @@ function OrderScanner({ data }: OrderScannerProps) {
       })
   }
 
+  const handleManualScan = () => {
+    setOpen("manual-scan")
+  }
+
+  const handleAddCustomer = () => {
+    setOpen("add-customer")
+  }
+
+  const handlePayWith = () => {
+    setOpen("pay-with")
+  }
+
   return (
-    <div>
-      <div className="grid gap-4 grid-cols-1 md:grid-cols-2 mb-4 mt-4">
+    <div className="flex flex-col h-full">
+      <div className="gap-4 grid grid-cols-1 md:grid-cols-2 mt-4 mb-4">
         <Card className="bg-accent">
           <CardHeader>
-            <CardTitle className="text-muted-foreground text-md">Total</CardTitle>
+            <CardTitle className="text-md text-muted-foreground">Total</CardTitle>
           </CardHeader>
           <CardContent>
-            <CardDescription className="text-primary font-bold text-5xl">${total}</CardDescription>
+            <CardDescription className="font-bold text-5xl text-primary">${total}</CardDescription>
+            <CardDescription className="text-muted-foreground">
+              {clientId && <p>Cliente: {clientId.split("@")[1]}</p>}
+            </CardDescription>
           </CardContent>
         </Card>
         <Card className="bg-accent">
           <CardHeader>
-            <CardTitle className="text-muted-foreground text-md">Ultimo Producto</CardTitle>
+            <CardTitle className="text-md text-muted-foreground">Ultimo Producto</CardTitle>
           </CardHeader>
           <CardContent>
+
             {scannedProduct && (
-              <p className="text-primary font-bold text-4xl">
+              <p className="font-bold text-4xl text-primary">
                 {scannedProduct.name} x ${scannedProduct.price}
               </p>
             )}
@@ -111,14 +134,27 @@ function OrderScanner({ data }: OrderScannerProps) {
               </p>
             )}
           </CardContent>
-          <CardFooter className="justify-end">
+          <CardFooter className="flex justify-end items-end gap-4">
             <p className="text-muted-foreground">
               {scanning ? "Escaneando..." : "Esperando ingreso..."}
             </p>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button onClick={handleManualScan}>
+                    <Barcode />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Escaneao Manual</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </CardFooter>
         </Card>
       </div>
-      <Table>
+
+      <Table className="grow">
         <TableHeader>
           <TableRow>
             <TableHead>Nombre</TableHead>
@@ -144,16 +180,16 @@ function OrderScanner({ data }: OrderScannerProps) {
                 <TableCell>{product.barcode}</TableCell>
                 <TableCell className="flex items-center gap-2">
                   {product.count || 1}
-                  <Button variant={"outline"} className="aspect-square p-0" onClick={() => increment(product, i)}>
-                    <ArrowUp className="aspect-square p-0" />
+                  <Button variant={"outline"} className="p-0 aspect-square" onClick={() => increment(product, i)}>
+                    <ArrowUp className="p-0 aspect-square" />
                   </Button>
-                  <Button variant={"outline"} className="aspect-square p-0" onClick={() => decrement(product, i)}>
-                    <ArrowDown className="aspect-square p-0" />
+                  <Button variant={"outline"} className="p-0 aspect-square" onClick={() => decrement(product, i)}>
+                    <ArrowDown className="p-0 aspect-square" />
                   </Button>
                 </TableCell>
                 <TableCell>
-                  <Button variant={"outline"} className="aspect-square p-0" onClick={() => { remove(product, i) }}>
-                    <Trash2 className="aspect-square p-0" />
+                  <Button variant={"outline"} className="p-0 aspect-square" onClick={() => { remove(product, i) }}>
+                    <Trash2 className="p-0 aspect-square" />
                   </Button>
                 </TableCell>
               </TableRow>
@@ -161,6 +197,18 @@ function OrderScanner({ data }: OrderScannerProps) {
           )}
         </TableBody>
       </Table>
+
+      <div className="flex justify-center gap-4">
+        <Button onClick={handlePayWith} disabled={products.length === 0}>
+          Paga con
+        </Button>
+        <Button onClick={handleAddCustomer} disabled={products.length === 0}>
+          Agregar Cliente
+        </Button>
+        <OrderButton />
+        <CancelOrderButton />
+        <CloseCashRegisterButton />
+      </div>
     </div>
   )
 }

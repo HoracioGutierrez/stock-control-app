@@ -1,5 +1,5 @@
 import { CashRegisterType, HistoryType, ProductType, ProviderType } from "@/schema"
-import { User } from "next-auth"
+import { Session, User } from "next-auth"
 import { CustomerType } from "@/schema"
 
 
@@ -193,4 +193,8 @@ export type NewProductFormProps = {
 
 export type CustomLoaderProps = {
   title: string,
+}
+
+export type SideBarProps = {
+  session: Session | null
 }

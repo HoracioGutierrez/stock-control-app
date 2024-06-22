@@ -21,11 +21,11 @@ function CashRegisterTable({ data }: Props) {
               type="cash-register-close"
               data={rowData.id}
               active={rowData.openedById === null ? false : true}
-              activeIcon={<Ban className="aspect-square p-0 text-muted-foreground hover:text-red-400" />}
+              activeIcon={<Ban className="p-0 text-muted-foreground hover:text-red-400 aspect-square" />}
               tooltip={rowData.openedById === null ? "Abrir caja" : "Cerrar caja"}
             />
             <DeleteResourceButton
-              type="cash-register-close"
+              type="cash-register-delete"
               data={rowData.id}
               active={rowData.active}
               tooltip={rowData.active ? "Bloquear Caja" : "Desbloquear caja"}

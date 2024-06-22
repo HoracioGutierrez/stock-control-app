@@ -1,8 +1,10 @@
+"use server"
 import { GeneralResponse } from "@/lib/types"
 import { db, customers } from "@/schema"
 import { asc } from "drizzle-orm"
 
 export const getAllCustomers = async (): Promise<GeneralResponse> => {
+    "use server"
     try {
         const customersFromDb = await db.select().from(customers).orderBy(asc(customers.name))
         return {

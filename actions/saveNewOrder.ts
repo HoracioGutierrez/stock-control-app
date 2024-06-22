@@ -4,7 +4,7 @@ import { db, history, products, orders, productOrders, cashRegister as cashRegis
 import { eq, sql } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 
-export const saveNewOrder = async (userId: string, data: any, cashRegister: any, total: number): Promise<GeneralResponse> => {
+export const saveNewOrder = async (userId: string, data: any, cashRegister: any, total: number, clientId: string): Promise<GeneralResponse> => {
   "use server"
   try {
 
@@ -14,7 +14,7 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
         userId: userId,
         total: total,
         status: "pending",
-        customerId: data.customerId,
+        customerId: clientId,
         ip: data.ip,
         userAgent: data.userAgent,
         cashRegisterId: cashRegister.id

@@ -6,6 +6,7 @@ export const useOrderStore = create((set) => ({
   total: 0,
   hasProducts: false,
   scannedProduct: null,
+  clientId: null,
   setProduct: (product: ProductType) => set({ scannedProduct: product }),
   setProducts: (products: any[]) => set({ products }),
   setTotal: (total: number) => set({ total }),
@@ -47,5 +48,6 @@ export const useOrderStore = create((set) => ({
     productsCopy.splice(index, 1)
     return { products: productsCopy, total: newTotal }
   }),
-  cancelOrder: () => set({ products: [], total: 0, hasProducts: false, scannedProduct: null })
+  cancelOrder: () => set({ products: [], total: 0, hasProducts: false, scannedProduct: null }),
+  setClient : (clientId: string) => set({ clientId })
 }))

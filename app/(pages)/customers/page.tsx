@@ -3,9 +3,11 @@ import CustomerDialog from "@/components/CustomerDialog"
 import CustomersTable from "@/components/CustomersTable"
 import PageHeader from "@/components/layout/PageHeader"
 import CreateCustomerButton from "@/components/CreateCustomerButton"
+import { auth } from "@/auth"
 
 async function CustomersPage() {
 
+  const session = await auth()
   const { data, error } = await getAllCustomers()
 
   if (error) return <p>Error al obtener los clientes</p>
@@ -14,14 +16,14 @@ async function CustomersPage() {
     <>
       <PageHeader title="Clientes" actions={<CreateCustomerButton />} />
       {data.length == 0 && (
-        <div className="grow rounded border border-dashed border-slate-400 grid place-items-center">
+        <div className="place-items-center border-slate-400 grid border border-dashed rounded grow">
           <div className="max-w-sm text-center">
             <p className="font-bold text-xl">No hay clientes creados todavía</p>
-            <p className="text-sm text-muted-foreground mb-6">Podrás comenzar a operar en cuanto tengas al menos un cliente en tu lista de clientes</p>
+            <p className="mb-6 text-muted-foreground text-sm">Podrás comenzar a operar en cuanto tengas al menos un cliente en tu lista de clientes</p>
           </div>
         </div>
       )}
-      {data.length > 0 && <CustomersTable data={data} />}
+      {data.length > 0 && <CustomersTable data={data} isAdmin={session?.user.isAdmin} />}
       <CustomerDialog />
     </>
   )

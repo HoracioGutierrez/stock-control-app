@@ -6,9 +6,10 @@ import { getAllCashRegisters } from "@/actions/getAllCashRegisters"
 
 type Props = {
   data: any
+  isAdmin?: boolean
 }
 
-function CashRegisterTable({ data }: Props) {
+function CashRegisterTable({ data, isAdmin }: Props) {
   return (
     <CustomDataTable
       data={data}
@@ -27,12 +28,14 @@ function CashRegisterTable({ data }: Props) {
               activeIcon={<Ban className="p-0 text-muted-foreground hover:text-red-400 aspect-square" />}
               tooltip={rowData.openedById === null ? "Abrir caja" : "Cerrar caja"}
             />
-            <DeleteResourceButton
-              type="cash-register-delete"
-              data={rowData.id}
-              active={rowData.active}
-              tooltip={rowData.active ? "Bloquear Caja" : "Desbloquear caja"}
-            />
+            {isAdmin && (
+              <DeleteResourceButton
+                type="cash-register-delete"
+                data={rowData.id}
+                active={rowData.active}
+                tooltip={rowData.active ? "Bloquear Caja" : "Desbloquear caja"}
+              />
+            )}
           </>
         )
       }}

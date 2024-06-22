@@ -1,5 +1,5 @@
 import { auth } from "@/auth"
-import SideBar from "@/components/SideBar"
+import SideBar from "@/components/layout/SideBar"
 
 type PageLayoutProps = {
   children: React.ReactNode

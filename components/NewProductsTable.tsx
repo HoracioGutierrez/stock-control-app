@@ -10,9 +10,10 @@ import { Button } from "./ui/button"
 
 type ProductsTableProps = {
   data: any
+  isAdmin?: boolean
 }
 
-function ProductsTable({ data }: ProductsTableProps) {
+function ProductsTable({ data, isAdmin }: ProductsTableProps) {
   return (
     <CustomDataTable
       data={data}
@@ -24,8 +25,9 @@ function ProductsTable({ data }: ProductsTableProps) {
       actions={(rowData: any) => {
         return (
           <>
-            {/* <DeleteProductButton active={rowData.active} barcode={rowData.barcode} /> */}
-            <DeleteResourceButton type="product" data={rowData.id} active={rowData.active} tooltip={rowData.active ? "Borrar producto" : "Reactivar producto"} />
+            {isAdmin && (
+              <DeleteResourceButton type="product" data={rowData.id} active={rowData.active} tooltip={rowData.active ? "Borrar producto" : "Reactivar producto"} />
+            )}
             <EditProductButton barcode={rowData.barcode} />
             {!rowData.isVariant && <EditVariantButton barcode={rowData.barcode} />}
           </>

@@ -18,6 +18,7 @@ export type BarCodeScannerProps = {
 
 export type CustomerTableProps = {
   data: CustomerType[]
+  isAdmin?: boolean
 }
 
 export type CustomerInputValues = {

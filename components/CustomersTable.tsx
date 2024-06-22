@@ -6,7 +6,7 @@ import CustomDataTable from "./CustomDataTable"
 import DeleteCustomerButton from "./DeleteCustomerButton"
 import { getAllCustomers } from "@/actions/getAllCustomers"
 
-function CustomersTable({ data }: CustomerTableProps) {
+function CustomersTable({ data, isAdmin }: CustomerTableProps) {
 
     return (
         <CustomDataTable
@@ -19,7 +19,7 @@ function CustomersTable({ data }: CustomerTableProps) {
             actions={(rowData: any) => {
                 return (
                     <>
-                        <DeleteCustomerButton active={rowData.active} id={rowData.id} />
+                        {isAdmin && <DeleteCustomerButton active={rowData.active} id={rowData.id} />}
                         <EditProductButton id={rowData.id} />
                     </>
                 )

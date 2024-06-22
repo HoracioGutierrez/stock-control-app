@@ -2,17 +2,17 @@
 
 import { Barcode, ComputerIcon, History, Home, LineChart, Menu, PackageOpen, ShoppingBasket, Truck, UserRound, X } from "lucide-react"
 import { useDrawerStore } from "@/stores/drawerStore"
-import LogoutButton from "./LogoutButton"
-import { ModeToggle } from "./ModeToggle"
-import NavLink from "./NavLink"
+import { ModeToggle } from "../ModeToggle"
+import NavLink from "../NavLink"
 import { cn } from "@/lib/utils"
 import { SideBarProps } from "@/lib/types"
+import LogoutButton from "../LogoutButton"
 
 
 
 function SideBar({ session }: SideBarProps) {
 
-  const { isOpen, setOpen , collapsed, setCollapsed } = useDrawerStore((state: any) => state)
+  const { isOpen, setOpen, collapsed, setCollapsed } = useDrawerStore((state: any) => state)
 
   const handleClick = () => {
     setOpen(!isOpen)
@@ -61,12 +61,16 @@ function SideBar({ session }: SideBarProps) {
             <LineChart />
             <span>ventas</span>
           </NavLink>
-          <NavLink href="/movements" onClick={handleClick}>
-            <History />
-            <span>movimientos</span>
-          </NavLink>
+          {session?.user.isAdmin && (
+            <>
+              <NavLink href="/movements" onClick={handleClick}>
+                <History />
+                <span>movimientos</span>
+              </NavLink>
+              <div className="bg-accent w-full h-[1px]" />
+            </>
+          )}
         </div>
-        <div className="bg-accent w-full h-[1px]" />
         <div>
           <div className="flex items-center gap-2 hover:bg-accent p-2 pl-4 hover:font-bold text-muted-foreground hover:text-accent-foreground transition-colors hover:cursor-pointer" onClick={handleClick}>
             <ModeToggle />

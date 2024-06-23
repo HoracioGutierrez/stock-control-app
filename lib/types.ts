@@ -198,3 +198,10 @@ export type CustomLoaderProps = {
 export type SideBarProps = {
   session: Session | null
 }
+
+export type SchemaFormValues =
+  CustomerInputValues |
+  ProductInputValues |
+  ProviderInputValues |
+  EditCustomerInputValues |
+  EditProductInputValues

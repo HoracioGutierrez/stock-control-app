@@ -1,8 +1,8 @@
 "use client"
-import { entityConfig, formVariants, formNamesVariants, formDetailsVariants } from "@/lib/formConfig"
-import { SubmitHandler, useForm, useFieldArray, set } from "react-hook-form"
+import { entityConfig, formVariants, formNamesVariants, formDetailsVariants, defaultValue } from "@/lib/formConfig"
+import { SubmitHandler, useForm, useFieldArray } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { FormValues, InputValues } from "@/lib/types"
+import { FormValues, InputValues, SchemaFormValues } from "@/lib/types"
 import { editById } from "@/actions/editById"
 import { getById } from "@/actions/getById"
 import { toast } from "./ui/use-toast"
@@ -31,41 +31,11 @@ function EditFormContainer({ entityType, barcode, entityId, hasVariants }: any) 
             const { data, error } = await getById(entityType, entityId, barcode)
             setLoading(false)
             if (error) {
-                return entityType === "customer" ? {
-                    name: "",
-                    lastName: "",
-                    phone: "",
-                    email: "",
-                    address: "",
-                    legalName: "",
-                    cuitCuil: "",
-                } : {
-                    name: "",
-                    description: "",
-                    price: 0,
-                    barcode: "",
-                    stock: 0,
-                }
+                return defaultValue[entityType as keyof typeof defaultValue] as SchemaFormValues
             }
             setIdResolve(data.id as string)
             setIsVariant(data.isVariant as boolean)
-
-            return entityType === "customer" ? {
-                name: data.name as string,
-                lastName: data.lastName as string,
-                phone: data.phone as string,
-                email: data.email as string,
-                address: data.address as string,
-                legalName: data.legalName as string,
-                cuitCuil: data.cuitCuil as string,
-            } : {
-                name: data.name as string,
-                description: data.description as string,
-                price: data.price as number,
-                barcode: data.barcode as string,
-                stock: data.stock as number,
-                isVariant: data.isVariant as boolean,
-            }
+            return data as SchemaFormValues
         },
         resolver: yupResolver(entityConfig[entityType].schema),
     })

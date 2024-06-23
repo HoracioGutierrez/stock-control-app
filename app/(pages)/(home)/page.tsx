@@ -1,6 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import PageHeader from "@/components/layout/PageHeader";
 import { getStats } from "@/actions/getStats";
+import { Line, LineChart } from "recharts"
+import OrderChart from "@/components/home/OrderChart";
 
 export default async function Home() {
 
@@ -9,7 +11,7 @@ export default async function Home() {
   return (
     <>
       <PageHeader title="Inicio" />
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="gap-4 grid grid-cols-1 md:grid-cols-2">
         <Card className="bg-accent">
           <CardHeader>
             <CardTitle>Información general</CardTitle>
@@ -18,18 +20,22 @@ export default async function Home() {
             {!error && (
               <>
                 <p className="text-muted-foreground">
-                  <span className="text-primary font-bold text-2xl">{data?.productsCount.count}</span> productos en tu inventario
+                  <span className="font-bold text-2xl text-primary">{data?.productsCount.count}</span> productos en tu inventario
                 </p>
                 <p className="text-muted-foreground">
-                  <span className="text-primary font-bold text-2xl">{data?.salesStats.count}</span> ordenes en tu inventario
+                  <span className="font-bold text-2xl text-primary">{data?.salesStats.count}</span> ordenes en tu inventario
                 </p>
                 <p className="text-muted-foreground">
-                  <span className="text-primary font-bold text-2xl">${data?.salesStats.value}</span> total de ventas
+                  <span className="font-bold text-2xl text-primary">${data?.salesStats.value}</span> total de ventas
                 </p>
               </>
             )}
           </CardContent>
         </Card>
+        {/* <LineChart width={500} height={300} data={data?.salesFromDB}>
+          
+        </LineChart> */}
+        <OrderChart data={data?.salesFromDB} />
       </div>
     </>
   );

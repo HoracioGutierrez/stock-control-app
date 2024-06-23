@@ -35,9 +35,6 @@ export const users = pgTable(tablePrefix + "user", {
   updatedAt: timestamp("updatedAt", { mode: "date" }),
 })
 
-
-
-
 export const accounts = pgTable(
   tablePrefix + "account",
   {
@@ -277,6 +274,45 @@ export const cashRegistersOpennings: any = pgTable(
   }
 )
 
+export const purchaseOrders: any = pgTable(
+  tablePrefix + "purchaseOrder",
+  {
+    id: text("id")
+      .notNull()
+      .unique()
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    createdAt: timestamp("createdAt", { mode: "date" }).defaultNow(),
+    total: numeric("total").notNull(),
+    status: text("status").notNull(),
+    cashRegisterId: text("cashRegisterId")
+      .references(() => cashRegister.id, { onDelete: "cascade" }),
+    providerId: text("providerId")
+      .references(() => providers.id, { onDelete: "cascade" }),
+  }
+)
+
+export const purchaseOrderProducts: any = pgTable(
+  tablePrefix + "purchaseOrderProduct",
+  {
+    id: text("id")
+      .notNull()
+      .unique()
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    purchaseOrderId: text("purchaseOrderId")
+      .notNull()
+      .references(() => purchaseOrders.id, { onDelete: "cascade" }),
+    productId: text("productId")
+      .notNull()
+      .references(() => products.id, { onDelete: "cascade" }),
+    quantity: numeric("quantity").notNull(),
+  }
+)
+
 
 export type ProductType = typeof products.$inferInsert
 export type CustomerType = typeof customers.$inferInsert
@@ -285,5 +321,7 @@ export type CashRegisterType = typeof cashRegister.$inferInsert
 export type ProviderType = typeof providers.$inferInsert
 export type OrderType = typeof orders.$inferInsert
 export type CashRegisterOpenningType = typeof cashRegistersOpennings.$inferInsert
+export type PurchaseOrderType = typeof purchaseOrders.$inferInsert
+export type PurchaseOrderProductType = typeof purchaseOrderProducts.$inferInsert
 
 

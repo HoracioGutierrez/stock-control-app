@@ -6,8 +6,12 @@ import { Row, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react
 import { useEffect, useRef, useState } from "react"
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "../ui/table"
 import { Button } from "../ui/button"
-import { Minus, Plus } from "lucide-react"
+import { Check, Loader, Minus, Plus } from "lucide-react"
 import { useVirtualizer } from '@tanstack/react-virtual'
+import { createNewPurchaseOrder } from "@/actions/createNewPurchaseOrder"
+import { useDialogStore } from "@/stores/generalDialog"
+import { Checkbox } from "@/components/ui/checkbox"
+import { toast } from "../ui/use-toast"
 
 type Props = {
   userId: string
@@ -16,11 +20,15 @@ type Props = {
 function CreateProviderOrderForm({ userId }: Props) {
 
   const [products, setProducts] = useState<any[]>([])
+  const [loading, setLoading] = useState<boolean>(false)
   const [order, setOrder] = useState<any>({})
   const [units, setUnits] = useState<number>(0)
   const [total, setTotal] = useState<number>(0)
   const [pinnedRow, setPinnedRow] = useState<any>({ top: [], bottom: [] })
   const tableContainerRef = useRef<HTMLDivElement>(null)
+  const [increment, setIncrement] = useState<boolean>(true)
+  const { id, setClose } = useDialogStore((state: any) => state)
+
 
   const table = useReactTable({
     data: products,
@@ -67,25 +75,93 @@ function CreateProviderOrderForm({ userId }: Props) {
   }, [])
 
   const handleAddProduct = (product: any) => {
-    setOrder((order: any) => {
-      const newOrder = { ...order }
-      newOrder[product.id] = newOrder[product.id] ? newOrder[product.id] + 1 : 1
-      return newOrder
-    })
+    const newOrder = { ...order }
+    const isProdInOrder = newOrder[product.id]
+    if (isProdInOrder) {
+      newOrder[product.id].count += 1
+    } else {
+      newOrder[product.id] = {
+        productId: product.id,
+        count: 1
+      }
+    }
+    setOrder(newOrder)
     setUnits((units: number) => units + 1)
     setTotal((total: number) => total + Number(product.price))
   }
 
   const handleRemoveProduct = (product: any) => {
-    setOrder((order: any) => {
+    if (order[product.id] === undefined) return
+
+    if (order[product.id].count < 1) {
+      return
+    } else {
       const newOrder = { ...order }
-      newOrder[product.id] = newOrder[product.id] ? newOrder[product.id] - 1 : 0
-      return newOrder
-    })
-    setUnits((units: number) => units - 1)
-    setTotal((total: number) => total - Number(product.price))
+      const isProdInOrder = newOrder[product.id]
+      if (isProdInOrder) {
+        newOrder[product.id].count -= 1
+      } else {
+        newOrder[product.id] = {
+          productId: product.id,
+          count: 0
+        }
+      }
+      setOrder(newOrder)
+      setUnits((units: number) => units - 1)
+      setTotal((total: number) => total - Number(product.price))
+    }
   }
 
+  const handleSubmit = () => {
+    console.log("test")
+    setLoading(true)
+    const orderProducts: any[] = []
+    console.log(order)
+    Object.keys(order).forEach((key: string) => {
+      console.log(key)
+      orderProducts.push({
+        productId: key,
+        count: order[key].count
+      })
+    })
+    createNewPurchaseOrder(userId, orderProducts, total, id, increment)
+      .then((data) => {
+        if (data?.error) {
+          throw new Error(data.error)
+        }
+        toast({
+          title: "Orden guardada correctamente",
+          description: "La orden se ha guardado correctamente, puedes verla en la sección de ordenes"
+        })
+        setClose()
+        setIncrement(true)
+        setOrder({})
+        setUnits(0)
+        setTotal(0)
+        setPinnedRow({ top: [], bottom: [] })
+      })
+      .catch((error) => {
+        if (error instanceof Error) {
+          return toast({
+            variant: "destructive",
+            title: "Error al guardar la orden",
+            description: error.message
+          })
+        }
+        return toast({
+          variant: "destructive",
+          title: "Error al guardar la orden",
+          description: error.message
+        })
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }
+
+  const handleIncrement = () => {
+    setIncrement(!increment)
+  }
 
   return (
     <div>
@@ -141,7 +217,7 @@ function CreateProviderOrderForm({ userId }: Props) {
                               <Plus />
                             </Button>
                             <p className="font-bold text-lg">
-                              {order[row.original.id] || 0}
+                              {order[row.original.id] ? order[row.original.id].count : 0}
                             </p>
                             <Button variant={"outline"} className="p-0 aspect-square" onClick={() => {
                               handleRemoveProduct(row.original)
@@ -181,9 +257,16 @@ function CreateProviderOrderForm({ userId }: Props) {
           </TableFooter>
         </Table>
       </div>
-      <Button className="flex items-center gap-2 mx-auto text-white dark:text-primary-foreground">
-        <span>Guardar orden</span>
-      </Button>
+      <div className="flex justify-center items-center gap-8">
+        <Button className="flex items-center gap-2 text-white dark:text-primary-foreground" onClick={handleSubmit}>
+          {loading ? <Loader className="animate-spin" /> : <Check />}
+          <span>Guardar orden</span>
+        </Button>
+        <div className="flex items-center gap-2">
+          <Checkbox className="flex justify-center items-center gap-2 w-7 h-7" onCheckedChange={handleIncrement} checked={increment} />
+          <p className="text-sm">Incrementar stock <br /> en el inventario</p>
+        </div>
+      </div>
     </div>
   )
 }

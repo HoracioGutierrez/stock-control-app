@@ -4,7 +4,7 @@ import { DeleteByIdProps, Entity, EntityName } from "@/lib/types"
 import { GeneralResponse } from "@/lib/types"
 import { revalidatePath } from "next/cache"
 import { eq } from "drizzle-orm"
-import { db } from "@/schema"
+import { db, products } from "@/schema"
 
 
 export const deleteById = async ({ entityType, entityId, userId }: DeleteByIdProps): Promise<GeneralResponse> => {
@@ -19,8 +19,8 @@ export const deleteById = async ({ entityType, entityId, userId }: DeleteByIdPro
 
     await db.insert(entityHistory).values({
       userId: userId,
-      actionType: `delete-${entityType}`,
-      products: [data[0].id],
+      actionType: `${entityNameResolve} eliminado`,
+      products: [data[0].lastName ? data[0].lastName + " " + data[0].name : ""],
       orderId: null,
       customerId: null,
       ip: null,

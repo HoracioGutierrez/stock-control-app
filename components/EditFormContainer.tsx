@@ -11,7 +11,7 @@ import { useState } from "react"
 import { useDialogStore } from "@/stores/generalDialog"
 
 
-function EditFormContainer({ entityType, barcode, entityId, hasVariants }: any) {
+function EditFormContainer({ entityType, barcode, entityId, hasVariants, userId }: any) {
     const [error, setError] = useState<string | null>(null)
     const [mainName, setMainName] = useState<string>("")
     const [loading, setLoading] = useState<boolean>(false)
@@ -47,7 +47,7 @@ function EditFormContainer({ entityType, barcode, entityId, hasVariants }: any) 
 
     const onSubmit: SubmitHandler<InputValues> = async (data: InputValues) => {
         setLoading(true)
-        editById(entityType, idResolve, data)
+        editById(entityType, idResolve, data, userId)
             .then((data) => {
                 if (data?.error) {
                     throw new Error(data.error)

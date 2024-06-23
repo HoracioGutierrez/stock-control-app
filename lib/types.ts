@@ -52,7 +52,7 @@ export type DeleteProductConfirmationFormProps = {
 export type DeleteByIdProps = {
   entityType: string | keyof Entity
   entityId: string
-  userId: string | undefined
+  userId?: string | undefined
 }
 
 export type DeleteCustomerProps = DeleteByIdProps & {
@@ -185,6 +185,13 @@ export type ProductVariantInputValues = {
   price: number
   stock: number
   barcode: string
+}
+
+export type ReactivateByIdProps = {
+  entityType: string
+  barcode?: string
+  entityId?: string
+  userId: string
 }
 
 export type NewProductFormProps = {

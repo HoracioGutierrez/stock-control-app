@@ -22,7 +22,8 @@ export const closeCashRegister = async (cashRegisterId: string, userId: string):
 
     await db.update(cashRegister).set({
       openedById: null,
-      currentAmount: 0
+      currentAmount: 0,
+      currentOpenningId: null
     }).where(eq(cashRegister.id, cashRegisterId))
 
 

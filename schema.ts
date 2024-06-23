@@ -37,6 +37,7 @@ export const users = pgTable(tablePrefix + "user", {
 
 
 
+
 export const accounts = pgTable(
   tablePrefix + "account",
   {
@@ -284,3 +285,5 @@ export type CashRegisterType = typeof cashRegister.$inferInsert
 export type ProviderType = typeof providers.$inferInsert
 export type OrderType = typeof orders.$inferInsert
 export type CashRegisterOpenningType = typeof cashRegistersOpennings.$inferInsert
+
+

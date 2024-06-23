@@ -9,19 +9,21 @@ type DialogTriggerButtonProps = {
   children?: any,
   className?: string,
   icon?: JSX.Element,
-  text?: string
+  text?: string,
+  data?: any,
+  disabled?: boolean
 }
 
-const DialogTriggerButton = ({ dialogType, children, className, icon, text = "Trigger Dialog" }: DialogTriggerButtonProps) => {
+const DialogTriggerButton = ({ dialogType, children, className, icon, text = "Trigger Dialog", data , disabled = false }: DialogTriggerButtonProps) => {
 
   const { setOpen } = useDialogStore((state: any) => state)
 
   const handleClick = () => {
-    setOpen(dialogType)
+    setOpen(dialogType, data)
   }
 
   return (
-    <Button onClick={handleClick} className={cn("flex items-center gap-2 text-white dark:text-primary-foreground", className)}>
+    <Button onClick={handleClick} className={cn("flex items-center gap-2 text-white dark:text-primary-foreground", className)} disabled={disabled}>
       {icon && icon}
       <span>{children ? children : text ? text : "Trigger Dialog"}</span>
     </Button>

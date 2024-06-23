@@ -17,7 +17,7 @@ function CustomDialog({ fullWidth = false, title = "Custom Dialog", children, re
 
   return (
     <Dialog open={isOpen} onOpenChange={setClose}>
-      <DialogContent className={cn(fullWidth && "max-w-screen-lg")}>
+      <DialogContent className={cn(fullWidth && "max-w-screen-lg", "overflow-auto max-h-[calc(100vh_-_4rem)]")}>
         <DialogHeader>
           <DialogTitle className="text-2xl">
             {title}

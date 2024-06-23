@@ -261,3 +261,42 @@ export const cashRegistersColumns: ColumnDef<CashRegisterType>[] = [
     size : 1
   }
 ]
+
+export const providerOrdersColumns: ColumnDef<any>[] = [
+  {
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="link"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="p-0"
+        >
+          Nombre
+          <ArrowUpDown className="ml-2 w-4 h-4" />
+        </Button>
+      )
+    },
+    accessorKey: "name",
+  },
+  {
+    header : ({ column }) => {
+      //price
+      return (
+        <Button
+          variant="link"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")
+          }
+          className="p-0"
+        >
+          Precio
+          <ArrowUpDown className="ml-2 w-4 h-4" />
+        </Button>
+      )
+    },
+    accessorKey: "price",
+  },
+  {
+    header : "Acciones",
+    accessorKey: "actions",
+  }
+]

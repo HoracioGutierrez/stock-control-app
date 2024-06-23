@@ -6,6 +6,7 @@ import PageHeader from "@/components/layout/PageHeader"
 import CustomDialog from "@/components/CustomDialog"
 import { PlusIcon } from "lucide-react"
 import { auth } from "@/auth"
+import ProviderDialog from "@/components/providers/ProviderDialog"
 
 async function ProvidersPage() {
 
@@ -14,7 +15,10 @@ async function ProvidersPage() {
   return (
     <>
       <PageHeader title="Proveedores" actions={
-        <DialogTriggerButton dialogType="new-provider" text="Crear Proveedor" icon={<PlusIcon />} />
+        <>
+          {/* <DialogTriggerButton dialogType="new-provider-order" text="Nueva orden de compra" icon={<PlusIcon />} /> */}
+          <DialogTriggerButton dialogType="new-provider" text="Crear Proveedor" icon={<PlusIcon />} />
+        </>
       } />
       {data.length == 0 && (
         <div className="place-items-center border-slate-400 grid border border-dashed rounded grow">
@@ -25,9 +29,7 @@ async function ProvidersPage() {
         </div>
       )}
       {data.length > 0 && <ProvidersTable data={data} />}
-      <CustomDialog title="Crear Proveedor" fullWidth>
-        <CreateProviderForm userId={session?.user.id as string} />
-      </CustomDialog>
+      <ProviderDialog userId={session?.user.id as string} />
     </>
   )
 }

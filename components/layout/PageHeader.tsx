@@ -15,7 +15,9 @@ const PageHeader = ({ title = "Demo Title", actions, subtitle }: PageHeaderProps
         {subtitle && <p className="text-muted-foreground">Cajero : {subtitle}</p>}
         <PageTitle title={title} />
       </div>
-      {actions && actions}
+      <div className="flex gap-4">
+        {actions && actions}
+      </div>
     </div>
   )
 }

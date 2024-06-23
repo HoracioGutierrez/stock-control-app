@@ -174,7 +174,7 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
           </Select>
         </div>
       </div>
-      <div className="grow">
+      <div className="overflow-auto grow">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

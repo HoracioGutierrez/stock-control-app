@@ -5,9 +5,9 @@ import { Button } from "./ui/button"
 import { toast } from "./ui/use-toast"
 import { useState } from "react"
 import { Check, Loader } from "lucide-react"
-import { reactivateCustomerById } from "@/actions/reactivateCustomerById"
 import { useDialogStore } from "@/stores/generalDialog"
-import { DeleteCustomerProps } from "@/lib/types"
+import { DeleteByIdProps, DeleteCustomerProps, ReactivateByIdProps } from "@/lib/types"
+import { reactivateById } from "@/actions/reactivateById"
 
 function DeleteCustomerConfirmationForm({ entityType, entityId, type, userId, hasVariants }: DeleteCustomerProps) {
 
@@ -18,9 +18,9 @@ function DeleteCustomerConfirmationForm({ entityType, entityId, type, userId, ha
     const handleClick = () => {
         setLoading(true)
         let request: any
-        request = deleteById({ entityType, entityId, userId })
+
         if (type === "delete-customer") {
-            request = deleteById({ entityType, entityId, userId })
+            request = deleteById({ entityType, entityId, userId } as DeleteByIdProps)
                 .then((data) => {
                     if (data?.error) {
                         throw new Error(data.error)
@@ -45,7 +45,7 @@ function DeleteCustomerConfirmationForm({ entityType, entityId, type, userId, ha
                     })
                 })
         } else {
-            request = reactivateCustomerById(entityId)
+            request = reactivateById({ entityType, entityId, userId } as ReactivateByIdProps)
                 .then((data) => {
                     if (data?.error) {
                         throw new Error(data.error)

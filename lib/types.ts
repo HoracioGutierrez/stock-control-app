@@ -53,7 +53,7 @@ export type DeleteProductConfirmationFormProps = {
 export type DeleteByIdProps = {
   entityType: string | keyof Entity
   entityId: string
-  userId: string | undefined
+  userId?: string | undefined
 }
 
 export type DeleteCustomerProps = DeleteByIdProps & {
@@ -188,6 +188,13 @@ export type ProductVariantInputValues = {
   barcode: string
 }
 
+export type ReactivateByIdProps = {
+  entityType: string
+  barcode?: string
+  entityId?: string
+  userId: string
+}
+
 export type NewProductFormProps = {
   userId: string
 }
@@ -199,3 +206,10 @@ export type CustomLoaderProps = {
 export type SideBarProps = {
   session: Session | null
 }
+
+export type SchemaFormValues =
+  CustomerInputValues |
+  ProductInputValues |
+  ProviderInputValues |
+  EditCustomerInputValues |
+  EditProductInputValues

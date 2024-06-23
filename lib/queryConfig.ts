@@ -8,10 +8,10 @@ export const entitiesPropsById = {
   cashRegister: cashRegister
 }
 
-export const entityName= {
-  product: "producto",
-  customer: "cliente",
-  provider: "proveedor",
-  history: "historial",
-  cashRegister: "registro"
+export const entityName = {
+  product: "Producto",
+  customer: "Cliente",
+  provider: "Proveedor",
+  history: "Historial",
+  cashRegister: "Registro de Caja"
 }

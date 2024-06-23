@@ -1,11 +1,11 @@
 "use client"
 import { deleteById } from "@/actions/deleteById"
 import { Button } from "./ui/button"
-import { reactivateProduct } from "@/actions/reactivateProduct"
+import { reactivateById } from "@/actions/reactivateById"
 import { toast } from "./ui/use-toast"
 import { useState } from "react"
 import { Check, Loader } from "lucide-react"
-import { DeleteProductConfirmationFormProps } from "@/lib/types"
+import { DeleteProductConfirmationFormProps, ReactivateByIdProps } from "@/lib/types"
 import { useDialogStore } from "@/stores/generalDialog"
 
 
@@ -44,7 +44,7 @@ function DeleteProductConfirmationForm({ barcode, type, userId }: DeleteProductC
           })
         })
     } else {
-      request = reactivateProduct(barcode, userId)
+      request = reactivateById({ entityType, barcode, userId } as ReactivateByIdProps)
         .then((data) => {
           if (data?.error) {
             throw new Error(data.error)

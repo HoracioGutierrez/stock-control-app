@@ -3,6 +3,9 @@ import PageHeader from "@/components/layout/PageHeader";
 import { getStats } from "@/actions/getStats";
 import { Line, LineChart } from "recharts"
 import OrderChart from "@/components/home/OrderChart";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { LogOut, ShoppingBasket, ShoppingCart } from "lucide-react";
 
 export default async function Home() {
 
@@ -11,8 +14,8 @@ export default async function Home() {
   return (
     <>
       <PageHeader title="Inicio" />
-      <div className="place-items-start gap-10 grid grid-cols-1 2xl:grid-cols-2">
-        <Card className="bg-accent w-full">
+      <div className="place-items-start gap-10 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6">
+        <Card className="col-span-1 xl:col-span-2 bg-primary-foreground w-full">
           <CardHeader>
             <CardTitle>Información general</CardTitle>
           </CardHeader>
@@ -32,8 +35,37 @@ export default async function Home() {
             )}
           </CardContent>
         </Card>
+        <Card className="flex flex-col xl:col-span-1 2xl:col-span-2 bg-primary-foreground w-full h-full">
+          <CardHeader>
+            <CardTitle>Accesos Directos</CardTitle>
+          </CardHeader>
+          <CardContent className="flex justify-center items-center gap-4 grow">
+            <Button asChild>
+              <Link href="/order">
+                <ShoppingBasket/>
+              </Link>
+            </Button>
+            <Button asChild>
+              <Link href="/providers">
+                <ShoppingCart/>
+              </Link>
+            </Button>
+            <Button asChild>
+              <Link href="/logout">
+                <LogOut/>
+              </Link>
+            </Button>
+          </CardContent>
+        </Card>
         <div></div>
-        <OrderChart data={data?.salesFromDB} />
+        <Card className="md:col-span-2 2xl:col-span-3 xl:col-span-2 row-start-2 bg-primary-foreground w-full">
+          <CardHeader>
+            <CardTitle>Ventas</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <OrderChart data={data?.salesFromDB} />
+          </CardContent>
+        </Card>
       </div>
     </>
   );

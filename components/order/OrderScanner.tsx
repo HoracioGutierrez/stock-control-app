@@ -238,7 +238,7 @@ function OrderScanner({ data }: OrderScannerProps) {
             onCapture={handleCapture}
             className="top-0 left-0 z-10 fixed w-screen h-screen"
             options={{
-              formats: ["code_128"]
+              formats: ["code_128","code_39","code_93","codabar","ean_13","ean_8","itf","qr_code","upc_a","upc_e"]
             }}
           />
         </>

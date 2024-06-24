@@ -14,7 +14,7 @@ type Props = {
 }
 function ConfirmSaveOrderButton({ cashRegisters, userId }: Props) {
 
-  const { products, total, cancelOrder , customer } = useOrderStore((state: any) => state)
+  const { products, total, cancelOrder , customer , setClient } = useOrderStore((state: any) => state)
   const [loading, setLoading] = useState<boolean>(false)
   const { setClose } = useDialogStore((state: any) => state)
   const [paymentMethod, setPaymentMethod] = useState<string>("cash")
@@ -33,6 +33,7 @@ function ConfirmSaveOrderButton({ cashRegisters, userId }: Props) {
         })
         setClose()
         cancelOrder()
+        setClient({})
       })
       .catch((error) => {
         if (error instanceof Error) {

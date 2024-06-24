@@ -1,5 +1,5 @@
 
-import { customerSchema, productSchema, providerSchema, cashRegisterSchema } from "./schemas"
+import { customerSchema, productSchema, providerSchema, cashRegisterSchema, customerDebtSchema } from "./schemas"
 import { FormSchemaVariants } from "@/lib/types"
 
 export const entityConfig: {
@@ -24,6 +24,10 @@ export const entityConfig: {
         formId: "new-cash-register-form",
         schema: cashRegisterSchema
     },
+    customerDebt : {
+        formId: "new-customer-debt-form",
+        schema: customerDebtSchema
+    }
 }
 
 export const formNamesVariants: {
@@ -82,6 +86,18 @@ export const formNamesVariants: {
             inputType: "text"
         }
     },
+    customerDebt: {
+        payAll: {
+            name: "payAll",
+            label: "Pagar todo",
+            inputType: "checkbox"
+        },
+        manualAmount: {
+            name: "manualAmount",
+            label: "Monto manual",
+            inputType: "number"
+        }
+    }
 }
 
 export const formDetailsVariants: {

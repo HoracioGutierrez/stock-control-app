@@ -1,7 +1,7 @@
 "use client"
 import { UserRoundPlusIcon } from "lucide-react"
-import { Button } from "./ui/button"
 import { useDialogStore } from "@/stores/generalDialog"
+import { Button } from "../ui/button"
 
 type Props = {}
 function CreateCustomerButton({ }: Props) {

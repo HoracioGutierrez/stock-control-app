@@ -49,3 +49,11 @@ export const providerSchema = yup.object().shape({
   email: yup.string().required("El correo electrónico es obligatorio"),
   cuitCuil: yup.string().required("El CUIT/CUIL es obligatorio"),
 })
+
+export const customerDebtSchema = yup.object().shape({
+  payAll: yup.boolean(),
+  manualAmount: yup.number().when("payAll",([payAll],schema)=>{
+    console.log(payAll)
+    return payAll ? schema : yup.number().moreThan(0,"El monto debe ser mayor a cero").required("El monto manual es obligatorio")
+  })
+})

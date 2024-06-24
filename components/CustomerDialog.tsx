@@ -6,6 +6,7 @@ import NewCustomerForm from "./NewCustomerForm"
 import CustomDialog from "./CustomDialog"
 import { useDialogStore } from "@/stores/generalDialog"
 import { useSession } from "next-auth/react"
+import UpdateCustomerDebtForm from "./customer/UpdateCustomerDebtForm"
 
 
 function CustomerDialog() {
@@ -30,6 +31,10 @@ function CustomerDialog() {
         "activate-customer": {
             title: "Habilitar Cliente",
             fullWidth: false
+        },
+        "update-customer-debt": {
+            title: "Saldar deuda",
+            fullWidth: false
         }
     }
 
@@ -48,6 +53,7 @@ function CustomerDialog() {
                 {type === "edit-customer" && <EditFormContainer {...entityProps} />}
                 {type === "delete-customer" && <DeleteCustomerConfirmationForm {...entityProps} type={type} />}
                 {type === "activate-customer" && <DeleteCustomerConfirmationForm {...entityProps} type={type} />}
+                {type === "update-customer-debt" && <UpdateCustomerDebtForm userId={userId as string} type={type} />}
             </CustomDialog>
         </>
     )

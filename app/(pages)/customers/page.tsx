@@ -2,7 +2,7 @@ import { getAllCustomers } from "@/actions/getAllCustomers"
 import CustomerDialog from "@/components/CustomerDialog"
 import CustomersTable from "@/components/CustomersTable"
 import PageHeader from "@/components/layout/PageHeader"
-import CreateCustomerButton from "@/components/CreateCustomerButton"
+import CreateCustomerButton from "@/components/customer/CreateCustomerButton"
 import { auth } from "@/auth"
 
 async function CustomersPage() {

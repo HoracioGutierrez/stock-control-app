@@ -11,8 +11,8 @@ export default async function Home() {
   return (
     <>
       <PageHeader title="Inicio" />
-      <div className="gap-4 grid grid-cols-1 2xl:grid-cols-2">
-        <Card className="bg-accent">
+      <div className="place-items-start gap-10 grid grid-cols-1 2xl:grid-cols-2">
+        <Card className="bg-accent w-full">
           <CardHeader>
             <CardTitle>Información general</CardTitle>
           </CardHeader>
@@ -32,6 +32,7 @@ export default async function Home() {
             )}
           </CardContent>
         </Card>
+        <div></div>
         <OrderChart data={data?.salesFromDB} />
       </div>
     </>

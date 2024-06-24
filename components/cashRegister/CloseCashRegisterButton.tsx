@@ -15,7 +15,7 @@ const CloseCashRegisterButton = ({ }: CloseCashRegisterButtonProps) => {
   }
 
   return (
-    <Button onClick={handleClick} className="flex gap-2 text-white dark:text-primary-foreground">
+    <Button onClick={handleClick} className="flex gap-2 col-span-2 lg:col-span-1 text-white dark:text-primary-foreground">
       <X/>
       Cerrar Caja
     </Button>

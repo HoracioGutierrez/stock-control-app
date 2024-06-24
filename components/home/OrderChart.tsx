@@ -12,8 +12,6 @@ type Props = {
 
 function OrderChart({ data }: Props) {
 
-  console.log(data)
-
   const daysInWords = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]
 
   const getDays = (data: any) => {
@@ -37,7 +35,7 @@ function OrderChart({ data }: Props) {
   }
 
   return (
-    <div>
+    <div className="w-full">
       <h1>Ventas : últimos 7 días</h1>
       <Line data={newDataSet} />
     </div>

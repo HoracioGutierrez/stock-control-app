@@ -198,7 +198,7 @@ function OrderScanner({ data }: OrderScannerProps) {
         </TableBody>
       </Table>
 
-      <div className="flex justify-center gap-4">
+      <div className="justify-center gap-4 grid grid-cols-2 lg:grid-cols-5">
         <Button onClick={handlePayWith} disabled={products.length === 0}>
           Paga con
         </Button>

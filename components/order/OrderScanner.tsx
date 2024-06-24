@@ -107,7 +107,7 @@ function OrderScanner({ data }: OrderScannerProps) {
   }
 
   const handleCapture = (barcode: DetectedBarcode) => {
-    alert(barcode.rawValue)
+    //alert(barcode.rawValue)
     handleScan(barcode.rawValue)
     setCamScan(false)
   }

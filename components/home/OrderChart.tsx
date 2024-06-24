@@ -5,18 +5,6 @@ const Line = dynamic(() => import('react-chartjs-2').then((mod) => mod.Line), {
   ssr: false,
 });
 
-const dataset = {
-  labels: ['January', 'February', 'March', 'April', 'May'],
-  datasets: [
-    {
-      label: 'GeeksforGeeks Line Chart',
-      data: [65, 59, 80, 81, 56],
-      fill: false,
-      borderColor: 'rgb(75, 192, 192)',
-      tension: 0.1,
-    },
-  ],
-};
 
 type Props = {
   data: any
@@ -25,29 +13,35 @@ type Props = {
 function OrderChart({ data }: Props) {
 
   console.log(data)
-  const today = new Date()
-  const fourDaysAgo = new Date(today.getTime() - (1000 * 60 * 60 * 24 * 3))
+
   const daysInWords = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]
 
-  const getDays = (startDate: Date, endDate: Date) => {
-    const days = []
-    let currentDate = startDate
-    while (currentDate <= endDate) {
-      days.push(daysInWords[currentDate.getDay()])
-      currentDate.setDate(currentDate.getDate() + 1)
-    }
+  const getDays = (data: any) => {
+    const days: string[] = []
+    data.forEach((item: any) => {
+      const day = new Date(item.date)
+      days.push(daysInWords[day.getDay()])
+    })
     return days
   }
 
-  /* const newDataSet = {
-    labels : getDays(fourDaysAgo, today),
-    datasets : data.map((item: any) => {})
+  const newDataSet = {
+    labels: getDays(data),
+    datasets: [
+      {
+        label: "Total",
+        data: data.map((item: any) => item.total),
+        fill: false,
+        borderColor: 'rgb(75, 192, 192)',
+        tension: 0.1,
+      }
+    ]
   }
- */
+
   return (
-    <div style={{ width: '700px', height: '700px' }}>
-      <h1>Example 1: Line Chart</h1>
-      <Line data={dataset} />
+    <div>
+      <h1>Ventas : últimos 7 días</h1>
+      <Line data={newDataSet} />
     </div>
   )
 }

@@ -1,11 +1,12 @@
 "use server"
 import { GeneralResponse } from "@/lib/types"
-import { db, history, products, orders, productOrders, cashRegister as cashRegisterSchema } from "@/schema"
+import { db, history, products, orders, productOrders, cashRegister as cashRegisterSchema, customers } from "@/schema"
 import { eq, sql } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 
-export const saveNewOrder = async (userId: string, data: any, cashRegister: any, total: number, clientId: string): Promise<GeneralResponse> => {
+export const saveNewOrder = async (userId: string, data: any, cashRegister: any, total: number, clientId: string, paymentMethod: string): Promise<GeneralResponse> => {
   "use server"
+
   try {
 
     const res = await db.transaction(async (tx) => {
@@ -14,10 +15,11 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
         userId: userId,
         total: total,
         status: "pending",
-        customerId: clientId,
+        customerId: clientId ? clientId.split("@")[0] : null,
         ip: data.ip,
         userAgent: data.userAgent,
-        cashRegisterId: cashRegister.id
+        cashRegisterId: cashRegister.id,
+        paymentMethod: paymentMethod
       }).returning({
         insertedId: orders.id
       })
@@ -45,7 +47,7 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
         }
 
         //Decrease stock of the product
-        const stockDecrease = await db.update(products).set({ stock: sql`${products.stock} - ${product.count}` }).where(eq(products.id, product.id)).returning({
+        const stockDecrease = await tx.update(products).set({ stock: sql`${products.stock} - ${product.count}` }).where(eq(products.id, product.id)).returning({
           updatedId: products.id
         })
 
@@ -55,6 +57,7 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
           throw new Error("Error al decrementar el stock")
         }
       })
+
 
       //Increase amount of cash register
       const updatedCashRegister = await tx.update(cashRegisterSchema).set({
@@ -69,6 +72,27 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
         throw new Error("Error al incrementar el monto de la caja")
       }
 
+      //check if clientID exists and update the spentAmount
+      if (clientId) {
+        const customerId = clientId.split("@")[0]
+
+        const customerFromDB = await tx.select().from(customers).where(eq(customers.id, customerId))
+        if (customerFromDB.length === 0) throw new Error("El cliente no existe")
+
+        await tx.update(customers).set({ spentAmount: sql`${customers.spentAmount} + ${total}` }).where(eq(customers.id, customerId)).returning({
+          updatedId: customers.id
+        })
+
+
+        if (paymentMethod === "debt") {
+          await tx.update(customers).set({
+            currentAmount: sql`${customers.currentAmount} - ${total}`
+          }).where(eq(customers.id, customerId)).returning({
+            updatedId: customers.id
+          })
+        }
+      }
+
       await tx.insert(history).values({
         userId: userId,
         actionType: "save-order",
@@ -78,6 +102,8 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
         ip: data.ip,
         userAgent: data.userAgent,
       })
+
+      revalidatePath("/order")
 
       return {
         data: order[0],
@@ -89,6 +115,7 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
     return res
 
   } catch (error) {
+    console.log(error)
     if (error instanceof Error) {
       return {
         data: null,

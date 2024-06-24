@@ -118,6 +118,8 @@ export const customers: any = pgTable(
     createdAt: timestamp("createdAt", { mode: "date" }).defaultNow(),
     updatedAt: timestamp("updatedAt", { mode: "date" }).defaultNow(),
     active: boolean("active").notNull(),
+    currentAmount : numeric("currentAmount").notNull(),
+    spentAmount : numeric("spentAmount").notNull(),
   }
 )
 
@@ -232,6 +234,7 @@ export const orders: any = pgTable(
     userAgent: text("userAgent"),
     cashRegisterId: text("cashRegisterId")
       .references(() => cashRegister.id, { onDelete: "cascade" }),
+    paymentMethod: text("paymentMethod").notNull(),
   }
 )
 

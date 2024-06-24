@@ -197,6 +197,27 @@
       "when": 1719120363216,
       "tag": "0027_panoramic_expediter",
       "breakpoints": true
+    },
+    {
+      "idx": 28,
+      "version": "7",
+      "when": 1719176883895,
+      "tag": "0028_brief_nova",
+      "breakpoints": true
+    },
+    {
+      "idx": 29,
+      "version": "7",
+      "when": 1719177277556,
+      "tag": "0029_brief_madame_hydra",
+      "breakpoints": true
+    },
+    {
+      "idx": 30,
+      "version": "7",
+      "when": 1719177981744,
+      "tag": "0030_loud_rick_jones",
+      "breakpoints": true
     }
   ]
 }

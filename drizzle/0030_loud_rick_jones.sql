@@ -1,0 +1,1 @@
+ALTER TABLE "stock-control-app_order" ADD COLUMN "paymentMethod" text NOT NULL;

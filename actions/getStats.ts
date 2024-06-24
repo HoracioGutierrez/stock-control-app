@@ -7,20 +7,17 @@ export const getStats = async (): Promise<GeneralResponse> => {
   try {
     const salesStats = await db.select({ count: count(), value: sum(orders.total) }).from(orders)
     const productsCount = await db.select({ count: count() }).from(products)
-    const today = new Date()
-    const yesterday = new Date(today.getTime() - (1000 * 60 * 60 * 24 * 4))
+    const salesAmountQuery = sql`
+        SELECT
+          DATE("stock-control-app_order"."createdAt") AS date,
+          SUM("stock-control-app_order"."total") AS total,
+          COUNT("stock-control-app_order"."id") AS count
+        FROM "stock-control-app_order"
+        GROUP BY "stock-control-app_order"."createdAt"
+        HAVING "stock-control-app_order"."createdAt" > (now() - interval '7 days')
+      `
 
-    //const salesFromDB = await db.select().from(orders).where(gt(orders.createdAt, yesterday))
-    //get the total amount of sales from each day only for the last 4 days
-    const salesAmount = await db.select({
-      count: count(),
-      value: sum(orders.total),
-      createdAt: orders.createdAt
-    })
-      .from(orders)
-      .groupBy(orders.createdAt)
-      .having(gt(orders.createdAt, yesterday))
-
+    const salesAmount = await db.execute(salesAmountQuery)
 
     if (salesStats.length === 0 || productsCount.length === 0) throw new Error("Error al obtener los datos")
 

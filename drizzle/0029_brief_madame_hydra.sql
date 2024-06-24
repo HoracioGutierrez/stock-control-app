@@ -1,0 +1,1 @@
+ALTER TABLE "stock-control-app_customer" ADD COLUMN "spentAmount" numeric NOT NULL;

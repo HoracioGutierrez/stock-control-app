@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowLeftToLine, Barcode, ComputerIcon, History, Home, LineChart, Menu, PackageOpen, ShoppingBasket, Truck, UserRound, X } from "lucide-react"
+import { ArrowLeftToLine, ArrowRightToLine, Barcode, ComputerIcon, History, Home, LineChart, Menu, PackageOpen, ShoppingBasket, Truck, UserRound, X } from "lucide-react"
 import { useDrawerStore } from "@/stores/drawerStore"
 import { ModeToggle } from "../ModeToggle"
 import NavLink from "../NavLink"
@@ -24,14 +24,14 @@ function SideBar({ session }: SideBarProps) {
 
   return (
     <div id="sidebar" className={cn("fixed top-0 -left-full md:static md:flex flex-col justify-between h-full", session && "border-r border-accent bg-primary-foreground w-4/5 z-10 md:w-auto md:bg-primary-foreground md:dark:bg-[rgba(0,0,0,0.5)] transition-all", isOpen && "left-0", collapsed && "!w-fit")}>
-      <div className={cn(collapsed && "w-fit")}>
-        <div className="flex flex-col justify-between items-center gap-4 py-8">
+      <div className={cn("transition-all", collapsed && "w-fit")}>
+        <div className={cn("flex flex-col justify-between items-center gap-4 p-4 transition-all",collapsed && "py-4 px-2")}>
           <div className="relative flex flex-col items-center text-2xl">
             <PackageOpen width={40} height={40} />
             <span className={cn("font-bold text-3xl text-center",collapsed && "hidden")}>Control de Stock</span>
           </div>
           <X className="top-2 right-2 absolute md:hidden cursor-pointer" onClick={handleClick} />
-          <ArrowLeftToLine onClick={handleCollapse} className="cursor-pointer" />
+          {collapsed ? <ArrowRightToLine onClick={handleCollapse} className="cursor-pointer" /> : <ArrowLeftToLine onClick={handleCollapse} className="cursor-pointer" />}
         </div>
         <div>
           <NavLink href="/" onClick={handleClick}>
@@ -82,7 +82,7 @@ function SideBar({ session }: SideBarProps) {
           {session && <LogoutButton collapsed={collapsed} />}
         </div>
       </div>
-      <div className={cn("flex flex-col justify-center items-center gap-2 p-4 text-xs",collapsed && "hidden")}>
+      <div className={cn("flex flex-col justify-center items-center gap-2 p-4 text-xs transition-all",collapsed && "hidden")}>
         <p className="text-muted-foreground">Control de Stock - version 0.0.1</p>
         <p className="text-muted-foreground">Desarrollado por @horagutierrez</p>
       </div>

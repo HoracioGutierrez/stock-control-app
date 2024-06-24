@@ -1,10 +1,9 @@
-import { LoginContentProps } from "@/lib/types"
 import { cn } from "@/lib/utils"
 
 
-function Content({ children, className }: LoginContentProps) {
+function Content({ children, className }: { children: any, className: string }) {
   return (
-    <main className={cn("p-4 grow", className)}>
+    <main className={cn("grid grid-cols-1 md:grid-cols-[300px_1fr] grow", className)}>
       {children}
     </main>
   )

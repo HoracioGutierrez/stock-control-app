@@ -14,14 +14,14 @@ type Props = {
 }
 function ConfirmSaveOrderButton({ cashRegisters, userId }: Props) {
 
-  const { products, total, cancelOrder , clientId } = useOrderStore((state: any) => state)
+  const { products, total, cancelOrder , customer } = useOrderStore((state: any) => state)
   const [loading, setLoading] = useState<boolean>(false)
   const { setClose } = useDialogStore((state: any) => state)
   const [paymentMethod, setPaymentMethod] = useState<string>("cash")
 
   const handleClick = () => {
     setLoading(true)
-    saveNewOrder(userId, products, cashRegisters, total, clientId, paymentMethod)
+    saveNewOrder(userId, products, cashRegisters, total, customer.id, paymentMethod)
       .then((data) => {
         if (!data) {
           throw new Error("Error al guardar la orden")

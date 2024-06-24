@@ -12,6 +12,7 @@ function AddCustomerForm() {
 
   const [customers, setCustomers] = useState<any[]>([])
   const [clientId, setClientId] = useState<string>("")
+  const [customer, setCustomer] = useState<any>({})
   const { setClient } = useOrderStore((state: any) => state)
   const { setClose } = useDialogStore((state: any) => state)
 
@@ -40,13 +41,14 @@ function AddCustomerForm() {
       })
   }, [])
 
-  const handleSetClient = (clientId: string) => {
-    setClientId(clientId)
+  const handleSetClient = (customer: any) => {
+    //setClientId(clientId)
+    setCustomer(JSON.parse(customer))
   }
 
   const handleSubmit: MouseEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault()
-    setClient(clientId)
+    setClient(customer)
     setClose()
   }
 
@@ -64,7 +66,7 @@ function AddCustomerForm() {
               </SelectTrigger>
               <SelectContent>
                 {customers.map((customer: any) => (
-                  <SelectItem key={customer.id} value={`${customer.id}@${customer.name}`}>
+                  <SelectItem key={customer.id} value={`${JSON.stringify(customer)}`}>
                     {customer.name}
                   </SelectItem>
                 ))}

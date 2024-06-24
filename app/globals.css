@@ -103,3 +103,11 @@
 ::-webkit-scrollbar-thumb:active {
   background: rgb(104, 104, 104);
 }
+
+#sidebar {
+  box-shadow: 16px 0px 20px rgba(0, 0, 0, 0.1);
+}
+
+.dark #sidebar {
+  box-shadow: 16px 0px 20px rgba(0, 0, 0, 0.4);
+}

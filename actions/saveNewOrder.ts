@@ -15,7 +15,7 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
         userId: userId,
         total: total,
         status: "pending",
-        customerId: clientId ? clientId.split("@")[0] : null,
+        customerId: clientId ? clientId : null,
         ip: data.ip,
         userAgent: data.userAgent,
         cashRegisterId: cashRegister.id,
@@ -74,7 +74,7 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
 
       //check if clientID exists and update the spentAmount
       if (clientId) {
-        const customerId = clientId.split("@")[0]
+        const customerId = clientId
 
         const customerFromDB = await tx.select().from(customers).where(eq(customers.id, customerId))
         if (customerFromDB.length === 0) throw new Error("El cliente no existe")

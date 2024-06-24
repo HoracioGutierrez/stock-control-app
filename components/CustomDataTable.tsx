@@ -150,6 +150,7 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
                           column.toggleVisibility(!!value)
                         }
                       >
+                        {/* {column.columnDef.meta ? column.columnDef.meta.name : column.id} */}
                         {column.id}
                       </DropdownMenuCheckboxItem>
                     )
@@ -235,8 +236,11 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
 
                     return (
                       <TableCell key={cell.id} className="" onDoubleClick={() => { console.log(cell) }}>
-                        <div className="place-content-center gap-2 grid grid-cols-[max-content_1fr]">
-                          {cell.column.id === "price" && <span>$</span>}
+                        <div className={cn(
+                          "place-content-center gap-2 grid grid-cols-[max-content_1fr]",
+                          cell.column.id === "currentAmount" && row.original.currentAmount < 0 && "text-red-500"
+                        )}>
+                          {(cell.column.id === "price" || cell.column.id === "currentAmount") && <span>$</span>}
                           {flexRender(cell.column.columnDef.cell, cell.getContext())}
                           {cell.column.id === "stock" && <span className="w-full grow"> unidades</span>}
                         </div>

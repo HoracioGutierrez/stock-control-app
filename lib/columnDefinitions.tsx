@@ -116,6 +116,9 @@ export const customersColumns: ColumnDef<CustomerType>[] = [
       )
     },
     accessorKey: "name",
+    meta : {
+      name : "Nombre"
+    }
   },
   {
     header: ({ column }) => {
@@ -132,6 +135,9 @@ export const customersColumns: ColumnDef<CustomerType>[] = [
       )
     },
     accessorKey: "lastName",
+    meta : {
+      name : "Apellido"
+    }
   },
 
   {
@@ -141,6 +147,10 @@ export const customersColumns: ColumnDef<CustomerType>[] = [
   {
     header: "Correo",
     accessorKey: "email",
+  },
+  {
+    header : "Balance Total",
+    accessorKey : "currentAmount",
   },
   {
     header : "Activo",

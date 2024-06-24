@@ -1,6 +1,6 @@
 "use client"
 
-import { Barcode, ComputerIcon, History, Home, LineChart, Menu, PackageOpen, ShoppingBasket, Truck, UserRound, X } from "lucide-react"
+import { ArrowLeftToLine, Barcode, ComputerIcon, History, Home, LineChart, Menu, PackageOpen, ShoppingBasket, Truck, UserRound, X } from "lucide-react"
 import { useDrawerStore } from "@/stores/drawerStore"
 import { ModeToggle } from "../ModeToggle"
 import NavLink from "../NavLink"
@@ -23,49 +23,52 @@ function SideBar({ session }: SideBarProps) {
   }
 
   return (
-    <div id="sidebar" className={cn("fixed top-0 -left-full md:static md:flex flex-col justify-between h-full", session && "border-r border-accent bg-primary-foreground w-4/5 z-10 md:w-auto md:bg-primary-foreground md:dark:bg-[rgba(0,0,0,0.5)] transition-all", isOpen && "left-0")}>
-      <div>
-        <div className="relative flex flex-col items-center py-8 text-2xl">
-          <PackageOpen width={40} height={40} />
-          <span className="font-bold text-3xl text-center">Control de Stock</span>
+    <div id="sidebar" className={cn("fixed top-0 -left-full md:static md:flex flex-col justify-between h-full", session && "border-r border-accent bg-primary-foreground w-4/5 z-10 md:w-auto md:bg-primary-foreground md:dark:bg-[rgba(0,0,0,0.5)] transition-all", isOpen && "left-0", collapsed && "!w-fit")}>
+      <div className={cn(collapsed && "w-fit")}>
+        <div className="flex flex-col justify-between items-center gap-4 py-8">
+          <div className="relative flex flex-col items-center text-2xl">
+            <PackageOpen width={40} height={40} />
+            <span className={cn("font-bold text-3xl text-center",collapsed && "hidden")}>Control de Stock</span>
+          </div>
           <X className="top-2 right-2 absolute md:hidden cursor-pointer" onClick={handleClick} />
+          <ArrowLeftToLine onClick={handleCollapse} className="cursor-pointer" />
         </div>
         <div>
           <NavLink href="/" onClick={handleClick}>
             <Home />
-            <span>inicio</span>
+            <span className={cn(collapsed && "hidden")}>inicio</span>
           </NavLink>
           <NavLink href="/order" onClick={handleClick}>
             <ShoppingBasket />
-            <span>nueva orden</span>
+            <span className={cn(collapsed && "hidden")}>nueva orden</span>
           </NavLink>
           <NavLink href="/stock" onClick={handleClick}>
             <ComputerIcon />
-            <span>caja</span>
+            <span className={cn(collapsed && "hidden")}>caja</span>
           </NavLink>
           <div className="bg-accent w-full h-[1px]" />
           <NavLink href="/products" onClick={handleClick}>
             <Barcode />
-            <span>productos</span>
+            <span className={cn(collapsed && "hidden")}>productos</span>
           </NavLink>
           <NavLink href="/customers" onClick={handleClick}>
             <UserRound />
-            <span>clientes</span>
+            <span className={cn(collapsed && "hidden")}>clientes</span>
           </NavLink>
           <NavLink href="/providers" onClick={handleClick}>
             <Truck />
-            <span>proveedores</span>
+            <span className={cn(collapsed && "hidden")}>proveedores</span>
           </NavLink>
           <div className="bg-accent w-full h-[1px]" />
           <NavLink href="/sales" onClick={handleClick}>
             <LineChart />
-            <span>ventas</span>
+            <span className={cn(collapsed && "hidden")}>ventas</span>
           </NavLink>
           {session?.user.isAdmin && (
             <>
               <NavLink href="/movements" onClick={handleClick}>
                 <History />
-                <span>movimientos</span>
+                <span className={cn(collapsed && "hidden")}>movimientos</span>
               </NavLink>
               <div className="bg-accent w-full h-[1px]" />
             </>
@@ -74,12 +77,12 @@ function SideBar({ session }: SideBarProps) {
         <div>
           <div className="flex items-center gap-2 hover:bg-accent p-2 pl-4 hover:font-bold text-muted-foreground hover:text-accent-foreground transition-colors hover:cursor-pointer" onClick={handleClick}>
             <ModeToggle />
-            <span>modo dark</span>
+            <span className={cn(collapsed && "hidden")}>modo dark</span>
           </div>
-          {session && <LogoutButton />}
+          {session && <LogoutButton collapsed={collapsed} />}
         </div>
       </div>
-      <div className="flex flex-col justify-center items-center gap-2 p-4 text-xs">
+      <div className={cn("flex flex-col justify-center items-center gap-2 p-4 text-xs",collapsed && "hidden")}>
         <p className="text-muted-foreground">Control de Stock - version 0.0.1</p>
         <p className="text-muted-foreground">Desarrollado por @horagutierrez</p>
       </div>

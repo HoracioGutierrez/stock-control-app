@@ -26,7 +26,7 @@ function OrderScanner({ data }: OrderScannerProps) {
   const [scanning, setScanning] = useState<boolean>(false)
   const { setOpen } = useDialogStore((state: any) => state)
   const [camScan, setCamScan] = useState<boolean>(false)
-  const { products, setScannedProduct, increment, decrement, total, remove, setProduct, scannedProduct, clientId } = useOrderStore((state: any) => state)
+  const { products, setScannedProduct, increment, decrement, total, remove, setProduct, scannedProduct, customer } = useOrderStore((state: any) => state)
 
   let barcode = ""
 
@@ -121,8 +121,9 @@ function OrderScanner({ data }: OrderScannerProps) {
           </CardHeader>
           <CardContent>
             <CardDescription className="font-bold text-5xl text-primary">${total}</CardDescription>
-            <CardDescription className="text-muted-foreground">
-              {clientId && <p>Cliente: {clientId.split("@")[1]}</p>}
+            <CardDescription className="flex flex-col text-lg text-muted-foreground">
+              {customer.id && <span>Cliente: {customer.name}</span>}
+              {customer.currentAmount < 0 && <span className="font-bold text-red-400">Balance actual : ${customer.currentAmount}</span>}
             </CardDescription>
           </CardContent>
         </Card>

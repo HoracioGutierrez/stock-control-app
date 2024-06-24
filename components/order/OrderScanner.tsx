@@ -106,7 +106,7 @@ function OrderScanner({ data }: OrderScannerProps) {
     setCamScan(true)
   }
 
-  const handleCapture = (barcode:DetectedBarcode) => {
+  const handleCapture = (barcode: DetectedBarcode) => {
     alert(barcode.rawValue)
     handleScan(barcode.rawValue)
     setCamScan(false)
@@ -165,7 +165,7 @@ function OrderScanner({ data }: OrderScannerProps) {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button onClick={handleCamScan}>
-                    <ScanBarcode/>
+                    <ScanBarcode />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -232,7 +232,17 @@ function OrderScanner({ data }: OrderScannerProps) {
         <CancelOrderButton />
         <CloseCashRegisterButton />
       </div>
-      {camScan && ( <BarcodeScanner onCapture={handleCapture}/>)}
+      {camScan && (
+        <>
+          <BarcodeScanner
+            onCapture={handleCapture}
+            className="top-0 left-0 z-10 fixed w-screen h-screen"
+            options={{
+              formats: ["code_128"]
+            }}
+          />
+        </>
+      )}
     </div>
   )
 }

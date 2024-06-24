@@ -15,6 +15,7 @@ export const getStats = async (): Promise<GeneralResponse> => {
         FROM "stock-control-app_order"
         GROUP BY "stock-control-app_order"."createdAt"
         HAVING "stock-control-app_order"."createdAt" > (now() - interval '7 days')
+        ORDER BY "stock-control-app_order"."createdAt" ASC
       `
 
     const salesAmount = await db.execute(salesAmountQuery)

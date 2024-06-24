@@ -39,7 +39,7 @@ function SideBar({ session }: SideBarProps) {
             <ShoppingBasket />
             <span>nueva orden</span>
           </NavLink>
-          <NavLink href="/stock" onClick={handleClick}>
+          <NavLink href="/cashRegisters" onClick={handleClick}>
             <ComputerIcon />
             <span>caja</span>
           </NavLink>

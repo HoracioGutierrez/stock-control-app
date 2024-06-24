@@ -2,8 +2,9 @@
 import { useDialogStore } from "@/stores/generalDialog"
 import { Button } from "./ui/button"
 import { Ban, UserRoundCheck } from "lucide-react"
+import { DeleteButtonProps } from "@/lib/types"
 
-function DeleteCustomerButton({ active, id }: any) {
+function DeleteCustomerButton({ active, id }: DeleteButtonProps) {
   const { setOpen } = useDialogStore((state: any) => state)
 
   const handleClick = () => {

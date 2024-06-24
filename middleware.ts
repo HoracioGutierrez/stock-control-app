@@ -13,7 +13,7 @@ export default auth((req) => {
     "/providers",
     "/sales",
     "/movements",
-    "/stock"
+    "/cashRegisters",
   ]
 
   if(req.auth && req.nextUrl.pathname === "/login") {

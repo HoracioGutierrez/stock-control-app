@@ -80,6 +80,11 @@ export const formNamesVariants: {
             name: "currentAmount",
             label: "Cantidad",
             inputType: "text"
+        },
+        totalAmount: {
+            name: "totalAmount",
+            label: "Total",
+            inputType: "text"
         }
     },
 }

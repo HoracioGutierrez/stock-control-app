@@ -3,6 +3,7 @@ import { Ban } from "lucide-react"
 import CustomDataTable from "../CustomDataTable"
 import DeleteResourceButton from "../layout/DeleteResourceButton"
 import { getAllCashRegisters } from "@/actions/getAllCashRegisters"
+import EditButton from "../EditButton"
 
 type Props = {
   data: any
@@ -35,6 +36,9 @@ function CashRegisterTable({ data, isAdmin }: Props) {
                 active={rowData.active}
                 tooltip={rowData.active ? "Bloquear Caja" : "Desbloquear caja"}
               />
+            )}
+            {isAdmin && (
+              <EditButton id={rowData.id} entity="cash-register" />
             )}
           </>
         )

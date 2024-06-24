@@ -3,7 +3,7 @@
 import { getAllProducts } from "@/actions/getAllProducts"
 import CustomDataTable from "./CustomDataTable"
 import DeleteProductButton from "./DeleteProductButton"
-import EditProductButton from "./EditProductButton"
+import EditButton from "./EditButton"
 import EditVariantButton from "./EditVariantButton"
 import DeleteResourceButton from "./layout/DeleteResourceButton"
 import { Button } from "./ui/button"
@@ -28,7 +28,7 @@ function ProductsTable({ data, isAdmin }: ProductsTableProps) {
             {isAdmin && (
               <DeleteResourceButton type="product" data={rowData.id} active={rowData.active} tooltip={rowData.active ? "Borrar producto" : "Reactivar producto"} />
             )}
-            <EditProductButton barcode={rowData.barcode} />
+            <EditButton barcode={rowData.barcode} entity="product" />
             {!rowData.isVariant && <EditVariantButton barcode={rowData.barcode} />}
           </>
         )

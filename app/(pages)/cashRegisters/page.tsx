@@ -21,7 +21,7 @@ async function StockPage() {
         : null
       } />
       <CashRegisterTable data={data} isAdmin={session?.user.isAdmin} />
-      <CashRegisterDialog userId={session?.user.id as string} />
+      <CashRegisterDialog userId={session?.user.id as string} data={data} />
     </>
   )
 }

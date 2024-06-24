@@ -32,7 +32,7 @@
     "postgres": "^3.4.4",
     "react": "^18",
     "react-barcode-reader": "^0.0.2",
-    "react-barcode-scanner": "^2.0.2",
+    "react-barcode-scanner": "^2.1.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",
     "react-hook-form": "^7.51.5",

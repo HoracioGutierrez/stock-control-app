@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table"
 import { getProductByBarcode } from "@/actions/getProductByBarcode"
-import { ArrowDown, ArrowUp, Barcode, Trash2 } from "lucide-react"
+import { ArrowDown, ArrowUp, Barcode, ScanBarcode, Trash2 } from "lucide-react"
 import { useOrderStore } from "@/stores/orderStore"
 import { useEffect, useState } from "react"
 import { Button } from "../ui/button"
@@ -11,6 +11,8 @@ import { useDialogStore } from "@/stores/generalDialog"
 import CloseCashRegisterButton from "../cashRegister/CloseCashRegisterButton"
 import CancelOrderButton from "./CancelOrderButton"
 import OrderButton from "./OrderButton"
+import { BarcodeScanner, DetectedBarcode } from 'react-barcode-scanner'
+import "react-barcode-scanner/polyfill"
 
 type OrderScannerProps = {
   data: any
@@ -23,7 +25,8 @@ function OrderScanner({ data }: OrderScannerProps) {
   const [error, setError] = useState<string>("")
   const [scanning, setScanning] = useState<boolean>(false)
   const { setOpen } = useDialogStore((state: any) => state)
-  const { products, setScannedProduct, increment, decrement, total, remove, setProduct, scannedProduct , clientId } = useOrderStore((state: any) => state)
+  const [camScan, setCamScan] = useState<boolean>(false)
+  const { products, setScannedProduct, increment, decrement, total, remove, setProduct, scannedProduct, clientId } = useOrderStore((state: any) => state)
 
   let barcode = ""
 
@@ -99,6 +102,16 @@ function OrderScanner({ data }: OrderScannerProps) {
     setOpen("pay-with")
   }
 
+  const handleCamScan = () => {
+    setCamScan(true)
+  }
+
+  const handleCapture = (barcode:DetectedBarcode) => {
+    alert(barcode.rawValue)
+    handleScan(barcode.rawValue)
+    setCamScan(false)
+  }
+
   return (
     <div className="flex flex-col h-full">
       <div className="gap-4 grid grid-cols-1 md:grid-cols-2 mt-4 mb-4">
@@ -147,6 +160,16 @@ function OrderScanner({ data }: OrderScannerProps) {
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>Escaneao Manual</p>
+                </TooltipContent>
+              </Tooltip>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button onClick={handleCamScan}>
+                    <ScanBarcode/>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Escaneao con camara</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
@@ -209,6 +232,7 @@ function OrderScanner({ data }: OrderScannerProps) {
         <CancelOrderButton />
         <CloseCashRegisterButton />
       </div>
+      {camScan && ( <BarcodeScanner onCapture={handleCapture}/>)}
     </div>
   )
 }

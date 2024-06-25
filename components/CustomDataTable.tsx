@@ -50,7 +50,9 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
   const [activeState, setActiveState] = useState<boolean>(false)
   const [selectedDay, setSelectedDay] = useState<Date | undefined>(undefined)
   const [open, setOpen] = useState(false)
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
+    "active": false,
+  })
   const form = useForm({
     defaultValues: {
       date: new Date().toDateString()
@@ -70,7 +72,10 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
     initialState: {
       pagination: {
         pageSize: 5
-      }
+      },
+      columnVisibility : {
+        "active": false,
+      },
     },
     state: {
       sorting,
@@ -95,11 +100,13 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
       manualCallback(true)
         .then((data: any) => {
           setTableData(data.data)
+          setColumnVisibility({...columnVisibility, "active": true})
         })
     } else {
       manualCallback()
         .then((data: any) => {
           setTableData(data.data)
+          setColumnVisibility({...columnVisibility, "active": false})
         })
     }
 

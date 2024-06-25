@@ -155,7 +155,7 @@ export const customersColumns: ColumnDef<CustomerType>[] = [
   {
     header: "Activo",
     accessorKey: "active",
-    size: 1
+    size: 1,
   },
   {
     header: "Acciones",

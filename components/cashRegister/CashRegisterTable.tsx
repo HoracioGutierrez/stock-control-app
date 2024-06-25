@@ -3,7 +3,7 @@ import CustomDataTable from "../CustomDataTable"
 import DeleteResourceButton from "../layout/DeleteResourceButton"
 import { getAllCashRegisters } from "@/actions/getAllCashRegisters"
 import EditButton from "../EditButton"
-import { IconDeviceDesktopOff, IconDeviceDesktopDollar } from '@tabler/icons-react'
+import { IconDeviceDesktopOff, IconDeviceDesktopCheck } from '@tabler/icons-react'
 
 type Props = {
   data: any
@@ -27,7 +27,7 @@ function CashRegisterTable({ data, isAdmin }: Props) {
               data={rowData.id}
               active={rowData.openedById === null ? false : true}
               activeIcon={<IconDeviceDesktopOff className="p-0 text-muted-foreground hover:text-red-400 aspect-square" />}
-              inactiveIcon={<IconDeviceDesktopDollar className="p-0 text-muted-foreground hover:text-green-400 aspect-square" />}
+              inactiveIcon={<IconDeviceDesktopCheck className="p-0 text-muted-foreground hover:text-green-400 aspect-square" />}
               tooltip={rowData.openedById === null ? "Abrir caja" : "Cerrar caja"}
             />
             {isAdmin && (

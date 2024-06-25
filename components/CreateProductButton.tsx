@@ -3,6 +3,7 @@
 import { Button } from "./ui/button"
 import { Plus } from "lucide-react"
 import { useDialogStore } from "@/stores/generalDialog"
+import { PackagePlus } from "lucide-react"
 
 const CreateProductButton = () => {
 
@@ -14,7 +15,7 @@ const CreateProductButton = () => {
 
   return (
     <Button onClick={handleClick} className="flex items-center gap-2 text-white dark:text-primary-foreground">
-      <Plus />
+      <PackagePlus className="p-0 text-primary-foreground" />
       Crear producto
     </Button>
   )

@@ -8,6 +8,7 @@ import { PlusIcon } from "lucide-react"
 import { auth } from "@/auth"
 import CashRegisterTable from "@/components/cashRegister/CashRegisterTable"
 import CashRegisterDialog from "@/components/cashRegister/CashRegisterDialog"
+import {IconDeviceDesktopPlus} from '@tabler/icons-react'
 
 async function StockPage() {
 
@@ -17,7 +18,7 @@ async function StockPage() {
   return (
     <>
       <PageHeader title="Cajas" actions={session?.user.isAdmin
-        ? <DialogTriggerButton dialogType="new-cash-register" text="Crear Caja" icon={<PlusIcon />} />
+        ? <DialogTriggerButton dialogType="new-cash-register" text="Crear Caja" icon={<IconDeviceDesktopPlus />} />
         : null
       } />
       <CashRegisterTable data={data} isAdmin={session?.user.isAdmin} />

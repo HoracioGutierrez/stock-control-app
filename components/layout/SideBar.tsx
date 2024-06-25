@@ -7,6 +7,7 @@ import NavLink from "../NavLink"
 import { cn } from "@/lib/utils"
 import { SideBarProps } from "@/lib/types"
 import LogoutButton from "../LogoutButton"
+import {IconDeviceDesktopDollar} from '@tabler/icons-react'
 
 
 
@@ -43,7 +44,7 @@ function SideBar({ session }: SideBarProps) {
             <span className={cn(collapsed && "hidden")}>nueva orden</span>
           </NavLink>
           <NavLink href="/cashRegisters" onClick={handleClick}>
-            <ComputerIcon />
+            <IconDeviceDesktopDollar />
             <span className={cn(collapsed && "hidden")}>caja</span>
           </NavLink>
           <div className="bg-accent w-full h-[1px]" />

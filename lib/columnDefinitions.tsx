@@ -287,6 +287,7 @@ export const providerOrdersColumns: ColumnDef<any>[] = [
       )
     },
     accessorKey: "name",
+    /* cell: */
   },
   {
     header : ({ column }) => {

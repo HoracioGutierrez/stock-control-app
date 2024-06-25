@@ -13,7 +13,7 @@ const EditButton = ({ barcode, id, entity }: EditButtonProps) => {
   const { setOpen } = useDialogStore((state: any) => state)
 
   const handleClick = () => {
-    const action = "edit" + "-" + entity
+    const action = "edit-" + entity
     const idResolve = barcode ? barcode : id
     setOpen(action, idResolve)
   }

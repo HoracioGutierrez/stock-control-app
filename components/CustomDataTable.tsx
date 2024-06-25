@@ -8,19 +8,17 @@ import { CustomerType, HistoryType, ProductType, ProviderType } from "@/schema"
 import { Input } from "@/components/ui/input"
 import { useEffect, useState } from "react"
 import { Button } from "./ui/button"
-import { Eye, Filter } from "lucide-react"
+import { Filter, Package, PackageX } from "lucide-react"
 import { TooltipProvider } from "@radix-ui/react-tooltip"
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip"
 import { cn } from "@/lib/utils"
-import { getAllCashRegisters } from "@/actions/getAllCashRegisters"
 import { Calendar } from "./ui/calendar"
-
-import { FormControl, FormField, FormItem, FormLabel } from "./ui/form"
 import { useForm } from "react-hook-form"
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
 import { format } from "date-fns"
 import { getAllOrders } from "@/actions/getAllOrders"
 import { toast } from "./ui/use-toast"
+import { IconCashRegister, IconDeviceDesktopX, IconTruck, IconTruckOff, IconTruckReturn, IconUser, IconUserOff } from '@tabler/icons-react'
 
 type CustomDataTableProps = {
   data: ProductType[] | HistoryType[] | CustomerType[] | ProviderType[] | null,
@@ -284,7 +282,7 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
                     if (cell.column.id === "active") {
                       return (
                         <TableCell key={cell.id}>
-                          {row.original.active ? "si" : "no"}
+                          {row.original.active ? "Si" : "No"}
                         </TableCell>
                       )
                     }
@@ -296,7 +294,6 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
                         </TableCell>
                       )
                     }
-
                     return (
                       <TableCell key={cell.id} className="" onDoubleClick={() => { console.log(cell) }}>
                         <div className={cn(
@@ -304,6 +301,14 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
                           cell.column.id === "currentAmount" && row.original.currentAmount < 0 && "text-red-500"
                         )}>
                           {(cell.column.id === "price" || cell.column.id === "currentAmount") && <span>$</span>}
+                          {(cell.column.id === "label" && row.original.openedById != null) && <IconCashRegister className="p-0 text-green-400" />}
+                          {(cell.column.id === "label" && row.original.openedById === null) && <IconDeviceDesktopX className="p-0 text-red-400 aspect-square" />}
+                          {(cell.column.id === "name" && type === "products" && row.original.active) && <Package className="p-0 text-green-400 aspect-square" />}
+                          {(cell.column.id === "name" && type === "products" && !row.original.active) && <PackageX className="p-0 text-red-400 aspect-square" />}
+                          {(cell.column.id === "name" && type === "customers" && row.original.active) && <IconUser className="p-0 text-green-400 aspect-square" />}
+                          {(cell.column.id === "name" && type === "customers" && !row.original.active) && <IconUserOff className="p-0 text-red-400 aspect-square" />}
+                          {(cell.column.id === "name" && type === "providers" && row.original.active) && <IconTruck className="p-0 text-green-400 aspect-square" />}
+                          {(cell.column.id === "name" && type === "providers" && !row.original.active) && <IconTruckOff className="p-0 text-red-400 aspect-square" />}
                           {flexRender(cell.column.columnDef.cell, cell.getContext())}
                           {cell.column.id === "stock" && <span className="w-full grow"> unidades</span>}
                         </div>

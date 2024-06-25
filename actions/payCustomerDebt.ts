@@ -29,7 +29,7 @@ export const payCustomerDebt = async (customerId: string, payAll: boolean, manua
 
       await db.update(customers).set({
         currentAmount: 0,
-      })
+      }).where(eq(customers.id, customerId))
     } else {
 
       /* await db.update(cashRegister).set({
@@ -38,7 +38,7 @@ export const payCustomerDebt = async (customerId: string, payAll: boolean, manua
 
       await db.update(customers).set({
         currentAmount: sql`${customers.currentAmount} + ${manualAmount}`
-      })
+      }).where(eq(customers.id, customerId))
     }
 
     await db.insert(history).values({

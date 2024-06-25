@@ -160,7 +160,7 @@ function OrderScanner({ data }: OrderScannerProps) {
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Escaneao Manual</p>
+                  <p>Escaneo Manual</p>
                 </TooltipContent>
               </Tooltip>
               <Tooltip>
@@ -170,7 +170,7 @@ function OrderScanner({ data }: OrderScannerProps) {
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Escaneao con camara</p>
+                  <p>Escaneo con Camara</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
@@ -239,7 +239,7 @@ function OrderScanner({ data }: OrderScannerProps) {
             onCapture={handleCapture}
             className="top-0 left-0 z-10 fixed w-screen h-screen"
             options={{
-              formats: ["code_128","code_39","code_93","codabar","ean_13","ean_8","itf","qr_code","upc_a","upc_e"]
+              formats: ["code_128", "code_39", "code_93", "codabar", "ean_13", "ean_8", "itf", "qr_code", "upc_a", "upc_e"]
             }}
           />
         </>

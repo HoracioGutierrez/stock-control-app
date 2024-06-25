@@ -7,6 +7,8 @@ import EditProductVariantsForm from "./EditProductVariantsForm"
 import EditFormContainer from "./EditFormContainer"
 import CustomDialog from "./CustomDialog"
 import { useDialogStore } from "@/stores/generalDialog"
+import EditPricesForm from "./products/EditPricesForm"
+import { useState } from "react"
 
 type ProductDialogProps = {
   userId: string
@@ -15,7 +17,7 @@ type ProductDialogProps = {
 function ProductDialog({ userId }: ProductDialogProps) {
 
   const { setOpen, type, id } = useDialogStore((state: any) => state)
-
+  const [isFullWidth, setIsFullWidth] = useState<boolean>(false)
 
   const session = useSession()
   const entityType = "product"
@@ -40,6 +42,10 @@ function ProductDialog({ userId }: ProductDialogProps) {
     "variant": {
       title: "Editar Productos",
       fullWidth: true
+    },
+    "edit-prices": {
+      title: "Editar precios",
+      fullWidth: isFullWidth
     }
   }
 
@@ -50,6 +56,7 @@ function ProductDialog({ userId }: ProductDialogProps) {
         {(type === "delete-product" || type === "activate-product") && <DeleteProductConfirmationForm userId={session?.data?.user.id as string} barcode={id} type={type} />}
         {type === "edit-product" && <EditFormContainer {...entityProps} userId={session?.data?.user.id as string} />}
         {type === "variant" && <EditProductVariantsForm barcode={id} userId={session?.data?.user.id as string} />}
+        {type === "edit-prices" && <EditPricesForm setIsFullWidth={setIsFullWidth} userId={session?.data?.user.id as string} />}
       </CustomDialog>
     </>
   )

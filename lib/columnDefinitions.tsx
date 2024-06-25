@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import { HistoryType, ProductType, CustomerType, ProviderType, CashRegisterType } from "@/schema"
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown } from "lucide-react"
+import { Checkbox } from "@/components/ui/checkbox"
 
 export const productsColumns: ColumnDef<ProductType>[] = [
   {
@@ -362,4 +363,63 @@ export const ordersColumns: ColumnDef<any>[] = [
       return name.toLowerCase().includes(value.toLowerCase())
     }
   }
+]
+
+export const priceColumns: ColumnDef<any>[] = [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="link"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="p-0"
+        >
+          Nombre
+          <ArrowUpDown className="ml-2 w-4 h-4" />
+        </Button>
+      )
+    },
+    accessorKey: "name",
+    id: "name",
+    /* cell: */
+  },
+  {
+    header: ({ column }) => {
+      //price
+      return (
+        <Button
+          variant="link"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")
+          }
+          className="p-0"
+        >
+          Precio
+          <ArrowUpDown className="ml-2 w-4 h-4" />
+        </Button>
+      )
+    },
+    accessorKey: "price",
+  },
 ]

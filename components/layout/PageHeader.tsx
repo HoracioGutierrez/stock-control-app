@@ -10,7 +10,7 @@ type PageHeaderProps = {
 
 const PageHeader = ({ title = "Demo Title", actions, subtitle }: PageHeaderProps) => {
   return (
-    <div className="flex justify-between mb-8">
+    <div className="align-top flex justify-between mb-8">
       <div>
         {subtitle && <p className="text-muted-foreground">Cajero : {subtitle}</p>}
         <PageTitle title={title} />

@@ -4,6 +4,8 @@ import { getAllProducts } from "@/actions/getAllProducts"
 import PageHeader from "@/components/layout/PageHeader"
 import ProductDialog from "@/components/ProductDialog"
 import { auth } from "@/auth"
+import CustomButton from "@/components/layout/CustomButton"
+import { Edit2Icon } from "lucide-react"
 
 async function ProductsPage() {
 
@@ -14,7 +16,18 @@ async function ProductsPage() {
 
   return (
     <>
-      <PageHeader title="Productos" actions={<CreateProductButton />} />
+      <PageHeader title="Productos" actions={
+        <>
+          <CustomButton
+            icon={<Edit2Icon />}
+            tooltip="Edita precio de productos"
+            dialogType="edit-prices"
+          >
+            editar precios
+          </CustomButton>
+          <CreateProductButton />
+        </>
+      } />
       {data.length == 0 && (
         <div className="place-items-center border-slate-400 grid border border-dashed rounded grow">
           <div className="max-w-sm text-center">

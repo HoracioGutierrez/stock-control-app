@@ -11,13 +11,20 @@ import { useState } from "react"
 import { useDialogStore } from "@/stores/generalDialog"
 
 
-function EditFormContainer({ entityType, barcode, entityId, hasVariants, userId }: any) {
+function EditFormContainer({ entityType, barcode, entityId, hasVariants, userId, hasDetails }: any) {
     const [error, setError] = useState<string | null>(null)
     const [mainName, setMainName] = useState<string>("")
     const [loading, setLoading] = useState<boolean>(false)
     const [idResolve, setIdResolve] = useState<string>("")
     const [isVariant, setIsVariant] = useState<boolean>(false)
-    const conditionalEntity = entityType === "customer" ? "Cliente" : "Producto"
+
+    const conditionalEntity: Record<string, string> = {
+        "provider": "Proveedor",
+        "customer": "Cliente",
+        "product": "Producto",
+        "cashRegister": "Caja",
+    }
+    const entityResolved = conditionalEntity[entityType]
 
     const formForName = formNamesVariants[entityType]
     const formForDetails = formDetailsVariants[entityType]
@@ -53,8 +60,8 @@ function EditFormContainer({ entityType, barcode, entityId, hasVariants, userId 
                     throw new Error(data.error)
                 }
                 toast({
-                    title: `${conditionalEntity} editado correctamente`,
-                    description: `${conditionalEntity} actualizado correctamente en la base de datos`,
+                    title: `${entityResolved} editado correctamente`,
+                    description: `${entityResolved} actualizado correctamente en la base de datos`,
                 })
                 setClose()
             })
@@ -62,15 +69,16 @@ function EditFormContainer({ entityType, barcode, entityId, hasVariants, userId 
                 if (error instanceof Error) {
                     return setError(error.message)
                 }
-                setError(`Error al editar el ${conditionalEntity}, intente nuevamente o contacte al desarrollador.`)
+                setError(`Error al editar el ${entityResolved}, intente nuevamente o contacte al desarrollador.`)
                 toast({
                     variant: "destructive",
-                    title: `Error al editar el ${conditionalEntity}`,
+                    title: `Error al editar el ${entityResolved}`,
                     description: error.message
                 })
             })
             .finally(() => {
                 setLoading(false)
+
             })
     }
 
@@ -96,18 +104,22 @@ function EditFormContainer({ entityType, barcode, entityId, hasVariants, userId 
         formForDetails,
         formForVariant,
         entityConfig,
-        conditionalEntity,
+        entityResolved,
         handleMainNameChange,
         handleAddVariant,
         fields,
-        hasVariants
+        hasVariants,
+        hasDetails
     }
 
     return (
         <>
-            <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-2 gap-8 overflow-auto" id={entityConfig[entityType].formId}>
+            {hasDetails && <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-2 gap-8 overflow-auto" id={entityConfig[entityType].formId}>
                 <EditForm {...formProps} />
-            </form>
+            </form>}
+            {hasDetails == false && <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col overflow-auto" id={entityConfig[entityType].formId}>
+                <EditForm {...formProps} />
+            </form>}
         </>
     )
 }

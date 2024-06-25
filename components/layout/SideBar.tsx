@@ -42,7 +42,7 @@ function SideBar({ session }: SideBarProps) {
             <ShoppingBasket />
             <span className={cn(collapsed && "hidden")}>nueva orden</span>
           </NavLink>
-          <NavLink href="/stock" onClick={handleClick}>
+          <NavLink href="/cashRegisters" onClick={handleClick}>
             <ComputerIcon />
             <span className={cn(collapsed && "hidden")}>caja</span>
           </NavLink>

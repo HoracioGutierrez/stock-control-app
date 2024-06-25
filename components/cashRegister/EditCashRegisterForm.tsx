@@ -1,12 +1,24 @@
+import { useDialogStore } from "@/stores/generalDialog"
 import EditFormContainer from "../EditFormContainer"
 
+
+
 type Props = {
-  id: string
+  data: any
   userId: string
+  hasDetails?: boolean
+  hasVariants?: boolean
 }
-function EditCashRegisterForm({ id, userId }: Props) {
+function EditCashRegisterForm({ data, userId }: Props) {
+  const { type, id } = useDialogStore((state: any) => state)
+  const entityProps = {
+    entityType: "cashRegister",
+    entityId: id,
+    hasDetails: false,
+    hasVariants: false,
+  }
   return (
-    <EditFormContainer entity="cash-register" barcode={id} userId={userId} hasVariants={false} data={id} />
+    <EditFormContainer {...entityProps} />
   )
 }
 export default EditCashRegisterForm

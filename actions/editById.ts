@@ -20,18 +20,20 @@ export const editById = async (entityType: string, entityId: string, data: any, 
         if (response.length === 0) throw new Error(`${entityNameResolve} no encontrado`)
 
 
-        await db.insert(entityHistory).values({
-            userId: userId,
-            actionType: `${entityNameResolve} editado`,
-            products: [data.lastName ? data.lastName + " " + data.name : ""],
-            orderId: null,
-            customerId: null,
-            ip: null,
-            userAgent: null,
-        })
+        if (entityType != "cashRegister") {
+            await db.insert(entityHistory).values({
+                userId: userId,
+                actionType: `${entityNameResolve} editado`,
+                products: [data.lastName ? data.lastName + " " + data.name : ""],
+                orderId: null,
+                customerId: null,
+                ip: null,
+                userAgent: null,
+            })
+        }
 
 
-        revalidatePath(`/${entityId}s`)
+        revalidatePath(`/${entityType}s`)
         return {
             data: response[0],
             error: null,

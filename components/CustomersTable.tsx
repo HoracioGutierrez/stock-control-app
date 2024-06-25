@@ -1,7 +1,7 @@
 "use client"
 
 import { CustomerTableProps } from "@/lib/types"
-import EditProductButton from "./EditProductButton"
+import EditButton from "./EditButton"
 import CustomDataTable from "./CustomDataTable"
 import DeleteCustomerButton from "./DeleteCustomerButton"
 import { getAllCustomers } from "@/actions/getAllCustomers"
@@ -22,7 +22,7 @@ function CustomersTable({ data, isAdmin }: CustomerTableProps) {
                     <>  
                         <UpdateCustomerDebtButton isInDebt={rowData.currentAmount < 0} id={rowData.id} />
                         {isAdmin && <DeleteCustomerButton active={rowData.active} id={rowData.id} />}
-                        <EditProductButton id={rowData.id} />
+                        <EditButton id={rowData.id} entity="customer" />
                     </>
                 )
             }}

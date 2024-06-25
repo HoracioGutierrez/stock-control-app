@@ -1,22 +1,29 @@
 "use server"
 
-import { GeneralResponse } from "@/lib/types"
-import { db, customers, products } from "@/schema"
+import { entitiesPropsById, entityName } from "@/lib/queryConfig"
+import { Entity, EntityName, GeneralResponse } from "@/lib/types"
+import { db } from "@/schema"
 import { eq } from "drizzle-orm"
 
-export const getById = async (entityType: string, id: string | undefined, barcode: string | undefined): Promise<GeneralResponse> => {
+export const getById = async (entityType: string, entityId?: string, barcode?: string): Promise<GeneralResponse> => {
   "use server"
+  const entityNameResolve = entityName[entityType as keyof EntityName]
   try {
-    const entity = entityType === 'product' ? products : customers;
-    const entityId = barcode === undefined ? "id" : "barcode"
-    const entityData = barcode === undefined ? id : barcode
-    const data = await db.select().from(entity).where(eq(entity[entityId], entityData))
+    const idResolve = barcode === undefined ? entityId : barcode
+    const entitySchema = entitiesPropsById[entityType as keyof Entity]
+    let response
+    if (entityType === "product") {
+      response = await db.select().from(entitySchema).where(eq(entitySchema.barcode, idResolve))
+    } else {
+      response = await db.select().from(entitySchema).where(eq(entitySchema.id, idResolve))
+    }
 
-    if (data.length === 0) throw new Error(`${entityType.charAt(0).toUpperCase() + entityType.slice(1)} no encontrado`)
+    if (response.length === 0) throw new Error(`${entityNameResolve} no encontrado`)
+
     return {
-      data: data[0],
+      data: response[0],
       error: null,
-      message: `${entityType.charAt(0).toUpperCase() + entityType.slice(1)} encontrado`
+      message: `${entityNameResolve} encontrado`,
     }
 
   } catch (error) {
@@ -24,13 +31,13 @@ export const getById = async (entityType: string, id: string | undefined, barcod
       return {
         data: null,
         error: error.message,
-        message: `Error al obtener el ${entityType}`
+        message: `Error al obtener el ${entityNameResolve}`
       }
     }
     return {
       data: null,
-      error: `Error al obtener el ${entityType}`,
-      message: `Error al obtener el ${entityType}`
+      error: `Error al obtener el ${entityNameResolve}`,
+      message: `Error al obtener el ${entityNameResolve}`
     }
   }
 }

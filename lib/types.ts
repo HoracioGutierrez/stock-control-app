@@ -39,7 +39,7 @@ export type CashRegisterInputValues = {
   totalAmount: number
 }
 
-export type DeleteCustomerButtonProps = {
+export type DeleteButtonProps = {
   active: boolean
   id: string
 }
@@ -72,9 +72,10 @@ export type EditCustomerInputValues = CustomerInputValues & {
   variants?: any[]
 }
 
-export type EditProductButtonProps = {
+export type EditButtonProps = {
   barcode?: string
   id?: string
+  entity: string
 }
 
 export type EditProductInputValues = {
@@ -122,17 +123,20 @@ export type FormEditProps = {
   formForDetails: FormSchemaVariants
   formForVariant: FormSchemaVariants
   entityConfig: any
-  conditionalEntity?: string
+  entityResolved?: string
   handleMainNameChange?: any
   handleAddVariant?: any
   fields: any
   hasVariants: boolean
+  hasDetails: boolean
 }
 
-export type FormValues = EditCustomerInputValues | EditProductInputValues
+export type FormValues =
+  EditCustomerInputValues |
+  EditProductInputValues
 
 export type GeneralResponse = {
-  data: User | null | any
+  data: User | null | any 
   error: string | null
   message: string
 }

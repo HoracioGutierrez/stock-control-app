@@ -5,7 +5,7 @@ import { SortingState, getSortedRowModel, flexRender, getCoreRowModel, useReactT
 import { useEffect, useState } from "react"
 import { Button } from "./ui/button"
 import DeleteProductButton from "./DeleteProductButton"
-import EditProductButton from "./EditProductButton"
+import EditButton from "./EditButton"
 import EditVariantButton from "./EditVariantButton"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -114,7 +114,7 @@ function ProductsTable({ data }: ProductsTableProps) {
                       return (
                         <TableCell key={cell.id} className="flex items-center gap-2">
                           <DeleteProductButton active={row.original.active} barcode={row.original.barcode} />
-                          <EditProductButton barcode={row.original.barcode} />
+                          <EditButton barcode={row.original.barcode} entity="product" />
                           {!row.original.isVariant && <EditVariantButton barcode={row.original.barcode} />}
                         </TableCell>
                       )

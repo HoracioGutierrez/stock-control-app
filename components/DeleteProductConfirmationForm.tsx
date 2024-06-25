@@ -44,7 +44,7 @@ function DeleteProductConfirmationForm({ barcode, type, userId }: DeleteProductC
           })
         })
     } else {
-      request = reactivateById({ entityType, barcode, userId } as ReactivateByIdProps)
+      request = reactivateById({ entityType, entityId: barcode, userId } as ReactivateByIdProps)
         .then((data) => {
           if (data?.error) {
             throw new Error(data.error)

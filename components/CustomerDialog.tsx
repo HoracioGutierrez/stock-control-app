@@ -43,6 +43,7 @@ function CustomerDialog() {
         entityId: id,
         userId,
         type,
+        hasDetails: true,
         hasVariants: false
     }
 

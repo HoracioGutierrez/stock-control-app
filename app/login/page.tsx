@@ -11,12 +11,12 @@ import { PackageOpen } from "lucide-react"
 
 function LoginPage() {
   return (
-    <Content className="grid place-items-center">
+    <Content className="place-items-center place-content-center grid">
       <Card className="mx-auto max-w-sm">
         <CardHeader>
-          <CardTitle className="text-2xl flex flex-col items-center">
+          <CardTitle className="flex flex-col items-center text-2xl">
             <PackageOpen width={40} height={40} />
-            <span className="text-3xl font-bold text-center">Control de Stock</span>
+            <span className="font-bold text-3xl text-center">Control de Stock</span>
           </CardTitle>
           <CardDescription className="pt-8 text-center">
             Ingresa tu nombre de usuario y contraseña para iniciar sesión.

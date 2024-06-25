@@ -106,7 +106,7 @@ function ProductsTable({ data }: ProductsTableProps) {
                     if (cell.column.id === "active") {
                       return (
                         <TableCell key={cell.id}>
-                          {row.original.active ? "si" : "no"}
+                          {row.original.active ? "Si" : "No"}
                         </TableCell>
                       )
                     }

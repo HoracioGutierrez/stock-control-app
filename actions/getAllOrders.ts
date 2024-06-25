@@ -15,7 +15,6 @@ export const getAllOrders = async (startDate?: string, endDate?: string): Promis
     }
 
     if (startDate && !endDate) {
-      console.log(db.select().from(orders).where(gt(orders.createdAt, startDate)).orderBy(asc(orders.createdAt)).innerJoin(cashRegister, eq(cashRegister.id, orders.cashRegisterId)).innerJoin(customers, eq(customers.id, orders.customerId)).toSQL())
       ordersFromDB = await db.select().from(orders).where(gt(orders.createdAt, startDate)).orderBy(asc(orders.createdAt)).innerJoin(cashRegister, eq(cashRegister.id, orders.cashRegisterId)).innerJoin(customers, eq(customers.id, orders.customerId))
     }
 

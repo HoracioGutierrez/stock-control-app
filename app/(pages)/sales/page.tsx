@@ -1,16 +1,23 @@
 import { Pickaxe } from "lucide-react"
 import PageHeader from "@/components/layout/PageHeader"
+import { getAllOrders } from "@/actions/getAllOrders"
+import OrdersTable from "@/components/orders/OrdersTable"
 
-function SalesPage() {
+async function SalesPage() {
+
+  const { data, error } = await getAllOrders()
   return (
     <>
       <PageHeader title="Ventas" />
-      <div className="grow roundedborder-slate-400 grid place-items-center">
-        <div className="max-w-sm text-center flex flex-col gap-4 items-center text-muted-foreground">
-          <Pickaxe width={35} height={35} className="animate-bounce" />
-          <p className="font-bold text-3xl">Pagina en desarrollo</p>
+      {data.length == 0 && (
+        <div className="place-items-center border-slate-400 grid border border-dashed rounded grow">
+          <div className="max-w-sm text-center">
+            <p className="font-bold text-xl">No hay ventas todavía</p>
+            <p className="mb-6 text-muted-foreground text-sm">Podrás comenzar a ver ventas luego de realizar alguna acción en la aplicación.</p>
+          </div>
         </div>
-      </div>
+      )}
+      {data.length > 0 && <OrdersTable data={data} />}
     </>
   )
 }

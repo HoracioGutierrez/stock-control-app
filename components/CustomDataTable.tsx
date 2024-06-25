@@ -1,5 +1,5 @@
 "use client"
-import { historyColumns, productsColumns, providersColumns, customersColumns, cashRegistersColumns } from "@/lib/columnDefinitions"
+import { historyColumns, productsColumns, providersColumns, customersColumns, cashRegistersColumns, ordersColumns } from "@/lib/columnDefinitions"
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { SortingState, getSortedRowModel, flexRender, getCoreRowModel, useReactTable, ColumnFiltersState, getFilteredRowModel, getPaginationRowModel, ColumnDef, VisibilityState } from "@tanstack/react-table"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -13,26 +13,36 @@ import { TooltipProvider } from "@radix-ui/react-tooltip"
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip"
 import { cn } from "@/lib/utils"
 import { getAllCashRegisters } from "@/actions/getAllCashRegisters"
+import { Calendar } from "./ui/calendar"
+
+import { FormControl, FormField, FormItem, FormLabel } from "./ui/form"
+import { useForm } from "react-hook-form"
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
+import { format } from "date-fns"
+import { getAllOrders } from "@/actions/getAllOrders"
+import { toast } from "./ui/use-toast"
 
 type CustomDataTableProps = {
   data: ProductType[] | HistoryType[] | CustomerType[] | ProviderType[] | null,
-  type: "products" | "history" | "customers" | "providers" | "cash-registers"
+  type: "products" | "history" | "customers" | "providers" | "cash-registers" | "orders"
   filterColumn?: string
   filterKey?: string
   actions?: (rowData: any) => JSX.Element
   manualFetch?: boolean
   manualCallback?: any
+  dateFilter?: boolean
 }
 
-const columns: Record<"products" | "history" | "providers" | "customers" | "cash-registers", ColumnDef<unknown | any>[]> = {
+const columns: Record<"products" | "history" | "providers" | "customers" | "cash-registers" | "orders", ColumnDef<unknown | any>[]> = {
   "products": productsColumns,
   "history": historyColumns,
   "providers": providersColumns,
   "customers": customersColumns,
-  "cash-registers": cashRegistersColumns
+  "cash-registers": cashRegistersColumns,
+  "orders": ordersColumns
 }
 
-function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualFetch, manualCallback }: CustomDataTableProps) {
+function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualFetch, manualCallback, dateFilter }: CustomDataTableProps) {
 
   const [sorting, setSorting] = useState<SortingState>([])
   const [tableData, setTableData] = useState<ProductType | HistoryType[]>(data)
@@ -40,7 +50,14 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
   const [pageSize, setPageSize] = useState<number>(5)
   const [pageIndex, setPageIndex] = useState<number>(0)
   const [activeState, setActiveState] = useState<boolean>(false)
+  const [selectedDay, setSelectedDay] = useState<Date | undefined>(undefined)
+  const [open, setOpen] = useState(false)
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
+  const form = useForm({
+    defaultValues: {
+      date: new Date().toDateString()
+    }
+  })
   const table = useReactTable({
     columns: columns[type],
     data: tableData,
@@ -94,6 +111,35 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
     setPageSize(Number(pageIndex))
   }
 
+  const handleDateSelect = (day: any, selectedDay: any) => {
+    const date = format(day, "yyyy-MM-dd")
+    form.setValue("date", date)
+    setSelectedDay(selectedDay)
+    setOpen(false)
+    getAllOrders(date)
+      .then((data) => {
+        if (data?.error) {
+          throw new Error(data.error)
+        }
+        setTableData(data.data)
+      })
+      .catch((error) => {
+        if (error instanceof Error) {
+          return toast({
+            variant: "destructive",
+            title: "Error al obtener los productos",
+            description: error.message
+          })
+        }
+
+        return toast({
+          variant: "destructive",
+          title: "Error al obtener los productos",
+          description: error.message
+        })
+      })
+  }
+
   return (
     <div className="flex flex-col grow">
       <div className="flex justify-between items-center py-4">
@@ -105,6 +151,23 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
           }}
           className="max-w-sm"
         />
+
+        {dateFilter && (
+          <div>
+            <Popover open={open}>
+              <PopoverTrigger asChild>
+                <Button onClick={() => setOpen(true)}>{selectedDay ? format(selectedDay, "dd/MM/yyyy") : "Elige una fecha"}</Button>
+              </PopoverTrigger>
+              <PopoverContent>
+                <Calendar
+                  mode="single"
+                  onSelect={handleDateSelect}
+                  selected={selectedDay}
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
+        )}
 
         <div className="flex items-center gap-2">
           <TooltipProvider>
@@ -213,7 +276,7 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
                     if (cell.column.id === "createdAt") {
                       return (
                         <TableCell key={cell.id}>
-                          {row.original.createdAt.toLocaleString("es-ES")}
+                          {row.original.createdAt ? row.original.createdAt.toLocaleString("es-ES") : "Sin fecha"}
                         </TableCell>
                       )
                     }

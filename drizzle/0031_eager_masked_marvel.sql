@@ -1,0 +1,1 @@
+ALTER TABLE "stock-control-app_order" ALTER COLUMN "createdAt" SET DATA TYPE date;

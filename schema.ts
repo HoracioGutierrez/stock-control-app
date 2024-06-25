@@ -5,7 +5,8 @@ import {
   text,
   primaryKey,
   integer,
-  numeric
+  numeric,
+  date
 } from "drizzle-orm/pg-core"
 import postgres from "postgres"
 import { drizzle } from "drizzle-orm/postgres-js"
@@ -226,7 +227,8 @@ export const orders: any = pgTable(
     userId: text("userId")
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
-    createdAt: timestamp("createdAt", { mode: "date" }).defaultNow(),
+    //createdAt: timestamp("createdAt", { mode: "date" }).defaultNow(),
+    createdAt: date("createdAt").defaultNow(),
     total: numeric("total").notNull(),
     status: text("status").notNull(),
     customerId: text("customerId"),

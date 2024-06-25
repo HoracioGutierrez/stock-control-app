@@ -58,12 +58,12 @@ export const productsColumns: ColumnDef<ProductType>[] = [
   {
     header: "Activo",
     accessorKey: "active",
-    size : 1
+    size: 1
   },
   {
     header: "Acciones",
     accessorKey: "actions",
-    size : 1
+    size: 1
   }
 ]
 
@@ -116,8 +116,8 @@ export const customersColumns: ColumnDef<CustomerType>[] = [
       )
     },
     accessorKey: "name",
-    meta : {
-      name : "Nombre"
+    meta: {
+      name: "Nombre"
     }
   },
   {
@@ -135,8 +135,8 @@ export const customersColumns: ColumnDef<CustomerType>[] = [
       )
     },
     accessorKey: "lastName",
-    meta : {
-      name : "Apellido"
+    meta: {
+      name: "Apellido"
     }
   },
 
@@ -149,18 +149,18 @@ export const customersColumns: ColumnDef<CustomerType>[] = [
     accessorKey: "email",
   },
   {
-    header : "Balance Total",
-    accessorKey : "currentAmount",
+    header: "Balance Total",
+    accessorKey: "currentAmount",
   },
   {
-    header : "Activo",
+    header: "Activo",
     accessorKey: "active",
-    size : 1
+    size: 1
   },
   {
     header: "Acciones",
     accessorKey: "actions",
-    size : 1
+    size: 1
   }
 ]
 
@@ -197,18 +197,18 @@ export const providersColumns: ColumnDef<ProviderType>[] = [
     accessorKey: "lastName",
   },
   {
-    header : "Teléfono",
+    header: "Teléfono",
     accessorKey: "phone",
   },
   {
-    header : "Activo",
+    header: "Activo",
     accessorKey: "active",
-    size : 1
+    size: 1
   },
   {
     header: "Acciones",
     accessorKey: "actions",
-    size : 1
+    size: 1
   }
 ]
 
@@ -261,14 +261,14 @@ export const cashRegistersColumns: ColumnDef<CashRegisterType>[] = [
     accessorKey: "openedById",
   },
   {
-    header : "Activo",
+    header: "Activo",
     accessorKey: "active",
-    size : 1
+    size: 1
   },
   {
-    header : "Acciones",
+    header: "Acciones",
     accessorKey: "actions",
-    size : 1
+    size: 1
   }
 ]
 
@@ -289,7 +289,7 @@ export const providerOrdersColumns: ColumnDef<any>[] = [
     accessorKey: "name",
   },
   {
-    header : ({ column }) => {
+    header: ({ column }) => {
       //price
       return (
         <Button
@@ -306,7 +306,59 @@ export const providerOrdersColumns: ColumnDef<any>[] = [
     accessorKey: "price",
   },
   {
-    header : "Acciones",
+    header: "Acciones",
     accessorKey: "actions",
+  }
+]
+
+export const ordersColumns: ColumnDef<any>[] = [
+  //createdAt
+  {
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="link"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="p-0"
+        >
+          Fecha
+          < ArrowUpDown className="ml-2 w-4 h-4" />
+        </Button>
+      )
+    },
+    accessorKey: "stock-control-app_order.createdAt",
+  },
+  {
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="link"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="p-0"
+        >
+          Total
+          < ArrowUpDown className="ml-2 w-4 h-4" />
+        </Button>
+      )
+    },
+    accessorKey: "stock-control-app_order.total",
+  },
+  {
+    header: "Pago con",
+    accessorKey: "stock-control-app_order.paymentMethod",
+  },
+  {
+    header: "Registro de Caja",
+    accessorKey: "stock-control-app_cashRegister.label",
+  }, {
+    header: "Cliente",
+    accessorKey: "name",
+    cell: ({ row }) => {
+      return row.original["stock-control-app_customer"].name + ", " + row.original["stock-control-app_customer"].lastName
+    },
+    filterFn: (row, id, value) => {
+      const name = row.original["stock-control-app_customer"].name + ", " + row.original["stock-control-app_customer"].lastName.toLowerCase()
+      return name.toLowerCase().includes(value.toLowerCase())
+    }
   }
 ]

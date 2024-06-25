@@ -4,6 +4,8 @@ import { Trash2, UndoDot } from "lucide-react"
 import { useDialogStore } from "@/stores/generalDialog"
 import { Button } from "../ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { IconPlugX, IconPlug } from '@tabler/icons-react'
+
 
 type DeleteResourceButtonProps = {
   active: boolean

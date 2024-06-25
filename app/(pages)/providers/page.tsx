@@ -4,7 +4,7 @@ import DialogTriggerButton from "@/components/DialogTriggerButton"
 import { getAllProviders } from "@/actions/getAllProviders"
 import PageHeader from "@/components/layout/PageHeader"
 import CustomDialog from "@/components/CustomDialog"
-import { PlusIcon } from "lucide-react"
+import { PackagePlus } from "lucide-react"
 import { auth } from "@/auth"
 import ProviderDialog from "@/components/providers/ProviderDialog"
 
@@ -17,7 +17,7 @@ async function ProvidersPage() {
       <PageHeader title="Proveedores" actions={
         <>
           {/* <DialogTriggerButton dialogType="new-provider-order" text="Nueva orden de compra" icon={<PlusIcon />} /> */}
-          <DialogTriggerButton dialogType="new-provider" text="Crear Proveedor" icon={<PlusIcon />} />
+          <DialogTriggerButton dialogType="new-provider" text="Crear Proveedor" icon={<PackagePlus />} />
         </>
       } />
       {data.length == 0 && (

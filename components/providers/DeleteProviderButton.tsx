@@ -14,7 +14,7 @@ function DeleteProviderButton({ active, id }: DeleteButtonProps) {
   return (
     <Button variant={"ghost"} className="aspect-square p-0 group" onClick={handleClick}>
       {active
-        ? <Trash2 className="aspect-square p-0 text-muted-foreground group-hover:text-red-400" />
+        ? <PackageX className="aspect-square p-0 text-muted-foreground group-hover:text-red-400" />
         : <PackageCheck className="aspect-square p-0 text-muted-foreground group-hover:text-green-400" />}
     </Button>
   )

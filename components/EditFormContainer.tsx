@@ -40,7 +40,6 @@ function EditFormContainer({ entityType, barcode, entityId, hasVariants, userId,
             if (error) {
                 return defaultValue[entityType as keyof typeof defaultValue] as SchemaFormValues
             }
-            console.log(data)
             setIdResolve(data.id as string)
             setIsVariant(data.isVariant as boolean)
             return data as SchemaFormValues
@@ -113,8 +112,6 @@ function EditFormContainer({ entityType, barcode, entityId, hasVariants, userId,
         hasDetails,
         userId
     }
-
-    console.log(isVariant)
 
     return (
         <>

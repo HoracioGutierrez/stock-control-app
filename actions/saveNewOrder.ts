@@ -60,11 +60,20 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
 
 
       //Increase amount of cash register
-      const updatedCashRegister = await tx.update(cashRegisterSchema).set({
-        currentAmount: sql`${cashRegisterSchema.currentAmount} + ${total}`,
-      }).where(eq(cashRegisterSchema.openedById, userId)).returning({
-        updatedId: cashRegisterSchema.id
-      })
+      let updatedCashRegister : any;
+      if (paymentMethod !== "debt") {
+        /* updatedCashRegister = await tx.update(cashRegisterSchema).set({
+          currentAmount: sql`${cashRegisterSchema.currentAmount} + ${total}`,
+        }).where(eq(cashRegisterSchema.openedById, userId)).returning({
+          updatedId: cashRegisterSchema.id
+        }) */
+      } else {
+        updatedCashRegister = await tx.update(cashRegisterSchema).set({
+          currentAmount: sql`${cashRegisterSchema.currentAmount} - ${total}`,
+        }).where(eq(cashRegisterSchema.openedById, userId)).returning({
+          updatedId: cashRegisterSchema.id
+        })
+      }
 
       //Check if cash register was updated
       if (updatedCashRegister.length === 0) {

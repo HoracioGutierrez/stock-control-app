@@ -81,7 +81,7 @@ export type EditButtonProps = {
 export type EditProductInputValues = {
   name: string
   description?: string
-  price: number
+  price?: number
   barcode: string
   stock: number
 }

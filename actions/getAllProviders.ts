@@ -93,7 +93,6 @@ export const getAllProviders = async (inactive = false): Promise<GeneralResponse
       message: "Proveedores encontrados"
     }
   } catch (error) {
-    console.log(error)
     if (error instanceof Error) {
       return {
         data: null,

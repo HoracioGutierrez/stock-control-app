@@ -1,8 +1,8 @@
 "use server"
 
 import { GeneralResponse } from "@/lib/types"
-import { db, orders , cashRegister, customers } from "@/schema"
-import { and, asc, desc, eq, gt, lt } from "drizzle-orm"
+import { db, orders, cashRegister, customers } from "@/schema"
+import { and, asc, desc, eq, gt, lt, sql } from "drizzle-orm"
 
 export const getAllOrders = async (startDate?: string, endDate?: string): Promise<GeneralResponse> => {
   "use server"
@@ -10,19 +10,53 @@ export const getAllOrders = async (startDate?: string, endDate?: string): Promis
     let ordersFromDB: any
 
     if (startDate && endDate) {
-      ordersFromDB = await db.select().from(orders).where(and(gt(orders.createdAt, startDate), lt(orders.createdAt, endDate))).orderBy(desc(orders.createdAt)).innerJoin(cashRegister, eq(cashRegister.id, orders.cashRegisterId)).innerJoin(customers, eq(customers.id, orders.customerId))
+      ordersFromDB = await db.select({
+        id: orders.id,
+        status: orders.status,
+        paymentMethod: orders.paymentMethod,
+        total : orders.total,
+        createdAt: orders.createdAt,
+        customerName : customers.name,
+        customerLastName : customers.lastName,
+      }).from(orders).where(and(gt(orders.createdAt, startDate), lt(orders.createdAt, endDate))).orderBy(desc(orders.createdAt)).innerJoin(cashRegister, eq(cashRegister.id, orders.cashRegisterId)).leftJoin(customers, eq(customers.id, orders.customerId))
     }
 
     if (startDate && !endDate) {
-      ordersFromDB = await db.select().from(orders).where(gt(orders.createdAt, startDate)).orderBy(desc(orders.createdAt)).innerJoin(cashRegister, eq(cashRegister.id, orders.cashRegisterId)).innerJoin(customers, eq(customers.id, orders.customerId))
+      ordersFromDB = await db.select({
+        id: orders.id,
+        status: orders.status,
+        paymentMethod: orders.paymentMethod,
+        total : orders.total,
+        createdAt: orders.createdAt,
+        customerName : customers.name,
+        customerLastName : customers.lastName,
+      }).from(orders).where(gt(orders.createdAt, startDate)).orderBy(desc(orders.createdAt)).innerJoin(cashRegister, eq(cashRegister.id, orders.cashRegisterId)).leftJoin(customers, eq(customers.id, orders.customerId))
     }
 
     if (!startDate && endDate) {
-      ordersFromDB = await db.select().from(orders).where(lt(orders.createdAt, endDate)).orderBy(desc(orders.createdAt)).innerJoin(cashRegister, eq(cashRegister.id, orders.cashRegisterId)).innerJoin
+      ordersFromDB = await db.select({
+        id: orders.id,
+        status: orders.status,
+        paymentMethod: orders.paymentMethod,
+        total : orders.total,
+        createdAt: orders.createdAt,
+        customerName : customers.name,
+        customerLastName : customers.lastName,
+      }).from(orders).where(lt(orders.createdAt, endDate)).orderBy(desc(orders.createdAt)).innerJoin(cashRegister, eq(cashRegister.id, orders.cashRegisterId)).leftJoin(customers, eq(customers.id, orders.customerId))
     }
 
     if (!startDate && !endDate) {
-      ordersFromDB = await db.select().from(orders).orderBy(desc(orders.createdAt)).innerJoin(cashRegister, eq(cashRegister.id, orders.cashRegisterId)).innerJoin(customers, eq(customers.id, orders.customerId))
+      ordersFromDB = await db.select({
+        id: orders.id,
+        status: orders.status,
+        paymentMethod: orders.paymentMethod,
+        total : orders.total,
+        createdAt: orders.createdAt,
+        customerName : customers.name,
+        customerLastName : customers.lastName,
+      }).from(orders).orderBy(desc(orders.createdAt))
+      .innerJoin(cashRegister, eq(cashRegister.id, orders.cashRegisterId))
+      .leftJoin(customers, eq(customers.id, orders.customerId))
     }
 
     return {
@@ -31,6 +65,7 @@ export const getAllOrders = async (startDate?: string, endDate?: string): Promis
       message: "Orders found"
     }
   } catch (error) {
+    console.log(error)
     if (error instanceof Error) {
       return {
         data: null,

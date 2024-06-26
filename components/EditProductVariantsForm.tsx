@@ -37,7 +37,6 @@ function EditProductVariantsForm({ barcode, userId }: EditProductVariantsFormPro
     defaultValues: async () => {
       setLoading(true)
       const { data, error } = await getProductWithVariantsByBarcode(barcode)
-      console.log(data)
       setLoading(false)
       if (error) {
         return {
@@ -114,7 +113,6 @@ function EditProductVariantsForm({ barcode, userId }: EditProductVariantsFormPro
     //editById("product", id, { productId: null, isVariant: false }, userId)
     unlinkVariant(barcode, userId)
       .then((data) => {
-        console.log(data)
         if (data?.error) {
           throw new Error(data.error)
         }
@@ -141,7 +139,6 @@ function EditProductVariantsForm({ barcode, userId }: EditProductVariantsFormPro
       })
   }
 
-  console.log(fields)
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="gap-8 grid grid-cols-1 lg:grid-cols-2 overflow-auto" id="new-product-form">

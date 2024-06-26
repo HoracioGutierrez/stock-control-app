@@ -41,7 +41,6 @@ const columns: Record<"products" | "history" | "providers" | "customers" | "cash
 }
 
 function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualFetch, manualCallback, dateFilter }: CustomDataTableProps) {
-  console.log(data) 
   const [sorting, setSorting] = useState<SortingState>([])
   const [tableData, setTableData] = useState<ProductType | HistoryType[]>(data)
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -272,7 +271,7 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                   className={cn(
-                    type === "orders" && row.original["stock-control-app_order"].status === "canceled" && "text-muted-foreground",
+                    type === "orders" && row.original.status === "canceled" && "text-muted-foreground",
                   )}
                 >
                   {row.getVisibleCells().map((cell) => {
@@ -288,9 +287,9 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
                     if (cell.column.id === "createdAt" && type === "orders") {
                       return (
                         <TableCell key={cell.id} className="flex items-center gap-2">
-                          {(row.original["stock-control-app_order"].status !== "canceled") && <IconClipboardList className="p-0 text-green-400 aspect-square" />}
-                          {(row.original["stock-control-app_order"].status === "canceled") && <IconClipboardList className="p-0 text-red-400 aspect-square" />}
-                          {row.original["stock-control-app_order"].createdAt ? row.original["stock-control-app_order"].createdAt.toLocaleString("es-ES") : "Sin fecha"}
+                          {(row.original.status !== "canceled") && <IconClipboardList className="p-0 text-green-400 aspect-square" />}
+                          {(row.original.status === "canceled") && <IconClipboardList className="p-0 text-red-400 aspect-square" />}
+                          {row.original.createdAt ? row.original.createdAt.toLocaleString("es-ES") : "Sin fecha"}
                         </TableCell>
                       )
                     }
@@ -314,11 +313,11 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
                     if (cell.column.id === "status" && type === "orders") {
                       return (
                         <TableCell key={cell.id} className={cn(
-                          row.original["stock-control-app_order"].status === "canceled" && "text-red-500"
+                          row.original.status === "canceled" && "text-red-500"
                         )}>
 
-                          {row.original["stock-control-app_order"].status === "canceled" && "Cancelado"}
-                          {row.original["stock-control-app_order"].status === "pending" && "Pendiente"}
+                          {row.original.status === "canceled" && "Cancelado"}
+                          {row.original.status === "pending" && "Pendiente"}
                         </TableCell>
                       )
                     }
@@ -329,7 +328,7 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
                           "place-content-center gap-2 grid grid-cols-[max-content_1fr]",
                           cell.column.id === "currentAmount" && row.original.currentAmount < 0 && "text-red-500",
                           cell.column.id === "total" && row.original.total < 0 && "text-red-500",
-                          cell.column.id === "status" && row.original["stock-control-app_order"].status === "canceled" && "text-red-500",
+                          cell.column.id === "status" && row.original.status === "canceled" && "text-red-500",
                           cell.column.id === "spentAmount" && row.original.spentAmount < 0 && "text-red-500"
                         )}>
                           {(

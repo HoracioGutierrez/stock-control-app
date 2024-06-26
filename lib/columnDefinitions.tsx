@@ -339,7 +339,7 @@ export const ordersColumns: ColumnDef<any>[] = [
         </Button>
       )
     },
-    accessorKey: "stock-control-app_order.createdAt",
+    accessorKey: "createdAt",
     id: "createdAt",
   },
   {
@@ -355,31 +355,74 @@ export const ordersColumns: ColumnDef<any>[] = [
         </Button>
       )
     },
-    accessorKey: "stock-control-app_order.total",
+    accessorKey: "total",
     id: "total",
   },
   {
     header: "Pago con",
-    accessorKey: "stock-control-app_order.paymentMethod",
+    accessorKey: "paymentMethod",
+    cell: ({ row }) => {
+      if(row.original.paymentMethod === "cash") {
+        return "Efectivo"
+      }
+
+      if(row.original.paymentMethod === "debt") {
+        return "Fiado/Deuda"
+      }
+
+      if(row.original.paymentMethod === "credit") {
+        return "Crédito"
+      }
+
+      if(row.original.paymentMethod === "debit") {
+        return "Débito"
+      }
+
+      if(row.original.paymentMethod === "transfer") {
+        return "Transferencia"
+      }
+
+      if(row.original.paymentMethod === "mercadopago") {
+        return "Mercado Pago"
+      }
+
+      if(row.original.paymentMethod === "other") {
+        return "Otro"
+      }
+
+      return "Sin pago"
+    },
   },
   {
     header: "Registro de Caja",
-    accessorKey: "stock-control-app_cashRegister.label",
+    accessorKey: ".label",
   },
   {
     header: "Cliente",
     accessorKey: "name",
     cell: ({ row }) => {
-      return row.original["stock-control-app_customer"].name + ", " + row.original["stock-control-app_customer"].lastName
+      if(row.original.customerName && row.original.customerLastName) {
+        return row.original.customerName + ", " + row.original.customerLastName
+      }
+
+      if(row.original.customerName && !row.original.customerLastName) {
+        return row.original.customerName
+      }
+
+      if(!row.original.customerName && row.original.customerLastName) {
+        return row.original.customerLastName
+      }
+
+      return "Sin cliente"
     },
     filterFn: (row, id, value) => {
-      const name = row.original["stock-control-app_customer"].name + ", " + row.original["stock-control-app_customer"].lastName.toLowerCase()
+      const name = row.original.name + ", " + row.original.lastName.toLowerCase()
       return name.toLowerCase().includes(value.toLowerCase())
     }
   },
   {
     header: "Estado",
-    accessorKey: "stock-control-app_order.status",
+    accessorKey: ".status",
     id: "status",
   },
   {

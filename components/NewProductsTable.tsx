@@ -23,7 +23,6 @@ function ProductsTable({ data, isAdmin }: ProductsTableProps) {
       manualFetch={true}
       manualCallback={getAllProducts}
       actions={(rowData: any) => {
-        console.log(rowData)
         return (
           <>
             {isAdmin && (

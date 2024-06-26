@@ -21,6 +21,9 @@ import ProductVariantForm from "./ProductVariantForm"
 import { toast } from "./ui/use-toast"
 import { getProductWithVariantsByBarcode } from "@/actions/getProductWithVariantsByBarcode"
 import { saveProductEditWithVariants } from "@/actions/saveProductEditWithVariants"
+import { editById } from "@/actions/editById"
+import { useDialogStore } from "@/stores/generalDialog"
+import { unlinkVariant } from "@/actions/unlinkVariant"
 
 
 function EditProductVariantsForm({ barcode, userId }: EditProductVariantsFormProps) {
@@ -29,10 +32,12 @@ function EditProductVariantsForm({ barcode, userId }: EditProductVariantsFormPro
   const [mainName, setMainName] = useState<string>("")
   const [loading, setLoading] = useState<boolean>(false)
   const [productId, setProductId] = useState<string>("")
+  const { id } = useDialogStore((state: any) => state)
   const { control, register, handleSubmit, formState: { errors }, reset, getValues } = useForm<ProductInputValues>({
     defaultValues: async () => {
       setLoading(true)
       const { data, error } = await getProductWithVariantsByBarcode(barcode)
+      console.log(data)
       setLoading(false)
       if (error) {
         return {
@@ -57,7 +62,7 @@ function EditProductVariantsForm({ barcode, userId }: EditProductVariantsFormPro
     resolver: yupResolver(productSchema),
   })
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove, update } = useFieldArray({
     control,
     name: "variants"
   })
@@ -97,24 +102,62 @@ function EditProductVariantsForm({ barcode, userId }: EditProductVariantsFormPro
   }
 
   const handleAddVariant = () => {
-    append({ name: getValues("name"), price: getValues("price"), stock: 0, barcode: "" })
+    append({ name: getValues("name"), price: getValues("price"), stock: 0, barcode: "", canRemove: true })
   }
 
+  const handleRemoveVariant = (index: number) => {
+    remove(index)
+  }
+
+  const handleUnlinkVariant = (index: number, barcode: string) => {
+    update(index, { isUnlinking: true })
+    //editById("product", id, { productId: null, isVariant: false }, userId)
+    unlinkVariant(barcode, userId)
+      .then((data) => {
+        console.log(data)
+        if (data?.error) {
+          throw new Error(data.error)
+        }
+        toast({
+          title: "Variante eliminada correctamente",
+          description: "La variante se ha eliminado correctamente de la base de datos",
+        })
+        //update(index, { isUnlinking: false })
+        remove(index)
+      })
+      .catch((error) => {
+        if (error instanceof Error) {
+          return toast({
+            variant: "destructive",
+            title: "Error al eliminar la variante",
+            description: error.message
+          })
+        }
+        return toast({
+          variant: "destructive",
+          title: "Error al eliminar la variante",
+          description: "Error al eliminar la variante",
+        })
+      })
+  }
+
+  console.log(fields)
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-2 gap-8 overflow-auto" id="new-product-form">
+    <form onSubmit={handleSubmit(onSubmit)} className="gap-8 grid grid-cols-1 lg:grid-cols-2 overflow-auto" id="new-product-form">
       <div className="self-stretch">
         <Card className="bg-primary-foreground h-full">
           <CardHeader>
             <CardTitle>Detalles</CardTitle>
             <CardDescription>Estos detalles son obligatorios para que el producto pueda crearse correctamente.</CardDescription>
           </CardHeader>
-          <CardContent className="grid gap-4">
-            <div className="grid gap-2">
+          <CardContent className="gap-4 grid">
+            <div className="gap-2 grid">
               <Label htmlFor="name" className="text-muted-foreground">Nombre</Label>
               <Input type="text" disabled={loading} placeholder="Producto" {...register("name", { onChange: handleMainNameChange })} />
               {errors.name && <p className="text-red-500">{errors.name.message}</p>}
             </div>
-            <div className="grid gap-2">
+            <div className="gap-2 grid">
               <Label htmlFor="description" className="text-muted-foreground">Descripción</Label>
               <Textarea disabled={loading} placeholder="Descripción" {...register("description")} />
               {errors.description && <p className="text-red-500">{errors.description.message}</p>}
@@ -128,18 +171,18 @@ function EditProductVariantsForm({ barcode, userId }: EditProductVariantsFormPro
             <CardTitle>Precio</CardTitle>
             <CardDescription>Estos datos son opcionales para que el producto pueda crearse correctamente.</CardDescription>
           </CardHeader>
-          <CardContent className="grid gap-4">
-            <div className="grid gap-2">
+          <CardContent className="gap-4 grid">
+            <div className="gap-2 grid">
               <Label htmlFor="price" className="text-muted-foreground">Precio</Label>
               <Input type="number" placeholder="Precio" {...register("price")} disabled={loading} />
               {errors.price && <p className="text-red-500">{errors.price.message}</p>}
             </div>
-            <div className="grid gap-2">
+            <div className="gap-2 grid">
               <Label htmlFor="stock" className="text-muted-foreground">Stock</Label>
               <Input type="number" placeholder="Stock" {...register("stock")} disabled={loading} />
               {errors.stock && <p className="text-red-500">{errors.stock.message}</p>}
             </div>
-            <div className="grid gap-2">
+            <div className="gap-2 grid">
               <Label htmlFor="barcode" className="text-muted-foreground">Código de barras</Label>
               <Input type="text" placeholder="Código de barras" {...register("barcode")} disabled={loading} />
               {errors.barcode && <p className="text-red-500">{errors.barcode.message}</p>}
@@ -153,7 +196,7 @@ function EditProductVariantsForm({ barcode, userId }: EditProductVariantsFormPro
             <CardTitle>Variantes</CardTitle>
             <CardDescription>Estos datos son opcionales para que el producto pueda crearse correctamente.</CardDescription>
           </CardHeader>
-          <CardContent className="grid gap-4">
+          <CardContent className="gap-4 grid">
             {fields.length > 0 && (
               <Table>
                 <TableHeader>
@@ -166,21 +209,19 @@ function EditProductVariantsForm({ barcode, userId }: EditProductVariantsFormPro
                 </TableHeader>
                 <TableBody>
                   {fields.map((field, index) => (
-                    <ProductVariantForm key={field.id} index={index} register={register} error={errors.variants?.[index]} isLoading={loading} canRemove={false}/>
+                    <ProductVariantForm key={field.id} index={index} register={register} error={errors.variants?.[index]} isLoading={loading} canRemove={field.canRemove || false} onRemove={handleRemoveVariant} handleUnlinkVariant={handleUnlinkVariant} isUnlinking={field.isUnlinking || false} id={field.barcode} />
                   ))}
                 </TableBody>
               </Table>
             )}
-            {fields.length === 0 && (
-              <Button type="button" className="flex items-center gap-2" variant={"outline"} onClick={handleAddVariant}>
-                <PlusCircle />
-                Agregar Variante
-              </Button>
-            )}
+            <Button type="button" className="flex items-center gap-2" variant={"outline"} onClick={handleAddVariant}>
+              <PlusCircle />
+              Agregar Variante
+            </Button>
           </CardContent>
         </Card>
         <Button disabled={loading} className="flex items-center gap-2 mx-auto mt-8">
-          {loading ? <Loader className="animate-spin" /> : <Check /> }
+          {loading ? <Loader className="animate-spin" /> : <Check />}
           <span>Guardar producto</span>
         </Button>
       </div>

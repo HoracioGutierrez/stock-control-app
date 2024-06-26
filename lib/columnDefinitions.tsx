@@ -362,6 +362,11 @@ export const ordersColumns: ColumnDef<any>[] = [
       const name = row.original["stock-control-app_customer"].name + ", " + row.original["stock-control-app_customer"].lastName.toLowerCase()
       return name.toLowerCase().includes(value.toLowerCase())
     }
+  },
+  {
+    header: "Acciones",
+    accessorKey: "actions",
+    size: 1
   }
 ]
 

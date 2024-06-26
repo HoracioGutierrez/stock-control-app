@@ -150,8 +150,12 @@ export const customersColumns: ColumnDef<CustomerType>[] = [
     accessorKey: "email",
   },
   {
-    header: "Balance Total",
+    header: "Balance Actual",
     accessorKey: "currentAmount",
+  },
+  {
+    header: "Total Gastado",
+    accessorKey: "spentAmount",
   },
   {
     header: "Activo",

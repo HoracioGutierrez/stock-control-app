@@ -329,9 +329,15 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
                           "place-content-center gap-2 grid grid-cols-[max-content_1fr]",
                           cell.column.id === "currentAmount" && row.original.currentAmount < 0 && "text-red-500",
                           cell.column.id === "total" && row.original.total < 0 && "text-red-500",
-                          cell.column.id === "status" && row.original["stock-control-app_order"].status === "canceled" && "text-red-500"
+                          cell.column.id === "status" && row.original["stock-control-app_order"].status === "canceled" && "text-red-500",
+                          cell.column.id === "spentAmount" && row.original.spentAmount < 0 && "text-red-500"
                         )}>
-                          {(cell.column.id === "price" || cell.column.id === "currentAmount" || cell.column.id === "total") && <span>$</span>}
+                          {(
+                            cell.column.id === "price" ||
+                            cell.column.id === "currentAmount" ||
+                            cell.column.id === "total" ||
+                            cell.column.id === "spentAmount"
+                          ) && <span>$</span>}
                           {(cell.column.id === "label" && row.original.openedById != null) && <IconCashRegister className="p-0 text-green-400" />}
                           {(cell.column.id === "label" && row.original.openedById === null) && <IconDeviceDesktopX className="p-0 text-red-400 aspect-square" />}
                           {(cell.column.id === "name" && type === "products" && row.original.active) && <Package className="p-0 text-green-400 aspect-square" />}
@@ -340,9 +346,6 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
                           {(cell.column.id === "name" && type === "customers" && !row.original.active) && <IconUserOff className="p-0 text-red-400 aspect-square" />}
                           {(cell.column.id === "name" && type === "providers" && row.original.active) && <IconTruck className="p-0 text-green-400 aspect-square" />}
                           {(cell.column.id === "name" && type === "providers" && !row.original.active) && <IconTruckOff className="p-0 text-red-400 aspect-square" />}
-                          {/* {(cell.column.id === "createdAt" && type === "orders" && row.original["stock-control-app_order"].status !== "canceled") && <IconTruckOff className="p-0 text-green-400 aspect-square" />} 
-                          {(cell.column.id === "createdAt" && type === "orders" && row.original["stock-control-app_order"].status === "canceled") && <IconTruckOff className="p-0 text-red-400 aspect-square" />}  */}
-
                           {flexRender(cell.column.columnDef.cell, cell.getContext())}
                           {cell.column.id === "stock" && <span className="w-full grow"> unidades</span>}
                         </div>

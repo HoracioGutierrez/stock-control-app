@@ -206,6 +206,13 @@ export const providersColumns: ColumnDef<ProviderType>[] = [
     accessorKey: "phone",
   },
   {
+    header: "Total gastado",
+    accessorKey: "totalSpent",
+    cell: ({ row }) => {
+      return row.original.totalSpent ? Number(row.original.totalSpent).toFixed(2) : 0
+    },
+  },
+  {
     header: "Activo",
     accessorKey: "active",
     size: 1

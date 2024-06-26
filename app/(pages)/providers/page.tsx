@@ -18,7 +18,7 @@ async function ProvidersPage() {
       <PageHeader title="Proveedores" actions={
         <>
           {/* <DialogTriggerButton dialogType="new-provider-order" text="Nueva orden de compra" icon={<PlusIcon />} /> */}
-          <DialogTriggerButton dialogType="new-provider" text="Crear Proveedor" icon={<IconAmbulance className="h-7 w-7" />} />
+          <DialogTriggerButton dialogType="new-provider" text="Crear Proveedor" icon={<IconAmbulance className="w-7 h-7" />} />
         </>
       } />
       {data.length == 0 && (

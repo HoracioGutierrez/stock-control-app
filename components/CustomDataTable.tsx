@@ -41,7 +41,7 @@ const columns: Record<"products" | "history" | "providers" | "customers" | "cash
 }
 
 function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualFetch, manualCallback, dateFilter }: CustomDataTableProps) {
-
+  console.log(data) 
   const [sorting, setSorting] = useState<SortingState>([])
   const [tableData, setTableData] = useState<ProductType | HistoryType[]>(data)
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -336,7 +336,8 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
                             cell.column.id === "price" ||
                             cell.column.id === "currentAmount" ||
                             cell.column.id === "total" ||
-                            cell.column.id === "spentAmount"
+                            cell.column.id === "spentAmount" ||
+                            cell.column.id === "totalSpent"
                           ) && <span>$</span>}
                           {(cell.column.id === "label" && row.original.openedById != null) && <IconCashRegister className="p-0 text-green-400" />}
                           {(cell.column.id === "label" && row.original.openedById === null) && <IconDeviceDesktopX className="p-0 text-red-400 aspect-square" />}

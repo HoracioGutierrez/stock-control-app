@@ -65,3 +65,11 @@ export const accountSchema = yup.object().shape({
   email: yup.string().required("El email es obligatorio"),
   username: yup.string().required("El nombre de usuario es obligatorio"),
 })
+
+export const userSchema = yup.object().shape({
+  name: yup.string().required("El nombre es obligatorio"),
+  email: yup.string().required("El email es obligatorio"),
+  username: yup.string().matches(/^[a-zA-Z0-9]+$/, "El nombre de usuario solo puede contener letras y números").required("El nombre de usuario es obligatorio"),
+  password: yup.string().required("La contraseña es obligatoria"),
+  isAdmin: yup.boolean().required("Debes seleccionar si eres administrador")
+})

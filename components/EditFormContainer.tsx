@@ -23,6 +23,7 @@ function EditFormContainer({ entityType, barcode, entityId, hasVariants, userId,
         "customer": "Cliente",
         "product": "Producto",
         "cashRegister": "Caja",
+        "user": "Usuario",
     }
     const entityResolved = conditionalEntity[entityType]
 

@@ -7,6 +7,7 @@ import { useState } from "react"
 import { Check, Loader } from "lucide-react"
 import { DeleteByIdProps, DeleteUserProps, GeneralResponse, ReactivateByIdProps } from "@/lib/types"
 import { useDialogStore } from "@/stores/generalDialog"
+import { reactivateById } from "@/actions/reactivateById"
 
 
 function DeleteUserConfirmationForm({ userId, type }: DeleteUserProps) {
@@ -15,34 +16,62 @@ function DeleteUserConfirmationForm({ userId, type }: DeleteUserProps) {
 
   const handleClick = () => {
     setLoading(true)
-    deleteById({ entityType: "user", entityId: id, userId: userId as string })
-      .then((data) => {
-        if (data?.error) {
-          throw new Error(data.error)
-        }
-        toast({
-          title: "Usuario eliminado correctamente",
-          description: "El usuario se ha eliminado correctamente de la base de datos",
+    if (type === "delete-user") {
+      deleteById({ entityType: "user", entityId: id, userId: userId as string })
+        .then((data) => {
+          if (data?.error) {
+            throw new Error(data.error)
+          }
+          toast({
+            title: "Usuario eliminado correctamente",
+            description: "El usuario se ha eliminado correctamente de la base de datos",
+          })
+          setClose()
         })
-        setClose()
-      })
-      .catch((error) => {
-        if (error instanceof Error) {
+        .catch((error) => {
+          if (error instanceof Error) {
+            return toast({
+              variant: "destructive",
+              title: "Error al eliminar el usuario",
+              description: error.message
+            })
+          }
           return toast({
             variant: "destructive",
             title: "Error al eliminar el usuario",
-            description: error.message
+            description: "Error al eliminar el usuario",
           })
-        }
-        return toast({
-          variant: "destructive",
-          title: "Error al eliminar el usuario",
-          description: "Error al eliminar el usuario",
         })
-      })
-      .finally(() => {
-        setLoading(false)
-      })
+        .finally(() => {
+          setLoading(false)
+        })
+    } else {
+      reactivateById({ entityType: "user", entityId: id, userId: userId as string })
+        .then((data) => {
+          if (data?.error) {
+            throw new Error(data.error)
+          }
+          toast({
+            title: "Usuario reactivado correctamente",
+            description: "El usuario se ha reactivado correctamente de la base de datos",
+          })
+          setClose()
+        })
+        .catch((error) => {
+          if (error instanceof Error) {
+            return toast({
+              variant: "destructive",
+              title: "Error al reactivar el usuario",
+              description: error.message
+            })
+          }
+          return toast({
+            variant: "destructive",
+            title: "Error al reactivar el usuario",
+            description: "Error al reactivar el usuario",
+          })
+        })
+    }
   }
 
   return (

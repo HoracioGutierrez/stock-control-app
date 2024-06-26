@@ -1,5 +1,5 @@
 
-import { customerSchema, productSchema, providerSchema, cashRegisterSchema, customerDebtSchema } from "./schemas"
+import { customerSchema, productSchema, providerSchema, cashRegisterSchema, customerDebtSchema, userSchema } from "./schemas"
 import { FormSchemaVariants } from "@/lib/types"
 
 export const entityConfig: {
@@ -24,9 +24,13 @@ export const entityConfig: {
         formId: "new-cash-register-form",
         schema: cashRegisterSchema
     },
-    customerDebt : {
+    customerDebt: {
         formId: "new-customer-debt-form",
         schema: customerDebtSchema
+    },
+    user: {
+        formId: "new-user-form",
+        schema: userSchema
     }
 }
 
@@ -102,6 +106,23 @@ export const formNamesVariants: {
             label: "Monto manual",
             inputType: "number"
         }
+    },
+    user: {
+        name: {
+            name: "name",
+            label: "Nombre",
+            inputType: "text"
+        },
+        email: {
+            name: "email",
+            label: "Email",
+            inputType: "text"
+        },
+        username: {
+            name: "username",
+            label: "Nombre de usuario",
+            inputType: "text"
+        }
     }
 }
 
@@ -172,6 +193,13 @@ export const formDetailsVariants: {
             name: "cuitCuil",
             label: "CUIT/CUIL",
             inputType: "text"
+        }
+    },
+    user: {
+        isAdmin : {
+            name: "isAdmin",
+            label: "Es admin",
+            inputType: "checkbox"
         }
     }
 }

@@ -223,14 +223,14 @@ function EditForm({ entityType, loading, register, errors, data, formForVariant,
             )}
 
             <div className="flex justify-center items-center gap-8 col-span-full">
-                {(isVariant && !isVariantUnlinking) && <CustomButton onClick={handleVariantUnlink}>desvincular variante</CustomButton>}
+                {(isVariant && !isVariantUnlinking && entityType === "product") && <CustomButton onClick={handleVariantUnlink}>desvincular variante</CustomButton>}
                 {isVariantUnlinking && (
                     <>
                         <CustomButton onClick={cancelVariantUnlink}>cancelar</CustomButton>
                         <CustomButton isLoading={loadingUnlink} onClick={handleVariantUnlinkConfirm}>confirmar</CustomButton>
                     </>
                 )}
-                {!isVariant && <CustomButton>vincular variante</CustomButton>}
+                {!isVariant && entityType === "product" && <CustomButton>vincular variante</CustomButton>}
                 {!isVariantUnlinking && (
                     <Button form={entityConfig[entityType].formId} className="flex items-center gap-2" disabled={loading}>
                         {loading && <Loader className="animate-spin" /> || <Check />}

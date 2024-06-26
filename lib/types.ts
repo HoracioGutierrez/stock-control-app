@@ -144,12 +144,12 @@ export type GeneralResponse = {
 
 export type ProviderInputValues = {
   name: string
-  lastName: string
-  companyName: string
-  address: string
-  phone: string
-  email: string
-  cuitCuil: string
+  lastName?: string
+  companyName?: string
+  address?: string
+  phone?: string
+  email?: string
+  cuitCuil?: string
 }
 
 export type InputValues = CustomerInputValues | ProductInputValues | ProviderInputValues

@@ -17,7 +17,6 @@ function SideBar({ session }: SideBarProps) {
 
   const { isOpen, setOpen, collapsed, setCollapsed } = useDrawerStore((state: any) => state)
   const { theme, setTheme } = useTheme()
-  let themeNameInitial = theme?.includes("dark") ? "Modo Claro" : "Modo Oscuro" 
   const [themeName, setThemeName] = useState("")
 
 

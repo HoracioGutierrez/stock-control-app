@@ -14,7 +14,7 @@ export function ModeToggle({ setTheme, themeName, collapsed, cn }: ModeTogglePro
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild className="rounded-none size-full m-0">
+      <DropdownMenuTrigger asChild className="rounded-none size-full m-0 border-none">
         <Button variant="ghost" className="size-full border-none p-4 gap-2 pl-4 justify-start hover:bg-accent hover:font-bold text-muted-foreground hover:text-accent-foreground transition-colors hover:cursor-pointer text-[1.2rem] font-light">
           <div className="flex items-center">
             <Sun className="rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />

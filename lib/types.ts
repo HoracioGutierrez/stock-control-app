@@ -129,6 +129,7 @@ export type FormEditProps = {
   fields: any
   hasVariants: boolean
   hasDetails: boolean
+  userId : string
 }
 
 export type FormValues =

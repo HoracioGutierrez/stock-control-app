@@ -40,6 +40,7 @@ function EditFormContainer({ entityType, barcode, entityId, hasVariants, userId,
             if (error) {
                 return defaultValue[entityType as keyof typeof defaultValue] as SchemaFormValues
             }
+            console.log(data)
             setIdResolve(data.id as string)
             setIsVariant(data.isVariant as boolean)
             return data as SchemaFormValues
@@ -109,12 +110,15 @@ function EditFormContainer({ entityType, barcode, entityId, hasVariants, userId,
         handleAddVariant,
         fields,
         hasVariants,
-        hasDetails
+        hasDetails,
+        userId
     }
+
+    console.log(isVariant)
 
     return (
         <>
-            {hasDetails && <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-2 gap-8 overflow-auto" id={entityConfig[entityType].formId}>
+            {hasDetails && <form onSubmit={handleSubmit(onSubmit)} className="gap-8 grid grid-cols-1 lg:grid-cols-2 overflow-auto" id={entityConfig[entityType].formId}>
                 <EditForm {...formProps} />
             </form>}
             {hasDetails == false && <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col overflow-auto" id={entityConfig[entityType].formId}>

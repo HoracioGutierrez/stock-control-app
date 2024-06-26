@@ -44,17 +44,14 @@ function OrderScanner({ data }: OrderScannerProps) {
       setScanning(isScanning)
 
       if (e.key === "Enter") {
-        //console.log(barcode)
         handleScan(barcode)
         setScanning(false)
         return
       }
 
       barcode += e.key
-      //console.log(e.key)
 
       setTimeout(() => {
-        //console.log("timeout")
         barcode = ""
       }, 600)
     }

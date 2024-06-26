@@ -7,9 +7,6 @@ import { revalidatePath } from "next/cache"
 export const updatePrices = async (applyToAll: boolean, selectedColumns: string[], operationType: string, unitType: string, amount: number, userId: string): Promise<GeneralResponse> => {
   "use server"
 
-  console.log(selectedColumns)
-  console.log(operationType)
-  console.log(unitType)
   const operationQueries: Record<string, any> = {
     add: {
       gross: sql`${products.price} + ${amount}`,
@@ -20,8 +17,6 @@ export const updatePrices = async (applyToAll: boolean, selectedColumns: string[
       percentage: sql`${products.price} - ${amount} * ${products.price} / 100`,
     },
   }
-
-  console.log(operationQueries[operationType][unitType])
 
   try {
     if (applyToAll) {

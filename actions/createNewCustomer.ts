@@ -43,7 +43,6 @@ export const createNewCustomer = async (data: CustomerType, userId: string): Pro
         }
 
     } catch (error) {
-        console.log(error)
         if (error instanceof Error) {
             return {
                 data: null,

@@ -52,8 +52,7 @@ export const providerSchema = yup.object().shape({
 
 export const customerDebtSchema = yup.object().shape({
   payAll: yup.boolean(),
-  manualAmount: yup.number().when("payAll",([payAll],schema)=>{
-    console.log(payAll)
-    return payAll ? schema : yup.number().moreThan(0,"El monto debe ser mayor a cero").required("El monto manual es obligatorio")
+  manualAmount: yup.number().when("payAll", ([payAll], schema) => {
+    return payAll ? schema : yup.number().moreThan(0, "El monto debe ser mayor a cero").required("El monto manual es obligatorio")
   })
 })

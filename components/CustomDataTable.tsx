@@ -295,7 +295,7 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
                       )
                     }
                     return (
-                      <TableCell key={cell.id} className="" onDoubleClick={() => { console.log(cell) }}>
+                      <TableCell key={cell.id}>
                         <div className={cn(
                           "place-content-center gap-2 grid grid-cols-[max-content_1fr]",
                           cell.column.id === "currentAmount" && row.original.currentAmount < 0 && "text-red-500"

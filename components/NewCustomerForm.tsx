@@ -34,7 +34,6 @@ function NewCustomerForm() {
     })
 
     const onSubmit: SubmitHandler<CustomerInputValues> = (data: CustomerInputValues) => {
-        console.log(data)
         setIsLoading(true)
         createNewCustomer({
             name: data.name,
@@ -73,23 +72,23 @@ function NewCustomerForm() {
 
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-2 gap-8" id="new-customer-form">
+        <form onSubmit={handleSubmit(onSubmit)} className="gap-8 grid grid-cols-1 lg:grid-cols-2" id="new-customer-form">
             <div className="self-stretch">
                 <Card className="bg-primary-foreground h-full">
                     <CardHeader>
                         <CardTitle>Detalles Del Cliente</CardTitle>
                         <CardDescription>Estos detalles son obligatorios para que el cliente pueda crearse correctamente.</CardDescription>
                     </CardHeader>
-                    <CardContent className="grid gap-4 ">
-                        <div className="grid gap-4">
-                            <div className="grid gap-2">
+                    <CardContent className="gap-4 grid">
+                        <div className="gap-4 grid">
+                            <div className="gap-2 grid">
                                 <div>
                                     <Label htmlFor="name">Nombre De Cliente</Label>
                                     <Input type="text" disabled={isLoading} placeholder="Nombre" {...register("name")} />
                                     {errors.name && <p className="text-error text-red-500">{errors.name.message}</p>}
                                 </div>
                             </div>
-                            <div className="grid gap-2">
+                            <div className="gap-2 grid">
                                 <div>
                                     <Label htmlFor="lastName">Apellidos</Label>
                                     <Input type="text" disabled={isLoading} placeholder="Apellidos" {...register("lastName")} />
@@ -106,36 +105,36 @@ function NewCustomerForm() {
                         <CardTitle>Datos Adicionales</CardTitle>
                         <CardDescription>Estos datos son opcionales para que el cliente pueda crearse correctamente.</CardDescription>
                     </CardHeader>
-                    <CardContent className="grid gap-4">
-                        <div className="grid gap-4">
+                    <CardContent className="gap-4 grid">
+                        <div className="gap-4 grid">
                             <div>
                                 <Label htmlFor="phone">Teléfono</Label>
                                 <Input type="text" disabled={isLoading} placeholder="Teléfono" {...register("phone")} />
                                 {errors.phone && <p className="text-error">{errors.phone.message}</p>}
                             </div>
                         </div>
-                        <div className="grid gap-4">
+                        <div className="gap-4 grid">
                             <div>
                                 <Label htmlFor="email">Email</Label>
                                 <Input type="email" disabled={isLoading} placeholder="Email" {...register("email")} />
                                 {errors.email && <p className="text-error">{errors.email.message}</p>}
                             </div>
                         </div>
-                        <div className="grid gap-4">
+                        <div className="gap-4 grid">
                             <div>
                                 <Label htmlFor="address">Dirección</Label>
                                 <Input type="text" disabled={isLoading} placeholder="Dirección" {...register("address")} />
                                 {errors.address && <p className="text-error">{errors.address.message}</p>}
                             </div>
                         </div>
-                        <div className="grid gap-4">
+                        <div className="gap-4 grid">
                             <div>
                                 <Label htmlFor="legalName">Nombre Legal</Label>
                                 <Input type="text" disabled={isLoading} placeholder="Razón Social/Nombre Legal" {...register("legalName")} />
                                 {errors.legalName && <p className="text-error">{errors.legalName.message}</p>}
                             </div>
                         </div>
-                        <div className="grid gap-4">
+                        <div className="gap-4 grid">
                             <div>
                                 <Label htmlFor="cuitCuil">CUIT/CUIL</Label>
                                 <Input type="text" disabled={isLoading} placeholder="CUIT/CUIL" {...register("cuitCuil")} />
@@ -144,7 +143,7 @@ function NewCustomerForm() {
                         </div>
                     </CardContent>
                 </Card>
-                <Button form="new-customer-form" disabled={isLoading} className="flex items-center justify-center gap-2 mx-auto mt-8">
+                <Button form="new-customer-form" disabled={isLoading} className="flex justify-center items-center gap-2 mx-auto mt-8">
                     {isLoading ? <Loader className="animate-spin" /> : <Check />}
                     <span>Guardar Cliente</span>
                 </Button>

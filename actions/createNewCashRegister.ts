@@ -33,7 +33,6 @@ export const createNewCashRegister = async (data: CashRegisterType, userId: stri
     }
 
   } catch (error) {
-    console.log(error)
     if (error instanceof Error) {
       return {
         data: null,

@@ -115,7 +115,6 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
     return res
 
   } catch (error) {
-    console.log(error)
     if (error instanceof Error) {
       return {
         data: null,

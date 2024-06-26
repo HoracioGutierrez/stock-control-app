@@ -113,12 +113,9 @@ function CreateProviderOrderForm({ userId }: Props) {
   }
 
   const handleSubmit = () => {
-    console.log("test")
     setLoading(true)
     const orderProducts: any[] = []
-    console.log(order)
     Object.keys(order).forEach((key: string) => {
-      console.log(key)
       orderProducts.push({
         productId: key,
         count: order[key].count

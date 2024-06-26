@@ -21,7 +21,7 @@ type Props = {
   variant?: "default" | "outline" | "ghost" | "link" | "destructive" | "secondary",
 }
 
-function CustomButton({ children, className, icon, text = "Trigger Dialog", data, disabled = false, onClick, isLoading = false, tooltip = "Tooltip", dialogType, href, variant }: Props) {
+function CustomButton({ children, className, icon, text = "Trigger Dialog", data, disabled = false, onClick, isLoading = false, tooltip, dialogType, href, variant }: Props) {
 
   const { setOpen } = useDialogStore((state: any) => state)
 
@@ -36,9 +36,9 @@ function CustomButton({ children, className, icon, text = "Trigger Dialog", data
 
   }
 
-  const ButtonEl = ({ children, className, icon, text = "Trigger Dialog", disabled = false, onClick, isLoading = false, variant = "default", ...props }: Props) => {
+  const ButtonEl = ({ children, className, icon, text = "Trigger Dialog", disabled = false, onClick, isLoading = false, variant, ...props }: Props) => {
     return (
-      <Button {...props} variant={variant} className={cn("", className)} onClick={onClick} disabled={disabled}>
+      <Button variant={variant} className={cn("text-muted-foreground", className)} onClick={onClick} disabled={disabled}>
         {isLoading && <Loader className="animate-spin" />}
         {!isLoading && icon ? icon : null}
         <span>{children ? children : text ? text : "Trigger Dialog"}</span>
@@ -51,7 +51,7 @@ function CustomButton({ children, className, icon, text = "Trigger Dialog", data
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button variant={variant} className={cn("", className)} onClick={handleClick} disabled={disabled}>
+            <Button variant={variant} className={cn("text-muted-foreground", className)} onClick={handleClick} disabled={disabled}>
               {isLoading && <Loader className="animate-spin" />}
               {!isLoading && icon ? icon : null}
               <span>{children ? children : text ? text : "Trigger Dialog"}</span>
@@ -67,7 +67,7 @@ function CustomButton({ children, className, icon, text = "Trigger Dialog", data
 
   if (href) {
     return (
-      <ButtonEl className={className} onClick={handleClick} disabled={disabled} href={href} isLoading={isLoading} tooltip={tooltip} dialogType={dialogType} data={data} icon={icon} text={text}>
+      <ButtonEl className={className} onClick={handleClick} disabled={disabled} href={href} isLoading={isLoading} tooltip={tooltip} dialogType={dialogType} data={data} icon={icon} text={text} variant={variant}>
         <Link href={href}>
           {children ? children : text ? text : "Trigger Dialog"}
         </Link>
@@ -76,7 +76,7 @@ function CustomButton({ children, className, icon, text = "Trigger Dialog", data
   }
 
   return (
-    <ButtonEl className={className} onClick={handleClick} disabled={disabled} href={href} isLoading={isLoading} tooltip={tooltip} dialogType={dialogType} data={data} icon={icon} text={text}>
+    <ButtonEl className={className} onClick={handleClick} disabled={disabled} href={href} isLoading={isLoading} tooltip={tooltip} dialogType={dialogType} data={data} icon={icon} text={text} variant={variant}>
       {children ? children : text ? text : "Trigger Dialog"}
     </ButtonEl>
   )

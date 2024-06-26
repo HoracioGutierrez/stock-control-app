@@ -2,10 +2,14 @@ import { Pickaxe } from "lucide-react"
 import PageHeader from "@/components/layout/PageHeader"
 import { getAllOrders } from "@/actions/getAllOrders"
 import OrdersTable from "@/components/orders/OrdersTable"
+import { auth } from "@/auth"
+import OrdersDialog from "@/components/order/OrdersDialog"
 
 async function SalesPage() {
 
+  const session = await auth()
   const { data, error } = await getAllOrders()
+
   return (
     <>
       <PageHeader title="Ventas" />
@@ -18,6 +22,7 @@ async function SalesPage() {
         </div>
       )}
       {data.length > 0 && <OrdersTable data={data} />}
+      <OrdersDialog userId={session?.user.id as string} />
     </>
   )
 }

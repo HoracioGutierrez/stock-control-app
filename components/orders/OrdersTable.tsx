@@ -15,6 +15,13 @@ function OrdersTable({ data }: Props) {
       manualFetch={true}
       manualCallback={getAllOrders}
       dateFilter
+      actions={(rowData: any) => {
+        return (
+          <>
+            
+          </>
+        )
+      }}
     />
   )
 }

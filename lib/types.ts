@@ -86,6 +86,16 @@ export type EditProductInputValues = {
   stock: number
 }
 
+export type EditProviderInputValues = {
+  name: string
+  lastName?: string
+  companyName?: string
+  address?: string
+  phone?: string
+  email?: string
+  cuitCuil?: string
+}
+
 export type EditProductVariantsFormProps = {
   barcode: string
   userId: string
@@ -134,7 +144,9 @@ export type FormEditProps = {
 
 export type FormValues =
   EditCustomerInputValues |
-  EditProductInputValues
+  EditProductInputValues |
+  EditProviderInputValues
+  
 
 export type GeneralResponse = {
   data: User | null | any

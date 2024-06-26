@@ -215,6 +215,11 @@ export type SideBarProps = {
   session: Session | null
 }
 
+export type DeleteUserProps = {
+  userId: string
+  type : string
+}
+
 export type SchemaFormValues =
   CustomerInputValues |
   ProductInputValues |

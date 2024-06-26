@@ -34,6 +34,7 @@ export const users = pgTable(tablePrefix + "user", {
   isAdmin: boolean("isAdmin").notNull(),
   createdAt: timestamp("createdAt", { mode: "date" }),
   updatedAt: timestamp("updatedAt", { mode: "date" }),
+  active: boolean("active").notNull(),
 })
 
 export const accounts = pgTable(
@@ -328,5 +329,6 @@ export type OrderType = typeof orders.$inferInsert
 export type CashRegisterOpenningType = typeof cashRegistersOpennings.$inferInsert
 export type PurchaseOrderType = typeof purchaseOrders.$inferInsert
 export type PurchaseOrderProductType = typeof purchaseOrderProducts.$inferInsert
+export type UserType = typeof users.$inferInsert
 
 

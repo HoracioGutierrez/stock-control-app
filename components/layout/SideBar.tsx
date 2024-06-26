@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowLeftToLine, ArrowRightToLine, Barcode, ComputerIcon, History, Home, LineChart, Menu, PackageOpen, Settings, ShoppingBasket, Truck, UserCogIcon, UserRound, X } from "lucide-react"
+import { ArrowLeftToLine, ArrowRightToLine, Barcode, ComputerIcon, History, Home, LineChart, Menu, PackageOpen, Settings, ShoppingBasket, Truck, User, UserCogIcon, UserRound, Users, X } from "lucide-react"
 import { useDrawerStore } from "@/stores/drawerStore"
 import { ModeToggle } from "../ModeToggle"
 import NavLink from "../NavLink"
@@ -80,6 +80,12 @@ function SideBar({ session }: SideBarProps) {
             <ModeToggle />
             <span className={cn(collapsed && "hidden")}>Modo Oscuro</span>
           </div>
+          {session?.user.isAdmin && (
+            <NavLink href="/users" onClick={handleClick}>
+              <Users />
+              <span className={cn(collapsed && "hidden")}>usuarios</span>
+            </NavLink>
+          )}
           <NavLink href="/account" onClick={handleClick}>
             <UserCogIcon />
             <span className={cn(collapsed && "hidden")}>cuenta</span>

@@ -490,3 +490,30 @@ export const priceColumns: ColumnDef<any>[] = [
     accessorKey: "price",
   },
 ]
+
+export const usersColumns: ColumnDef<any>[] = [
+  {
+    header : "Nombre",
+    accessorKey: "name",
+  },
+  {
+    header : "Email",
+    accessorKey: "email",
+  },
+  {
+    header : "Nombre de usuario",
+    accessorKey: "username",
+  },
+  {
+    header : "Es admin",
+    accessorKey: "isAdmin",
+  },
+  {
+    header: "Activo",
+    accessorKey: "active",
+  },
+  {
+    header: "Acciones",
+    accessorKey: "actions",
+  }
+]

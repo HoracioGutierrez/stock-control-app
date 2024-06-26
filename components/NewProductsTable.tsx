@@ -23,12 +23,13 @@ function ProductsTable({ data, isAdmin }: ProductsTableProps) {
       manualFetch={true}
       manualCallback={getAllProducts}
       actions={(rowData: any) => {
+        console.log(rowData)
         return (
           <>
             {isAdmin && (
               <DeleteResourceButton type="product" data={rowData.id} active={rowData.active} tooltip={rowData.active ? "Borrar producto" : "Reactivar producto"} />
             )}
-            <EditButton barcode={rowData.barcode} entity="product" />
+            {rowData.isVariant && <EditButton barcode={rowData.barcode} entity="product" />}
             {!rowData.isVariant && <EditVariantButton barcode={rowData.barcode} />}
           </>
         )

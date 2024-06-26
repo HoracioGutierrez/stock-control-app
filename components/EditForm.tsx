@@ -230,6 +230,7 @@ function EditForm({ entityType, loading, register, errors, data, formForVariant,
                         <CustomButton isLoading={loadingUnlink} onClick={handleVariantUnlinkConfirm}>confirmar</CustomButton>
                     </>
                 )}
+                {!isVariant && <CustomButton>vincular variante</CustomButton>}
                 {!isVariantUnlinking && (
                     <Button form={entityConfig[entityType].formId} className="flex items-center gap-2" disabled={loading}>
                         {loading && <Loader className="animate-spin" /> || <Check />}

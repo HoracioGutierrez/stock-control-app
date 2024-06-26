@@ -9,6 +9,7 @@ import { revalidatePath } from "next/cache"
 
 
 export const editById = async (entityType: string, entityId: string, data: any, userId: string): Promise<GeneralResponse> => {
+    console.log(entityType, entityId, data, userId)
     "use server"
     const entityNameResolve = entityName[entityType as keyof EntityName]
     try {

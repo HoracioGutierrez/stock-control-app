@@ -129,7 +129,7 @@ export type FormEditProps = {
   fields: any
   hasVariants: boolean
   hasDetails: boolean
-  userId : string
+  userId: string
 }
 
 export type FormValues =
@@ -137,7 +137,7 @@ export type FormValues =
   EditProductInputValues
 
 export type GeneralResponse = {
-  data: User | null | any 
+  data: User | null | any
   error: string | null
   message: string
 }
@@ -184,6 +184,9 @@ export type ProductVariantFormProps = {
   isLoading?: boolean
   onRemove?: any
   canRemove?: boolean
+  handleUnlinkVariant?: any
+  isUnlinking?: boolean
+  id?: string
 }
 
 export type ProductVariantInputValues = {

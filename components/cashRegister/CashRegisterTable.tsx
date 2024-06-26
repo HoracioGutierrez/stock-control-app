@@ -26,8 +26,8 @@ function CashRegisterTable({ data, isAdmin }: Props) {
               type="cash-register-close"
               data={rowData.id}
               active={rowData.openedById === null ? false : true}
-              activeIcon={<IconDeviceDesktopOff className="p-0 text-muted-foreground hover:text-red-400 aspect-square" />}
-              inactiveIcon={<IconDeviceDesktopCheck className="p-0 text-muted-foreground hover:text-green-400 aspect-square" />}
+              activeIcon={<IconDeviceDesktopOff className="p-0 text-muted-foreground group-hover:text-red-400 aspect-square" />}
+              inactiveIcon={<IconDeviceDesktopCheck className="p-0 text-muted-foreground group-hover:text-green-400 aspect-square" />}
               tooltip={rowData.openedById === null ? "Abrir caja" : "Cerrar caja"}
             />
             {isAdmin && (

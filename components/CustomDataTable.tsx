@@ -2,23 +2,23 @@
 import { historyColumns, productsColumns, providersColumns, customersColumns, cashRegistersColumns, ordersColumns } from "@/lib/columnDefinitions"
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { SortingState, getSortedRowModel, flexRender, getCoreRowModel, useReactTable, ColumnFiltersState, getFilteredRowModel, getPaginationRowModel, ColumnDef, VisibilityState } from "@tanstack/react-table"
+import { IconCashRegister, IconDeviceDesktopX, IconTruck, IconTruckOff, IconUser, IconUserOff } from '@tabler/icons-react'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { CustomerType, HistoryType, ProductType, ProviderType } from "@/schema"
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip"
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
+import { TooltipProvider } from "@radix-ui/react-tooltip"
+import { Filter, Package, PackageX } from "lucide-react"
+import { getAllOrders } from "@/actions/getAllOrders"
 import { Input } from "@/components/ui/input"
 import { useEffect, useState } from "react"
-import { Button } from "./ui/button"
-import { Filter, Package, PackageX } from "lucide-react"
-import { TooltipProvider } from "@radix-ui/react-tooltip"
-import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip"
-import { cn } from "@/lib/utils"
-import { Calendar } from "./ui/calendar"
 import { useForm } from "react-hook-form"
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
-import { format } from "date-fns"
-import { getAllOrders } from "@/actions/getAllOrders"
+import { Calendar } from "./ui/calendar"
 import { toast } from "./ui/use-toast"
-import { IconCashRegister, IconDeviceDesktopX, IconTruck, IconTruckOff, IconTruckReturn, IconUser, IconUserOff } from '@tabler/icons-react'
+import { Button } from "./ui/button"
+import { format } from "date-fns"
+import { cn } from "@/lib/utils"
 
 type CustomDataTableProps = {
   data: ProductType[] | HistoryType[] | CustomerType[] | ProviderType[] | null,

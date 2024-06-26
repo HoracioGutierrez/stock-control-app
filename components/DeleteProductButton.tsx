@@ -15,10 +15,10 @@ const DeleteProductButton = ({ active, barcode }: DeleteProductButtonProps) => {
   }
 
   return (
-    <Button variant={"ghost"} className="aspect-square p-0" onClick={handleClick}>
+    <Button variant={"ghost"} className="aspect-square p-0 group" onClick={handleClick}>
       {active
-        ? <Trash2 className="aspect-square p-0 text-muted-foreground hover:text-red-400" />
-        : <UndoDot className="aspect-square p-0 text-muted-foreground hover:text-green-400" />}
+        ? <Trash2 className="aspect-square p-0 text-muted-foreground group-hover:text-red-400 aspect-square" />
+        : <UndoDot className="aspect-square p-0 text-muted-foreground group-hover:text-green-400 aspect-square" />}
     </Button>
   )
 }

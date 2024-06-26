@@ -111,7 +111,6 @@ function EditProductVariantsForm({ barcode, userId }: EditProductVariantsFormPro
 
   const handleUnlinkVariant = (index: number, barcode: string) => {
     update(index, { isUnlinking: true })
-    console.log(id)
     //editById("product", id, { productId: null, isVariant: false }, userId)
     unlinkVariant(barcode, userId)
       .then((data) => {

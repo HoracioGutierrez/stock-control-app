@@ -207,6 +207,14 @@ export type NewProductFormProps = {
   userId: string
 }
 
+export type ModeToggleProps = {
+  theme?: string | undefined
+  setTheme: (theme: string) => void
+  themeName?: string,
+  collapsed?: boolean
+  cn?: any
+}
+
 export type CustomLoaderProps = {
   title: string,
 }

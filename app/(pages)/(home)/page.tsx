@@ -23,13 +23,13 @@ export default async function Home() {
             {!error && (
               <>
                 <p className="text-muted-foreground">
-                  <span className="font-bold text-2xl text-primary">{data?.productsCount.count}</span> productos en tu inventario
+                  <span className="font-bold text-2xl text-primary">{data?.productsCount.count}</span> Productos en tu lista de productos
                 </p>
                 <p className="text-muted-foreground">
-                  <span className="font-bold text-2xl text-primary">{data?.salesStats.count}</span> ordenes en tu inventario
+                  <span className="font-bold text-2xl text-primary">{data?.salesStats.count}</span> Ordenes en tu inventario
                 </p>
                 <p className="text-muted-foreground">
-                  <span className="font-bold text-2xl text-primary">${data?.salesStats.value}</span> total de ventas
+                  <span className="font-bold text-2xl text-primary">${data?.salesStats.value}</span> Total de ventas
                 </p>
               </>
             )}

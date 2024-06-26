@@ -19,7 +19,7 @@ async function CustomersPage() {
         <div className="place-items-center border-slate-400 grid border border-dashed rounded grow">
           <div className="max-w-sm text-center">
             <p className="font-bold text-xl">No hay clientes creados todavía</p>
-            <p className="mb-6 text-muted-foreground text-sm">Podrás comenzar a operar en cuanto tengas al menos un cliente en tu lista de clientes</p>
+            <p className="mb-6 text-muted-foreground text-sm">Podrás comenzar a operar tan pronto como agregues al menos un cliente a tu lista o crees uno nuevo.</p>
           </div>
         </div>
       )}

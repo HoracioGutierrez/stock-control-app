@@ -129,7 +129,7 @@ function OrderScanner({ data }: OrderScannerProps) {
         </Card>
         <Card className="bg-accent">
           <CardHeader>
-            <CardTitle className="text-md text-muted-foreground">Ultimo Producto</CardTitle>
+            <CardTitle className="text-md text-muted-foreground">Último Producto</CardTitle>
           </CardHeader>
           <CardContent>
 

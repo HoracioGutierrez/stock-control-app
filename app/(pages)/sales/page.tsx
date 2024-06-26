@@ -13,7 +13,7 @@ async function SalesPage() {
         <div className="place-items-center border-slate-400 grid border border-dashed rounded grow">
           <div className="max-w-sm text-center">
             <p className="font-bold text-xl">No hay ventas todavía</p>
-            <p className="mb-6 text-muted-foreground text-sm">Podrás comenzar a ver ventas luego de realizar alguna acción en la aplicación.</p>
+            <p className="mb-6 text-muted-foreground text-sm">Podrás comenzar a ver las ventas luego de realizar una orden de venta en la aplicación.</p>
           </div>
         </div>
       )}

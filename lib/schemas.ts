@@ -59,3 +59,9 @@ export const customerDebtSchema = yup.object().shape({
     return payAll ? schema : yup.number().moreThan(0, "El monto debe ser mayor a cero").required("El monto manual es obligatorio")
   })
 })
+
+export const accountSchema = yup.object().shape({
+  name: yup.string().required("El nombre es obligatorio"),
+  email: yup.string().required("El email es obligatorio"),
+  username: yup.string().required("El nombre de usuario es obligatorio"),
+})

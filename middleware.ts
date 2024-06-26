@@ -14,6 +14,7 @@ export default auth((req) => {
     "/sales",
     "/movements",
     "/cashRegisters",
+    "/account",
   ]
 
   if(req.auth && req.nextUrl.pathname === "/login") {

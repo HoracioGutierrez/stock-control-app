@@ -1,11 +1,12 @@
-import { products, customers, providers, history, cashRegister } from "@/schema"
+import { products, customers, providers, history, cashRegister, users } from "@/schema"
 
 export const entitiesPropsById = {
   product: products,
   customer: customers,
   provider: providers,
   history: history,
-  cashRegister: cashRegister
+  cashRegister: cashRegister,
+  user: users
 }
 
 export const entityName = {
@@ -13,5 +14,6 @@ export const entityName = {
   customer: "Cliente",
   provider: "Proveedor",
   history: "Historial",
-  cashRegister: "Registro de Caja"
+  cashRegister: "Registro de Caja",
+  user: "Usuario"
 }

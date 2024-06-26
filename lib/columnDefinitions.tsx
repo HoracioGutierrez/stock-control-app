@@ -329,6 +329,7 @@ export const ordersColumns: ColumnDef<any>[] = [
       )
     },
     accessorKey: "stock-control-app_order.createdAt",
+    id: "createdAt",
   },
   {
     header: ({ column }) => {
@@ -344,6 +345,7 @@ export const ordersColumns: ColumnDef<any>[] = [
       )
     },
     accessorKey: "stock-control-app_order.total",
+    id: "total",
   },
   {
     header: "Pago con",
@@ -352,7 +354,8 @@ export const ordersColumns: ColumnDef<any>[] = [
   {
     header: "Registro de Caja",
     accessorKey: "stock-control-app_cashRegister.label",
-  }, {
+  },
+  {
     header: "Cliente",
     accessorKey: "name",
     cell: ({ row }) => {
@@ -362,6 +365,11 @@ export const ordersColumns: ColumnDef<any>[] = [
       const name = row.original["stock-control-app_customer"].name + ", " + row.original["stock-control-app_customer"].lastName.toLowerCase()
       return name.toLowerCase().includes(value.toLowerCase())
     }
+  },
+  {
+    header: "Estado",
+    accessorKey: "stock-control-app_order.status",
+    id: "status",
   },
   {
     header: "Acciones",

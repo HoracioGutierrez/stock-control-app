@@ -2,7 +2,7 @@
 import { historyColumns, productsColumns, providersColumns, customersColumns, cashRegistersColumns, ordersColumns } from "@/lib/columnDefinitions"
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { SortingState, getSortedRowModel, flexRender, getCoreRowModel, useReactTable, ColumnFiltersState, getFilteredRowModel, getPaginationRowModel, ColumnDef, VisibilityState } from "@tanstack/react-table"
-import { IconCashRegister, IconDeviceDesktopX, IconTruck, IconTruckOff, IconUser, IconUserOff } from '@tabler/icons-react'
+import { IconCashRegister, IconClipboardList, IconDeviceDesktopX, IconTruck, IconTruckOff, IconUser, IconUserOff } from '@tabler/icons-react'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { CustomerType, HistoryType, ProductType, ProviderType } from "@/schema"
@@ -73,7 +73,7 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
       pagination: {
         pageSize: 5
       },
-      columnVisibility : {
+      columnVisibility: {
         "active": false,
       },
     },
@@ -100,13 +100,13 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
       manualCallback(true)
         .then((data: any) => {
           setTableData(data.data)
-          setColumnVisibility({...columnVisibility, "active": true})
+          setColumnVisibility({ ...columnVisibility, "active": true })
         })
     } else {
       manualCallback()
         .then((data: any) => {
           setTableData(data.data)
-          setColumnVisibility({...columnVisibility, "active": false})
+          setColumnVisibility({ ...columnVisibility, "active": false })
         })
     }
 
@@ -117,7 +117,11 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
   }
 
   const handleDateSelect = (day: any, selectedDay: any) => {
-    const date = format(day, "yyyy-MM-dd")
+    const sampleDate = new Date(day)
+    const finalDate = sampleDate.getDate() - 1
+    sampleDate.setDate(finalDate)
+
+    const date = format(sampleDate, "yyyy-MM-dd")
     form.setValue("date", date)
     setSelectedDay(selectedDay)
     setOpen(false)
@@ -267,6 +271,9 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  className={cn(
+                    type === "orders" && row.original["stock-control-app_order"].status === "canceled" && "text-muted-foreground",
+                  )}
                 >
                   {row.getVisibleCells().map((cell) => {
 
@@ -278,10 +285,12 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
                       )
                     }
 
-                    if (cell.column.id === "createdAt") {
+                    if (cell.column.id === "createdAt" && type === "orders") {
                       return (
-                        <TableCell key={cell.id}>
-                          {row.original.createdAt ? row.original.createdAt.toLocaleString("es-ES") : "Sin fecha"}
+                        <TableCell key={cell.id} className="flex items-center gap-2">
+                          {(row.original["stock-control-app_order"].status !== "canceled") && <IconClipboardList className="p-0 text-green-400 aspect-square" />}
+                          {(row.original["stock-control-app_order"].status === "canceled") && <IconClipboardList className="p-0 text-red-400 aspect-square" />}
+                          {row.original["stock-control-app_order"].createdAt ? row.original["stock-control-app_order"].createdAt.toLocaleString("es-ES") : "Sin fecha"}
                         </TableCell>
                       )
                     }
@@ -301,13 +310,28 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
                         </TableCell>
                       )
                     }
+
+                    if (cell.column.id === "status" && type === "orders") {
+                      return (
+                        <TableCell key={cell.id} className={cn(
+                          row.original["stock-control-app_order"].status === "canceled" && "text-red-500"
+                        )}>
+
+                          {row.original["stock-control-app_order"].status === "canceled" && "Cancelado"}
+                          {row.original["stock-control-app_order"].status === "pending" && "Pendiente"}
+                        </TableCell>
+                      )
+                    }
+
                     return (
                       <TableCell key={cell.id}>
                         <div className={cn(
                           "place-content-center gap-2 grid grid-cols-[max-content_1fr]",
-                          cell.column.id === "currentAmount" && row.original.currentAmount < 0 && "text-red-500"
+                          cell.column.id === "currentAmount" && row.original.currentAmount < 0 && "text-red-500",
+                          cell.column.id === "total" && row.original.total < 0 && "text-red-500",
+                          cell.column.id === "status" && row.original["stock-control-app_order"].status === "canceled" && "text-red-500"
                         )}>
-                          {(cell.column.id === "price" || cell.column.id === "currentAmount") && <span>$</span>}
+                          {(cell.column.id === "price" || cell.column.id === "currentAmount" || cell.column.id === "total") && <span>$</span>}
                           {(cell.column.id === "label" && row.original.openedById != null) && <IconCashRegister className="p-0 text-green-400" />}
                           {(cell.column.id === "label" && row.original.openedById === null) && <IconDeviceDesktopX className="p-0 text-red-400 aspect-square" />}
                           {(cell.column.id === "name" && type === "products" && row.original.active) && <Package className="p-0 text-green-400 aspect-square" />}
@@ -316,6 +340,9 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
                           {(cell.column.id === "name" && type === "customers" && !row.original.active) && <IconUserOff className="p-0 text-red-400 aspect-square" />}
                           {(cell.column.id === "name" && type === "providers" && row.original.active) && <IconTruck className="p-0 text-green-400 aspect-square" />}
                           {(cell.column.id === "name" && type === "providers" && !row.original.active) && <IconTruckOff className="p-0 text-red-400 aspect-square" />}
+                          {/* {(cell.column.id === "createdAt" && type === "orders" && row.original["stock-control-app_order"].status !== "canceled") && <IconTruckOff className="p-0 text-green-400 aspect-square" />} 
+                          {(cell.column.id === "createdAt" && type === "orders" && row.original["stock-control-app_order"].status === "canceled") && <IconTruckOff className="p-0 text-red-400 aspect-square" />}  */}
+
                           {flexRender(cell.column.columnDef.cell, cell.getContext())}
                           {cell.column.id === "stock" && <span className="w-full grow"> unidades</span>}
                         </div>

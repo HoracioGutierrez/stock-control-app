@@ -18,8 +18,8 @@ function UpdateCustomerDebtButton({ isInDebt , id }: Props) {
   }
 
   return (
-    <Button variant={"ghost"} className="p-0 aspect-square" onClick={handleClick} disabled={!isInDebt}>
-      <HandCoins className="p-0 text-muted-foreground hover:text-green-400 aspect-square" />
+    <Button variant={"ghost"} className="p-0 aspect-square group" onClick={handleClick} disabled={!isInDebt}>
+      <HandCoins className="p-0 text-muted-foreground group-hover:text-green-400 aspect-square" />
     </Button>
   )
 }

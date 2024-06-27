@@ -232,6 +232,13 @@
       "when": 1719439587048,
       "tag": "0032_left_johnny_blaze",
       "breakpoints": true
+    },
+    {
+      "idx": 33,
+      "version": "7",
+      "when": 1719507759885,
+      "tag": "0033_worthless_black_queen",
+      "breakpoints": true
     }
   ]
 }

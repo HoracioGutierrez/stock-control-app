@@ -1,0 +1,1 @@
+ALTER TABLE "stock-control-app_customer" ALTER COLUMN "lastName" DROP NOT NULL;

@@ -111,7 +111,7 @@ export const customers: any = pgTable(
       .primaryKey()
       .$defaultFn(() => crypto.randomUUID()),
     name: text("name").notNull(),
-    lastName: text("lastName").notNull(),
+    lastName: text("lastName"),
     phone: text("phone"),
     email: text("email"),
     address: text("address"),

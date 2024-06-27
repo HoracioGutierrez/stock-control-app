@@ -51,7 +51,7 @@ const OrderDialog = ({ userId, data, cashRegisters }: Props) => {
         <ManualScan />
       )}
       {type === "add-customer" && (
-        <AddCustomerForm />
+        <AddCustomerForm userId={userId} />
       )}
       {
         type === "pay-with" && (

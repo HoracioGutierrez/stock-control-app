@@ -15,7 +15,9 @@ export const createNewCustomer = async (data: CustomerType, userId: string): Pro
             address: data.address,
             legalName: data.legalName,
             cuitCuil: data.cuitCuil,
-            active: true
+            active: true,
+            currentAmount: 0,
+            spentAmount: 0
         }).returning({
             insertedId: customers.id
         })

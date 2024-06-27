@@ -19,8 +19,12 @@ function ConfirmSaveOrderButton({ cashRegisters, userId }: Props) {
   const [loading, setLoading] = useState<boolean>(false)
   const { setClose } = useDialogStore((state: any) => state)
   const [paymentMethod, setPaymentMethod] = useState<string>("cash")
+  const [error, setError] = useState<string | null>(null)
 
   const handleClick = () => {
+    if(paymentMethod === "debt" && !customer.id) {
+      return setError("Si el tipo de pago es fiado/deuda, debes seleccionar un cliente")
+    }
     setLoading(true)
     saveNewOrder(userId, products, cashRegisters, total, customer.id, paymentMethod)
       .then((data) => {
@@ -57,11 +61,16 @@ function ConfirmSaveOrderButton({ cashRegisters, userId }: Props) {
 
   const handleChange = (value: string) => {
     setPaymentMethod(value)
+    if(value === "debt" && !customer.id) {
+      return setError("Si el tipo de pago es fiado/deuda, debes seleccionar un cliente")
+    }
+    setError(null)
   }
 
   return (
     <div className="flex flex-col gap-8">
       <p className="text-muted-foreground">Seleccione el método de pago para la orden, luego podra confirmar la orden</p>
+      {error && <p className="text-red-500">{error}</p>}
       <Select defaultValue="cash" onValueChange={handleChange}>
         <SelectTrigger>
           <SelectValue placeholder="Selecciona un metodo de pago" />
@@ -125,7 +134,9 @@ function ConfirmSaveOrderButton({ cashRegisters, userId }: Props) {
           </SelectItem>
         </SelectContent>
       </Select>
-      <Button onClick={handleClick} className="flex items-center gap-2 text-white dark:text-primary-foreground">
+      <Button onClick={handleClick} className="flex items-center gap-2 text-white dark:text-primary-foreground" disabled={
+        loading || paymentMethod === "debt" && !customer.id
+      }>
         {loading ? <Loader className="animate-spin" /> : <Check />}
         Confirmar Orden
       </Button>

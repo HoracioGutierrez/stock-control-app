@@ -52,16 +52,16 @@ function LoginForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="gap-4 grid">
       {loginError && <p className="text-red-500">{loginError}</p>}
-      <div className="grid gap-2">
+      <div className="gap-2 grid">
         <Label htmlFor="username">Usuario</Label>
-        <Input type="text" placeholder="user-1" {...register("username")} />
+        <Input type="text" autoComplete="off" placeholder="user-1" {...register("username")} />
         {errors.username && <p className="text-red-500">{errors.username.message}</p>}
       </div>
-      <div className="grid gap-2">
+      <div className="gap-2 grid">
         <Label htmlFor="password">Password</Label>
-        <Input type="password" placeholder="********" {...register("password")} />
+        <Input type="password" autoComplete="off" placeholder="********" {...register("password")} />
         {errors.password && <p className="text-red-500">{errors.password.message}</p>}
       </div>
       <Button type="submit" className="w-full">

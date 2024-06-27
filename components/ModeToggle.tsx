@@ -14,11 +14,11 @@ export function ModeToggle({ setTheme, themeName, collapsed, cn }: ModeTogglePro
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild className="rounded-none size-full m-0 border-none">
-        <Button variant="ghost" className="size-full border-none p-4 gap-2 pl-4 justify-start hover:bg-accent hover:font-bold text-muted-foreground hover:text-accent-foreground transition-colors hover:cursor-pointer text-[1.2rem] font-light">
+      <DropdownMenuTrigger asChild className="m-0 border-none rounded-none size-full">
+        <Button variant="ghost" className="justify-start gap-2 hover:bg-accent p-3 pl-3 border-none font-light hover:font-bold text-[1.2rem] text-muted-foreground text-sm hover:text-accent-foreground transition-colors hover:cursor-pointer size-full">
           <div className="flex items-center">
-            <Sun className="rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <Moon className="absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            <Sun className="transition-all rotate-0 scale-100 dark:-rotate-90 dark:scale-0" />
+            <Moon className="absolute transition-all rotate-90 scale-0 dark:rotate-0 dark:scale-100" />
           </div>
           <span className={cn(collapsed && "hidden")} >{themeName}</span>
 

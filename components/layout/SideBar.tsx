@@ -93,24 +93,24 @@ function SideBar({ session }: SideBarProps) {
           )}
         </div>
         <div>
-          <div className="flex items-center size-full m-0" onClick={handleClick} >
+          <div className="flex items-center m-0 size-full" onClick={handleClick} >
             <ModeToggle theme={theme} setTheme={setTheme} themeName={themeName} collapsed={collapsed} cn={cn} />
           </div>
           {session?.user.isAdmin && (
             <NavLink href="/users" onClick={handleClick}>
               <Users />
-              <span className={cn(collapsed && "hidden")}>usuarios</span>
+              <span className={cn(collapsed && "hidden")}>Usuarios</span>
             </NavLink>
           )}
           <NavLink href="/account" onClick={handleClick}>
             <UserCogIcon />
-            <span className={cn(collapsed && "hidden")}>cuenta</span>
+            <span className={cn(collapsed && "hidden")}>Cuenta</span>
           </NavLink>
           {session && <LogoutButton collapsed={collapsed} />}
         </div>
       </div>
       <div className={cn("flex flex-col justify-center items-center gap-2 p-4 text-xs transition-all", collapsed && "hidden")}>
-        <p className="text-muted-foreground">Control de Stock - version 0.0.1</p>
+        <p className="text-muted-foreground">Control de Stock - version 1.0.0</p>
         <p className="text-muted-foreground">Desarrollado por:</p>
         <p className="text-muted-foreground">@horagutierrez - @ArturoGabrielRamirez</p>
       </div>

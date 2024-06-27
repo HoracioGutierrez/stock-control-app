@@ -228,7 +228,6 @@ export const orders: any = pgTable(
     userId: text("userId")
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
-    //createdAt: timestamp("createdAt", { mode: "date" }).defaultNow(),
     createdAt: date("createdAt").defaultNow(),
     total: numeric("total").notNull(),
     status: text("status").notNull(),

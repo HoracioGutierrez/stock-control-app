@@ -6,7 +6,6 @@ import { asc, eq } from "drizzle-orm"
 export const getAllCustomers = async (inactive = false): Promise<GeneralResponse> => {
     "use server"
     try {
-        //const customersFromDb = await db.select().from(customers).orderBy(asc(customers.name))
         let customersFromDb: any
         if (inactive) {
             customersFromDb = await db.select().from(customers).orderBy(asc(customers.name))

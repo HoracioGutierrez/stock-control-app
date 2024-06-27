@@ -19,7 +19,6 @@ function OrdersTable({ data }: Props) {
       manualCallback={getAllOrders}
       dateFilter
       actions={(rowData: any) => {
-        console.log(rowData)
         return (
           <>
             <CustomButton variant="ghost" className="p-0 aspect-square" tooltip="Cancelar orden / reembolso" dialogType="cancel-order" data={rowData.id}>

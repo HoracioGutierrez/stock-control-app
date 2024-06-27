@@ -28,7 +28,7 @@ function OrdersDialog({ userId }: Props) {
       title={type ? config[type].title : "Custom Dialog"}
       fullWidth={type ? config[type].fullWidth : false}
     >
-      {type === "cancel-order" && <CancelOrderForm userId={userId}  orderId={id} />}
+      {type === "cancel-order" && <CancelOrderForm userId={userId} orderId={id} />}
     </CustomDialog>
   )
 }

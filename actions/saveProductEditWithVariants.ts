@@ -57,7 +57,7 @@ export const saveProductEditWithVariants = async (barcode: string, data: any, us
         })
 
       } else {
-        
+
         const productVariant = await db.insert(products).values({
           name: variant.name,
           description: variant.description,

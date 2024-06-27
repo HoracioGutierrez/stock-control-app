@@ -146,7 +146,7 @@ export type FormValues =
   EditCustomerInputValues |
   EditProductInputValues |
   EditProviderInputValues
-  
+
 
 export type GeneralResponse = {
   data: User | null | any
@@ -219,6 +219,14 @@ export type NewProductFormProps = {
   userId: string
 }
 
+export type ModeToggleProps = {
+  theme?: string | undefined
+  setTheme: (theme: string) => void
+  themeName?: string,
+  collapsed?: boolean
+  cn?: any
+}
+
 export type CustomLoaderProps = {
   title: string,
 }
@@ -229,7 +237,18 @@ export type SideBarProps = {
 
 export type DeleteUserProps = {
   userId: string
-  type : string
+  type: string
+}
+
+export type CustomDataTableProps = {
+  data: ProductType[] | HistoryType[] | CustomerType[] | ProviderType[] | null,
+  type: "products" | "history" | "customers" | "providers" | "cash-registers" | "orders" | "users"
+  filterColumn?: string
+  filterKey?: string
+  actions?: (rowData: any) => JSX.Element
+  manualFetch?: boolean
+  manualCallback?: any
+  dateFilter?: boolean
 }
 
 export type SchemaFormValues =
@@ -237,4 +256,5 @@ export type SchemaFormValues =
   ProductInputValues |
   ProviderInputValues |
   EditCustomerInputValues |
-  EditProductInputValues
+  EditProductInputValues |
+  EditProviderInputValues 

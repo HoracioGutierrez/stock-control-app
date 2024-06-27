@@ -1,6 +1,5 @@
 "use client"
-import { Moon, Sun } from "lucide-react"
-import { useTheme } from "next-themes"
+import { Cpu, Moon, Sun } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -8,28 +7,32 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { ModeToggleProps } from "@/lib/types"
 
-export function ModeToggle() {
-  const { setTheme } = useTheme()
+export function ModeToggle({ setTheme, themeName, collapsed, cn }: ModeToggleProps) {
+
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="w-[24px]">
-          <Sun className="rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-          <Moon className="absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          <span className="sr-only">Toggle theme</span>
+      <DropdownMenuTrigger asChild className="rounded-none size-full m-0 border-none">
+        <Button variant="ghost" className="size-full border-none p-4 gap-2 pl-4 justify-start hover:bg-accent hover:font-bold text-muted-foreground hover:text-accent-foreground transition-colors hover:cursor-pointer text-[1.2rem] font-light">
+          <div className="flex items-center">
+            <Sun className="rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+            <Moon className="absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          </div>
+          <span className={cn(collapsed && "hidden")} >{themeName}</span>
+
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => setTheme("light")}>
-          Light
+          Claro
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("dark")}>
-          Dark
+          Oscuro
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("system")}>
-          System
+          Sistema
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

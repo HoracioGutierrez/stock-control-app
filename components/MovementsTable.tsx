@@ -1,7 +1,6 @@
 "use client"
 
 import CustomDataTable from "./CustomDataTable"
-import { Button } from "./ui/button"
 
 type MovementsTableProps = {
   data: any
@@ -12,7 +11,7 @@ function MovementsTable({ data }: MovementsTableProps) {
     <CustomDataTable
       data={data}
       type="history"
-      filterColumn="tipo de movimiento"
+      filterColumn="nombre"
       filterKey="actionType"
     />
   )

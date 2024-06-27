@@ -139,7 +139,6 @@ function EditProductVariantsForm({ barcode, userId }: EditProductVariantsFormPro
       })
   }
 
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="gap-8 grid grid-cols-1 lg:grid-cols-2 overflow-auto" id="new-product-form">
       <div className="self-stretch">

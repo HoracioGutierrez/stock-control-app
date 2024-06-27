@@ -8,12 +8,17 @@ import { cn } from "@/lib/utils"
 import { SideBarProps } from "@/lib/types"
 import LogoutButton from "../LogoutButton"
 import { IconDeviceDesktopDollar } from '@tabler/icons-react'
+import { useTheme } from "next-themes"
+import { useEffect, useState } from "react"
 
 
 
 function SideBar({ session }: SideBarProps) {
 
   const { isOpen, setOpen, collapsed, setCollapsed } = useDrawerStore((state: any) => state)
+  const { theme, setTheme } = useTheme()
+  const [themeName, setThemeName] = useState("")
+
 
   const handleClick = () => {
     setOpen(!isOpen)
@@ -22,6 +27,18 @@ function SideBar({ session }: SideBarProps) {
   const handleCollapse = () => {
     setCollapsed(!collapsed)
   }
+
+  useEffect(() => {
+    if (theme === "dark") {
+      setThemeName("Modo Oscuro")
+    } else if (theme === "light") {
+      setThemeName("Modo Claro")
+    } else if (theme === "system") {
+      setThemeName("Colores del Sistema")
+    }
+  }, [theme])
+
+
 
   return (
     <div id="sidebar" className={cn("fixed top-0 -left-full md:static md:flex flex-col justify-between h-full", session && "border-r border-accent bg-primary-foreground w-4/5 z-10 md:w-auto md:bg-primary-foreground md:dark:bg-[rgba(0,0,0,0.5)] transition-all", isOpen && "left-0", collapsed && "!w-fit")}>
@@ -76,9 +93,8 @@ function SideBar({ session }: SideBarProps) {
           )}
         </div>
         <div>
-          <div className="flex items-center gap-2 hover:bg-accent p-2 pl-4 hover:font-bold text-muted-foreground hover:text-accent-foreground transition-colors hover:cursor-pointer" onClick={handleClick}>
-            <ModeToggle />
-            <span className={cn(collapsed && "hidden")}>Modo Oscuro</span>
+          <div className="flex items-center size-full m-0" onClick={handleClick} >
+            <ModeToggle theme={theme} setTheme={setTheme} themeName={themeName} collapsed={collapsed} cn={cn} />
           </div>
           {session?.user.isAdmin && (
             <NavLink href="/users" onClick={handleClick}>

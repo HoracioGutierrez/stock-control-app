@@ -223,6 +223,17 @@ export type SideBarProps = {
   session: Session | null
 }
 
+export type CustomDataTableProps = {
+  data: ProductType[] | HistoryType[] | CustomerType[] | ProviderType[] | null,
+  type: "products" | "history" | "customers" | "providers" | "cash-registers" | "orders"
+  filterColumn?: string
+  filterKey?: string
+  actions?: (rowData: any) => JSX.Element
+  manualFetch?: boolean
+  manualCallback?: any
+  dateFilter?: boolean
+}
+
 export type SchemaFormValues =
   CustomerInputValues |
   ProductInputValues |

@@ -6,7 +6,6 @@ import { revalidatePath } from "next/cache"
 
 export const saveProductEditWithVariants = async (barcode: string, data: any, userId: string): Promise<any> => {
   "use server"
-  console.log(userId)
   try {
 
     const product = await db.select().from(products).where(eq(products.barcode, barcode))
@@ -58,7 +57,7 @@ export const saveProductEditWithVariants = async (barcode: string, data: any, us
         })
 
       } else {
-        
+
         const productVariant = await db.insert(products).values({
           name: variant.name,
           description: variant.description,

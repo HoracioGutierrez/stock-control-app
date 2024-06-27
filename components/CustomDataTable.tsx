@@ -1,11 +1,10 @@
 "use client"
-import { historyColumns, productsColumns, providersColumns, customersColumns, cashRegistersColumns, ordersColumns } from "@/lib/columnDefinitions"
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { SortingState, getSortedRowModel, flexRender, getCoreRowModel, useReactTable, ColumnFiltersState, getFilteredRowModel, getPaginationRowModel, ColumnDef, VisibilityState } from "@tanstack/react-table"
+import { SortingState, getSortedRowModel, flexRender, getCoreRowModel, useReactTable, ColumnFiltersState, getFilteredRowModel, getPaginationRowModel, VisibilityState } from "@tanstack/react-table"
 import { IconCashRegister, IconDeviceDesktopX, IconTruck, IconTruckOff, IconUser, IconUserOff } from '@tabler/icons-react'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { CustomerType, HistoryType, ProductType, ProviderType } from "@/schema"
+import { HistoryType, ProductType } from "@/schema"
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip"
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
 import { TooltipProvider } from "@radix-ui/react-tooltip"
@@ -19,26 +18,8 @@ import { toast } from "./ui/use-toast"
 import { Button } from "./ui/button"
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
-
-type CustomDataTableProps = {
-  data: ProductType[] | HistoryType[] | CustomerType[] | ProviderType[] | null,
-  type: "products" | "history" | "customers" | "providers" | "cash-registers" | "orders"
-  filterColumn?: string
-  filterKey?: string
-  actions?: (rowData: any) => JSX.Element
-  manualFetch?: boolean
-  manualCallback?: any
-  dateFilter?: boolean
-}
-
-const columns: Record<"products" | "history" | "providers" | "customers" | "cash-registers" | "orders", ColumnDef<unknown | any>[]> = {
-  "products": productsColumns,
-  "history": historyColumns,
-  "providers": providersColumns,
-  "customers": customersColumns,
-  "cash-registers": cashRegistersColumns,
-  "orders": ordersColumns
-}
+import { columns, rewriteActionType } from "@/lib/columnHistoryDefinitions"
+import { CustomDataTableProps } from "@/lib/types"
 
 function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualFetch, manualCallback, dateFilter }: CustomDataTableProps) {
 
@@ -73,7 +54,7 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
       pagination: {
         pageSize: 5
       },
-      columnVisibility : {
+      columnVisibility: {
         "active": false,
       },
     },
@@ -100,13 +81,13 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
       manualCallback(true)
         .then((data: any) => {
           setTableData(data.data)
-          setColumnVisibility({...columnVisibility, "active": true})
+          setColumnVisibility({ ...columnVisibility, "active": true })
         })
     } else {
       manualCallback()
         .then((data: any) => {
           setTableData(data.data)
-          setColumnVisibility({...columnVisibility, "active": false})
+          setColumnVisibility({ ...columnVisibility, "active": false })
         })
     }
 
@@ -144,6 +125,8 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
         })
       })
   }
+
+
 
   return (
     <div className="flex flex-col grow">
@@ -301,6 +284,15 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
                         </TableCell>
                       )
                     }
+                    if (cell.column.id === "actionType") {
+                      return (<>
+                        <TableCell key={cell.id} className="flex items-center gap-2">
+                          {rewriteActionType[row.original.actionType]}
+                        </TableCell>
+                      </>
+                      )
+                    }
+
                     return (
                       <TableCell key={cell.id}>
                         <div className={cn(

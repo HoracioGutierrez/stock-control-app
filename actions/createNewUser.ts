@@ -19,7 +19,7 @@ export const createNewUser = async (data: any, userId: string): Promise<GeneralR
 
     if (userFromDB.length === 0) throw new Error("Error al crear el usuario")
 
-    await db.update(history).set({
+    await db.insert(history).values({
       userId: userId,
       actionType: "Nuevo usuario creado",
       products: [],

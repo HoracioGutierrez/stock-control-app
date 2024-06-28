@@ -94,23 +94,23 @@ function NewProductForm({ userId }: NewProductFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-2 gap-8" id="new-product-form">
+    <form onSubmit={handleSubmit(onSubmit)} className="gap-8 grid grid-cols-1 lg:grid-cols-2" id="new-product-form">
       <div className="self-stretch">
         <Card className="bg-primary-foreground h-full">
           <CardHeader>
             <CardTitle>Detalles</CardTitle>
           </CardHeader>
-          <CardContent className="grid gap-4">
-            <div className="grid gap-2">
+          <CardContent className="gap-4 grid">
+            <div className="gap-2 grid">
               <div>
                 <Label htmlFor="name" className="text-muted-foreground">Nombre</Label>
-                {errors.name && <p className="text-red-500 font-bold text-sm">{errors.name.message}</p>}
+                {errors.name && <p className="font-bold text-red-500 text-sm">{errors.name.message}</p>}
               </div>
               <Input type="text" disabled={isLoading} placeholder="Producto" {...register("name", { onChange: handleMainNameChange })} />
             </div>
-            <div className="grid gap-2">
+            <div className="gap-2 grid">
               <div>
-                {errors.description && <p className="text-red-500 font-bold text-sm">{errors.description.message}</p>}
+                {errors.description && <p className="font-bold text-red-500 text-sm">{errors.description.message}</p>}
               </div>
               <Label htmlFor="description" className="text-muted-foreground">Descripción</Label>
               <Textarea disabled={isLoading} placeholder="Descripción" {...register("description")} />
@@ -123,25 +123,25 @@ function NewProductForm({ userId }: NewProductFormProps) {
           <CardHeader>
             <CardTitle>Precio</CardTitle>
           </CardHeader>
-          <CardContent className="grid gap-4">
-            <div className="grid gap-2">
+          <CardContent className="gap-4 grid">
+            <div className="gap-2 grid">
               <div>
                 <Label htmlFor="price" className="text-muted-foreground">Precio</Label>
-                {errors.price && <p className="text-red-500 font-bold text-sm">{errors.price.message}</p>}
+                {errors.price && <p className="font-bold text-red-500 text-sm">{errors.price.message}</p>}
               </div>
               <Input type="number" placeholder="Precio" {...register("price")} disabled={isLoading} />
             </div>
-            <div className="grid gap-2">
+            <div className="gap-2 grid">
               <div>
                 <Label htmlFor="stock" className="text-muted-foreground">Stock</Label>
-                {errors.stock && <p className="text-red-500 font-bold text-sm">{errors.stock.message}</p>}
+                {errors.stock && <p className="font-bold text-red-500 text-sm">{errors.stock.message}</p>}
               </div>
               <Input type="number" placeholder="Stock" {...register("stock")} disabled={isLoading} />
             </div>
-            <div className="grid gap-2">
+            <div className="gap-2 grid">
               <div>
                 <Label htmlFor="barcode" className="text-muted-foreground">Código de barras</Label>
-                {errors.barcode && <p className="text-red-500 font-bold text-sm">{errors.barcode.message}</p>}
+                {errors.barcode && <p className="font-bold text-red-500 text-sm">{errors.barcode.message}</p>}
               </div>
               <Input type="text" placeholder="Código de barras" {...register("barcode")} disabled={isLoading} />
             </div>
@@ -153,7 +153,7 @@ function NewProductForm({ userId }: NewProductFormProps) {
           <CardHeader>
             <CardTitle>Variantes</CardTitle>
           </CardHeader>
-          <CardContent className="grid gap-4">
+          <CardContent className="gap-4 grid">
             {fields.length > 0 && (
               <Table>
                 <TableCaption>

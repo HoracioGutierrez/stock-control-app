@@ -267,6 +267,13 @@
       "when": 1719536394683,
       "tag": "0037_many_magus",
       "breakpoints": true
+    },
+    {
+      "idx": 38,
+      "version": "7",
+      "when": 1719603220986,
+      "tag": "0038_mysterious_oracle",
+      "breakpoints": true
     }
   ]
 }

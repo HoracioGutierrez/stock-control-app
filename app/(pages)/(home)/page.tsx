@@ -6,6 +6,7 @@ import OrderChart from "@/components/home/OrderChart";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { LogOut, ShoppingBasket, ShoppingCart } from "lucide-react";
+import CustomButton from "@/components/layout/CustomButton";
 
 export default async function Home() {
 
@@ -40,21 +41,18 @@ export default async function Home() {
             <CardTitle>Accesos Directos</CardTitle>
           </CardHeader>
           <CardContent className="flex justify-center items-center gap-4 grow">
-            <Button asChild>
-              <Link href="/order">
+            <CustomButton href="/order" tooltip="Ver ordenes">
                 <ShoppingBasket/>
-              </Link>
-            </Button>
-            <Button asChild>
-              <Link href="/providers">
+            </CustomButton>
+
+            <CustomButton href="/providers" tooltip="Ver proveedores">
                 <ShoppingCart/>
-              </Link>
-            </Button>
-            <Button asChild>
-              <Link href="/logout">
+            </CustomButton>
+
+            <CustomButton href="/logout" tooltip="Cerrar sesión">
                 <LogOut/>
-              </Link>
-            </Button>
+            </CustomButton>
+
           </CardContent>
         </Card>
         <div></div>

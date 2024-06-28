@@ -213,7 +213,7 @@ export const providers: any = pgTable(
     phone: text("phone").notNull(),
     email: text("email").notNull(),
     cuitCuil: text("cuitCuil").notNull(),
-    active: boolean("active").notNull(),
+    active: boolean("active").notNull().default(true),
   }
 )
 

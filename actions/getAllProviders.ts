@@ -46,6 +46,7 @@ export const getAllProviders = async (inactive = false): Promise<GeneralResponse
         .leftJoin(subPO, eq(subPO.providerId, providers.id))
         .leftJoin(subPOproducts, eq(subPOproducts.providerId, providers.id))
         .orderBy(providers.name);
+        
     } else {
 
       const subPO = db
@@ -87,12 +88,14 @@ export const getAllProviders = async (inactive = false): Promise<GeneralResponse
         .orderBy(providers.name);
     }
 
+
     return {
       data: providersFromDb,
       error: null,
       message: "Proveedores encontrados"
     }
   } catch (error) {
+
     if (error instanceof Error) {
       return {
         data: null,

@@ -4,6 +4,8 @@ import CustomDataTable from "@/components/CustomDataTable"
 import NewProviderOrderButton from "./NewProviderOrderButton"
 import DeleteProviderButton from "./DeleteProviderButton"
 import EditButton from "../EditButton"
+import CustomButton from "../layout/CustomButton"
+import { Eye } from "lucide-react"
 
 type ProvidersTableProps = {
   data: any
@@ -21,6 +23,9 @@ function ProvidersTable({ data }: ProvidersTableProps) {
       actions={(rowData: any) => {
         return (
           <>
+            <CustomButton variant="ghost" className="p-0 aspect-square" tooltip="Ver detalles del proveedor y ordenes de compra hechas" dialogType="provider-details" data={rowData.id}>
+              <Eye/>
+            </CustomButton>
             <NewProviderOrderButton userId={rowData.id} />
             <DeleteProviderButton active={rowData.active} id={rowData.id} />
             <EditButton id={rowData.id} entity="provider" />

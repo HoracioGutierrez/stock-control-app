@@ -5,6 +5,7 @@ import CreateProviderForm from "./CreateProviderForm"
 import CreateProviderOrderForm from "./CreateProviderOrderForm"
 import EditFormContainer from "../EditFormContainer"
 import DeleteProviderConfirmationForm from "./DeleteProviderConfirmationForm"
+import ProviderDetails from "./ProviderDetails"
 
 type Props = {
   userId: string
@@ -19,6 +20,7 @@ function ProviderDialog({ userId }: Props) {
     "edit-provider": "Editar Proveedor",
     "delete-provider": "Borrar Proveedor",
     "activate-provider": "Activar Proveedor",
+    "provider-details": "Detalles del Proveedor",
   }
 
   const entityProps = {
@@ -37,6 +39,7 @@ function ProviderDialog({ userId }: Props) {
       {type === "edit-provider" && <EditFormContainer {...entityProps} />}
       {type === "delete-provider" && <DeleteProviderConfirmationForm {...entityProps} type={type} />}
       {type === "activate-provider" && <DeleteProviderConfirmationForm {...entityProps} type={type} />}
+      {type === "provider-details" && <ProviderDetails userId={userId} providerId={id} />}
     </CustomDialog>
   )
 }

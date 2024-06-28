@@ -51,13 +51,23 @@ function CustomButton({ children, className, icon, text = "Trigger Dialog", data
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button variant={variant} className={cn("text-muted-foreground flex gap-2", className)} onClick={handleClick} disabled={disabled}>
-              {isLoading && <Loader className="animate-spin" />}
-              {!isLoading && icon ? icon : null}
-              <span>{children ? children : text ? text : "Trigger Dialog"}</span>
+            <Button variant={variant} className={cn("text-muted-foreground flex gap-2", className)} onClick={handleClick} disabled={disabled} asChild={href ? true : false}>
+              {href ? (
+                <Link href={href}>
+                  {isLoading && <Loader className="animate-spin" />}
+                  {!isLoading && icon ? icon : null}
+                  <span>{children ? children : text ? text : "Trigger Dialog"}</span>
+                </Link>
+              ) : (
+                <>
+                  {isLoading && <Loader className="animate-spin" />}
+                  {!isLoading && icon ? icon : null}
+                  <span>{children ? children : text ? text : "Trigger Dialog"}</span>
+                </>
+              )}
             </Button>
           </TooltipTrigger>
-          <TooltipContent className="max-w-xs">
+          <TooltipContent className="max-w-[250px] text-center">
             <p>{tooltip}</p>
           </TooltipContent>
         </Tooltip>
@@ -67,11 +77,21 @@ function CustomButton({ children, className, icon, text = "Trigger Dialog", data
 
   if (href) {
     return (
-      <ButtonEl className={className} onClick={handleClick} disabled={disabled} href={href} isLoading={isLoading} tooltip={tooltip} dialogType={dialogType} data={data} icon={icon} text={text} variant={variant}>
-        <Link href={href}>
-          {children ? children : text ? text : "Trigger Dialog"}
-        </Link>
-      </ButtonEl>
+      <Button variant={variant} className={cn("text-muted-foreground flex gap-2", className)} onClick={handleClick} disabled={disabled} asChild={href ? true : false}>
+        {href ? (
+          <Link href={href}>
+            {isLoading && <Loader className="animate-spin" />}
+            {!isLoading && icon ? icon : null}
+            <span>{children ? children : text ? text : "Trigger Dialog"}</span>
+          </Link>
+        ) : (
+          <>
+            {isLoading && <Loader className="animate-spin" />}
+            {!isLoading && icon ? icon : null}
+            <span>{children ? children : text ? text : "Trigger Dialog"}</span>
+          </>
+        )}
+      </Button>
     )
   }
 

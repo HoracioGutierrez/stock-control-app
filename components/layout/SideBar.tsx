@@ -97,9 +97,6 @@ function SideBar({ session }: SideBarProps) {
           )}
         </div>
         <div>
-          <div className="flex items-center m-0 size-full" onClick={handleClick} >
-            <ModeToggle theme={theme} setTheme={setTheme} themeName={themeName} collapsed={collapsed} cn={cn} />
-          </div>
           {session?.user.isAdmin && (
             <NavLink href="/users" onClick={handleClick}>
               <Users />
@@ -110,6 +107,9 @@ function SideBar({ session }: SideBarProps) {
             <UserCogIcon />
             <span className={cn(collapsed && "hidden")}>Cuenta</span>
           </NavLink>
+          <div className="flex items-center m-0 size-full" onClick={handleClick} >
+            <ModeToggle theme={theme} setTheme={setTheme} themeName={themeName} collapsed={collapsed} cn={cn} />
+          </div>
           {session && <LogoutButton collapsed={collapsed} />}
         </div>
       </div>

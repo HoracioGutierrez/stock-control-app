@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { HistoryType, ProductType, CustomerType, ProviderType, CashRegisterType } from "@/schema"
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown } from "lucide-react"
+import { ArrowUpDown, TrendingDown, TrendingUp } from "lucide-react"
 import { Checkbox } from "@/components/ui/checkbox"
 
 export const productsColumns: ColumnDef<ProductType>[] = [
@@ -324,6 +324,27 @@ export const providerOrdersColumns: ColumnDef<any>[] = [
   }
 ]
 
+export const purchaseOrdersColumns: ColumnDef<any>[] = [
+  {
+    header: "Fecha",
+    accessorKey: "createdAt",
+    cell: ({ row }) => {
+      return row.original.createdAt.toLocaleString("es-ES")
+    },
+  },
+  {
+    header: "Total",
+    accessorKey: "total",
+    cell: ({ row }) => {
+      return "$" + row.original.total
+    },
+  },
+  {
+    header: "Cant. de productos",
+    accessorKey: "itemCount",
+  }
+]
+
 export const ordersColumns: ColumnDef<any>[] = [
   //createdAt
   {
@@ -579,15 +600,15 @@ export const balanceColumns: ColumnDef<any>[] = [
         return "Egreso manual"
       }
 
-      if(row.original.operationType === "refund-customer") {
+      if (row.original.operationType === "refund-customer") {
         return "Reembolso cliente / Compra Cancelada"
       }
 
-      if(row.original.operationType === "open-cash-register") {
+      if (row.original.operationType === "open-cash-register") {
         return "Apertura caja"
       }
 
-      if(row.original.operationType === "close-cash-register") {
+      if (row.original.operationType === "close-cash-register") {
         return "Cierre caja"
       }
 
@@ -596,14 +617,30 @@ export const balanceColumns: ColumnDef<any>[] = [
     }
   },
   {
-    header : "Descripcion",
+    header: "Descripcion",
     accessorKey: "detail",
   },
   {
     header: "Monto de la operación",
     accessorKey: "incomingAmount",
     cell: ({ row }) => {
-      return "$" + row.original.incomingAmount
+
+      const debtTypes = ["save-order-debt", "refund-customer", "save-manual-expense", "save-purchase-order"]
+      if (debtTypes.includes(row.original.operationType)) {
+        return (
+          <>
+            <TrendingDown className="p-0 text-red-400 aspect-square" />
+            <span className="ml-2">$ {row.original.incomingAmount}</span>
+          </>
+        )
+      } else {
+        return (
+          <>
+            <TrendingUp className="p-0 text-green-400 aspect-square" />
+            <span className="ml-2">$ {row.original.incomingAmount}</span>
+          </>
+        )
+      }
     },
   },
   {

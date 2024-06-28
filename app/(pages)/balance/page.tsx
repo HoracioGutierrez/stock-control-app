@@ -1,16 +1,23 @@
 import { getGeneralBalance } from "@/actions/getGeneralBalance"
 import { auth } from "@/auth"
 import PageTitle from "@/components/PageTitle"
+import BalanceDialog from "@/components/balance/BalanceDialog"
 import BalanceTable from "@/components/balance/BalanceTable"
+import CustomButton from "@/components/layout/CustomButton"
+import PageHeader from "@/components/layout/PageHeader"
 
-async function page() {
+async function BalancePage() {
 
   const session = await auth()
   const { data, error } = await getGeneralBalance()
 
   return (
     <>
-      <PageTitle title="Balance" />
+      <PageHeader title="Balance" actions={
+        <CustomButton tooltip="Ingresar dinero manualmente a la caja actual" dialogType="manual-income" className="truncate">
+          Ingreso/Egreso Manual
+        </CustomButton>
+      } />
       {(!data || data.length == 0) && (
         <div className="place-items-center border-slate-400 grid border border-dashed rounded grow">
           <div className="max-w-sm text-center">
@@ -20,7 +27,8 @@ async function page() {
         </div>
       )}
       {data && data.length > 0 && <BalanceTable data={data} />}
+      <BalanceDialog userId={session?.user.id as string} />
     </>
   )
 }
-export default page
+export default BalancePage

@@ -7,6 +7,7 @@ import ConfirmOpenCashRegisterButton from "./ConfirmOpenCashRegisterButton"
 import ConfirmDeleteCashRegisterButton from "./ConfirmDeleteCashRegisterButton"
 import ConfirmReactivateCashRegisterButton from "./ConfirmReactivateCashRegisterButton"
 import EditCashRegisterForm from "./EditCashRegisterForm"
+import ManualIncomeForm from "../ManualIncomeForm"
 
 type Props = {
   userId: string
@@ -23,6 +24,7 @@ const CashRegisterDialog = ({ data, userId }: Props) => {
     "delete-cash-register-delete": "Borrar Caja",
     "activate-cash-register-delete": "Reactivar Caja",
     "edit-cash-register": "Editar Caja",
+    "manual-income": "Ingreso/Egreso Manual"
   }
 
   return (
@@ -33,6 +35,9 @@ const CashRegisterDialog = ({ data, userId }: Props) => {
       {type === "delete-cash-register-delete" && <ConfirmDeleteCashRegisterButton cashRegisters={{ id }} userId={userId} />}
       {type === "activate-cash-register-delete" && <ConfirmReactivateCashRegisterButton cashRegisters={{ id }} userId={userId} />}
       {type === "edit-cash-register" && <EditCashRegisterForm data={data} userId={userId} />}
+      {type === "manual-income" && (
+        <ManualIncomeForm userId={userId} />
+      )}
     </CustomDialog>
   )
 }

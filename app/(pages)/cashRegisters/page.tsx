@@ -5,6 +5,7 @@ import { auth } from "@/auth"
 import CashRegisterTable from "@/components/cashRegister/CashRegisterTable"
 import CashRegisterDialog from "@/components/cashRegister/CashRegisterDialog"
 import { IconDeviceDesktopPlus } from '@tabler/icons-react'
+import CustomButton from "@/components/layout/CustomButton"
 
 async function StockPage() {
 
@@ -14,7 +15,14 @@ async function StockPage() {
   return (
     <>
       <PageHeader title="Cajas" actions={session?.user.isAdmin
-        ? <DialogTriggerButton dialogType="new-cash-register" text="Crear Caja" icon={<IconDeviceDesktopPlus />} />
+        ? (
+          <>
+            <CustomButton tooltip="Ingresar dinero manualmente a la caja actual" dialogType="manual-income" className="truncate">
+              Ingreso/Egreso Manual
+            </CustomButton>
+            <DialogTriggerButton dialogType="new-cash-register" text="Crear Caja" icon={<IconDeviceDesktopPlus />} />
+          </>
+        )
         : null
       } />
       {(!data || data.length == 0) && (

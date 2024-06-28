@@ -1,7 +1,7 @@
 "use server"
 import { GeneralResponse } from "@/lib/types"
-import { db, history, orders, cashRegister, productOrders, products, users, customers } from "@/schema"
-import { eq, sql } from "drizzle-orm"
+import { db, history, orders, cashRegister, productOrders, products, users, customers, generalBalance } from "@/schema"
+import { desc, eq, sql } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 
 export const cancelOrder = async (orderId: string, userId: string): Promise<GeneralResponse> => {
@@ -79,7 +79,37 @@ export const cancelOrder = async (orderId: string, userId: string): Promise<Gene
       })
     }
 
-    await db.update(customers).set({ spentAmount: sql`${customers.spentAmount} - ${orderFromDB[0].total}` }).where(eq(customers.id, orderFromDB[0].customerId))
+    const customerFromDB = await db.update(customers).set({ spentAmount: sql`${customers.spentAmount} - ${orderFromDB[0].total}` }).where(eq(customers.id, orderFromDB[0].customerId)).returning({
+      updatedId: customers.id,
+      name: customers.name,
+      lastName: customers.lastName,
+    })
+
+    const generalBalanceFromDb = await db.select().from(generalBalance).limit(1).orderBy(desc(generalBalance.createdAt))
+
+    //actualizar balance general con el reembolso del cliente descontando el total de la orden al saldo general
+    if (customerFromDB && customerFromDB.length > 0) {
+
+      await db.insert(generalBalance).values({
+        incomingAmount: orderFromDB[0].total,
+        balance: String(Number(generalBalanceFromDb[0].balance) - orderFromDB[0].total),
+        balanceWithDebt: String(Number(generalBalanceFromDb[0].balanceWithDebt) - orderFromDB[0].total),
+        operationType: "refund-customer",
+        detail: "Reembolso de cliente " + customerFromDB[0].name + ", " + customerFromDB[0].lastName + " de la caja " + cashRegisterFromDB[0].label,
+        isDebt: false,
+        userId: userId
+      })
+    } else {
+      await db.insert(generalBalance).values({
+        incomingAmount: orderFromDB[0].total,
+        balance: String(Number(generalBalanceFromDb[0].balance) - orderFromDB[0].total),
+        balanceWithDebt: String(Number(generalBalanceFromDb[0].balanceWithDebt) - orderFromDB[0].total),
+        operationType: "refund-customer",
+        detail: "Reembolso de cliente desconocido de la caja " + cashRegisterFromDB[0].label,
+        isDebt: false,
+        userId: userId
+      })
+    }
 
     await db.insert(history).values({
       userId: userId,

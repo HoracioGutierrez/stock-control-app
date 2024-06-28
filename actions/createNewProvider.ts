@@ -14,6 +14,7 @@ export const createNewProvider = async (data: ProviderType, userId: string): Pro
       phone: data.phone,
       email: data.email,
       cuitCuil: data.cuitCuil,
+      active : true
     }).returning({
       insertedId: providers.id
     })

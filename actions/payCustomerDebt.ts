@@ -1,7 +1,7 @@
 "use server"
 
-import { db, customers, cashRegister, history } from "@/schema"
-import { eq, sql } from "drizzle-orm"
+import { db, customers, cashRegister, history, generalBalance } from "@/schema"
+import { desc, eq, sql } from "drizzle-orm"
 import { GeneralResponse } from "@/lib/types"
 import { entitiesPropsById, entityName } from "@/lib/queryConfig"
 import { revalidatePath } from "next/cache"
@@ -39,6 +39,30 @@ export const payCustomerDebt = async (customerId: string, payAll: boolean, manua
       await db.update(customers).set({
         currentAmount: sql`${customers.currentAmount} + ${manualAmount}`
       }).where(eq(customers.id, customerId))
+    }
+
+    const generalBalanceFromDb = await db.select().from(generalBalance).limit(1).orderBy(desc(generalBalance.createdAt))
+
+    if (payAll) {
+      await db.insert(generalBalance).values({
+        incomingAmount: customer[0].currentAmount,
+        balance: String(Number(generalBalanceFromDb[0].balance) + customer[0].currentAmount),
+        balanceWithDebt: generalBalanceFromDb[0].balanceWithDebt,
+        operationType: "refund-customer",
+        detail: "Saldo completo de deuda de " + customer[0].name + ", " + customer[0].lastName + " de la caja " + cashRegisterFromDB[0].label,
+        isDebt: false,
+        userId: userId
+      })
+    } else {
+      await db.insert(generalBalance).values({
+        incomingAmount: `${manualAmount}`,
+        balance: String(Number(generalBalanceFromDb[0].balance) + customer[0].currentAmount),
+        balanceWithDebt: generalBalanceFromDb[0].balanceWithDebt,
+        operationType: "refund-customer",
+        detail: "Saldo parcial de deuda de " + customer[0].name + ", " + customer[0].lastName + " de la caja " + cashRegisterFromDB[0].label,
+        isDebt: false,
+        userId: userId
+      })
     }
 
     await db.insert(history).values({

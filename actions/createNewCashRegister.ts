@@ -10,6 +10,7 @@ export const createNewCashRegister = async (data: CashRegisterType, userId: stri
       currentAmount: data.currentAmount,
       totalAmount: data.totalAmount,
       userId: userId,
+      active: true,
     }).returning({
       insertedId: cashRegister.id
     })
@@ -33,6 +34,7 @@ export const createNewCashRegister = async (data: CashRegisterType, userId: stri
     }
 
   } catch (error) {
+    console.log(error)
     if (error instanceof Error) {
       return {
         data: null,

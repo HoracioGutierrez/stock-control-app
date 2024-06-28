@@ -14,7 +14,8 @@ export const createNewProduct = async (userId: string, data: ProductType, varian
       barcode: data.barcode,
       stock: data.stock,
       userId: userId,
-      isVariant: false
+      isVariant: false,
+      active: true
     }).returning({
       insertedId: products.id
     })
@@ -30,7 +31,8 @@ export const createNewProduct = async (userId: string, data: ProductType, varian
           stock: variant.stock,
           userId: userId,
           productId: product[0].insertedId,
-          isVariant: true
+          isVariant: true,
+          active: true
         }).returning({
           insertedId: products.id
         })
@@ -68,6 +70,8 @@ export const createNewProduct = async (userId: string, data: ProductType, varian
     }
 
   } catch (error) {
+
+    console.log(error)
     if (error instanceof Error) {
       return {
         data: null,

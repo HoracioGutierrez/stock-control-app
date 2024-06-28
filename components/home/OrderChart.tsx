@@ -16,6 +16,7 @@ function OrderChart({ data }: Props) {
 
   const getDays = (data: any) => {
     const days: string[] = []
+    if(!data) return days
     data.forEach((item: any) => {
       const day = new Date(item.date.split("-").join("/"))
       days.push(daysInWords[day.getDay()])
@@ -28,7 +29,7 @@ function OrderChart({ data }: Props) {
     datasets: [
       {
         label: "Total",
-        data: data.map((item: any) => item.total),
+        data: data?.map((item: any) => item.total) ?? [],
         backgroundColor: 'rgba(54, 162, 235, 0.2)',
       }
     ]

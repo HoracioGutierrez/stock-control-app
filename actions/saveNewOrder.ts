@@ -1,7 +1,7 @@
 "use server"
 import { GeneralResponse } from "@/lib/types"
-import { db, history, products, orders, productOrders, cashRegister as cashRegisterSchema, customers } from "@/schema"
-import { eq, sql } from "drizzle-orm"
+import { db, history, products, orders, productOrders, cashRegister as cashRegisterSchema, customers, generalBalance } from "@/schema"
+import { desc, eq, sql } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 
 export const saveNewOrder = async (userId: string, data: any, cashRegister: any, total: number, clientId: string, paymentMethod: string): Promise<GeneralResponse> => {
@@ -14,21 +14,25 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
       const order = await tx.insert(orders).values({
         userId: userId,
         total: total,
-        status: "pending",
+        status: paymentMethod === "debt" ? "pending" : "confirmed",
         customerId: clientId ? clientId : null,
         ip: data.ip,
         userAgent: data.userAgent,
         cashRegisterId: cashRegister.id,
-        paymentMethod: paymentMethod
+        paymentMethod: paymentMethod,
       }).returning({
         insertedId: orders.id
       })
+
+      console.log("uno")
 
       //Check if order was created
       if (order.length === 0) {
         tx.rollback()
         throw new Error("Error al crear la orden")
       }
+
+      console.log("dos")
 
       //Create Product Orders for each product in the order
       data.forEach(async (product: any) => {
@@ -58,9 +62,11 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
         }
       })
 
+      console.log("tres")
+
 
       //Increase amount of cash register
-      let updatedCashRegister : any;
+      let updatedCashRegister: any;
       if (paymentMethod !== "debt") {
         /* updatedCashRegister = await tx.update(cashRegisterSchema).set({
           currentAmount: sql`${cashRegisterSchema.currentAmount} + ${total}`,
@@ -75,11 +81,17 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
         })
       }
 
+      console.log("cuatro")
+
       //Check if cash register was updated
-      if (updatedCashRegister.length === 0) {
-        tx.rollback()
-        throw new Error("Error al incrementar el monto de la caja")
+      if (paymentMethod === "debt") {
+        if (updatedCashRegister.length === 0) {
+          tx.rollback()
+          throw new Error("Error al incrementar el monto de la caja")
+        }
       }
+
+      console.log("cinco")
 
       //check if clientID exists and update the spentAmount
       if (clientId) {
@@ -100,6 +112,95 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
             updatedId: customers.id
           })
         }
+      }
+
+      console.log("seis")
+
+      const generalBalanceFromDb = await tx.select().from(generalBalance).limit(1).orderBy(desc(generalBalance.createdAt))
+
+      if (paymentMethod === "debt") {
+        await tx.insert(generalBalance).values({
+          incomingAmount: `${total}`,
+          balance: generalBalanceFromDb[0].balance,
+          balanceWithDebt: String(Number(generalBalanceFromDb[0].balanceWithDebt) + total),
+          operationType: "save-order-debt",
+          detail: "Nueva compra de " + total + " con deuda/fiado",
+          isDebt: true,
+          userId: userId
+        })
+      }
+
+      if (paymentMethod === "credit") {
+
+        await tx.insert(generalBalance).values({
+          incomingAmount: `${total}`,
+          balance: generalBalanceFromDb[0].balance,
+          balanceWithDebt: String(Number(generalBalanceFromDb[0].balanceWithDebt) + total),
+          operationType: "save-order-credit",
+          detail: "Nueva compra de " + total + " con crédito",
+          isDebt: true,
+          userId: userId,
+        })
+      }
+
+      if (paymentMethod === "debit") {
+        await tx.insert(generalBalance).values({
+          incomingAmount: `${total}`,
+          balance: generalBalanceFromDb[0].balance,
+          balanceWithDebt: String(Number(generalBalanceFromDb[0].balanceWithDebt) + total),
+          operationType: "save-order-debit",
+          detail: "Nueva compra de " + total + " con débito",
+          isDebt: true,
+          userId: userId
+        })
+      }
+
+      if (paymentMethod === "transfer") {
+        await tx.insert(generalBalance).values({
+          incomingAmount: `${total}`,
+          balance: generalBalanceFromDb[0].balance,
+          balanceWithDebt: String(Number(generalBalanceFromDb[0].balanceWithDebt) + total),
+          operationType: "save-order-transfer",
+          detail: "Nueva compra de " + total + " con transferencia",
+          isDebt: true,
+          userId: userId
+        })
+      }
+
+      if (paymentMethod === "mercadopago") {
+        await tx.insert(generalBalance).values({
+          incomingAmount: `${total}`,
+          balance: generalBalanceFromDb[0].balance,
+          balanceWithDebt: String(Number(generalBalanceFromDb[0].balanceWithDebt) + total),
+          operationType: "save-order-mercadopago",
+          detail: "Nueva compra de " + total + " con mercadopago",
+          isDebt: true,
+          userId: userId
+        })
+      }
+
+      if (paymentMethod === "other") {
+        await tx.insert(generalBalance).values({
+          incomingAmount: `${total}`,
+          balance: generalBalanceFromDb[0].balance,
+          balanceWithDebt: String(Number(generalBalanceFromDb[0].balanceWithDebt) + total),
+          operationType: "save-order-other",
+          detail: "Nueva compra de " + total + " con otro método de pago",
+          isDebt: true,
+          userId: userId
+        })
+      }
+
+      if (paymentMethod === "cash") {
+        await tx.insert(generalBalance).values({
+          incomingAmount: `${total}`,
+          balance: String(Number(generalBalanceFromDb[0].balance) + total),
+          balanceWithDebt: String(Number(generalBalanceFromDb[0].balanceWithDebt) + total),
+          operationType: "save-order-cash",
+          detail: "Nueva compra de $" + total + " con efectivo",
+          isDebt: false,
+          userId: userId
+        })
       }
 
       await tx.insert(history).values({
@@ -124,6 +225,7 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
     return res
 
   } catch (error) {
+    console.log(error)
     if (error instanceof Error) {
       return {
         data: null,

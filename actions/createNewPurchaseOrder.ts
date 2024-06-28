@@ -1,7 +1,7 @@
 "use server"
 import { GeneralResponse } from "@/lib/types"
-import { db, history, purchaseOrders, purchaseOrderProducts, cashRegister, users, products as productsSchema } from "@/schema"
-import { eq, sql } from "drizzle-orm"
+import { db, history, purchaseOrders, purchaseOrderProducts, cashRegister, users, products as productsSchema, generalBalance, providers } from "@/schema"
+import { desc, eq, sql } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 
 export const createNewPurchaseOrder = async (userId: string, products: any[], total: number, providerId: string, incrementStock: boolean): Promise<GeneralResponse> => {
@@ -56,6 +56,19 @@ export const createNewPurchaseOrder = async (userId: string, products: any[], to
           userAgent: null,
         })
       }
+    })
+
+    const generalBalanceFromDb = await db.select().from(generalBalance).limit(1).orderBy(desc(generalBalance.createdAt))
+    const providerFromDB = await db.select().from(providers).where(eq(providers.id, providerId))
+
+    await db.insert(generalBalance).values({
+      incomingAmount: `${total}`,
+      balance: String(Number(generalBalanceFromDb[0].balance) - total),
+      balanceWithDebt: String(Number(generalBalanceFromDb[0].balanceWithDebt) - total),
+      operationType: "save-purchase-order",
+      detail: "Nueva compra de " + total + " con efectivo para proveedor " + providerFromDB[0].name + " de la caja " + cashRegisterFromDB[0].label,
+      isDebt: true,
+      userId: userId
     })
 
     await db.insert(history).values({

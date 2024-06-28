@@ -14,7 +14,7 @@ async function MovementsPage() {
   return (
     <>
       <PageHeader title="Movimientos" />
-      {data.length == 0 && (
+      {(!data || data.length == 0) && (
         <div className="place-items-center border-slate-400 grid border border-dashed rounded grow">
           <div className="max-w-sm text-center">
             <p className="font-bold text-xl">No hay movimientos todavía</p>
@@ -22,7 +22,7 @@ async function MovementsPage() {
           </div>
         </div>
       )}
-      {data.length > 0 && <MovementsTable data={data} />}
+      {data && data.length > 0 && <MovementsTable data={data} />}
     </>
   )
 }

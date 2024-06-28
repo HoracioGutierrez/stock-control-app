@@ -239,6 +239,34 @@
       "when": 1719507759885,
       "tag": "0033_worthless_black_queen",
       "breakpoints": true
+    },
+    {
+      "idx": 34,
+      "version": "7",
+      "when": 1719533353046,
+      "tag": "0034_polite_random",
+      "breakpoints": true
+    },
+    {
+      "idx": 35,
+      "version": "7",
+      "when": 1719536108872,
+      "tag": "0035_luxuriant_mastermind",
+      "breakpoints": true
+    },
+    {
+      "idx": 36,
+      "version": "7",
+      "when": 1719536303773,
+      "tag": "0036_slim_inertia",
+      "breakpoints": true
+    },
+    {
+      "idx": 37,
+      "version": "7",
+      "when": 1719536394683,
+      "tag": "0037_many_magus",
+      "breakpoints": true
     }
   ]
 }

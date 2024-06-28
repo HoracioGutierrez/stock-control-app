@@ -1,0 +1,2 @@
+ALTER TABLE "stock-control-app_generalBalance" ADD COLUMN "balanceWithDebt" numeric NOT NULL;--> statement-breakpoint
+ALTER TABLE "stock-control-app_generalBalance" ADD COLUMN "isDebt" boolean NOT NULL;

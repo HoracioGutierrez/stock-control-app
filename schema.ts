@@ -15,7 +15,7 @@ import { act } from "react"
 import { sql } from "drizzle-orm"
 
 const connectionString = process.env.DATABASE_URL || ""
-const pool = postgres(connectionString, { max: 1 })
+const pool = postgres(connectionString, { max: 1, ssl: { rejectUnauthorized: false } })
 
 export const db = drizzle(pool)
 
@@ -120,8 +120,8 @@ export const customers: any = pgTable(
     createdAt: timestamp("createdAt", { mode: "date" }).defaultNow(),
     updatedAt: timestamp("updatedAt", { mode: "date" }).defaultNow(),
     active: boolean("active").notNull(),
-    currentAmount : numeric("currentAmount").notNull(),
-    spentAmount : numeric("spentAmount").notNull(),
+    currentAmount: numeric("currentAmount").notNull(),
+    spentAmount: numeric("spentAmount").notNull(),
   }
 )
 
@@ -318,6 +318,27 @@ export const purchaseOrderProducts: any = pgTable(
   }
 )
 
+export const generalBalance = pgTable(
+  tablePrefix + "generalBalance",
+  {
+    id: text("id")
+      .notNull()
+      .unique()
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    incomingAmount: numeric("incomingAmount").notNull(),
+    balance: numeric("balance").notNull(),
+    balanceWithDebt : numeric("balanceWithDebt").notNull(),
+    createdAt: timestamp("createdAt", { mode: "date" }).defaultNow(),
+    operationType: text("operationType").notNull(),
+    updatedAt: timestamp("updatedAt", { mode: "date" }).defaultNow(),
+    detail : text("detail").notNull().default(""),
+    isDebt: boolean("isDebt").notNull().default(false),
+  }
+)
 
 export type ProductType = typeof products.$inferInsert
 export type CustomerType = typeof customers.$inferInsert

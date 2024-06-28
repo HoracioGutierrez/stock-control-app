@@ -1,7 +1,7 @@
 "use server"
 import { GeneralResponse } from "@/lib/types"
-import { db, cashRegister, history, cashRegistersOpennings } from "@/schema"
-import { eq, sql } from "drizzle-orm"
+import { db, cashRegister, history, cashRegistersOpennings, generalBalance } from "@/schema"
+import { desc, eq, sql } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 
 export const closeCashRegister = async (cashRegisterId: string, userId: string): Promise<GeneralResponse> => {
@@ -26,6 +26,17 @@ export const closeCashRegister = async (cashRegisterId: string, userId: string):
       currentOpenningId: null
     }).where(eq(cashRegister.id, cashRegisterId))
 
+    const generalBalanceFromDb = await db.select().from(generalBalance).limit(1).orderBy(desc(generalBalance.createdAt))
+
+    await db.insert(generalBalance).values({
+      incomingAmount: generalBalanceFromDb[0].balance,
+      balance: generalBalanceFromDb[0].balance,
+      balanceWithDebt: generalBalanceFromDb[0].balanceWithDebt,
+      operationType: "close-cash-register",
+      detail: "Cerrando caja " + cashRegisterFromDb[0].label,
+      isDebt: false,
+      userId: userId
+    })
 
     //await db.update(history).set({ actionType: "close-cash-register" }).where(eq(history.userId, userId))
     await db.insert(history).values({

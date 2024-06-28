@@ -50,7 +50,11 @@ function NewCashRegisterForm({ userId }: NewCashRegisterFormProps) {
       })
       .catch((error) => {
         if (error instanceof Error) {
-          return setError(error.message)
+          return toast({
+            variant: "destructive",
+            title: "Error al crear la caja",
+            description: error.message
+          })
         }
         setError("Error al crear la caja, intente nuevamente o contacte al desarrollador.")
         toast({
@@ -67,25 +71,25 @@ function NewCashRegisterForm({ userId }: NewCashRegisterFormProps) {
 
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="gap-4 grid">
       <div className="self-stretch">
         <Card className="bg-transparent border-none h-full">
           <CardHeader className="p-0 pb-8">
             {/* <CardTitle>Detalles</CardTitle> */}
             <CardDescription>Estos detalles son obligatorios para que la caja pueda crearse correctamente.</CardDescription>
           </CardHeader>
-          <CardContent className="grid gap-4 p-0">
-            <div className="grid gap-2">
+          <CardContent className="gap-4 grid p-0">
+            <div className="gap-2 grid">
               <Label htmlFor="label">Label</Label>
               <Input type="text" placeholder="Label" {...register("label")} />
               {errors.label && <p className="text-red-500">{errors.label.message}</p>}
             </div>
-            {/* <div className="grid gap-2">
+            {/* <div className="gap-2 grid">
               <Label htmlFor="currentAmount">Monto Actual</Label>
               <Input type="text" placeholder="Monto Actual" {...register("currentAmount")} />
               {errors.currentAmount && <p className="text-red-500">{errors.currentAmount.message}</p>}
             </div>
-            <div className="grid gap-2">
+            <div className="gap-2 grid">
               <Label htmlFor="totalAmount">Monto Total</Label>
               <Input type="text" placeholder="Monto Total" {...register("totalAmount")} />
               {errors.totalAmount && <p className="text-red-500">{errors.totalAmount.message}</p>}

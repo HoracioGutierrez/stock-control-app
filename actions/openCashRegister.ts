@@ -1,7 +1,7 @@
 "use server"
 import { GeneralResponse } from "@/lib/types"
-import { db, cashRegister, history, cashRegistersOpennings } from "@/schema"
-import { eq } from "drizzle-orm"
+import { db, cashRegister, history, cashRegistersOpennings, generalBalance } from "@/schema"
+import { asc, desc, eq, sql } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 
 export const openCashRegister = async (cashRegisterId: string, currentAmount: number, userId: string): Promise<GeneralResponse> => {
@@ -16,13 +16,16 @@ export const openCashRegister = async (cashRegisterId: string, currentAmount: nu
 
     if (hasCashRegister.length > 0) throw new Error("Ya tienes una caja abierta")
 
+    const generalBalanceFromDb = await db.select().from(generalBalance).limit(1).orderBy(desc(generalBalance.createdAt))
+
+    if (generalBalanceFromDb.length === 0) throw new Error("No hay saldo en la base de datos")
 
     const openning = await db.insert(cashRegistersOpennings).values({
       userId: userId,
       openedAt: new Date(),
       closedAt: null,
       cashRegisterId: cashRegisterId,
-      startAmount: currentAmount,
+      startAmount: generalBalanceFromDb[0].balance,
       endAmount: 0
     }).returning({
       insertedId: cashRegistersOpennings.id
@@ -30,11 +33,26 @@ export const openCashRegister = async (cashRegisterId: string, currentAmount: nu
 
     if (openning.length === 0) throw new Error("Error al crear la caja")
 
-    await db.update(cashRegister).set({
+    const cashRegisterUpdated = await db.update(cashRegister).set({
       openedById: userId,
       currentAmount: currentAmount,
       currentOpenningId: openning[0].insertedId
-    }).where(eq(cashRegister.id, cashRegisterId))
+    }).where(eq(cashRegister.id, cashRegisterId)).returning({
+      updatedId: cashRegister.id,
+      label: cashRegister.label
+    })
+
+    if (cashRegisterUpdated.length === 0) throw new Error("Error al actualizar la caja")
+
+    await db.insert(generalBalance).values({
+      incomingAmount : generalBalanceFromDb[0].balance,
+      balance : generalBalanceFromDb[0].balance,
+      balanceWithDebt : generalBalanceFromDb[0].balance,
+      operationType: "open-cash-register",
+      detail: "Abriendo caja " + cashRegisterUpdated[0].label,
+      isDebt: false,
+      userId: userId
+    })
 
     await db.insert(history).values({
       userId: userId,
@@ -53,6 +71,7 @@ export const openCashRegister = async (cashRegisterId: string, currentAmount: nu
       message: "Caja abierta correctamente"
     }
   } catch (error) {
+    console.log(error)
     if (error instanceof Error) {
       return {
         data: null,

@@ -66,7 +66,7 @@ function OpenCashRegisterForm({ userId, data }: OpenCashRegisterFormProps) {
 
   return (
     <div>
-      <p className="text-sm text-muted-foreground mb-6">Selecciona la caja que deseas abrir</p>
+      <p className="mb-6 text-muted-foreground text-sm">Selecciona la caja que deseas abrir</p>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-4">
           <Label htmlFor="label">Label</Label>
@@ -83,12 +83,12 @@ function OpenCashRegisterForm({ userId, data }: OpenCashRegisterFormProps) {
             </SelectContent>
           </Select>
         </div>
-        <div className="flex flex-col gap-4">
+        {/* <div className="flex flex-col gap-4">
           <Label htmlFor="currentAmount">Monto de apertura</Label>
           <Input type="text" placeholder="Monto Actual" {...register("currentAmount")} />
           {errors.currentAmount && <p className="text-red-500">{errors.currentAmount.message}</p>}
-        </div>
-        <Button className="w-full flex gap-2 text-white dark:text-primary-foreground">
+        </div> */}
+        <Button className="flex gap-2 w-full text-white dark:text-primary-foreground">
           {loading ? <Loader className="animate-spin" /> : <ShoppingBasket />}
           Abrir Caja
         </Button>

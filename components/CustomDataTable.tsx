@@ -16,7 +16,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip"
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
 import { TooltipProvider } from "@radix-ui/react-tooltip"
-import { Filter, Package, PackageX } from "lucide-react"
+import { FileX2, Filter, Package, PackageX } from "lucide-react"
 import { getAllOrders } from "@/actions/getAllOrders"
 import { Input } from "@/components/ui/input"
 import { useEffect, useState } from "react"
@@ -379,7 +379,9 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
             ) : (
               <TableRow>
                 <TableCell colSpan={columns[type].length} className="h-24 text-center">
-                  No results.
+                  <div className="flex items-center justify-center gap-2">
+                    <FileX2 /> No hay cliente creados o habilitados, puedes crear uno o activar uno ya existente.
+                  </div>
                 </TableCell>
               </TableRow>
             )}

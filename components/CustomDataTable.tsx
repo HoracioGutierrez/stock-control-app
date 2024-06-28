@@ -26,7 +26,7 @@ import { toast } from "./ui/use-toast"
 import { Button } from "./ui/button"
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
-import { columns, rewriteActionType } from "@/lib/columnHistoryDefinitions"
+import { columns, rewriteActionType, rewriteActionTypeMessage } from "@/lib/columnHistoryDefinitions"
 import { CustomDataTableProps } from "@/lib/types"
 
 /* type CustomDataTableProps = {
@@ -125,6 +125,8 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
   const handlePageChange = (pageIndex: string) => {
     setPageSize(Number(pageIndex))
   }
+
+
 
   const handleDateSelect = (day: any, selectedDay: any) => {
     const sampleDate = new Date(day)
@@ -380,7 +382,7 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
               <TableRow>
                 <TableCell colSpan={columns[type].length} className="h-24 text-center">
                   <div className="flex items-center justify-center gap-2">
-                    <FileX2 /> No hay cliente creados o habilitados, puedes crear uno o activar uno ya existente.
+                    <FileX2 /> {`No hay ${rewriteActionTypeMessage[type]} creados o habilitados, puedes crear uno o activar uno ya existente.`}
                   </div>
                 </TableCell>
               </TableRow>

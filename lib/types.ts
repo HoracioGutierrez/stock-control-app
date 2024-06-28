@@ -180,9 +180,9 @@ export type ProductInputValues = EditProductInputValues & {
   variants?: any[]
 }
 
-export type ProductsTableProps = {
+/* export type ProductsTableProps = {
   data: ProductType[]
-}
+} */
 
 export type PageTitleProps = {
   title: string

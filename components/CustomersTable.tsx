@@ -30,7 +30,6 @@ function CustomersTable({ data, isAdmin }: CustomerTableProps) {
                         <CustomButton tooltip="Editar cliente" data={rowData.id} variant="ghost" className="aspect-square p-0 group" dialogType="edit-customer">
                             <Edit className="p-0 aspect-square group-hover:text-yellow-400" />
                         </CustomButton>
-                        {/*  <EditButton id={rowData.id} entity="customer" /> */}
                     </>
                 )
             }}

@@ -55,3 +55,11 @@ export const rewriteActionType: Record<string, string> = {
   "Nuevo usuario creado": "Nuevo usuario creado",
   "Usuario eliminado": "Usuario eliminado",
 }
+
+export const rewriteActionTypeMessage: Record<string, string> = {
+  "products": "productos",
+  "customers": "clientes",
+  "providers": "proveedores",
+  "cash-registers": "cajas",
+  "orders": "pedidos",
+}

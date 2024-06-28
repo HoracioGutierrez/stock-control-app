@@ -362,31 +362,31 @@ export const ordersColumns: ColumnDef<any>[] = [
     header: "Pago con",
     accessorKey: "paymentMethod",
     cell: ({ row }) => {
-      if(row.original.paymentMethod === "cash") {
+      if (row.original.paymentMethod === "cash") {
         return "Efectivo"
       }
 
-      if(row.original.paymentMethod === "debt") {
+      if (row.original.paymentMethod === "debt") {
         return "Fiado/Deuda"
       }
 
-      if(row.original.paymentMethod === "credit") {
+      if (row.original.paymentMethod === "credit") {
         return "Crédito"
       }
 
-      if(row.original.paymentMethod === "debit") {
+      if (row.original.paymentMethod === "debit") {
         return "Débito"
       }
 
-      if(row.original.paymentMethod === "transfer") {
+      if (row.original.paymentMethod === "transfer") {
         return "Transferencia"
       }
 
-      if(row.original.paymentMethod === "mercadopago") {
+      if (row.original.paymentMethod === "mercadopago") {
         return "Mercado Pago"
       }
 
-      if(row.original.paymentMethod === "other") {
+      if (row.original.paymentMethod === "other") {
         return "Otro"
       }
 
@@ -401,15 +401,15 @@ export const ordersColumns: ColumnDef<any>[] = [
     header: "Cliente",
     accessorKey: "name",
     cell: ({ row }) => {
-      if(row.original.customerName && row.original.customerLastName) {
+      if (row.original.customerName && row.original.customerLastName) {
         return row.original.customerName + ", " + row.original.customerLastName
       }
 
-      if(row.original.customerName && !row.original.customerLastName) {
+      if (row.original.customerName && !row.original.customerLastName) {
         return row.original.customerName
       }
 
-      if(!row.original.customerName && row.original.customerLastName) {
+      if (!row.original.customerName && row.original.customerLastName) {
         return row.original.customerLastName
       }
 
@@ -493,19 +493,19 @@ export const priceColumns: ColumnDef<any>[] = [
 
 export const usersColumns: ColumnDef<any>[] = [
   {
-    header : "Nombre",
+    header: "Nombre",
     accessorKey: "name",
   },
   {
-    header : "Email",
+    header: "Email",
     accessorKey: "email",
   },
   {
-    header : "Nombre de usuario",
+    header: "Nombre de usuario",
     accessorKey: "username",
   },
   {
-    header : "Es admin",
+    header: "Es admin",
     accessorKey: "isAdmin",
   },
   {
@@ -515,5 +515,109 @@ export const usersColumns: ColumnDef<any>[] = [
   {
     header: "Acciones",
     accessorKey: "actions",
+  }
+]
+
+export const balanceColumns: ColumnDef<any>[] = [
+  {
+    header: "Fecha",
+    accessorKey: "createdAt",
+    cell: ({ row }) => {
+      return row.original.createdAt.toLocaleString("es-ES")
+    },
+  },
+  {
+    header: "Tipo de operación",
+    accessorKey: "operationType",
+    cell: ({ row }) => {
+
+      if (row.original.operationType === "pay-customer-debt-all") {
+        return "Saldo deuda total"
+      }
+
+      if (row.original.operationType === "pay-customer-debt-manual") {
+        return "Saldo deuda manual"
+      }
+
+      if (row.original.operationType === "save-order-debt") {
+        return "Nueva compra deuda/fiado"
+      }
+
+      if (row.original.operationType === "save-order-cash") {
+        return "Nueva compra efectivo"
+      }
+
+      if (row.original.operationType === "save-order-credit") {
+        return "Nueva compra crédito"
+      }
+
+      if (row.original.operationType === "save-order-debit") {
+        return "Nueva compra débito"
+      }
+
+      if (row.original.operationType === "save-order-transfer") {
+        return "Nueva compra transferencia"
+      }
+
+      if (row.original.operationType === "save-order-mercadopago") {
+        return "Nueva compra mercadopago"
+      }
+
+      if (row.original.operationType === "save-order-other") {
+        return "Nueva compra otro"
+      }
+
+      if (row.original.operationType === "save-purchase-order") {
+        return "Nueva orden de compra a proveedor"
+      }
+
+      if (row.original.operationType === "save-manual-income") {
+        return "Ingreso manual"
+      }
+
+      if (row.original.operationType === "save-manual-expense") {
+        return "Egreso manual"
+      }
+
+      if(row.original.operationType === "refund-customer") {
+        return "Reembolso cliente / Compra Cancelada"
+      }
+
+      if(row.original.operationType === "open-cash-register") {
+        return "Apertura caja"
+      }
+
+      if(row.original.operationType === "close-cash-register") {
+        return "Cierre caja"
+      }
+
+      return row.original.operationType
+
+    }
+  },
+  {
+    header : "Descripcion",
+    accessorKey: "detail",
+  },
+  {
+    header: "Monto de la operación",
+    accessorKey: "incomingAmount",
+    cell: ({ row }) => {
+      return "$" + row.original.incomingAmount
+    },
+  },
+  {
+    header: "Balance Efectivo",
+    accessorKey: "balance",
+    cell: ({ row }) => {
+      return "$" + row.original.balance
+    },
+  },
+  {
+    header: "Balance Total",
+    accessorKey: "balanceWithDebt",
+    cell: ({ row }) => {
+      return "$" + row.original.balanceWithDebt
+    },
   }
 ]

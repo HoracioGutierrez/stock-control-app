@@ -1,14 +1,15 @@
 import { ColumnDef } from "@tanstack/react-table"
-import { cashRegistersColumns, customersColumns, historyColumns, ordersColumns, productsColumns, providersColumns, usersColumns } from "./columnDefinitions"
+import { balanceColumns, cashRegistersColumns, customersColumns, historyColumns, ordersColumns, productsColumns, providersColumns, usersColumns } from "./columnDefinitions"
 
-export const columns: Record<"products" | "history" | "providers" | "customers" | "cash-registers" | "orders" | "users", ColumnDef<unknown | any>[]> = {
+export const columns: Record<"products" | "history" | "providers" | "customers" | "cash-registers" | "orders" | "users" | "balance", ColumnDef<unknown | any>[]> = {
   "products": productsColumns,
   "history": historyColumns,
   "providers": providersColumns,
   "customers": customersColumns,
   "cash-registers": cashRegistersColumns,
   "orders": ordersColumns,
-  "users": usersColumns
+  "users": usersColumns,
+  "balance": balanceColumns
 }
 
 export const rewriteActionType: Record<string, string> = {

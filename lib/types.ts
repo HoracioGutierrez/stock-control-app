@@ -242,13 +242,14 @@ export type DeleteUserProps = {
 
 export type CustomDataTableProps = {
   data: ProductType[] | HistoryType[] | CustomerType[] | ProviderType[] | null,
-  type: "products" | "history" | "customers" | "providers" | "cash-registers" | "orders" | "users"
+  type: "products" | "history" | "customers" | "providers" | "cash-registers" | "orders" | "users" | "balance"
   filterColumn?: string
   filterKey?: string
   actions?: (rowData: any) => JSX.Element
   manualFetch?: boolean
   manualCallback?: any
   dateFilter?: boolean
+  pageSize?: number
 }
 
 export type SchemaFormValues =

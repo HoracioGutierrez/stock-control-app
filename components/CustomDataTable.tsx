@@ -29,33 +29,11 @@ import { cn } from "@/lib/utils"
 import { columns, rewriteActionType } from "@/lib/columnHistoryDefinitions"
 import { CustomDataTableProps } from "@/lib/types"
 
-/* type CustomDataTableProps = {
-  data: ProductType[] | HistoryType[] | CustomerType[] | ProviderType[] | UserType[] | null,
-  type: "products" | "history" | "customers" | "providers" | "cash-registers" | "orders" | "users"
-  filterColumn?: string
-  filterKey?: string
-  actions?: (rowData: any) => JSX.Element
-  manualFetch?: boolean
-  manualCallback?: any
-  dateFilter?: boolean
-} */
-
-/* const columns: Record<"products" | "history" | "providers" | "customers" | "cash-registers" | "orders" | "users", ColumnDef<unknown | any>[]> = {
-  "products": productsColumns,
-  "history": historyColumns,
-  "providers": providersColumns,
-  "customers": customersColumns,
-  "cash-registers": cashRegistersColumns,
-  "orders": ordersColumns,
-  "users": usersColumns
-} */
-
-
-function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualFetch, manualCallback, dateFilter }: CustomDataTableProps) {
+function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualFetch, manualCallback, dateFilter , pageSize:size = 5 }: CustomDataTableProps) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [tableData, setTableData] = useState<ProductType | HistoryType[]>(data)
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-  const [pageSize, setPageSize] = useState<number>(5)
+  const [pageSize, setPageSize] = useState<number>(size)
   const [pageIndex, setPageIndex] = useState<number>(0)
   const [activeState, setActiveState] = useState<boolean>(false)
   const [selectedDay, setSelectedDay] = useState<Date | undefined>(undefined)

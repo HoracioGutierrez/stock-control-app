@@ -64,18 +64,19 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
 
       console.log("tres")
 
-
       //Increase amount of cash register
       let updatedCashRegister: any;
-      if (paymentMethod !== "debt") {
-        /* updatedCashRegister = await tx.update(cashRegisterSchema).set({
+      if (paymentMethod === "cash") {
+        updatedCashRegister = await tx.update(cashRegisterSchema).set({
           currentAmount: sql`${cashRegisterSchema.currentAmount} + ${total}`,
+          totalAmount: sql`${cashRegisterSchema.totalAmount} + ${total}`,
         }).where(eq(cashRegisterSchema.openedById, userId)).returning({
           updatedId: cashRegisterSchema.id
-        }) */
+        })
       } else {
         updatedCashRegister = await tx.update(cashRegisterSchema).set({
-          currentAmount: sql`${cashRegisterSchema.currentAmount} - ${total}`,
+          //currentAmount: sql`${cashRegisterSchema.currentAmount} - ${total}`,
+          totalAmount: sql`${cashRegisterSchema.totalAmount} + ${total}`,
         }).where(eq(cashRegisterSchema.openedById, userId)).returning({
           updatedId: cashRegisterSchema.id
         })
@@ -90,8 +91,6 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
           throw new Error("Error al incrementar el monto de la caja")
         }
       }
-
-      console.log("cinco")
 
       //check if clientID exists and update the spentAmount
       if (clientId) {

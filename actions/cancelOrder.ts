@@ -61,10 +61,15 @@ export const cancelOrder = async (orderId: string, userId: string): Promise<Gene
     }
 
     if (cashRegisterFromDB.length > 0) {
-      if (orderFromDB[0].paymentMethod !== "debt") {
-        await db.update(cashRegister).set({ currentAmount: sql`${cashRegister.currentAmount} - ${orderFromDB[0].total}` }).where(eq(cashRegister.id, cashRegisterFromDB[0].id))
+      if (orderFromDB[0].paymentMethod === "cash") {
+        await db.update(cashRegister).set({
+          currentAmount: sql`${cashRegister.currentAmount} - ${orderFromDB[0].total}`,
+          totalAmount: sql`${cashRegister.totalAmount} - ${orderFromDB[0].total}`,
+        }).where(eq(cashRegister.id, cashRegisterFromDB[0].id))
       } else {
-        /* await db.update(cashRegister).set({ currentAmount: sql`${cashRegister.currentAmount} + ${orderFromDB[0].total}` }).where(eq(cashRegister.id, cashRegisterFromDB[0].id)) */
+        await db.update(cashRegister).set({
+          totalAmount: sql`${cashRegister.totalAmount} - ${orderFromDB[0].total}`,
+        }).where(eq(cashRegister.id, cashRegisterFromDB[0].id))
       }
 
       //Registrar el reembolso en el historial

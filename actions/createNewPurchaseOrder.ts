@@ -16,13 +16,19 @@ export const createNewPurchaseOrder = async (userId: string, products: any[], to
 
     if (userFromDB[0].isAdmin === false) {
       if (cashRegisterFromDB.length === 0) throw new Error("El usuario no tiene una caja abierta")
+
+      await db.update(cashRegister).set({
+        currentAmount: sql`${cashRegister.currentAmount} - ${total}`,
+        totalAmount: sql`${cashRegister.totalAmount} -  ${total}`,
+      }).where(eq(cashRegister.openedById, userId))
     }
+
 
     const purchaseOrder = await db.insert(purchaseOrders).values({
       userId: userId,
       total: total,
       status: "pending",
-      cashRegisterId: cashRegisterFromDB[0].id,
+      cashRegisterId: cashRegisterFromDB ? cashRegisterFromDB[0].id : null,
       providerId: providerId,
     }).returning({
       insertedId: purchaseOrders.id
@@ -66,7 +72,7 @@ export const createNewPurchaseOrder = async (userId: string, products: any[], to
       balance: String(Number(generalBalanceFromDb[0].balance) - total),
       balanceWithDebt: String(Number(generalBalanceFromDb[0].balanceWithDebt) - total),
       operationType: "save-purchase-order",
-      detail: "Nueva compra de " + total + " con efectivo para proveedor " + providerFromDB[0].name + " de la caja " + cashRegisterFromDB[0].label,
+      detail: "Nueva compra de " + total + " con efectivo para proveedor " + providerFromDB[0].name + " de la caja " + cashRegisterFromDB ? cashRegisterFromDB[0].label : "Sin caja abierta",
       isDebt: true,
       userId: userId
     })

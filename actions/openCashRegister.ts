@@ -47,7 +47,7 @@ export const openCashRegister = async (cashRegisterId: string, currentAmount: nu
     await db.insert(generalBalance).values({
       incomingAmount : generalBalanceFromDb[0].balance,
       balance : generalBalanceFromDb[0].balance,
-      balanceWithDebt : generalBalanceFromDb[0].balance,
+      balanceWithDebt : generalBalanceFromDb[0].balanceWithDebt,
       operationType: "open-cash-register",
       detail: "Abriendo caja " + cashRegisterUpdated[0].label,
       isDebt: false,

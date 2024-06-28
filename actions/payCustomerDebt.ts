@@ -23,18 +23,21 @@ export const payCustomerDebt = async (customerId: string, payAll: boolean, manua
 
       const negativeToPositive = customer[0].currentAmount * -1
 
-      /* await db.update(cashRegister).set({
-        currentAmount: sql`${cashRegister.currentAmount} + ${negativeToPositive}`
-      }) */
+      await db.update(cashRegister).set({
+        currentAmount: sql`${cashRegister.currentAmount} + ${negativeToPositive}`,
+        totalAmount: sql`${cashRegister.totalAmount} + ${negativeToPositive}`,
+      })
 
       await db.update(customers).set({
         currentAmount: 0,
       }).where(eq(customers.id, customerId))
+
     } else {
 
-      /* await db.update(cashRegister).set({
-        currentAmount: sql`${cashRegister.currentAmount} + ${manualAmount}`
-      }) */
+      await db.update(cashRegister).set({
+        currentAmount: sql`${cashRegister.currentAmount} + ${manualAmount}`,
+        totalAmount: sql`${cashRegister.totalAmount} + ${manualAmount}`,
+      })
 
       await db.update(customers).set({
         currentAmount: sql`${customers.currentAmount} + ${manualAmount}`
@@ -44,11 +47,13 @@ export const payCustomerDebt = async (customerId: string, payAll: boolean, manua
     const generalBalanceFromDb = await db.select().from(generalBalance).limit(1).orderBy(desc(generalBalance.createdAt))
 
     if (payAll) {
+      const negativeToPositive = customer[0].currentAmount * -1
+
       await db.insert(generalBalance).values({
-        incomingAmount: customer[0].currentAmount,
-        balance: String(Number(generalBalanceFromDb[0].balance) + customer[0].currentAmount),
+        incomingAmount: `${negativeToPositive}`,
+        balance: String(Number(generalBalanceFromDb[0].balance) + negativeToPositive),
         balanceWithDebt: generalBalanceFromDb[0].balanceWithDebt,
-        operationType: "refund-customer",
+        operationType: "pay-customer-debt-all",
         detail: "Saldo completo de deuda de " + customer[0].name + ", " + customer[0].lastName + " de la caja " + cashRegisterFromDB[0].label,
         isDebt: false,
         userId: userId
@@ -56,9 +61,9 @@ export const payCustomerDebt = async (customerId: string, payAll: boolean, manua
     } else {
       await db.insert(generalBalance).values({
         incomingAmount: `${manualAmount}`,
-        balance: String(Number(generalBalanceFromDb[0].balance) + customer[0].currentAmount),
+        balance: String(Number(generalBalanceFromDb[0].balance) + manualAmount),
         balanceWithDebt: generalBalanceFromDb[0].balanceWithDebt,
-        operationType: "refund-customer",
+        operationType: "pay-customer-debt-manual",
         detail: "Saldo parcial de deuda de " + customer[0].name + ", " + customer[0].lastName + " de la caja " + cashRegisterFromDB[0].label,
         isDebt: false,
         userId: userId
@@ -86,6 +91,7 @@ export const payCustomerDebt = async (customerId: string, payAll: boolean, manua
 
 
   } catch (e) {
+    console.log(e)
     return {
       data: null,
       error: "Error al pagar la deuda",

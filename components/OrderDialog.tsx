@@ -9,6 +9,7 @@ import ConfirmSaveOrderButton from "./order/ConfirmSaveOrderButton"
 import ManualScan from "./order/ManualScan"
 import AddCustomerForm from "./order/AddCustomerForm"
 import PayWithForm from "./order/PayWithForm"
+import ManualIncomeForm from "./ManualIncomeForm"
 
 type Props = {
   userId: string
@@ -27,7 +28,8 @@ const OrderDialog = ({ userId, data, cashRegisters }: Props) => {
     "save-order": "Guardar Orden",
     "manual-scan": "Escaneo Manual",
     "add-customer": "Agregar Cliente",
-    "pay-with": "Pagar con"
+    "pay-with": "Pagar con",
+    "manual-income": "Ingreso/Egreso Manual"
   }
 
   useEffect(() => {
@@ -53,11 +55,12 @@ const OrderDialog = ({ userId, data, cashRegisters }: Props) => {
       {type === "add-customer" && (
         <AddCustomerForm userId={userId} />
       )}
-      {
-        type === "pay-with" && (
-          <PayWithForm />
-        )
-      }
+      {type === "pay-with" && (
+        <PayWithForm />
+      )}
+      {type === "manual-income" && (
+        <ManualIncomeForm userId={userId} />
+      )}
     </CustomDialog>
   )
 }

@@ -82,6 +82,10 @@ function SideBar({ session }: SideBarProps) {
             <LineChart />
             <span className={cn(collapsed && "hidden")}>Ventas</span>
           </NavLink>
+          <NavLink href="/sales" onClick={handleClick}>
+            <LineChart />
+            <span className={cn(collapsed && "hidden")}>Ventas</span>
+          </NavLink>
           {session?.user.isAdmin && (
             <>
               <NavLink href="/movements" onClick={handleClick}>

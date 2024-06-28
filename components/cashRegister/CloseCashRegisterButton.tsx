@@ -2,6 +2,7 @@
 import { useDialogStore } from "@/stores/generalDialog"
 import { Button } from "../ui/button"
 import { X } from "lucide-react"
+import CustomButton from "../layout/CustomButton"
 
 type CloseCashRegisterButtonProps = {
 }
@@ -15,10 +16,9 @@ const CloseCashRegisterButton = ({ }: CloseCashRegisterButtonProps) => {
   }
 
   return (
-    <Button onClick={handleClick} className="flex gap-2 col-span-2 lg:col-span-1 text-white dark:text-primary-foreground">
-      <X/>
+    <CustomButton onClick={handleClick} icon={<X/>} tooltip="Cerrar la caja actual y dejar de poder realizar nuevas compras">
       Cerrar Caja
-    </Button>
+    </CustomButton>
   )
 }
 export default CloseCashRegisterButton

@@ -13,6 +13,7 @@ import CancelOrderButton from "./CancelOrderButton"
 import OrderButton from "./OrderButton"
 import { BarcodeScanner, DetectedBarcode } from 'react-barcode-scanner'
 import "react-barcode-scanner/polyfill"
+import CustomButton from "../layout/CustomButton"
 
 type OrderScannerProps = {
   data: any
@@ -219,16 +220,19 @@ function OrderScanner({ data }: OrderScannerProps) {
         </TableBody>
       </Table>
 
-      <div className="justify-center gap-4 grid grid-cols-2 lg:grid-cols-5">
-        <Button onClick={handlePayWith} disabled={products.length === 0}>
-          Paga con
-        </Button>
-        <Button onClick={handleAddCustomer} disabled={products.length === 0}>
+      <div className="justify-center gap-4 grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6">
+        <CustomButton onClick={handlePayWith} disabled={products.length === 0} tooltip="Calcula el vuelto de la orden ingresando el monto con el cual desea pagar">
+          Calcular Vuelto
+        </CustomButton>
+        <CustomButton onClick={handleAddCustomer} disabled={products.length === 0} tooltip="Agrega un cliente existente o crea uno nuevo para agregar a la orden">
           Agregar Cliente
-        </Button>
-        <OrderButton />
-        <CancelOrderButton />
+        </CustomButton>
+        <CustomButton tooltip="Ingresar dinero manualmente a la caja actual" dialogType="manual-income" className="truncate">
+          Ingreso/Egreso Manual
+        </CustomButton>
         <CloseCashRegisterButton />
+        <CancelOrderButton />
+        <OrderButton />
       </div>
       {camScan && (
         <>

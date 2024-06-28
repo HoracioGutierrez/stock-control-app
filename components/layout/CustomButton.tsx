@@ -57,7 +57,7 @@ function CustomButton({ children, className, icon, text = "Trigger Dialog", data
               <span>{children ? children : text ? text : "Trigger Dialog"}</span>
             </Button>
           </TooltipTrigger>
-          <TooltipContent>
+          <TooltipContent className="max-w-xs">
             <p>{tooltip}</p>
           </TooltipContent>
         </Tooltip>

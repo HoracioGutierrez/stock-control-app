@@ -28,7 +28,6 @@ export const getAllPurchaseOrders = async (): Promise<GeneralResponse> => {
       message: "Ordenes de compra encontradas"
     }
   } catch (error) {
-    console.log(error)
     if (error instanceof Error) {
       return {
         data: null,

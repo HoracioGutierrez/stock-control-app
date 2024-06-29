@@ -70,8 +70,6 @@ export const createNewProduct = async (userId: string, data: ProductType, varian
     }
 
   } catch (error) {
-
-    console.log(error)
     if (error instanceof Error) {
       return {
         data: null,

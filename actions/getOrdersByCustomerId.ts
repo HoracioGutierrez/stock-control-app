@@ -18,8 +18,6 @@ export const getOrdersByCustomerId = async (customerId: string): Promise<General
       itemCount: sql<number>`sum(${productOrders.quantity})`.as("itemCount"),
     }).from(orders).where(eq(orders.customerId, customerId)).orderBy(orders.createdAt).innerJoin(productOrders, eq(productOrders.orderId, orders.id)).groupBy(orders.id)
 
-    console.log(ordersFromDB)
-
     if (ordersFromDB.length === 0) throw new Error("No se encontraron compras realizadas por este cliente")
 
     return {

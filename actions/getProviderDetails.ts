@@ -8,24 +8,21 @@ export const getProviderDetails = async (providerId: string): Promise<GeneralRes
   "use server"
   try {
     const provider = await db.select().from(providers).where(eq(providers.id, providerId))
-    console.log("first")
     if (provider.length === 0) throw new Error("El proveedor no existe")
-    console.log("second")
 
     const purchaseOrdersFromDB = await db
       .select({
         id: purchaseOrders.id,
         status: purchaseOrders.status,
         createdAt: purchaseOrders.createdAt,
-        itemCount : sql<number>`sum(${purchaseOrderProducts.quantity})`.as("itemCount"),
-        total : purchaseOrders.total
+        itemCount: sql<number>`sum(${purchaseOrderProducts.quantity})`.as("itemCount"),
+        total: purchaseOrders.total
       })
       .from(purchaseOrders)
       .where(eq(purchaseOrders.providerId, providerId))
       .innerJoin(purchaseOrderProducts, eq(purchaseOrders.id, purchaseOrderProducts.purchaseOrderId))
       .groupBy(purchaseOrders.id)
 
-    console.log("third")
 
     if (purchaseOrdersFromDB.length === 0) {
 
@@ -64,7 +61,6 @@ export const getProviderDetails = async (providerId: string): Promise<GeneralRes
 
 
   } catch (error) {
-    console.log(error)
     if (error instanceof Error) {
       return {
         data: null,

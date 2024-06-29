@@ -3,6 +3,7 @@ import { HistoryType, ProductType, CustomerType, ProviderType, CashRegisterType 
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown, TrendingDown, TrendingUp } from "lucide-react"
 import { Checkbox } from "@/components/ui/checkbox"
+import { IconTruckLoading } from "@tabler/icons-react"
 
 export const productsColumns: ColumnDef<ProductType>[] = [
   {
@@ -335,13 +336,18 @@ export const purchaseOrdersColumns: ColumnDef<any>[] = [
   {
     header: "Total",
     accessorKey: "total",
-    cell: ({ row }) => {
-      return "$" + row.original.total
-    },
   },
   {
     header: "Cant. de productos",
     accessorKey: "itemCount",
+    cell: ({ row }) => {
+      return `${row.original.itemCount} ${row.original.itemCount > 1 ? "unidades" : "unidad"}`
+    },
+  },
+  {
+    header: "Acciones",
+    accessorKey: "actions",
+    size: 1
   }
 ]
 
@@ -708,5 +714,94 @@ export const customerOrdersColumns: ColumnDef<any>[] = [
 
       return "Sin pago"
     }
+  },
+  {
+    header: "Cant. de productos",
+    accessorKey: "itemCount",
+  },
+  {
+    header: "Acciones",
+    accessorKey: "actions",
+    size: 1
+  },
+]
+
+export const orderDetailsColumns: ColumnDef<any>[] = [
+  {
+    header: "Nombre",
+    accessorKey: "name",
+  },
+  {
+    header: "Precio",
+    accessorKey: "price",
+  },
+  {
+    header: "Cantidad",
+    accessorKey: "quantity",
+  },
+  {
+    header: "Total",
+    accessorKey: "total",
+  }
+]
+
+export const purchaseOrderProductsColumns: ColumnDef<any>[] = [
+  {
+    header: "Nombre",
+    accessorKey: "name",
+  },
+  {
+    header: "Precio",
+    accessorKey: "price",
+  },
+  {
+    header: "Cantidad",
+    accessorKey: "quantity",
+  },
+  {
+    header: "Total",
+    accessorKey: "total",
+  }
+]
+
+export const purchaseOrdersProviderColumns: ColumnDef<any>[] = [
+  {
+    header: "Fecha",
+    accessorKey: "createdAt",
+    cell: ({ row }) => {
+      return (
+        <div className="flex items-center gap-2">
+          <IconTruckLoading/>
+          {row.original.createdAt.toLocaleString("es-ES")}
+        </div>
+      )
+    },
+  },
+  {
+    header: "Proveedor",
+    accessorKey: "providerName",
+    cell: ({ row }) => {
+      return row.original.providerName + ", " + row.original.providerLastName
+    },
+  },
+  {
+    header: "Compañía",
+    accessorKey: "providersCompanyName",
+    cell: ({ row }) => {
+      return row.original.providersCompanyName ? row.original.providersCompanyName : "Sin compañía"
+    },
+  },
+  {
+    header: "Total",
+    accessorKey: "total",
+  },
+  {
+    header: "Cant. de productos",
+    accessorKey: "itemCount",
+  },
+  {
+    header: "Acciones",
+    accessorKey: "actions",
+    size: 1
   }
 ]

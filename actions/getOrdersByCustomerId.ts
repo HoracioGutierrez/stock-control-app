@@ -1,14 +1,22 @@
 "use server"
 
 import { GeneralResponse } from "@/lib/types"
-import { db, orders, purchaseOrders, purchaseOrderProducts } from "@/schema"
+import { db, orders, purchaseOrders, purchaseOrderProducts, productOrders } from "@/schema"
 import { eq, sql } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 
 export const getOrdersByCustomerId = async (customerId: string): Promise<GeneralResponse> => {
   "use server"
   try {
-    const ordersFromDB = await db.select().from(orders).where(eq(orders.customerId, customerId)).orderBy(orders.createdAt)
+    
+    const ordersFromDB = await db.select({
+      id: orders.id,
+      total : orders.total,
+      status: orders.status,
+      paymentMethod: orders.paymentMethod,
+      createdAt: orders.createdAt,
+      itemCount: sql<number>`sum(${productOrders.quantity})`.as("itemCount"),
+    }).from(orders).where(eq(orders.customerId, customerId)).orderBy(orders.createdAt).innerJoin(productOrders, eq(productOrders.orderId, orders.id)).groupBy(orders.id)
 
     if (ordersFromDB.length === 0) throw new Error("No se encontraron compras realizadas por este cliente")
 

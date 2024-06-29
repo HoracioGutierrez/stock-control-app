@@ -9,7 +9,7 @@ type MovementsTableProps = {
 function MovementsTable({ data }: MovementsTableProps) {
   return (
     <CustomDataTable
-      data={data}
+      data={data ? data : []}
       type="history"
       filterColumn="nombre"
       filterKey="actionType"

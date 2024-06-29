@@ -12,7 +12,7 @@ import { PackageOpen } from "lucide-react"
 function LoginPage() {
   return (
     <Content className="place-items-center place-content-center grid">
-      <Card className="mx-auto max-w-sm">
+      <Card className="mx-auto max-w-sm" id="login-form">
         <CardHeader>
           <CardTitle className="flex flex-col items-center text-2xl">
             <PackageOpen width={40} height={40} />

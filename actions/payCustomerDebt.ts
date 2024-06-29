@@ -91,7 +91,6 @@ export const payCustomerDebt = async (customerId: string, payAll: boolean, manua
 
 
   } catch (e) {
-    console.log(e)
     return {
       data: null,
       error: "Error al pagar la deuda",

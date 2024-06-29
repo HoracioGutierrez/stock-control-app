@@ -66,7 +66,6 @@ export const openCashRegister = async (cashRegisterId: string, currentAmount: nu
       message: "Caja abierta correctamente"
     }
   } catch (error) {
-    console.log(error)
     if (error instanceof Error) {
       return {
         data: null,

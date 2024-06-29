@@ -7,7 +7,7 @@ import NavLink from "../NavLink"
 import { cn } from "@/lib/utils"
 import { SideBarProps } from "@/lib/types"
 import LogoutButton from "../LogoutButton"
-import { IconChartHistogram, IconDeviceDesktopDollar } from '@tabler/icons-react'
+import { IconChartHistogram, IconDeviceDesktopDollar, IconTruckLoading } from '@tabler/icons-react'
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 
@@ -76,6 +76,10 @@ function SideBar({ session }: SideBarProps) {
           <NavLink href="/providers" onClick={handleClick}>
             <Truck />
             <span className={cn(collapsed && "hidden")}>Proveedores</span>
+          </NavLink>
+          <NavLink href="/purchase-orders" onClick={handleClick}>
+            <IconTruckLoading />
+            <span className={cn(collapsed && "hidden")}>Ordenes de Compra</span>
           </NavLink>
           <div className="bg-accent w-full h-[1px]" />
           <NavLink href="/balance" onClick={handleClick}>

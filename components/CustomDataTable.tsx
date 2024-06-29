@@ -16,7 +16,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip"
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
 import { TooltipProvider } from "@radix-ui/react-tooltip"
-import { FileX2, Filter, Package, PackageX } from "lucide-react"
+import { FileX2, Filter, MoreHorizontal, Package, PackageX } from "lucide-react"
 import { getAllOrders } from "@/actions/getAllOrders"
 import { Input } from "@/components/ui/input"
 import { useEffect, useState } from "react"
@@ -31,7 +31,7 @@ import { CustomDataTableProps } from "@/lib/types"
 
 function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualFetch, manualCallback, dateFilter, pageSize: size = 5, noFilter = false }: CustomDataTableProps) {
   const [sorting, setSorting] = useState<SortingState>([])
-  const [tableData, setTableData] = useState<ProductType | HistoryType[]>(data)
+  const [tableData, setTableData] = useState<ProductType | HistoryType[]>(data ? data : [])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [pageSize, setPageSize] = useState<number>(size)
   const [pageIndex, setPageIndex] = useState<number>(0)
@@ -300,7 +300,17 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
                     if (cell.column.id === "actions") {
                       return (
                         <TableCell key={cell.id} className="flex items-center gap-2">
+                          {/* <MoreHorizontal/> */}
                           {actions && actions(row.original)}
+                          {/* <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <MoreHorizontal className="p-0 text-muted-foreground aspect-square" />
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuLabel>Acciones</DropdownMenuLabel>
+                              {actions && actions(row.original)}
+                            </DropdownMenuContent>
+                          </DropdownMenu> */}
                         </TableCell>
                       )
                     }
@@ -361,7 +371,7 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
             ) : (
               <TableRow>
                 <TableCell colSpan={columns[type].length} className="h-24 text-center">
-                  <div className="flex items-center justify-center gap-2">
+                  <div className="flex justify-center items-center gap-2">
                     <FileX2 /> {`No hay ${rewriteActionTypeMessage[type]} creados o habilitados, puedes crear uno o activar uno ya existente.`}
                   </div>
                 </TableCell>

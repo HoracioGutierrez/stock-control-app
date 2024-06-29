@@ -1,6 +1,7 @@
 import { getById } from "@/actions/getById"
 import { getOrdersByCustomerId } from "@/actions/getOrdersByCustomerId"
 import CustomDataTable from "@/components/CustomDataTable"
+import CustomerDetailsTable from "@/components/customer/CustomerDetailsTable"
 import PageHeader from "@/components/layout/PageHeader"
 import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card"
 
@@ -70,11 +71,7 @@ async function CustomerDetailsPage({ params: { id } }: Props) {
       {orders && orders.length > 0 && (
         <section className="my-16">
           <p className="text-muted-foreground">Compras realizadas por este cliente</p>
-          <CustomDataTable
-            data={orders}
-            type="customer-orders"
-            noFilter
-          />
+          <CustomerDetailsTable orders={orders} />
         </section>
       )}
     </>

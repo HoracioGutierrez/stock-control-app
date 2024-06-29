@@ -24,15 +24,11 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
         insertedId: orders.id
       })
 
-      console.log("uno")
-
       //Check if order was created
       if (order.length === 0) {
         tx.rollback()
         throw new Error("Error al crear la orden")
       }
-
-      console.log("dos")
 
       //Create Product Orders for each product in the order
       data.forEach(async (product: any) => {
@@ -62,8 +58,6 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
         }
       })
 
-      console.log("tres")
-
       //Increase amount of cash register
       let updatedCashRegister: any;
       if (paymentMethod === "cash") {
@@ -81,8 +75,6 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
           updatedId: cashRegisterSchema.id
         })
       }
-
-      console.log("cuatro")
 
       //Check if cash register was updated
       if (paymentMethod === "debt") {
@@ -112,8 +104,6 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
           })
         }
       }
-
-      console.log("seis")
 
       const generalBalanceFromDb = await tx.select().from(generalBalance).limit(1).orderBy(desc(generalBalance.createdAt))
 
@@ -224,7 +214,6 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
     return res
 
   } catch (error) {
-    console.log(error)
     if (error instanceof Error) {
       return {
         data: null,

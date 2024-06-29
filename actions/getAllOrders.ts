@@ -65,7 +65,6 @@ export const getAllOrders = async (startDate?: string, endDate?: string): Promis
       message: "Orders found"
     }
   } catch (error) {
-    console.log(error)
     if (error instanceof Error) {
       return {
         data: null,

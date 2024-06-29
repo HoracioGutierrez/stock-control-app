@@ -223,7 +223,7 @@ export type DeleteUserProps = {
 
 export type CustomDataTableProps = {
   data: ProductType[] | HistoryType[] | CustomerType[] | ProviderType[] | null,
-  type: "products" | "history" | "customers" | "providers" | "cash-registers" | "orders" | "users" | "balance" | "purchase-orders" | "customer-orders"
+  type: "products" | "history" | "customers" | "providers" | "cash-registers" | "orders" | "users" | "balance" | "purchase-orders" | "customer-orders" | "order-details" | "purchase-order-products" | "purchase-orders-provider"
   filterColumn?: string
   filterKey?: string
   actions?: (rowData: any) => JSX.Element

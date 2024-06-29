@@ -5,7 +5,6 @@ import { eq, or } from "drizzle-orm"
 
 export const getUser = async (username: string) : Promise<GeneralResponse> => {
   "use server"
-  console.log({username})
   try {
     const usersFromDb = await db.select().from(users).where(or(eq(users.username, username), eq(users.email, username)))
     if (usersFromDb.length === 0) throw new Error("User not found")

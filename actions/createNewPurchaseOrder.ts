@@ -14,13 +14,21 @@ export const createNewPurchaseOrder = async (userId: string, products: any[], to
 
     const cashRegisterFromDB = await db.select().from(cashRegister).where(eq(cashRegister.userId, userId))
 
-    if (userFromDB[0].isAdmin === false) {
+    /* if (userFromDB[0].isAdmin === false) {
       if (cashRegisterFromDB.length === 0) throw new Error("El usuario no tiene una caja abierta")
 
       await db.update(cashRegister).set({
         currentAmount: sql`${cashRegister.currentAmount} - ${total}`,
         totalAmount: sql`${cashRegister.totalAmount} -  ${total}`,
       }).where(eq(cashRegister.openedById, userId))
+    } */
+    if (cashRegisterFromDB.length > 0) {
+      await db.update(cashRegister).set({
+        currentAmount: sql`${cashRegister.currentAmount} - ${total}`,
+        totalAmount: sql`${cashRegister.totalAmount} -  ${total}`,
+      }).where(eq(cashRegister.openedById, userId))
+    } else {
+      if (userFromDB[0].isAdmin === false) throw new Error("El usuario no tiene una caja abierta")
     }
 
 

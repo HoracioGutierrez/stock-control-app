@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 import { Button } from "./ui/button"
-import { Check, Loader, PlusCircle } from "lucide-react"
+import { Check, Loader, PlusCircle, SaveIcon, X } from "lucide-react"
 import { FormEditProps } from "@/lib/types"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table"
 import ProductVariantForm from "./ProductVariantForm"
@@ -11,6 +11,7 @@ import { Key, useState } from "react"
 import CustomButton from "./layout/CustomButton"
 import { editById } from "@/actions/editById"
 import { toast } from "./ui/use-toast"
+import { IconDeviceFloppy, IconPlugConnected, IconPlugConnectedX } from "@tabler/icons-react"
 
 
 
@@ -29,7 +30,7 @@ function EditForm({ entityType, loading, register, errors, data, formForVariant,
 
     const handleVariantUnlinkConfirm = () => {
         setLoadingUnlink(true)
-        editById(entityType, data, { productId: null , isVariant : false }, userId)
+        editById(entityType, data, { productId: null, isVariant: false }, userId)
             .then((data) => {
                 if (data?.error) {
                     throw new Error(data.error)
@@ -62,18 +63,16 @@ function EditForm({ entityType, loading, register, errors, data, formForVariant,
     return (
         <>
             {!isVariantUnlinking && (
-                <div className="self-stretch">
+                <div className="flex justify-center items-center">
                     {hasDetails === false &&
-                        <div className="flex flex-col justify-center items-center">
-                            <Card className="bg-primary-foreground">
+                        <div className="grid grid-cols-1 gap-4 py-4 ">
+                            <Card className="bg-primary-foreground p-4">
                                 <CardHeader>
                                     <CardTitle>
                                         Detalles de {entityResolved}
                                     </CardTitle>
                                     <CardDescription>
-                                        Estos detalles son obligatorios para que el
-                                        {entityResolved}
-                                        pueda crearse correctamente.
+                                        Estos detalles son obligatorios para que la {entityResolved} pueda crearse correctamente.
                                     </CardDescription>
                                 </CardHeader>
                                 <CardContent className="">
@@ -103,9 +102,7 @@ function EditForm({ entityType, loading, register, errors, data, formForVariant,
                                 Detalles de {entityResolved}
                             </CardTitle>
                             <CardDescription>
-                                Estos detalles son obligatorios para que el
-                                {entityResolved}
-                                pueda crearse correctamente.
+                                Estos detalles son obligatorios para que el {entityResolved} pueda crearse correctamente.
                             </CardDescription>
                         </CardHeader>
                         <CardContent className="gap-4 grid">
@@ -138,8 +135,7 @@ function EditForm({ entityType, loading, register, errors, data, formForVariant,
                         <CardHeader>
                             <CardTitle>Detalles Adicionales</CardTitle>
                             <CardDescription>
-                                Estos datos son opcionales para crear el
-                                {entityResolved}.
+                                Estos datos son opcionales para crear el {entityResolved}.
                             </CardDescription>
                         </CardHeader>
                         <CardContent className="gap-4 grid">
@@ -218,25 +214,49 @@ function EditForm({ entityType, loading, register, errors, data, formForVariant,
 
             {isVariantUnlinking && (
                 <div className="col-span-full">
-                    <p className="text-muted-foreground">Estás a punto de eliminar este producto como variante de otro El producto seguira estando en el inventario pero no formara parte de las variantes de otro producto. ¿Está seguro de que desea continuar?</p>
+                    <p className="text-muted-foreground">Estás a punto de eliminar este producto como variante de otro. El producto seguira estando en el inventario pero no formara parte de las variantes de otro producto. ¿Está seguro de que desea continuar?</p>
                 </div>
             )}
 
-            <div className="flex justify-center items-center gap-8 col-span-full">
-                {(isVariant && !isVariantUnlinking && entityType === "product") && <CustomButton onClick={handleVariantUnlink}>desvincular variante</CustomButton>}
-                {isVariantUnlinking && (
-                    <>
-                        <CustomButton onClick={cancelVariantUnlink}>cancelar</CustomButton>
-                        <CustomButton isLoading={loadingUnlink} onClick={handleVariantUnlinkConfirm}>confirmar</CustomButton>
-                    </>
-                )}
-                {!isVariant && entityType === "product" && <CustomButton>vincular variante</CustomButton>}
-                {!isVariantUnlinking && (
-                    <Button form={entityConfig[entityType].formId} className="flex items-center gap-2" disabled={loading}>
-                        {loading && <Loader className="animate-spin" /> || <Check />}
-                        {<span>Guardar {entityResolved}</span>}
-                    </Button>
-                )}
+            <div className="grid grid-cols-1 col-span-full">
+                <div className="flex justify-center gap-2">
+                    {(isVariant && !isVariantUnlinking && entityType === "product") &&
+                        <CustomButton onClick={handleVariantUnlink}>{
+                            <div className="flex items-center group">
+                                <IconPlugConnectedX className="group-hover:text-red-500 size-8 text-muted-foreground aspect-square" />
+                                <span className="text-muted-foreground">Desvincular variante</span>
+                            </div>
+                        }</CustomButton>
+                    }
+                    {isVariantUnlinking && (
+                        <>
+                            <CustomButton onClick={cancelVariantUnlink}>
+                                <div className="flex items-center group">
+                                    <X className="group-hover:text-red-500 size-6 text-muted-foreground aspect-square" />
+                                    <span className="text-muted-foreground">Cancelar</span>
+                                </div>
+                            </CustomButton>
+                            <CustomButton isLoading={loadingUnlink} onClick={handleVariantUnlinkConfirm}>
+                                <div className="flex items-center group">
+                                    <Check className="group-hover:text-green-500 size-6 text-muted-foreground aspect-square" />
+                                    <span className="text-muted-foreground">Confirmar</span>
+                                </div>
+                            </CustomButton>
+                        </>
+                    )}
+                    {!isVariant && entityType === "product" && <CustomButton>
+                        <div className="flex items-center group">
+                            <IconPlugConnected className="group-hover:text-green-500 size-8 text-muted-foreground aspect-square" />
+                            <span className="text-muted-foreground">Vincular variante</span>
+                        </div>
+                    </CustomButton>}
+                    {!isVariantUnlinking && (
+                        <Button form={entityConfig[entityType].formId} className="flex items-center group" disabled={loading}>
+                            {loading && <Loader className="animate-spin" /> || <IconDeviceFloppy className="size-8 text-muted-foreground group-hover:text-green-500 aspect-square" />}
+                            {<span className="text-muted-foreground">Guardar {entityResolved}</span>}
+                        </Button>
+                    )}
+                </div>
             </div>
         </>
     )

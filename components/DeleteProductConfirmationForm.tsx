@@ -4,7 +4,7 @@ import { Button } from "./ui/button"
 import { reactivateById } from "@/actions/reactivateById"
 import { toast } from "./ui/use-toast"
 import { useState } from "react"
-import { Check, Loader } from "lucide-react"
+import { Check, Loader, X } from "lucide-react"
 import { DeleteProductConfirmationFormProps, ReactivateByIdProps } from "@/lib/types"
 import { useDialogStore } from "@/stores/generalDialog"
 
@@ -81,9 +81,9 @@ function DeleteProductConfirmationForm({ barcode, type, userId }: DeleteProductC
         <p>Esto {type === "delete-product" ? "eliminará" : "activará"} el producto en su inventario.</p>
         <p>¿Está seguro de que desea continuar?</p>
       </div>
-      <Button className="self-center" onClick={handleClick} disabled={loading}>
-        {loading ? <Loader className="animate-spin" /> : <Check />}
-        Confirmar
+      <Button className="self-center group" onClick={handleClick} disabled={loading}>
+        {loading ? <Loader className="animate-spin" /> : type === "delete-product" ? <X className="p-0 size-6 text-muted-foreground group-hover:text-green-500 aspect-square" /> : <Check className="p-0 size-6 text-muted-foreground group-hover:text-green-500 aspect-square" />}
+        {type === "delete-product" ? "Si, Eliminar." : "Si, Reactivar."}
       </Button>
     </div>
   )

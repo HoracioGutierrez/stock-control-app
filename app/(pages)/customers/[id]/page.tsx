@@ -67,14 +67,16 @@ async function CustomerDetailsPage({ params: { id } }: Props) {
           </Card>
         </section>
       )}
-      <section className="my-16">
-        <p className="text-muted-foreground">Compras realizadas por este cliente</p>
-        <CustomDataTable
-          data={orders}
-          type="customer-orders"
-          noFilter
-        />
-      </section>
+      {orders && orders.length > 0 && (
+        <section className="my-16">
+          <p className="text-muted-foreground">Compras realizadas por este cliente</p>
+          <CustomDataTable
+            data={orders}
+            type="customer-orders"
+            noFilter
+          />
+        </section>
+      )}
     </>
   )
 }

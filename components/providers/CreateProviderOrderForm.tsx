@@ -208,18 +208,18 @@ function CreateProviderOrderForm({ userId }: Props) {
                         <TableCell className="" key={cell.id} style={{ display: "flex", width: cell.column.getSize() }}>
                           <div className="flex items-center gap-4">
                             <Button variant={"outline"} className="p-0 aspect-square" onClick={() => {
-                              handleAddProduct(row.original)
-                              row.pin("top")
+                              handleRemoveProduct(row.original)
                             }}>
-                              <Plus />
+                              <Minus />
                             </Button>
                             <p className="font-bold text-lg">
                               {order[row.original.id] ? order[row.original.id].count : 0}
                             </p>
                             <Button variant={"outline"} className="p-0 aspect-square" onClick={() => {
-                              handleRemoveProduct(row.original)
+                              handleAddProduct(row.original)
+                              row.pin("top")
                             }}>
-                              <Minus />
+                              <Plus />
                             </Button>
                           </div>
                         </TableCell>
@@ -255,9 +255,9 @@ function CreateProviderOrderForm({ userId }: Props) {
         </Table>
       </div>
       <div className="flex justify-center items-center gap-8">
-        <Button className="flex items-center gap-2 text-white dark:text-primary-foreground" onClick={handleSubmit}>
-          {loading ? <Loader className="animate-spin" /> : <Check />}
-          <span>Guardar orden</span>
+        <Button className="flex items-center gap-2 text-white dark:text-primary-foreground group" onClick={handleSubmit}>
+          {loading ? <Loader className="animate-spin" /> : <Check className="group-hover:text-green-500" />}
+          <span className="text-muted-foreground">Guardar orden</span>
         </Button>
         <div className="flex items-center gap-2">
           <Checkbox className="flex justify-center items-center gap-2 w-7 h-7" onCheckedChange={handleIncrement} checked={increment} />

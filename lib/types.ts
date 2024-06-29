@@ -61,21 +61,10 @@ export type DeleteCustomerProps = DeleteByIdProps & {
   hasVariants?: boolean
 }
 
-export type DeleteProductButtonProps = {
-  active: boolean
-  barcode: string
-}
-
 export type EditCustomerInputValues = CustomerInputValues & {
   active?: boolean
   id?: string
   variants?: any[]
-}
-
-export type EditButtonProps = {
-  barcode?: string
-  id?: string
-  entity: string
 }
 
 export type EditProductInputValues = {
@@ -99,10 +88,6 @@ export type EditProviderInputValues = {
 export type EditProductVariantsFormProps = {
   barcode: string
   userId: string
-}
-
-export type EditVariantButtonProps = {
-  barcode: string
 }
 
 export type Entity = {
@@ -178,10 +163,6 @@ export type LoginInputValues = {
 
 export type ProductInputValues = EditProductInputValues & {
   variants?: any[]
-}
-
-export type ProductsTableProps = {
-  data: ProductType[]
 }
 
 export type PageTitleProps = {

@@ -16,7 +16,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Button } from "./ui/button"
-import { Check, Loader, PlusCircle } from "lucide-react"
+import { Loader, PlusCircle } from "lucide-react"
 import ProductVariantForm from "./ProductVariantForm"
 import { toast } from "./ui/use-toast"
 import { getProductWithVariantsByBarcode } from "@/actions/getProductWithVariantsByBarcode"
@@ -24,6 +24,7 @@ import { saveProductEditWithVariants } from "@/actions/saveProductEditWithVarian
 import { editById } from "@/actions/editById"
 import { useDialogStore } from "@/stores/generalDialog"
 import { unlinkVariant } from "@/actions/unlinkVariant"
+import { IconDeviceFloppy } from "@tabler/icons-react"
 
 
 function EditProductVariantsForm({ barcode, userId }: EditProductVariantsFormProps) {
@@ -216,9 +217,9 @@ function EditProductVariantsForm({ barcode, userId }: EditProductVariantsFormPro
             </Button>
           </CardContent>
         </Card>
-        <Button disabled={loading} className="flex items-center gap-2 mx-auto mt-8">
-          {loading ? <Loader className="animate-spin" /> : <Check />}
-          <span>Guardar producto</span>
+        <Button disabled={loading} className="flex items-center gap-2 mx-auto mt-8 group">
+          {loading ? <Loader className="animate-spin" /> : <IconDeviceFloppy className="p-0 size-8 text-muted-foreground group-hover:text-green-500 aspect-square" />}
+          <span className="text-muted-foreground">Guardar producto</span>
         </Button>
       </div>
     </form>

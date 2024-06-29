@@ -72,9 +72,9 @@ function NewCustomerForm() {
 
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="gap-8 grid grid-cols-1 lg:grid-cols-2" id="new-customer-form">
+        <form onSubmit={handleSubmit(onSubmit)} className="gap-4 grid grid-cols-1 lg:grid-cols-2" id="new-customer-form">
             <div className="self-stretch">
-                <Card className="bg-primary-foreground h-full">
+                <Card className="bg-primary-foreground h-full col-span-full">
                     <CardHeader>
                         <CardTitle>Detalles Del Cliente</CardTitle>
                         <CardDescription>Estos detalles son obligatorios para que el cliente pueda crearse correctamente.</CardDescription>
@@ -143,9 +143,11 @@ function NewCustomerForm() {
                         </div>
                     </CardContent>
                 </Card>
-                <Button form="new-customer-form" disabled={isLoading} className="flex justify-center items-center gap-2 mx-auto mt-8">
-                    {isLoading ? <Loader className="animate-spin" /> : <Check />}
-                    <span>Guardar Cliente</span>
+            </div>
+            <div className="col-span-full">
+                <Button form="new-customer-form" disabled={isLoading} className="flex justify-center items-center gap-2 mx-auto mt-8 group">
+                    {isLoading ? <Loader className="animate-spin" /> : <Check className="group-hover:text-green-500" />}
+                    <span className="text-muted-foreground">Guardar Cliente</span>
                 </Button>
             </div>
         </form>

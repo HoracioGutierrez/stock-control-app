@@ -4,7 +4,7 @@ import { deleteById } from "@/actions/deleteById"
 import { Button } from "./ui/button"
 import { toast } from "./ui/use-toast"
 import { useState } from "react"
-import { Check, Loader } from "lucide-react"
+import { Check, Loader, X } from "lucide-react"
 import { useDialogStore } from "@/stores/generalDialog"
 import { DeleteByIdProps, DeleteCustomerProps, ReactivateByIdProps } from "@/lib/types"
 import { reactivateById } from "@/actions/reactivateById"
@@ -82,9 +82,9 @@ function DeleteCustomerConfirmationForm({ entityType, entityId, type, userId, ha
                 <p>Esto {type === "delete-customer" ? "bloqueará" : "habilitará"} el cliente.</p>
                 <p>¿Está seguro de que desea continuar?</p>
             </div>
-            <Button className="self-center" onClick={handleClick} disabled={loading}>
-                {loading ? <Loader className="animate-spin" /> : <Check />}
-                Confirmar
+            <Button className="self-center group" onClick={handleClick} disabled={loading}>
+                {loading ? <Loader className="animate-spin" /> : type === "delete-customer" ? <X className="text-muted-foreground group-hover:text-red-500 aspect-square" /> : <Check className="text-muted-foreground group-hover:text-green-500 aspect-square" />}
+                {type === "delete-customer" ? <span className="text-muted-foreground">Si, Bloquear.</span> : <span className="text-muted-foreground">Si, Habilitar.</span>}
             </Button>
         </div>
     )

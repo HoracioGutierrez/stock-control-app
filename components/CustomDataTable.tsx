@@ -16,7 +16,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip"
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
 import { TooltipProvider } from "@radix-ui/react-tooltip"
-import { Filter, Package, PackageX } from "lucide-react"
+import { FileX2, Filter, Package, PackageX } from "lucide-react"
 import { getAllOrders } from "@/actions/getAllOrders"
 import { Input } from "@/components/ui/input"
 import { useEffect, useState } from "react"
@@ -26,7 +26,7 @@ import { toast } from "./ui/use-toast"
 import { Button } from "./ui/button"
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
-import { columns, rewriteActionType } from "@/lib/columnHistoryDefinitions"
+import { columns, rewriteActionType, rewriteActionTypeMessage } from "@/lib/columnHistoryDefinitions"
 import { CustomDataTableProps } from "@/lib/types"
 
 function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualFetch, manualCallback, dateFilter, pageSize: size = 5, noFilter = false }: CustomDataTableProps) {
@@ -103,6 +103,8 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
   const handlePageChange = (pageIndex: string) => {
     setPageSize(Number(pageIndex))
   }
+
+
 
   const handleDateSelect = (day: any, selectedDay: any) => {
     const sampleDate = new Date(day)
@@ -258,7 +260,7 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {table.getRowModel().rows?.length > 0 ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
@@ -359,7 +361,9 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
             ) : (
               <TableRow>
                 <TableCell colSpan={columns[type].length} className="h-24 text-center">
-                  No results.
+                  <div className="flex items-center justify-center gap-2">
+                    <FileX2 /> {`No hay ${rewriteActionTypeMessage[type]} creados o habilitados, puedes crear uno o activar uno ya existente.`}
+                  </div>
                 </TableCell>
               </TableRow>
             )}

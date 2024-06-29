@@ -118,7 +118,7 @@ function SideBar({ session }: SideBarProps) {
         </div>
       </div>
       <div className={cn("flex flex-col justify-center items-center gap-2 p-4 text-xs transition-all", collapsed && "hidden")}>
-        <p className="text-muted-foreground">Control de Stock - version 1.0.0</p>
+        <p className="text-muted-foreground">Control de Stock - version 1.2.1</p>
         <p className="text-muted-foreground">Desarrollado por:</p>
         <p className="text-muted-foreground">@horagutierrez - @ArturoGabrielRamirez</p>
       </div>

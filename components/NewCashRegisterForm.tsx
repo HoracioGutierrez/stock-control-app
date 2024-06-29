@@ -93,8 +93,8 @@ function NewCashRegisterForm({ userId }: NewCashRegisterFormProps) {
           </CardContent>
         </Card>
       </div>
-      <Button className="flex items-center gap-2 mx-auto mt-8 text-white dark:text-primary-foreground" disabled={loading}>
-        {loading ? <Loader className="animate-spin" /> : <Check />}
+      <Button className="flex items-center gap-2 mx-auto mt-8 text-white dark:text-primary-foreground group" disabled={loading}>
+        {loading ? <Loader className="animate-spin" /> : <Check className="group-hover:text-green-500" />}
         <span>Guardar caja</span>
       </Button>
     </form>

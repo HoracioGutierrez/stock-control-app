@@ -2,9 +2,9 @@ import { getAllCustomers } from "@/actions/getAllCustomers"
 import CustomerDialog from "@/components/CustomerDialog"
 import CustomersTable from "@/components/CustomersTable"
 import PageHeader from "@/components/layout/PageHeader"
-import CreateCustomerButton from "@/components/customer/CreateCustomerButton"
 import { auth } from "@/auth"
 import CustomButton from "@/components/layout/CustomButton"
+import { UserRoundPlusIcon } from "lucide-react"
 
 async function CustomersPage() {
 
@@ -15,7 +15,16 @@ async function CustomersPage() {
 
   return (
     <>
-      <PageHeader title="Clientes" actions={<CreateCustomerButton />} />
+      <PageHeader title="Clientes" actions={
+        <>
+          <CustomButton className="group"
+            dialogType="create-customer"
+            icon={<UserRoundPlusIcon
+              className="group-hover:text-green-500" />}>
+            <span className="text-muted-foreground">Crear cliente</span>
+          </CustomButton>
+        </>
+      } />
       {data.length >= 0 && <CustomersTable data={data} isAdmin={session?.user.isAdmin} />}
       <CustomerDialog />
     </>

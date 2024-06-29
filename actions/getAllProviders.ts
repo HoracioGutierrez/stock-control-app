@@ -29,7 +29,7 @@ export const getAllProviders = async (inactive = false): Promise<GeneralResponse
         .groupBy(purchaseOrders.providerId)
         .as('pop_totals');
 
-      await db.select({
+     providersFromDb = await db.select({
         id: providers.id,
         name: providers.name,
         lastName: providers.lastName,

@@ -1,9 +1,9 @@
 "use client"
 import CustomDataTable from "../CustomDataTable"
-import DeleteResourceButton from "../layout/DeleteResourceButton"
 import { getAllCashRegisters } from "@/actions/getAllCashRegisters"
-import EditButton from "../EditButton"
 import { IconDeviceDesktopOff, IconDeviceDesktopCheck } from '@tabler/icons-react'
+import CustomButton from "../layout/CustomButton"
+import { Edit, Trash2, UndoDot } from "lucide-react"
 
 type Props = {
   data: any
@@ -22,25 +22,17 @@ function CashRegisterTable({ data, isAdmin }: Props) {
       actions={(rowData: any) => {
         return (
           <>
-            <DeleteResourceButton
-              type="cash-register-close"
-              data={rowData.id}
-              active={rowData.openedById === null ? false : true}
-              activeIcon={<IconDeviceDesktopOff className="p-0 text-muted-foreground group-hover:text-red-400 aspect-square" />}
-              inactiveIcon={<IconDeviceDesktopCheck className="p-0 text-muted-foreground group-hover:text-green-400 aspect-square" />}
-              tooltip={rowData.openedById === null ? "Abrir caja" : "Cerrar caja"}
-            />
+            <CustomButton tooltip={rowData.openedById === null ? "Abrir caja" : "Cerrar caja"} data={rowData.id} variant="ghost" className="aspect-square p-0 group" dialogType={rowData.openedById === null ? "activate-cash-register-close" : "delete-cash-register-close"}>
+              {rowData.openedById === null ? <IconDeviceDesktopCheck className="p-0 aspect-square group-hover:text-green-400" /> : <IconDeviceDesktopOff className="p-0 aspect-square group-hover:text-red-400" />}
+            </CustomButton>
             {isAdmin && (
-              <DeleteResourceButton
-                type="cash-register-delete"
-                data={rowData.id}
-                active={rowData.active}
-                tooltip={rowData.active ? "Bloquear Caja" : "Desbloquear caja"}
-              />
+              <CustomButton variant="ghost" className="p-0 group aspect-square" tooltip="Borrar caja" dialogType="delete-cash-register-delete" data={rowData.id}>
+                {rowData.active ? <Trash2 className="p-0 text-muted-foreground group-hover:text-red-400 aspect-square" /> : <UndoDot className="p-0 text-muted-foreground group-hover:text-green-400 aspect-square" />}
+              </CustomButton>
             )}
-            {isAdmin && (
-              <EditButton id={rowData.id} entity="cash-register" />
-            )}
+            {isAdmin && <CustomButton variant="ghost" className="p-0 group aspect-square" tooltip="Editar caja" dialogType="edit-cash-register" data={rowData.id}>
+              <Edit className="p-0 text-muted-foreground group-hover:text-yellow-400 aspect-square" />
+            </CustomButton>}
           </>
         )
       }}

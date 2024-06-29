@@ -7,7 +7,8 @@ import { useState } from "react"
 import { toast } from "../ui/use-toast"
 import { reactivateById } from "@/actions/reactivateById"
 import { Button } from "../ui/button"
-import { Check, Loader } from "lucide-react"
+import { Check, Loader, X } from "lucide-react"
+import { IconDeviceFloppy } from "@tabler/icons-react"
 
 function DeleteProviderConfirmationForm({ entityType,
   entityId, type, userId, hasVariants }: DeleteCustomerProps) {
@@ -92,10 +93,10 @@ function DeleteProviderConfirmationForm({ entityType,
         </p>
         <p>¿Está seguro de que desea continuar?</p>
       </div>
-      <Button className="self-center" onClick={handleClick} disabled={loading}>
+      <Button className="self-center group" onClick={handleClick} disabled={loading}>
         {loading ? <Loader
-          className="animated-spin" /> : <Check />}
-        Confirmar
+          className="animated-spin" /> : type === "delete-provider" ? <Check className="p-0 size-6 text-muted-foreground group-hover:text-green-500 aspect-square" /> : <X className="p-0 size-6 text-muted-foreground group-hover:text-green-500 aspect-square" />}
+        <span className="text-muted-foreground">{type === "delete-provider" ? "Si, Eliminar." : "Si, Reactivar."}</span>
       </Button>
     </div>
   )

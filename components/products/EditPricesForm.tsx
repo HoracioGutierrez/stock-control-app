@@ -254,9 +254,9 @@ function EditPricesForm({ barcode, userId, setIsFullWidth }: any) {
           </Table>
         </div>
       )}
-      <Button form="edit-prices-form" className="flex items-center gap-2 mx-auto mt-8">
-        {loading ? <Loader className="animate-spin" /> : <Check />}
-        guardar
+      <Button form="edit-prices-form" className="flex items-center gap-2 mx-auto mt-8 group">
+        {loading ? <Loader className="animate-spin" /> : <Check className="group-hover:text-green-500 aspect-square text-muted-foreground" />}
+        <span className="text-muted-foreground">Guardar</span>
       </Button>
     </>
   )

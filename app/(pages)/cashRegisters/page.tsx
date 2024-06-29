@@ -14,7 +14,7 @@ async function StockPage() {
   return (
     <>
       <PageHeader title="Cajas" actions={session?.user.isAdmin
-        ? <DialogTriggerButton dialogType="new-cash-register" text="Crear Caja" icon={<IconDeviceDesktopPlus />} />
+        ? <DialogTriggerButton className="group" dialogType="new-cash-register" text="Crear Caja" icon={<IconDeviceDesktopPlus className="group-hover:text-green-500" />} />
         : null
       } />
       <CashRegisterTable data={data} isAdmin={session?.user.isAdmin} />

@@ -116,7 +116,7 @@ function EditFormContainer({ entityType, barcode, entityId, hasVariants, userId,
 
     return (
         <>
-            {hasDetails && <form onSubmit={handleSubmit(onSubmit)} className="gap-8 grid grid-cols-1 lg:grid-cols-2 overflow-auto" id={entityConfig[entityType].formId}>
+            {hasDetails && <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-2 overflow-auto col-span-full gap-4" id={entityConfig[entityType].formId}>
                 <EditForm {...formProps} />
             </form>}
             {hasDetails == false && <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col overflow-auto" id={entityConfig[entityType].formId}>

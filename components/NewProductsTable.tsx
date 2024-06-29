@@ -2,8 +2,6 @@
 
 import { getAllProducts } from "@/actions/getAllProducts"
 import CustomDataTable from "./CustomDataTable"
-import EditButton from "./EditButton"
-import EditVariantButton from "./EditVariantButton"
 import CustomButton from "./layout/CustomButton"
 import { Edit, ListTreeIcon, Trash2, UndoDot } from "lucide-react"
 
@@ -36,8 +34,6 @@ function ProductsTable({ data, isAdmin }: ProductsTableProps) {
             <CustomButton tooltip="Agregar variante" data={rowData.barcode} variant="ghost" className="aspect-square p-0 group" dialogType="variant">
               <ListTreeIcon className="p-0 aspect-square group-hover:text-yellow-400" />
             </CustomButton>
-            {/*  {rowData.isVariant && <EditButton barcode={rowData.barcode} entity="product" />} */}
-            {/*  {!rowData.isVariant && <EditVariantButton barcode={rowData.barcode} />} */}
           </>
         )
       }}

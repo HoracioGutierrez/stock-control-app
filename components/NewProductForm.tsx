@@ -186,9 +186,9 @@ function NewProductForm({ userId }: NewProductFormProps) {
             )}
           </CardContent>
         </Card>
-        <Button form="new-product-form" disabled={isLoading} className="flex items-center gap-2 mx-auto mt-8" onClick={handleSubmit(onSubmit)}>
-          {isLoading ? <Loader className="animate-spin" /> : <Check />}
-          <span>Guardar Producto</span>
+        <Button form="new-product-form" disabled={isLoading} className="flex items-center gap-2 mx-auto mt-8 group" onClick={handleSubmit(onSubmit)}>
+          {isLoading ? <Loader className="animate-spin" /> : <Check className="group-hover:text-green-500 aspect-square text-muted-foreground" />}
+          <span className="text-muted-foreground">Guardar Producto</span>
         </Button>
       </div>
     </form>

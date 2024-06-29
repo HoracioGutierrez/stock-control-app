@@ -82,9 +82,9 @@ function UpdateCustomerDebtForm({ type, userId }: Props) {
           {errors.manualAmount && <p className="text-red-500">{errors.manualAmount.message as string}</p>}
           <Input type="number" {...register("manualAmount")} disabled={isChecked} />
         </div>
-        <Button>
-          {loading ? <Loader className="animate-spin" /> : <Check /> }
-          <span>Pagar</span>
+        <Button className="group">
+          {loading ? <Loader className="animate-spin" /> : <Check className="group-hover:text-green-500 aspect-square text-muted-foreground" />}
+          <span className="text-muted-foreground">Pagar</span>
         </Button>
       </div>
     </form>

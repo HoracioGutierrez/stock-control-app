@@ -82,6 +82,11 @@ function EditProductVariantsForm({ barcode, userId }: EditProductVariantsFormPro
       })
       .catch((error) => {
         if (error instanceof Error) {
+          toast({
+            variant: "destructive",
+            title: "Error al editar el producto",
+            description: error.message
+          })
           return setError(error.message)
         }
         setError("Error al editar el producto, intente nuevamente o contacte al desarrollador.")
@@ -218,7 +223,7 @@ function EditProductVariantsForm({ barcode, userId }: EditProductVariantsFormPro
           </CardContent>
         </Card>
         <Button disabled={loading} className="flex items-center gap-2 mx-auto mt-8 group">
-          {loading ? <Loader className="animate-spin" /> : <IconDeviceFloppy className="p-0 size-8 text-muted-foreground group-hover:text-green-500 aspect-square" />}
+          {loading ? <Loader className="animate-spin" /> : <IconDeviceFloppy className="group-hover:text-green-500 p-0 text-muted-foreground aspect-square size-8" />}
           <span className="text-muted-foreground">Guardar producto</span>
         </Button>
       </div>

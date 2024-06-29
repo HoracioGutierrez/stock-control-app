@@ -56,6 +56,11 @@ function NewCustomerForm() {
         })
             .catch((error) => {
                 if (error instanceof Error) {
+                    toast({
+                        variant: "destructive",
+                        title: "Error al crear el cliente",
+                        description: error.message
+                    })
                     return setError(error.message)
                 }
                 setError("Error al crear el cliente, intente nuevamente o contacte al desarrollador.")
@@ -74,7 +79,7 @@ function NewCustomerForm() {
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="gap-4 grid grid-cols-1 lg:grid-cols-2" id="new-customer-form">
             <div className="self-stretch">
-                <Card className="bg-primary-foreground h-full col-span-full">
+                <Card className="col-span-full bg-primary-foreground h-full">
                     <CardHeader>
                         <CardTitle>Detalles Del Cliente</CardTitle>
                         <CardDescription>Estos detalles son obligatorios para que el cliente pueda crearse correctamente.</CardDescription>

@@ -95,8 +95,18 @@ function EditPricesForm({ barcode, userId, setIsFullWidth }: any) {
         .catch((error) => {
           if (error instanceof Error) {
             //return setError(error.message)
+            toast({
+              variant: "destructive",
+              title: "Error al obtener los productos",
+              description: error.message
+            })
           }
           //setError("Error al obtener los productos")
+          toast({
+            variant: "destructive",
+            title: "Error al obtener los productos",
+            description: "Error al obtener los productos"
+          })  
         })
     } else {
       setIsFullWidth(false)
@@ -255,7 +265,7 @@ function EditPricesForm({ barcode, userId, setIsFullWidth }: any) {
         </div>
       )}
       <Button form="edit-prices-form" className="flex items-center gap-2 mx-auto mt-8 group">
-        {loading ? <Loader className="animate-spin" /> : <Check className="group-hover:text-green-500 aspect-square text-muted-foreground" />}
+        {loading ? <Loader className="animate-spin" /> : <Check className="group-hover:text-green-500 text-muted-foreground aspect-square" />}
         <span className="text-muted-foreground">Guardar</span>
       </Button>
     </>

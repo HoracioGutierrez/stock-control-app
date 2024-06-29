@@ -52,6 +52,11 @@ function OpenCashRegisterForm({ userId, data }: OpenCashRegisterFormProps) {
       })
       .catch((error) => {
         if (error instanceof Error) {
+          toast({
+            variant: "destructive",
+            title: "Error al abrir la caja",
+            description: error.message
+          })
           return setLoading(false)
         }
         toast({

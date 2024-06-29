@@ -50,6 +50,11 @@ function NewUserForm({ userId }: NewUserFormProps) {
       })
       .catch((error) => {
         if (error instanceof Error) {
+          toast({
+            variant: "destructive",
+            title: "Error al crear el usuario",
+            description: error.message
+          })
           return setError(error.message)
         }
         setError("Error al crear el usuario, intente nuevamente o contacte al desarrollador.")

@@ -9,15 +9,10 @@ export const openCashRegister = async (cashRegisterId: string, currentAmount: nu
   try {
     const cashRegisterFromDb = await db.select().from(cashRegister).where(eq(cashRegister.id, cashRegisterId))
     if (cashRegisterFromDb.length === 0) throw new Error("La caja no existe")
-
     if (cashRegisterFromDb[0].openedById) throw new Error("La caja ya está abierta")
-
     const hasCashRegister = await db.select().from(cashRegister).where(eq(cashRegister.openedById, userId))
-
     if (hasCashRegister.length > 0) throw new Error("Ya tienes una caja abierta")
-
     const generalBalanceFromDb = await db.select().from(generalBalance).limit(1).orderBy(desc(generalBalance.createdAt))
-
     if (generalBalanceFromDb.length === 0) throw new Error("No hay saldo en la base de datos")
 
     const openning = await db.insert(cashRegistersOpennings).values({
@@ -45,9 +40,9 @@ export const openCashRegister = async (cashRegisterId: string, currentAmount: nu
     if (cashRegisterUpdated.length === 0) throw new Error("Error al actualizar la caja")
 
     await db.insert(generalBalance).values({
-      incomingAmount : generalBalanceFromDb[0].balance,
-      balance : generalBalanceFromDb[0].balance,
-      balanceWithDebt : generalBalanceFromDb[0].balanceWithDebt,
+      incomingAmount: generalBalanceFromDb[0].balance,
+      balance: generalBalanceFromDb[0].balance,
+      balanceWithDebt: generalBalanceFromDb[0].balanceWithDebt,
       operationType: "open-cash-register",
       detail: "Abriendo caja " + cashRegisterUpdated[0].label,
       isDebt: false,

@@ -70,6 +70,11 @@ function NewProductForm({ userId }: NewProductFormProps) {
       })
       .catch((error) => {
         if (error instanceof Error) {
+          toast({
+            variant: "destructive",
+            title: "Error al crear el producto",
+            description: error.message
+          })
           return setError(error.message)
         }
         setError("Error al crear el producto, intente nuevamente o contacte al desarrollador.")
@@ -187,7 +192,7 @@ function NewProductForm({ userId }: NewProductFormProps) {
           </CardContent>
         </Card>
         <Button form="new-product-form" disabled={isLoading} className="flex items-center gap-2 mx-auto mt-8 group" onClick={handleSubmit(onSubmit)}>
-          {isLoading ? <Loader className="animate-spin" /> : <Check className="group-hover:text-green-500 aspect-square text-muted-foreground" />}
+          {isLoading ? <Loader className="animate-spin" /> : <Check className="group-hover:text-green-500 text-muted-foreground aspect-square" />}
           <span className="text-muted-foreground">Guardar Producto</span>
         </Button>
       </div>

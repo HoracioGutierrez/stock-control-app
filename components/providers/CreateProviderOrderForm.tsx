@@ -69,8 +69,18 @@ function CreateProviderOrderForm({ userId }: Props) {
       .catch((error) => {
         if (error instanceof Error) {
           //return setError(error.message)
+          toast({
+            variant: "destructive",
+            title: "Error al obtener los productos",
+            description: error.message
+          })
         }
         //setError("Error al obtener los productos")
+        toast({
+          variant: "destructive",
+          title: "Error al obtener los productos",
+          description: "Error al obtener los productos"
+        })
       })
   }, [])
 

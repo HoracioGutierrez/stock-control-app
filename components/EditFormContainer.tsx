@@ -68,6 +68,11 @@ function EditFormContainer({ entityType, barcode, entityId, hasVariants, userId,
             })
             .catch((error) => {
                 if (error instanceof Error) {
+                    toast({
+                        variant: "destructive",
+                        title: "Error al editar el producto",
+                        description: error.message
+                    })
                     return setError(error.message)
                 }
                 setError(`Error al editar el ${entityResolved}, intente nuevamente o contacte al desarrollador.`)
@@ -116,7 +121,7 @@ function EditFormContainer({ entityType, barcode, entityId, hasVariants, userId,
 
     return (
         <>
-            {hasDetails && <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-2 overflow-auto col-span-full gap-4" id={entityConfig[entityType].formId}>
+            {hasDetails && <form onSubmit={handleSubmit(onSubmit)} className="gap-4 grid grid-cols-1 lg:grid-cols-2 col-span-full overflow-auto" id={entityConfig[entityType].formId}>
                 <EditForm {...formProps} />
             </form>}
             {hasDetails == false && <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col overflow-auto" id={entityConfig[entityType].formId}>

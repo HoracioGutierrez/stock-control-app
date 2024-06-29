@@ -50,6 +50,11 @@ function UpdateCustomerDebtForm({ type, userId }: Props) {
       })
       .catch((error) => {
         if (error instanceof Error) {
+          toast({
+            variant: "destructive",
+            title: "Error al pagar la deuda",
+            description: error.message
+          })
           return setError(error.message)
         }
         setError("Error al pagar la deuda, intente nuevamente o contacte al desarrollador.")
@@ -83,7 +88,7 @@ function UpdateCustomerDebtForm({ type, userId }: Props) {
           <Input type="number" {...register("manualAmount")} disabled={isChecked} />
         </div>
         <Button className="group">
-          {loading ? <Loader className="animate-spin" /> : <Check className="group-hover:text-green-500 aspect-square text-muted-foreground" />}
+          {loading ? <Loader className="animate-spin" /> : <Check className="group-hover:text-green-500 text-muted-foreground aspect-square" />}
           <span className="text-muted-foreground">Pagar</span>
         </Button>
       </div>

@@ -658,3 +658,55 @@ export const balanceColumns: ColumnDef<any>[] = [
     },
   }
 ]
+
+export const customerOrdersColumns: ColumnDef<any>[] = [
+  {
+    header: "Fecha",
+    accessorKey: "createdAt",
+    cell: ({ row }) => {
+      return row.original.createdAt.toLocaleString("es-ES")
+    },
+  },
+  {
+    header: "Total",
+    accessorKey: "total",
+    cell: ({ row }) => {
+      return "$" + row.original.total
+    },
+  },
+  {
+    header: "Pago con",
+    accessorKey: "paymentMethod",
+    cell: ({ row }) => {
+      if (row.original.paymentMethod === "cash") {
+        return "Efectivo"
+      }
+
+      if (row.original.paymentMethod === "debt") {
+        return "Fiado/Deuda"
+      }
+
+      if (row.original.paymentMethod === "credit") {
+        return "Crédito"
+      }
+
+      if (row.original.paymentMethod === "debit") {
+        return "Débito"
+      }
+
+      if (row.original.paymentMethod === "transfer") {
+        return "Transferencia"
+      }
+
+      if (row.original.paymentMethod === "mercadopago") {
+        return "Mercado Pago"
+      }
+
+      if (row.original.paymentMethod === "other") {
+        return "Otro"
+      }
+
+      return "Sin pago"
+    }
+  }
+]

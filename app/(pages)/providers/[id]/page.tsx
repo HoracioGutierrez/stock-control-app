@@ -1,6 +1,7 @@
 import { getProviderDetails } from "@/actions/getProviderDetails"
 import CustomDataTable from "@/components/CustomDataTable"
 import PageHeader from "@/components/layout/PageHeader"
+import PurchaseOrderTable from "@/components/providers/PurchaseOrderTable"
 import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 
@@ -64,11 +65,12 @@ const ProviderDetailsPage = async ({ params: { id } }: Props) => {
       {/* <Separator className="my-8" /> */}
       <section className="my-16">
         <p className="text-muted-foreground">Ordenes de compra</p>
-        <CustomDataTable
+        {/* <CustomDataTable
           data={data.purchaseOrders}
           type="purchase-orders"
           noFilter
-        />
+        /> */}
+        <PurchaseOrderTable data={data.purchaseOrders} />
       </section>
     </>
   )

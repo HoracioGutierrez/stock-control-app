@@ -5,6 +5,8 @@ import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 import { cn } from "@/lib/utils";
 import "./globals.css";
+import CustomTour from "@/components/layout/CustomTour";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,6 +14,7 @@ export const metadata: Metadata = {
   title: "Stock Control",
   description: "A stock control system for the company",
 };
+
 
 export default function RootLayout({
   children,
@@ -30,6 +33,7 @@ export default function RootLayout({
           >
             {children}
             <Toaster />
+            {/* <CustomTour/> */}
           </ThemeProvider>
         </SessionProvider>
       </body>

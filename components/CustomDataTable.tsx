@@ -29,7 +29,7 @@ import { cn } from "@/lib/utils"
 import { columns, rewriteActionType } from "@/lib/columnHistoryDefinitions"
 import { CustomDataTableProps } from "@/lib/types"
 
-function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualFetch, manualCallback, dateFilter , pageSize:size = 5 }: CustomDataTableProps) {
+function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualFetch, manualCallback, dateFilter, pageSize: size = 5, noFilter = false }: CustomDataTableProps) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [tableData, setTableData] = useState<ProductType | HistoryType[]>(data)
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -141,102 +141,104 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
 
   return (
     <div className="flex flex-col grow">
-      <div className="flex justify-between items-center py-4">
-        <Input
-          placeholder={`Filtrar por ${filterColumn ?? "nombre"}`}
-          value={(table.getColumn(filterKey || "name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) => {
-            return table.getColumn(filterKey || "name")?.setFilterValue(event.target.value)
-          }}
-          className="max-w-sm"
-        />
+      {!noFilter && (
+        <div className="flex justify-between items-center py-4">
+          <Input
+            placeholder={`Filtrar por ${filterColumn ?? "nombre"}`}
+            value={(table.getColumn(filterKey || "name")?.getFilterValue() as string) ?? ""}
+            onChange={(event) => {
+              return table.getColumn(filterKey || "name")?.setFilterValue(event.target.value)
+            }}
+            className="max-w-sm"
+          />
 
-        {dateFilter && (
-          <div>
-            <Popover open={open}>
-              <PopoverTrigger asChild>
-                <Button onClick={() => setOpen(true)}>{selectedDay ? format(selectedDay, "dd/MM/yyyy") : "Elige una fecha"}</Button>
-              </PopoverTrigger>
-              <PopoverContent>
-                <Calendar
-                  mode="single"
-                  onSelect={handleDateSelect}
-                  selected={selectedDay}
-                />
-              </PopoverContent>
-            </Popover>
-          </div>
-        )}
+          {dateFilter && (
+            <div>
+              <Popover open={open}>
+                <PopoverTrigger asChild>
+                  <Button onClick={() => setOpen(true)}>{selectedDay ? format(selectedDay, "dd/MM/yyyy") : "Elige una fecha"}</Button>
+                </PopoverTrigger>
+                <PopoverContent>
+                  <Calendar
+                    mode="single"
+                    onSelect={handleDateSelect}
+                    selected={selectedDay}
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+          )}
 
-        <div className="flex items-center gap-2">
-          <TooltipProvider>
-            <DropdownMenu>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="ml-auto">
-                      <Filter className="p-0 aspect-square" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Cambiar la visibilidad de las columnas</p>
-                </TooltipContent>
-              </Tooltip>
-              <DropdownMenuContent align="end">
-                {manualFetch && (<>
-                  <DropdownMenuLabel>Ver inactivos</DropdownMenuLabel>
-                  <DropdownMenuCheckboxItem
-                    className={cn("capitalize", activeState ? "" : "text-muted-foreground")}
-                    checked={activeState}
-                    onCheckedChange={(value) => setActiveState(!!value)}
-                  >
-                    ver inactivos
-                  </DropdownMenuCheckboxItem>
-                  <DropdownMenuSeparator />
-                </>
-                )}
-                <DropdownMenuLabel>Ver columnas</DropdownMenuLabel>
-                {table
-                  .getAllColumns()
-                  .filter(
-                    (column) => column.getCanHide()
-                  )
-                  .map((column) => {
-                    return (
-                      <DropdownMenuCheckboxItem
-                        key={column.id}
-                        className={cn("capitalize", column.getIsVisible() ? "" : "text-muted-foreground")}
-                        checked={column.getIsVisible()}
-                        onCheckedChange={(value) =>
-                          column.toggleVisibility(!!value)
-                        }
-                      >
-                        {/* {column.columnDef.meta ? column.columnDef.meta.name : column.id} */}
-                        {column.id}
-                      </DropdownMenuCheckboxItem>
+          <div className="flex items-center gap-2">
+            <TooltipProvider>
+              <DropdownMenu>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" className="ml-auto">
+                        <Filter className="p-0 aspect-square" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Cambiar la visibilidad de las columnas</p>
+                  </TooltipContent>
+                </Tooltip>
+                <DropdownMenuContent align="end">
+                  {manualFetch && (<>
+                    <DropdownMenuLabel>Ver inactivos</DropdownMenuLabel>
+                    <DropdownMenuCheckboxItem
+                      className={cn("capitalize", activeState ? "" : "text-muted-foreground")}
+                      checked={activeState}
+                      onCheckedChange={(value) => setActiveState(!!value)}
+                    >
+                      ver inactivos
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuSeparator />
+                  </>
+                  )}
+                  <DropdownMenuLabel>Ver columnas</DropdownMenuLabel>
+                  {table
+                    .getAllColumns()
+                    .filter(
+                      (column) => column.getCanHide()
                     )
-                  })}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </TooltipProvider>
+                    .map((column) => {
+                      return (
+                        <DropdownMenuCheckboxItem
+                          key={column.id}
+                          className={cn("capitalize", column.getIsVisible() ? "" : "text-muted-foreground")}
+                          checked={column.getIsVisible()}
+                          onCheckedChange={(value) =>
+                            column.toggleVisibility(!!value)
+                          }
+                        >
+                          {/* {column.columnDef.meta ? column.columnDef.meta.name : column.id} */}
+                          {column.id}
+                        </DropdownMenuCheckboxItem>
+                      )
+                    })}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </TooltipProvider>
 
-          <Select onValueChange={handlePageChange}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Cant. de resultados" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="5">5</SelectItem>
-              <SelectItem value="10">10</SelectItem>
-              <SelectItem value="15">15</SelectItem>
-              <SelectItem value="20">20</SelectItem>
-              <SelectItem value="30">30</SelectItem>
-              <SelectItem value="50">50</SelectItem>
-              <SelectItem value="100">100</SelectItem>
-            </SelectContent>
-          </Select>
+            <Select onValueChange={handlePageChange}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Cant. de resultados" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="5">5</SelectItem>
+                <SelectItem value="10">10</SelectItem>
+                <SelectItem value="15">15</SelectItem>
+                <SelectItem value="20">20</SelectItem>
+                <SelectItem value="30">30</SelectItem>
+                <SelectItem value="50">50</SelectItem>
+                <SelectItem value="100">100</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
-      </div>
+      )}
       <div className="overflow-auto grow">
         <Table>
           <TableHeader>

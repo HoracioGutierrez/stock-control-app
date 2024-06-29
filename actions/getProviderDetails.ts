@@ -31,6 +31,7 @@ export const getProviderDetails = async (providerId: string): Promise<GeneralRes
 
       return {
         data: {
+          provider: provider[0],
           purchaseOrders: [],
           purchaseOrderProducts: []
         },
@@ -53,6 +54,7 @@ export const getProviderDetails = async (providerId: string): Promise<GeneralRes
 
     return {
       data: {
+        provider: provider[0],
         purchaseOrders: purchaseOrdersFromDB,
         purchaseOrderProducts: purchaseOrderProductsFromDB
       },

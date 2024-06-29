@@ -23,7 +23,10 @@ function ProvidersTable({ data }: ProvidersTableProps) {
       actions={(rowData: any) => {
         return (
           <>
-            <CustomButton variant="ghost" className="p-0 aspect-square" tooltip="Ver detalles del proveedor y ordenes de compra hechas" dialogType="provider-details" data={rowData.id}>
+            {/* <CustomButton variant="ghost" className="p-0 aspect-square" tooltip="Ver detalles del proveedor y ordenes de compra hechas" dialogType="provider-details" data={rowData.id}>
+              <Eye/>
+            </CustomButton> */}
+            <CustomButton variant="ghost" className="p-0 aspect-square" tooltip="Ver detalles del proveedor y ordenes de compra hechas" href={`/providers/${rowData.id}`}>
               <Eye/>
             </CustomButton>
             <NewProviderOrderButton userId={rowData.id} />

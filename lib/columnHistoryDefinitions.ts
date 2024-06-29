@@ -1,7 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table"
-import { balanceColumns, cashRegistersColumns, customersColumns, historyColumns, ordersColumns, productsColumns, providersColumns, usersColumns } from "./columnDefinitions"
+import { balanceColumns, cashRegistersColumns, customersColumns, historyColumns, ordersColumns, productsColumns, providersColumns, purchaseOrdersColumns, usersColumns } from "./columnDefinitions"
 
-export const columns: Record<"products" | "history" | "providers" | "customers" | "cash-registers" | "orders" | "users" | "balance", ColumnDef<unknown | any>[]> = {
+export const columns: Record<"products" | "history" | "providers" | "customers" | "cash-registers" | "orders" | "users" | "balance" | "purchase-orders", ColumnDef<unknown | any>[]> = {
   "products": productsColumns,
   "history": historyColumns,
   "providers": providersColumns,
@@ -9,7 +9,8 @@ export const columns: Record<"products" | "history" | "providers" | "customers" 
   "cash-registers": cashRegistersColumns,
   "orders": ordersColumns,
   "users": usersColumns,
-  "balance": balanceColumns
+  "balance": balanceColumns,
+  "purchase-orders": purchaseOrdersColumns
 }
 
 export const rewriteActionType: Record<string, string> = {

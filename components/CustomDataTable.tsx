@@ -31,7 +31,7 @@ import { CustomDataTableProps } from "@/lib/types"
 
 function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualFetch, manualCallback, dateFilter, pageSize: size = 5, noFilter = false }: CustomDataTableProps) {
   const [sorting, setSorting] = useState<SortingState>([])
-  const [tableData, setTableData] = useState<ProductType | HistoryType[]>(data)
+  const [tableData, setTableData] = useState<ProductType | HistoryType[]>(data ? data : [])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [pageSize, setPageSize] = useState<number>(size)
   const [pageIndex, setPageIndex] = useState<number>(0)

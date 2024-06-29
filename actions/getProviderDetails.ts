@@ -63,14 +63,22 @@ export const getProviderDetails = async (providerId: string): Promise<GeneralRes
   } catch (error) {
     if (error instanceof Error) {
       return {
-        data: null,
+        data: {
+          provider : {},
+          purchaseOrders: [],
+          purchaseOrderProducts: []
+        },
         error: error.message,
         message: "Error al obtener los proveedores"
       }
     }
 
     return {
-      data: null,
+      data: {
+        provider : {},
+        purchaseOrders: [],
+        purchaseOrderProducts: []
+      },
       error: "Error al obtener los proveedores",
       message: "Error al obtener los proveedores"
     }

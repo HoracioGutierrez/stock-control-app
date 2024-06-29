@@ -11,7 +11,7 @@ function CustomersTable({ data, isAdmin }: CustomerTableProps) {
 
     return (
         <CustomDataTable
-            data={data}
+            data={data ? data : []}
             type="customers"
             filterColumn="nombre"
             filterKey="name"

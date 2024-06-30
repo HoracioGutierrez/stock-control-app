@@ -21,7 +21,7 @@ async function CustomersPage() {
             dialogType="create-customer"
             icon={<UserRoundPlusIcon
               className="group-hover:text-green-500" />}>
-            <span className="text-muted-foreground">Crear cliente</span>
+            <span className="md:block hidden text-muted-foreground">Crear cliente</span>
           </CustomButton>
         </>
       } />

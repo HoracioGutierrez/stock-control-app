@@ -173,14 +173,14 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
   return (
     <div className="flex flex-col grow">
       {!noFilter && (
-        <div className="flex justify-between items-center py-4">
+        <div className="flex sm:flex-row flex-col-reverse sm:justify-between gap-1 py-4">
           <Input
             placeholder={`Filtrar por ${filterColumn ?? "nombre"}`}
             value={(table.getColumn(filterKey || "name")?.getFilterValue() as string) ?? ""}
             onChange={(event) => {
               return table.getColumn(filterKey || "name")?.setFilterValue(event.target.value)
             }}
-            className="max-w-sm"
+            className="sm:max-w-sm"
           />
 
           {dateFilter && (
@@ -201,13 +201,13 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
             </div>
           )}
 
-          <div className="flex items-center gap-2">
+          <div className="flex justify-between items-center gap-2">
             <TooltipProvider>
               <DropdownMenu>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" className="ml-auto">
+                      <Button variant="ghost" className="">
                         <Filter className="p-0 aspect-square" />
                       </Button>
                     </DropdownMenuTrigger>

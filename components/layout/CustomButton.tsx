@@ -38,7 +38,7 @@ function CustomButton({ children, className, icon, text = "Trigger Dialog", data
 
   const ButtonEl = ({ children, className, icon, text = "Trigger Dialog", disabled = false, onClick, isLoading = false, variant, ...props }: Props) => {
     return (
-      <Button variant={variant} className={cn("text-muted-foreground flex gap-2", className)} onClick={onClick} disabled={disabled} type="button">
+      <Button variant={variant} className={cn("text-muted-foreground flex md:gap-2 max-sm:px-2 max-sm:py-1", className)} onClick={onClick} disabled={disabled} type="button">
         {isLoading && <Loader className="animate-spin" />}
         {!isLoading && icon ? icon : null}
         <span>{children ? children : text ? text : "Trigger Dialog"}</span>
@@ -51,7 +51,7 @@ function CustomButton({ children, className, icon, text = "Trigger Dialog", data
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button variant={variant} className={cn("text-muted-foreground flex gap-2", className)} onClick={handleClick} disabled={disabled} asChild={href ? true : false}>
+            <Button variant={variant} className={cn("text-muted-foreground flex md:gap-2 max-sm:px-2 max-sm:py-1", className)} onClick={handleClick} disabled={disabled} asChild={href ? true : false}>
               {href ? (
                 <Link href={href}>
                   {isLoading && <Loader className="animate-spin" />}
@@ -77,7 +77,7 @@ function CustomButton({ children, className, icon, text = "Trigger Dialog", data
 
   if (href) {
     return (
-      <Button variant={variant} className={cn("text-muted-foreground flex gap-2", className)} onClick={handleClick} disabled={disabled} asChild={href ? true : false}>
+      <Button variant={variant} className={cn("text-muted-foreground flex md:gap-2 max-sm:px-2 max-sm:py-1", className)} onClick={handleClick} disabled={disabled} asChild={href ? true : false}>
         {href ? (
           <Link href={href}>
             {isLoading && <Loader className="animate-spin" />}

@@ -102,10 +102,10 @@ function NewProductForm({ userId }: NewProductFormProps) {
     <form onSubmit={handleSubmit(onSubmit)} className="gap-8 grid grid-cols-1 lg:grid-cols-2" id="new-product-form">
       <div className="self-stretch">
         <Card className="bg-primary-foreground h-full">
-          <CardHeader>
+          <CardHeader className="max-sm:p-2">
             <CardTitle>Detalles</CardTitle>
           </CardHeader>
-          <CardContent className="gap-4 grid">
+          <CardContent className="gap-4 grid max-sm:p-2">
             <div className="gap-2 grid">
               <div>
                 <Label htmlFor="name" className="text-muted-foreground">Nombre</Label>
@@ -125,10 +125,10 @@ function NewProductForm({ userId }: NewProductFormProps) {
       </div>
       <div>
         <Card className="bg-primary-foreground">
-          <CardHeader>
+          <CardHeader className="max-sm:p-2">
             <CardTitle>Precio</CardTitle>
           </CardHeader>
-          <CardContent className="gap-4 grid">
+          <CardContent className="gap-4 grid max-sm:p-2">
             <div className="gap-2 grid">
               <div>
                 <Label htmlFor="price" className="text-muted-foreground">Precio</Label>
@@ -155,12 +155,12 @@ function NewProductForm({ userId }: NewProductFormProps) {
       </div>
       <div className="col-span-full">
         <Card className="bg-primary-foreground">
-          <CardHeader>
+          <CardHeader className="max-sm:p-2">
             <CardTitle>Variantes</CardTitle>
           </CardHeader>
-          <CardContent className="gap-4 grid">
+          <CardContent className="gap-4 grid max-sm:p-2">
             {fields.length > 0 && (
-              <Table>
+              <Table className="min-w-[600px]">
                 <TableCaption>
                   <Button type="button" className="flex items-center gap-2" variant={"outline"} onClick={handleAddVariant}>
                     <PlusCircle />

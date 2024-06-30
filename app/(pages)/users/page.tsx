@@ -16,7 +16,9 @@ async function page() {
       <PageHeader title="Usuarios" actions={
         <>
           <CustomButton icon={<UserPlus />} tooltip="Crear Usuario" dialogType="new-user">
-            Crear Usuario
+            <span className="md:block hidden">
+              Crear Usuario
+            </span>
           </CustomButton>
         </>
       } />

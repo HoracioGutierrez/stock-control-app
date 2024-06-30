@@ -1,17 +1,10 @@
 import { PageTitleProps } from "@/lib/types"
-import { ChevronLeft, Menu } from "lucide-react"
-import { Button } from "./ui/button"
-import GoBackButton from "./GoBackButton"
-import DrawerToggleButton from "./DrawerToggleButton"
 
-function PageTitle({ title = "Demo Title", backButton = false }: PageTitleProps) {
+function PageTitle({ title = "Demo Title", subtitle }: PageTitleProps) {
   return (
-    <div className="flex items-center gap-2 mb-4">
-      {backButton && (
-        <GoBackButton />
-      )}
-      <DrawerToggleButton />
-      <h2 className="text-4xl font-bold text-muted-foreground">{title}</h2>
+    <div className="flex flex-col lg:gap-2">
+      <h2 className="font-bold text-2xl text-muted-foreground lg:text-4xl">{title}</h2>
+      {subtitle && <p className="text-muted-foreground">Cajero : {subtitle}</p>}
     </div>
   )
 }

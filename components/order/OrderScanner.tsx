@@ -111,14 +111,14 @@ function OrderScanner({ data }: OrderScannerProps) {
   }
 
   return (
-    <div className="flex flex-col h-full">
-      <div className="gap-4 grid grid-cols-1 md:grid-cols-2 mt-4 mb-4">
+    <section className="flex flex-col h-full">
+      <div className="gap-4 grid grid-cols-1 lg:grid-cols-2 mt-4 mb-4">
         <Card className="bg-accent">
-          <CardHeader>
+          <CardHeader className="max-sm:p-2 max-sm:pb-0">
             <CardTitle className="text-md text-muted-foreground">Total</CardTitle>
           </CardHeader>
-          <CardContent>
-            <CardDescription className="font-bold text-5xl text-primary">${total}</CardDescription>
+          <CardContent className="max-sm:p-2 max-sm:pt-0">
+            <CardDescription className="font-bold text-2xl text-primary lg:text-5xl">${total}</CardDescription>
             <CardDescription className="flex flex-col text-lg text-muted-foreground">
               {customer.id && <span>Cliente: {customer.name}</span>}
               {customer.currentAmount < 0 && <span className="font-bold text-red-400">Balance actual : ${customer.currentAmount}</span>}
@@ -126,27 +126,26 @@ function OrderScanner({ data }: OrderScannerProps) {
           </CardContent>
         </Card>
         <Card className="bg-accent">
-          <CardHeader>
+          <CardHeader className="max-sm:p-2 max-sm:pb-0">
             <CardTitle className="text-md text-muted-foreground">Último Producto</CardTitle>
           </CardHeader>
-          <CardContent>
-
+          <CardContent className="max-sm:p-2 max-sm:pt-0">
             {scannedProduct && (
-              <p className="font-bold text-4xl text-primary">
+              <p className="font-bold text-2xl text-primary lg:text-4xl">
                 {scannedProduct.name} x ${scannedProduct.price}
               </p>
             )}
             {error && <p className="text-red-500">{error}</p>}
-            <p className="text-muted-foreground">
+            <p className="max-sm:mb-2 text-muted-foreground max-sm:text-sm">
               {scannedProduct && scannedProduct.description ? scannedProduct.description : "No hay descripción"}
             </p>
             {scannedProduct && (
-              <p className="text-muted-foreground">
+              <p className="font-bold text-muted-foreground max-sm:text-sm">
                 codigo : {scannedProduct.barcode}
               </p>
             )}
           </CardContent>
-          <CardFooter className="flex justify-end items-end gap-4">
+          <CardFooter className="flex justify-end items-end gap-4 max-sm:p-2 max-sm:pt-4">
             <p className="text-muted-foreground">
               {scanning ? "Escaneando..." : "Esperando ingreso..."}
             </p>
@@ -176,49 +175,51 @@ function OrderScanner({ data }: OrderScannerProps) {
         </Card>
       </div>
 
-      <Table className="grow">
-        <TableHeader>
-          <TableRow>
-            <TableHead>Nombre</TableHead>
-            <TableHead>Precio</TableHead>
-            <TableHead>Código de barras</TableHead>
-            <TableHead>Cantidad</TableHead>
-            <TableHead>Eliminar</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {products.length === 0 && (
+      <div className="max-sm:py-8 overflow-auto grow">
+        <Table className="max-sm:py-8 overflow-auto grow">
+          <TableHeader>
             <TableRow>
-              <TableCell colSpan={5} className="h-24 text-center">
-                No hay productos en la venta todavía
-              </TableCell>
+              <TableHead>Nombre</TableHead>
+              <TableHead>Precio</TableHead>
+              <TableHead>Código de barras</TableHead>
+              <TableHead>Cantidad</TableHead>
+              <TableHead>Eliminar</TableHead>
             </TableRow>
-          )}
-          {products.length > 0 && (
-            products.map((product: any, i: number) => (
-              <TableRow key={i}>
-                <TableCell>{product.name}</TableCell>
-                <TableCell>${product.price} x {product.quantity || 1}</TableCell>
-                <TableCell>{product.barcode}</TableCell>
-                <TableCell className="flex items-center gap-2">
-                  {product.count || 1}
-                  <Button variant={"outline"} className="p-0 aspect-square" onClick={() => increment(product, i)}>
-                    <ArrowUp className="p-0 aspect-square" />
-                  </Button>
-                  <Button variant={"outline"} className="p-0 aspect-square" onClick={() => decrement(product, i)}>
-                    <ArrowDown className="p-0 aspect-square" />
-                  </Button>
-                </TableCell>
-                <TableCell>
-                  <Button variant={"outline"} className="p-0 aspect-square" onClick={() => { remove(product, i) }}>
-                    <Trash2 className="p-0 aspect-square" />
-                  </Button>
+          </TableHeader>
+          <TableBody>
+            {products.length === 0 && (
+              <TableRow>
+                <TableCell colSpan={5} className="h-24 text-center">
+                  No hay productos en la venta todavía
                 </TableCell>
               </TableRow>
-            ))
-          )}
-        </TableBody>
-      </Table>
+            )}
+            {products.length > 0 && (
+              products.map((product: any, i: number) => (
+                <TableRow key={i}>
+                  <TableCell>{product.name}</TableCell>
+                  <TableCell>${product.price} x {product.quantity || 1}</TableCell>
+                  <TableCell>{product.barcode}</TableCell>
+                  <TableCell className="flex items-center gap-2">
+                    {product.count || 1}
+                    <Button variant={"outline"} className="p-0 aspect-square" onClick={() => increment(product, i)}>
+                      <ArrowUp className="p-0 aspect-square" />
+                    </Button>
+                    <Button variant={"outline"} className="p-0 aspect-square" onClick={() => decrement(product, i)}>
+                      <ArrowDown className="p-0 aspect-square" />
+                    </Button>
+                  </TableCell>
+                  <TableCell>
+                    <Button variant={"outline"} className="p-0 aspect-square" onClick={() => { remove(product, i) }}>
+                      <Trash2 className="p-0 aspect-square" />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </div>
 
       <div className="justify-center gap-4 grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6">
         <CustomButton onClick={handlePayWith} disabled={products.length === 0} tooltip="Calcula el vuelto de la orden ingresando el monto con el cual desea pagar">
@@ -245,7 +246,7 @@ function OrderScanner({ data }: OrderScannerProps) {
           />
         </>
       )}
-    </div>
+    </section>
   )
 }
 export default OrderScanner

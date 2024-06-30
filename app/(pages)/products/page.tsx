@@ -22,14 +22,14 @@ async function ProductsPage() {
             tooltip="Edita precio de productos"
             dialogType="edit-prices"
           >
-            <span className="text-muted-foreground">Editar precios</span>
+            <span className="md:block hidden text-muted-foreground">Editar precios</span>
           </CustomButton>
           <CustomButton className="group"
             icon={<PackagePlus className="group-hover:text-green-500" />}
             tooltip="Crear producto"
             dialogType="new-product"
           >
-            <span className="text-muted-foreground">Crear producto</span>
+            <span className="md:block hidden text-muted-foreground">Crear producto</span>
           </CustomButton>
         </>
       } />

@@ -6,6 +6,7 @@ import CashRegisterTable from "@/components/cashRegister/CashRegisterTable"
 import CashRegisterDialog from "@/components/cashRegister/CashRegisterDialog"
 import { IconDeviceDesktopPlus } from '@tabler/icons-react'
 import CustomButton from "@/components/layout/CustomButton"
+import { ArrowUpDown } from "lucide-react"
 
 async function StockPage() {
 
@@ -17,8 +18,10 @@ async function StockPage() {
       <PageHeader title="Cajas" actions={session?.user.isAdmin
         ? (
           <>
-            <CustomButton tooltip="Ingresar dinero manualmente a la caja actual" dialogType="manual-income" className="truncate">
-              Ingreso/Egreso Manual
+            <CustomButton tooltip="Ingresar dinero manualmente a la caja actual" dialogType="manual-income" className="truncate group" icon={<ArrowUpDown className="group-hover:text-green-500" />}>
+              <span className="md:block hidden">
+                Ingreso/Egreso Manual
+              </span>
             </CustomButton>
             <DialogTriggerButton className="group" dialogType="new-cash-register" text="Crear Caja" icon={<IconDeviceDesktopPlus className="group-hover:text-green-500" />} />
           </>

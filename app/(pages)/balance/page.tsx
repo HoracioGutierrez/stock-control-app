@@ -5,6 +5,7 @@ import BalanceDialog from "@/components/balance/BalanceDialog"
 import BalanceTable from "@/components/balance/BalanceTable"
 import CustomButton from "@/components/layout/CustomButton"
 import PageHeader from "@/components/layout/PageHeader"
+import { ArrowUpDown } from "lucide-react"
 
 async function BalancePage() {
 
@@ -14,8 +15,10 @@ async function BalancePage() {
   return (
     <>
       <PageHeader title="Balance" actions={
-        <CustomButton tooltip="Ingresar dinero manualmente a la caja actual" dialogType="manual-income" className="truncate">
-          Ingreso/Egreso Manual
+        <CustomButton tooltip="Ingresar dinero manualmente a la caja actual" dialogType="manual-income" className="truncate" icon={<ArrowUpDown className="group-hover:text-green-500" />}>
+          <span className="md:block hidden">
+            Ingreso/Egreso Manual
+          </span>
         </CustomButton>
       } />
       {(!data || data.length == 0) && (

@@ -23,9 +23,9 @@ const DialogTriggerButton = ({ dialogType, children, className, icon, text = "Tr
   }
 
   return (
-    <Button onClick={handleClick} className={cn("flex items-center gap-2 text-white dark:text-primary-foreground", className)} disabled={disabled}>
+    <Button onClick={handleClick} className={cn("flex items-center gap-2 text-white dark:text-primary-foreground max-sm:px-2 max-sm:py-1", className)} disabled={disabled} type="button">
       {icon && icon}
-      <span>{children ? children : text ? text : "Trigger Dialog"}</span>
+      <span className="md:block hidden">{children ? children : text ? text : "Trigger Dialog"}</span>
     </Button>
   )
 }

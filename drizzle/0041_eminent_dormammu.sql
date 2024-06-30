@@ -1,0 +1,1 @@
+ALTER TABLE "stock-control-app_product" ALTER COLUMN "hasVariants" SET DEFAULT false;

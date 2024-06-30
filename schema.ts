@@ -144,6 +144,7 @@ export const products: any = pgTable(
     createdAt: timestamp("createdAt", { mode: "date" }).defaultNow(),
     updatedAt: timestamp("updatedAt", { mode: "date" }).defaultNow(),
     isVariant: boolean("isVariant").notNull(),
+    hasVariants: boolean("hasVariants").notNull().default(false),
     productId: text("productId"),
     active: boolean("active").notNull().default(false),
   },

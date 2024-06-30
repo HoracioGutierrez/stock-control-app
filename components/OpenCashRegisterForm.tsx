@@ -26,8 +26,8 @@ function OpenCashRegisterForm({ userId, data }: OpenCashRegisterFormProps) {
   const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<CashRegisterInputValues>({
     defaultValues: {
       label: "",
-      currentAmount: 0,
-      totalAmount: 0
+      /* currentAmount: 0,
+      totalAmount: 0 */
     },
     resolver: yupResolver(cashRegisterSchema)
   })
@@ -38,7 +38,7 @@ function OpenCashRegisterForm({ userId, data }: OpenCashRegisterFormProps) {
 
   const onSubmit = (data: CashRegisterInputValues) => {
     setLoading(true)
-    openCashRegister(data.label,data.currentAmount, userId)
+    openCashRegister(data.label/* ,data.currentAmount */, userId)
       .then((data) => {
         if (data?.error) {
           throw new Error(data.error)

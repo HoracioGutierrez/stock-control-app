@@ -176,7 +176,7 @@ function EditProductVariantsForm({ barcode, userId }: EditProductVariantsFormPro
           <CardContent className="gap-4 grid">
             <div className="gap-2 grid">
               <Label htmlFor="price" className="text-muted-foreground">Precio</Label>
-              <Input type="number" placeholder="Precio" {...register("price")} disabled={loading} />
+              <Input type="number" placeholder="Precio" {...register("price")} disabled={loading} step="any" />
               {errors.price && <p className="text-red-500">{errors.price.message}</p>}
             </div>
             <div className="gap-2 grid">

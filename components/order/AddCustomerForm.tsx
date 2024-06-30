@@ -116,7 +116,7 @@ function AddCustomerForm({ userId }: AddCustomerFormProps) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <p className="mb-8 text-muted-foreground text-sm">Aca podrás agregar un cliente a la orden seleccionandolo de la siguiente lista, o bien creando uno nuevo haciendo click en el boton "Crear nuevo cliente"</p>
+      <p className="mb-8 text-muted-foreground text-sm">Aca podrás agregar un cliente a la orden seleccionandolo de la siguiente lista, o bien creando uno nuevo haciendo click en el boton &quot;Crear nuevo cliente&quot;</p>
       <div className="flex flex-col gap-4">
         {!isNewCustomerForm ? (
           <Select onValueChange={handleSetClient}>

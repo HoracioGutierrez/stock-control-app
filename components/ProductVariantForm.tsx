@@ -17,7 +17,7 @@ function ProductVariantForm({ index, register, error, isLoading, onRemove, canRe
       </TableCell>
       <TableCell>
         <div className="gap-2 grid">
-          <Input type="number" placeholder="Precio" {...register(`variants.${index}.price`)} disabled={isLoading} />
+          <Input type="number" placeholder="Precio" {...register(`variants.${index}.price`)} disabled={isLoading} step="any" />
           {error && error.price && <p className="text-red-500">{error.price.message}</p>}
         </div>
       </TableCell>

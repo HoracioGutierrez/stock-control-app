@@ -68,8 +68,6 @@ export const getAllOrders = async (startDate?: string, endDate?: string): Promis
       .leftJoin(customers, eq(customers.id, orders.customerId))
     }
 
-    console.log(ordersFromDB)
-
     return {
       data: ordersFromDB,
       error: null,

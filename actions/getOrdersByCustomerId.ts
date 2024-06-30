@@ -6,7 +6,6 @@ import { eq, sql } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 
 export const getOrdersByCustomerId = async (customerId: string): Promise<GeneralResponse> => {
-  console.log(customerId)
   "use server"
   try {
 
@@ -32,7 +31,6 @@ export const getOrdersByCustomerId = async (customerId: string): Promise<General
       message: "Compras realizadas encontradas"
     }
   } catch (error) {
-    console.log(error)
     if (error instanceof Error) {
       return {
         data: null,

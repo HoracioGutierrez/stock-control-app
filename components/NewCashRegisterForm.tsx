@@ -25,8 +25,8 @@ function NewCashRegisterForm({ userId }: NewCashRegisterFormProps) {
   const { register, handleSubmit, formState: { errors }, reset } = useForm<CashRegisterInputValues>({
     defaultValues: {
       label: "",
-      currentAmount: 0,
-      totalAmount: 0
+      /* currentAmount: 0,
+      totalAmount: 0 */
     },
     resolver: yupResolver(cashRegisterSchema)
   })
@@ -35,8 +35,8 @@ function NewCashRegisterForm({ userId }: NewCashRegisterFormProps) {
     setLoading(true)
     createNewCashRegister({
       label: data.label,
-      currentAmount: data.currentAmount,
-      totalAmount: data.totalAmount,
+      currentAmount: 0,
+      totalAmount: 0,
     }, userId)
       .then((data) => {
         if (data?.error) {

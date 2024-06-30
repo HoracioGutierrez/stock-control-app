@@ -52,7 +52,6 @@ function ManualIncomeForm({ userId }: Props) {
   }
 
   const onSubmit = (data: any) => {
-    console.log("test")
     handleSaveManualOperation(data.amount, data.reason, data.operationType)
   }
 

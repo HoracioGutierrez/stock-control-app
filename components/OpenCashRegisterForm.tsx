@@ -38,7 +38,7 @@ function OpenCashRegisterForm({ userId, data }: OpenCashRegisterFormProps) {
 
   const onSubmit = (data: CashRegisterInputValues) => {
     setLoading(true)
-    openCashRegister(data.label/* ,data.currentAmount */, userId)
+    openCashRegister(data.label, 0, userId)
       .then((data) => {
         if (data?.error) {
           throw new Error(data.error)

@@ -4,7 +4,7 @@ import { db, cashRegister, history, cashRegistersOpennings, generalBalance } fro
 import { asc, desc, eq, sql } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 
-export const openCashRegister = async (cashRegisterId: string/* , currentAmount: number */, userId: string): Promise<GeneralResponse> => {
+export const openCashRegister = async (cashRegisterId: string, currentAmount: number, userId: string): Promise<GeneralResponse> => {
   "use server"
   try {
     const cashRegisterFromDb = await db.select().from(cashRegister).where(eq(cashRegister.id, cashRegisterId))
@@ -34,8 +34,7 @@ export const openCashRegister = async (cashRegisterId: string/* , currentAmount:
 
     const cashRegisterUpdated = await db.update(cashRegister).set({
       openedById: userId,
-      //currentAmount: currentAmount,
-      currentAmount: generalBalanceFromDb[0].balance,
+      currentAmount: currentAmount,
       currentOpenningId: openning[0].insertedId
     }).where(eq(cashRegister.id, cashRegisterId)).returning({
       updatedId: cashRegister.id,

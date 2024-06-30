@@ -35,8 +35,8 @@ export type CustomerInputValues = {
 
 export type CashRegisterInputValues = {
   label: string
-  currentAmount: number
-  totalAmount: number
+  /* currentAmount: number
+  totalAmount: number */
 }
 
 export type DeleteButtonProps = {

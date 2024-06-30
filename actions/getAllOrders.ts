@@ -18,7 +18,13 @@ export const getAllOrders = async (startDate?: string, endDate?: string): Promis
         createdAt: orders.createdAt,
         customerName : customers.name,
         customerLastName : customers.lastName,
-      }).from(orders).where(and(gt(orders.createdAt, startDate), lt(orders.createdAt, endDate))).orderBy(desc(orders.createdAt)).innerJoin(cashRegister, eq(cashRegister.id, orders.cashRegisterId)).leftJoin(customers, eq(customers.id, orders.customerId))
+        label: cashRegister.label,
+      })
+      .from(orders)
+      .where(and(gt(orders.createdAt, startDate), lt(orders.createdAt, endDate)))
+      .orderBy(desc(orders.createdAt))
+      .innerJoin(cashRegister, eq(cashRegister.id, orders.cashRegisterId))
+      .leftJoin(customers, eq(customers.id, orders.customerId))
     }
 
     if (startDate && !endDate) {
@@ -30,6 +36,7 @@ export const getAllOrders = async (startDate?: string, endDate?: string): Promis
         createdAt: orders.createdAt,
         customerName : customers.name,
         customerLastName : customers.lastName,
+        label: cashRegister.label,
       }).from(orders).where(gt(orders.createdAt, startDate)).orderBy(desc(orders.createdAt)).innerJoin(cashRegister, eq(cashRegister.id, orders.cashRegisterId)).leftJoin(customers, eq(customers.id, orders.customerId))
     }
 
@@ -42,6 +49,7 @@ export const getAllOrders = async (startDate?: string, endDate?: string): Promis
         createdAt: orders.createdAt,
         customerName : customers.name,
         customerLastName : customers.lastName,
+        label: cashRegister.label,
       }).from(orders).where(lt(orders.createdAt, endDate)).orderBy(desc(orders.createdAt)).innerJoin(cashRegister, eq(cashRegister.id, orders.cashRegisterId)).leftJoin(customers, eq(customers.id, orders.customerId))
     }
 
@@ -54,6 +62,7 @@ export const getAllOrders = async (startDate?: string, endDate?: string): Promis
         createdAt: orders.createdAt,
         customerName : customers.name,
         customerLastName : customers.lastName,
+        label: cashRegister.label,
       }).from(orders).orderBy(desc(orders.createdAt))
       .innerJoin(cashRegister, eq(cashRegister.id, orders.cashRegisterId))
       .leftJoin(customers, eq(customers.id, orders.customerId))

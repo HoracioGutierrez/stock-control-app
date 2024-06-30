@@ -63,9 +63,12 @@ export const rewriteActionType: Record<string, string> = {
 }
 
 export const rewriteActionTypeMessage: Record<string, string> = {
-  "products": "productos",
-  "customers": "clientes",
-  "providers": "proveedores",
-  "cash-registers": "cajas",
-  "orders": "pedidos",
+  "products": "No hay productos creados o habilitados, puedes crear uno o activar uno ya existente.",
+  "customers": "No hay clientes creados o habilitados, puedes crear uno o activar uno ya existente.",
+  "providers": "No hay proveedores creados o habilitados, puedes crear uno o activar uno ya existente.",
+  "cash-registers": "No hay cajas creadas o habilitadas, puedes crear una o activar una ya existente.",
+  "orders": "No hay pedidos creados o habilitados, puedes crear uno o activar uno ya existente.",
+  "customer-orders": "No hay compras realizadas por este cliente aun.",
+  "purchase-orders-provider" : "No hay ordenes de compra creadas, puedes comenzar a crear una yendo a la sección de proveedores y generando un pedido de compra.",
+  "purchase-orders" : "No hay ordenes de compra hechas por este proveedor aun.",
 }

@@ -21,7 +21,7 @@ async function SalesPage() {
           </div>
         </div>
       )}
-      {data.length > 0 && <OrdersTable data={data} />}
+      {data.length > 0 && <OrdersTable data={data ? data : []} />}
       <OrdersDialog userId={session?.user.id as string} />
     </>
   )

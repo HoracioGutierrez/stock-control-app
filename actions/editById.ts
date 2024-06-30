@@ -14,6 +14,12 @@ export const editById = async (entityType: string, entityId: string, data: any, 
     try {
         const entitySchema = entitiesPropsById[entityType as keyof Entity]
         const entityHistory = entitiesPropsById["history"]
+
+        /* if (entityType === "product" && data) {
+            const hasVariants = await db.select().from(products).where(eq(products.productId, entityId))
+            if (hasVariants.length > 0) throw new Error("No se puede editar un producto con variantes")
+        } */
+
         const response = await db.update(entitySchema).set(data).where(eq(entitySchema.id, entityId)).returning({
             insertedId: entitySchema.id
         })

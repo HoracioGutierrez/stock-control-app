@@ -28,9 +28,9 @@ async function OrderDetailPage({ params: { id } }: OrderDetailPageProps) {
                 <div>
                   <p className="text-muted-foreground">Cliente</p>
                   <p>
-                    {data.customer ? data.customer.name : "Sin Nombre"}
-                    {data.customer && data.customer.lastName && ", "}
-                    {data.customer && data.customer.lastName && data.customer.lastName}
+                    {data.customers ? data.customers.name : "Sin Nombre"}
+                    {data.customers && data.customers.lastName && ", "}
+                    {data.customers && data.customers.lastName && data.customers.lastName}
                   </p>
                 </div>
                 <div>

@@ -4,6 +4,7 @@ import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown, TrendingDown, TrendingUp } from "lucide-react"
 import { Checkbox } from "@/components/ui/checkbox"
 import { IconTruckLoading } from "@tabler/icons-react"
+import { RadioGroupItem } from "@/components/ui/radio-group"
 
 export const productsColumns: ColumnDef<ProductType>[] = [
   {
@@ -422,7 +423,7 @@ export const ordersColumns: ColumnDef<any>[] = [
   },
   {
     header: "Registro de Caja",
-    accessorKey: ".label",
+    accessorKey: "label",
   },
   {
     header: "Cliente",
@@ -771,7 +772,7 @@ export const purchaseOrdersProviderColumns: ColumnDef<any>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex items-center gap-2">
-          <IconTruckLoading/>
+          <IconTruckLoading />
           {row.original.createdAt.toLocaleString("es-ES")}
         </div>
       )
@@ -804,4 +805,49 @@ export const purchaseOrdersProviderColumns: ColumnDef<any>[] = [
     accessorKey: "actions",
     size: 1
   }
+]
+
+export const variantColumns: ColumnDef<any>[] = [
+  {
+    id: "select",
+    header: "Seleccionar",
+    cell: ({ row, table }) => (
+      <input type="radio" name="variant" value={row.original.id} onChange={(e: any) => {
+        table.toggleAllPageRowsSelected(false)
+        row.toggleSelected(e.target.value)
+      }} />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+    size: 1,
+  },
+  {
+    header: "Nombre",
+    accessorKey: "name",
+    meta: {
+      name: "Nombre"
+    },
+  },
+  {
+    header: "Descripción",
+    accessorKey: "description",
+    meta: {
+      name: "Descripción"
+    },
+    cell : ({ row }) => {
+      return (
+        <div className="max-w-sm">
+          {row.original.description}
+        </div>
+      )
+    },
+    size : 300
+  },
+  {
+    header: "Precio",
+    accessorKey: "price",
+    meta: {
+      name: "Precio"
+    }
+  },
 ]

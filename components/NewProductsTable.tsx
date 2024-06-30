@@ -23,17 +23,19 @@ function ProductsTable({ data, isAdmin }: ProductsTableProps) {
         return (
           <>
             {isAdmin && (
-              <CustomButton tooltip={rowData.active ? "Borrar producto" : "Reactivar producto"} data={rowData.id} variant="ghost" className="aspect-square p-0 group" dialogType={rowData.active ? "delete-product" : "activate-product"} >
-                {rowData.active && <Trash2 className="p-0 aspect-square group-hover:text-red-400" />}
-                {!rowData.active && <UndoDot className="p-0 aspect-square group-hover:text-green-400" />}
+              <CustomButton tooltip={rowData.active ? "Borrar producto" : "Reactivar producto"} data={rowData.id} variant="ghost" className="p-0 aspect-square group" dialogType={rowData.active ? "delete-product" : "activate-product"} >
+                {rowData.active && <Trash2 className="group-hover:text-red-400 p-0 aspect-square" />}
+                {!rowData.active && <UndoDot className="group-hover:text-green-400 p-0 aspect-square" />}
               </CustomButton>
             )}
-            <CustomButton tooltip="Editar producto" data={rowData.barcode} variant="ghost" className="aspect-square p-0 group" dialogType="edit-product">
-              <Edit className="p-0 aspect-square group-hover:text-yellow-400" />
+            <CustomButton tooltip="Editar producto" data={rowData.barcode} variant="ghost" className="p-0 aspect-square group" dialogType="edit-product">
+              <Edit className="group-hover:text-yellow-400 p-0 aspect-square" />
             </CustomButton>
-            <CustomButton tooltip="Agregar variante" data={rowData.barcode} variant="ghost" className="aspect-square p-0 group" dialogType="variant">
-              <ListTreeIcon className="p-0 aspect-square group-hover:text-yellow-400" />
-            </CustomButton>
+            {rowData.isVariant === false && rowData.hasVariants === true && (
+              <CustomButton tooltip="Agregar variante" data={rowData.barcode} variant="ghost" className="p-0 aspect-square group" dialogType="variant">
+                <ListTreeIcon className="group-hover:text-yellow-400 p-0 aspect-square" />
+              </CustomButton>
+            )}
           </>
         )
       }}

@@ -1,6 +1,7 @@
 "use server"
 import { GeneralResponse, ProductInputValues } from "@/lib/types";
 import { ProductType, db, history, products } from "@/schema";
+import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 export const createNewProduct = async (userId: string, data: ProductType, variants: any[] | undefined): Promise<GeneralResponse> => {
@@ -15,7 +16,8 @@ export const createNewProduct = async (userId: string, data: ProductType, varian
       stock: data.stock,
       userId: userId,
       isVariant: false,
-      active: true
+      active: true,
+      hasVariants: variants && variants.length > 0 ? true : false
     }).returning({
       insertedId: products.id
     })
@@ -32,7 +34,8 @@ export const createNewProduct = async (userId: string, data: ProductType, varian
           userId: userId,
           productId: product[0].insertedId,
           isVariant: true,
-          active: true
+          active: true,
+          hasVariants: false
         }).returning({
           insertedId: products.id
         })
@@ -47,6 +50,7 @@ export const createNewProduct = async (userId: string, data: ProductType, varian
           userAgent: null,
         })
       }
+
     }
 
     if (product.length === 0) throw new Error("Error al crear el producto")

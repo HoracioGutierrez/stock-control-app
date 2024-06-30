@@ -28,8 +28,10 @@ import { format } from "date-fns"
 import { cn } from "@/lib/utils"
 import { columns, rewriteActionType, rewriteActionTypeMessage } from "@/lib/columnHistoryDefinitions"
 import { CustomDataTableProps } from "@/lib/types"
+import CustomButton from "./layout/CustomButton"
 
 function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualFetch, manualCallback, dateFilter, pageSize: size = 5, noFilter = false }: CustomDataTableProps) {
+
   const [sorting, setSorting] = useState<SortingState>([])
   const [tableData, setTableData] = useState<ProductType | HistoryType[]>(data ? data : [])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -139,6 +141,33 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
       })
   }
 
+  const handleCancelDateFilter = () => {
+    setSelectedDay(undefined)
+    setOpen(false)
+    getAllOrders()
+      .then((data) => {
+        if (data?.error) {
+          throw new Error(data.error)
+        }
+        setTableData(data.data)
+      })
+      .catch((error) => {
+        if (error instanceof Error) {
+          return toast({
+            variant: "destructive",
+            title: "Error al obtener los productos",
+            description: error.message
+          })
+        }
+
+        return toast({
+          variant: "destructive",
+          title: "Error al obtener los productos",
+          description: error.message
+        })
+      })
+  }
+
 
 
   return (
@@ -155,10 +184,10 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
           />
 
           {dateFilter && (
-            <div>
+            <div className="flex gap-2">
               <Popover open={open}>
                 <PopoverTrigger asChild>
-                  <Button onClick={() => setOpen(true)}>{selectedDay ? format(selectedDay, "dd/MM/yyyy") : "Elige una fecha"}</Button>
+                  <Button onClick={() => setOpen(!open)}>{selectedDay ? format(selectedDay, "dd/MM/yyyy") : "Elige una fecha"}</Button>
                 </PopoverTrigger>
                 <PopoverContent>
                   <Calendar
@@ -168,6 +197,7 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
                   />
                 </PopoverContent>
               </Popover>
+              {selectedDay && <CustomButton onClick={handleCancelDateFilter}>cancelar</CustomButton>}
             </div>
           )}
 
@@ -372,7 +402,7 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
               <TableRow>
                 <TableCell colSpan={columns[type].length} className="h-24 text-center">
                   <div className="flex justify-center items-center gap-2">
-                    <FileX2 /> {`No hay ${rewriteActionTypeMessage[type]} creados o habilitados, puedes crear uno o activar uno ya existente.`}
+                    <FileX2 /> {`${rewriteActionTypeMessage[type]}`}
                   </div>
                 </TableCell>
               </TableRow>

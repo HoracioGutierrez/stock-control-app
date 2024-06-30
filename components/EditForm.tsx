@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 import { Button } from "./ui/button"
-import { Check, Loader, PlusCircle, SaveIcon, X } from "lucide-react"
+import { Check, Link, Loader, PlusCircle, SaveIcon, X } from "lucide-react"
 import { FormEditProps } from "@/lib/types"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table"
 import ProductVariantForm from "./ProductVariantForm"
@@ -12,13 +12,20 @@ import CustomButton from "./layout/CustomButton"
 import { editById } from "@/actions/editById"
 import { toast } from "./ui/use-toast"
 import { IconDeviceFloppy, IconPlugConnected, IconPlugConnectedX } from "@tabler/icons-react"
+import LinkProductToVariantTable from "./products/LinkProductToVariantTable"
+import { RadioGroup } from "@radix-ui/react-dropdown-menu"
+import { useDialogStore } from "@/stores/generalDialog"
 
 
 
 function EditForm({ entityType, loading, register, errors, data, formForVariant, formForName, formForDetails, entityConfig, entityResolved, isVariant, handleMainNameChange, handleAddVariant, fields, hasVariants = false, hasDetails = false, userId }: FormEditProps) {
 
     const [isVariantUnlinking, setIsVariantUnlinking] = useState<boolean>(false)
+    const [isVariantLinking, setIsVariantLinking] = useState<boolean>(false)
     const [loadingUnlink, setLoadingUnlink] = useState<boolean>(false)
+    const [productId, setProductId] = useState<string>("")
+    const [loadingLink, setLoadingLink] = useState<boolean>(false)
+    const { setClose } = useDialogStore((state: any) => state)
 
     const handleVariantUnlink = () => {
         setIsVariantUnlinking(true)
@@ -60,12 +67,50 @@ function EditForm({ entityType, loading, register, errors, data, formForVariant,
             })
     }
 
+    const handleVariantLink = () => {
+        setIsVariantLinking(true)
+    }
+
+    const handleConfirmLinkVariant = () => {
+        setLoadingLink(true)
+        Promise.all([editById("product", data, { productId, isVariant: true }, userId), editById("product", productId, { hasVariants: true }, userId)])
+            .then((data) => {
+                if (data[0]?.error || data[1]?.error) {
+                    throw new Error("Error al vincular la variante")
+                }
+                toast({
+                    title: "Variante vinculada correctamente",
+                    description: "La variante se ha vinculado correctamente en la base de datos",
+                })
+            })
+            .catch((error) => {
+                if (error instanceof Error) {
+                    return toast({
+                        variant: "destructive",
+                        title: "Error al vincular la variante",
+                        description: error.message
+                    })
+                }
+                toast({
+                    variant: "destructive",
+                    title: `Error al vincular la variante`,
+                    description: error.message
+                })
+            })
+            .finally(() => {
+                setLoadingLink(false)
+                setIsVariantLinking(false)
+                setClose()
+            })
+
+    }
+
     return (
         <>
-            {!isVariantUnlinking && (
+            {!isVariantUnlinking && !isVariantLinking && (
                 <div className="flex justify-center items-center">
                     {hasDetails === false &&
-                        <div className="grid grid-cols-1 gap-4 py-4 ">
+                        <div className="gap-4 grid grid-cols-1 py-4">
                             <Card className="bg-primary-foreground p-4">
                                 <CardHeader>
                                     <CardTitle>
@@ -129,7 +174,7 @@ function EditForm({ entityType, loading, register, errors, data, formForVariant,
                 </div>
             )}
 
-            {(hasDetails && !isVariantUnlinking) && (
+            {(hasDetails && !isVariantUnlinking && !isVariantLinking) && (
                 <div>
                     <Card className="bg-primary-foreground">
                         <CardHeader>
@@ -163,7 +208,7 @@ function EditForm({ entityType, loading, register, errors, data, formForVariant,
                 </div >
             )}
 
-            {(hasVariants && !isVariantUnlinking) && (
+            {(hasVariants && !isVariantUnlinking && !isVariantLinking) && (
                 <div className="col-span-full">
                     <Card className="bg-accent">
                         <CardHeader>
@@ -218,12 +263,21 @@ function EditForm({ entityType, loading, register, errors, data, formForVariant,
                 </div>
             )}
 
+            {isVariantLinking && (
+                <div className="col-span-full">
+                    <p className="text-muted-foreground">Estás a punto de vincular este producto como variante de otro. Para hacerlo, debes seleccionar el producto que deseas vincular de la siguiente tabla :</p>
+                    <RadioGroup>
+                        <LinkProductToVariantTable userId={userId as string} setProductId={setProductId} />
+                    </RadioGroup>
+                </div>
+            )}
+
             <div className="grid grid-cols-1 col-span-full">
                 <div className="flex justify-center gap-2">
                     {(isVariant && !isVariantUnlinking && entityType === "product") &&
                         <CustomButton onClick={handleVariantUnlink}>{
                             <div className="flex items-center group">
-                                <IconPlugConnectedX className="group-hover:text-red-500 size-8 text-muted-foreground aspect-square" />
+                                <IconPlugConnectedX className="group-hover:text-red-500 text-muted-foreground aspect-square size-8" />
                                 <span className="text-muted-foreground">Desvincular variante</span>
                             </div>
                         }</CustomButton>
@@ -232,27 +286,39 @@ function EditForm({ entityType, loading, register, errors, data, formForVariant,
                         <>
                             <CustomButton onClick={cancelVariantUnlink}>
                                 <div className="flex items-center group">
-                                    <X className="group-hover:text-red-500 size-6 text-muted-foreground aspect-square" />
+                                    <X className="group-hover:text-red-500 text-muted-foreground aspect-square size-6" />
                                     <span className="text-muted-foreground">Cancelar</span>
                                 </div>
                             </CustomButton>
                             <CustomButton isLoading={loadingUnlink} onClick={handleVariantUnlinkConfirm}>
                                 <div className="flex items-center group">
-                                    <Check className="group-hover:text-green-500 size-6 text-muted-foreground aspect-square" />
+                                    <Check className="group-hover:text-green-500 text-muted-foreground aspect-square size-6" />
                                     <span className="text-muted-foreground">Confirmar</span>
                                 </div>
                             </CustomButton>
                         </>
                     )}
-                    {!isVariant && entityType === "product" && <CustomButton>
-                        <div className="flex items-center group">
-                            <IconPlugConnected className="group-hover:text-green-500 size-8 text-muted-foreground aspect-square" />
-                            <span className="text-muted-foreground">Vincular variante</span>
-                        </div>
-                    </CustomButton>}
-                    {!isVariantUnlinking && (
+                    {!isVariant && entityType === "product" && (
+                        <>
+                            <CustomButton onClick={isVariantLinking ? handleConfirmLinkVariant : handleVariantLink} disabled={loadingLink}>
+                                <div className="flex items-center group">
+                                    {loadingLink ? <Loader className="animate-spin" /> : <IconPlugConnected className="group-hover:text-green-500 text-muted-foreground aspect-square size-8" />}
+                                    <span className="text-muted-foreground">{isVariantLinking ? "Confirmar" : "Vincular variante"}</span>
+                                </div>
+                            </CustomButton>
+                            {isVariantLinking && (
+                                <CustomButton onClick={() => { setIsVariantLinking(false) }} className="flex items-center group" disabled={loading}>
+                                    <div className="flex items-center group">
+                                        <X className="group-hover:text-red-500 text-muted-foreground aspect-square size-8" />
+                                        <span className="text-muted-foreground">Cancelar</span>
+                                    </div>
+                                </CustomButton>
+                            )}
+                        </>
+                    )}
+                    {!isVariantUnlinking && !isVariantLinking && (
                         <Button form={entityConfig[entityType].formId} className="flex items-center group" disabled={loading}>
-                            {loading && <Loader className="animate-spin" /> || <IconDeviceFloppy className="size-8 text-muted-foreground group-hover:text-green-500 aspect-square" />}
+                            {loading && <Loader className="animate-spin" /> || <IconDeviceFloppy className="group-hover:text-green-500 text-muted-foreground aspect-square size-8" />}
                             {<span className="text-muted-foreground">Guardar {entityResolved}</span>}
                         </Button>
                     )}

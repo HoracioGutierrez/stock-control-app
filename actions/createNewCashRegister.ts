@@ -1,6 +1,7 @@
 "use server"
 import { GeneralResponse } from "@/lib/types"
 import { CashRegisterType, db, cashRegister, history } from "@/schema"
+import { revalidatePath } from "next/cache"
 
 export const createNewCashRegister = async (data: CashRegisterType, userId: string): Promise<GeneralResponse> => {
   "use server"
@@ -26,6 +27,8 @@ export const createNewCashRegister = async (data: CashRegisterType, userId: stri
       ip: null,
       userAgent: null,
     })
+
+    revalidatePath("/cashRegisters")
 
     return {
       data: cashRegisterFromDB[0],

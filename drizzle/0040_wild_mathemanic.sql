@@ -1,0 +1,1 @@
+ALTER TABLE "stock-control-app_product" ADD COLUMN "hasVariants" boolean NOT NULL;

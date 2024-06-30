@@ -38,7 +38,7 @@ function CustomButton({ children, className, icon, text = "Trigger Dialog", data
 
   const ButtonEl = ({ children, className, icon, text = "Trigger Dialog", disabled = false, onClick, isLoading = false, variant, ...props }: Props) => {
     return (
-      <Button variant={variant} className={cn("text-muted-foreground flex gap-2", className)} onClick={onClick} disabled={disabled}>
+      <Button variant={variant} className={cn("text-muted-foreground flex gap-2", className)} onClick={onClick} disabled={disabled} type="button">
         {isLoading && <Loader className="animate-spin" />}
         {!isLoading && icon ? icon : null}
         <span>{children ? children : text ? text : "Trigger Dialog"}</span>

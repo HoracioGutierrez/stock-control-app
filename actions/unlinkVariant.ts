@@ -9,8 +9,16 @@ export const unlinkVariant = async (barcode: string, userId: string): Promise<Ge
   "use server"
   try {
     const product = await db.select().from(products).where(eq(products.barcode, barcode))
+
     if (product.length === 0) throw new Error("Producto no encontrado")
+
     await db.update(products).set({ productId: null, isVariant: false }).where(eq(products.id, product[0].id))
+
+    const hasVariants = await db.select().from(products).where(eq(products.productId, product[0].id))
+
+    if (hasVariants.length === 0) {
+      await db.update(products).set({ hasVariants: false }).where(eq(products.id, product[0].productId))
+    }
 
     await db.insert(history).values({
       userId: userId,

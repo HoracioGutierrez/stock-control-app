@@ -8,10 +8,14 @@ export const openCashRegister = async (cashRegisterId: string, currentAmount: nu
   "use server"
   try {
     const cashRegisterFromDb = await db.select().from(cashRegister).where(eq(cashRegister.id, cashRegisterId))
+
     if (cashRegisterFromDb.length === 0) throw new Error("La caja no existe")
     if (cashRegisterFromDb[0].openedById) throw new Error("La caja ya está abierta")
+    if (cashRegisterFromDb[0].active === false) throw new Error("La caja está bloqueada/borrada")
+
     const hasCashRegister = await db.select().from(cashRegister).where(eq(cashRegister.openedById, userId))
     if (hasCashRegister.length > 0) throw new Error("Ya tienes una caja abierta")
+
     const generalBalanceFromDb = await db.select().from(generalBalance).limit(1).orderBy(desc(generalBalance.createdAt))
     if (generalBalanceFromDb.length === 0) throw new Error("No hay saldo en la base de datos")
 

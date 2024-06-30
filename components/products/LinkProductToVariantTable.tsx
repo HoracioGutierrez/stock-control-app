@@ -63,7 +63,7 @@ function LinkProductToVariantTable({ userId, providerId, setProductId }: Props) 
   })
 
   useEffect(() => {
-    getAllPossibleVariantProducts()
+    getAllPossibleVariantProducts(id)
       .then((data) => {
         if (data?.error) {
           throw new Error(data.error)

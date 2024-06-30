@@ -15,9 +15,10 @@ export const unlinkVariant = async (barcode: string, userId: string): Promise<Ge
     await db.update(products).set({ productId: null, isVariant: false }).where(eq(products.id, product[0].id))
 
     const hasVariants = await db.select().from(products).where(eq(products.productId, product[0].id))
+    console.log({hasVariants})
 
     if (hasVariants.length === 0) {
-      await db.update(products).set({ hasVariants: false }).where(eq(products.id, product[0].id))
+      await db.update(products).set({ hasVariants: false }).where(eq(products.id, product[0].productId))
     }
 
     await db.insert(history).values({

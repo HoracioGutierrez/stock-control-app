@@ -6,17 +6,23 @@ import { eq, sql } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 
 export const getOrdersByCustomerId = async (customerId: string): Promise<GeneralResponse> => {
+  console.log(customerId)
   "use server"
   try {
-    
+
     const ordersFromDB = await db.select({
       id: orders.id,
-      total : orders.total,
+      total: orders.total,
       status: orders.status,
       paymentMethod: orders.paymentMethod,
       createdAt: orders.createdAt,
       itemCount: sql<number>`sum(${productOrders.quantity})`.as("itemCount"),
-    }).from(orders).where(eq(orders.customerId, customerId)).orderBy(orders.createdAt).innerJoin(productOrders, eq(productOrders.orderId, orders.id)).groupBy(orders.id)
+    })
+    .from(orders)
+    .where(eq(orders.customerId, customerId))
+    .orderBy(orders.createdAt)
+    .innerJoin(productOrders, eq(productOrders.orderId, orders.id))
+    .groupBy(orders.id)
 
     if (ordersFromDB.length === 0) throw new Error("No se encontraron compras realizadas por este cliente")
 
@@ -26,6 +32,7 @@ export const getOrdersByCustomerId = async (customerId: string): Promise<General
       message: "Compras realizadas encontradas"
     }
   } catch (error) {
+    console.log(error)
     if (error instanceof Error) {
       return {
         data: null,

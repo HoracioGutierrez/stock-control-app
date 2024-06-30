@@ -68,12 +68,10 @@ async function CustomerDetailsPage({ params: { id } }: Props) {
           </Card>
         </section>
       )}
-      {orders && orders.length > 0 && (
-        <section className="my-16">
-          <p className="text-muted-foreground">Compras realizadas por este cliente</p>
-          <CustomerDetailsTable orders={orders} />
-        </section>
-      )}
+      <section className="my-16">
+        <p className="text-muted-foreground">Compras realizadas por este cliente</p>
+        <CustomerDetailsTable orders={orders} />
+      </section>
     </>
   )
 }

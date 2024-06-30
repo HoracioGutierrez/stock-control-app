@@ -30,6 +30,8 @@ import { columns, rewriteActionType, rewriteActionTypeMessage } from "@/lib/colu
 import { CustomDataTableProps } from "@/lib/types"
 
 function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualFetch, manualCallback, dateFilter, pageSize: size = 5, noFilter = false }: CustomDataTableProps) {
+
+  console.log(type)
   const [sorting, setSorting] = useState<SortingState>([])
   const [tableData, setTableData] = useState<ProductType | HistoryType[]>(data ? data : [])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -372,7 +374,7 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
               <TableRow>
                 <TableCell colSpan={columns[type].length} className="h-24 text-center">
                   <div className="flex justify-center items-center gap-2">
-                    <FileX2 /> {`No hay ${rewriteActionTypeMessage[type]} creados o habilitados, puedes crear uno o activar uno ya existente.`}
+                    <FileX2 /> {`${rewriteActionTypeMessage[type]}`}
                   </div>
                 </TableCell>
               </TableRow>

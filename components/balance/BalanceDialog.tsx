@@ -11,7 +11,7 @@ function BalanceDialog({ userId }: Props) {
 
   const config: Record<string, { title: string, fullWidth?: boolean }> = {
     "manual-income": {
-      title: "Ingreso/Egreso Manual",
+      title: "Ingreso/Retiro Manual",
       fullWidth: false
     }
   }

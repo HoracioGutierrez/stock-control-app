@@ -229,7 +229,7 @@ function OrderScanner({ data }: OrderScannerProps) {
           Agregar Cliente
         </CustomButton>
         <CustomButton tooltip="Ingresar dinero manualmente a la caja actual" dialogType="manual-income" className="truncate">
-          Ingreso/Egreso Manual
+          Ingreso/Retiro Manual
         </CustomButton>
         <CloseCashRegisterButton />
         <CancelOrderButton />

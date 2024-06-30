@@ -2,7 +2,7 @@
 import { historyColumns, productsColumns, providersColumns, customersColumns, cashRegistersColumns, ordersColumns, usersColumns } from "@/lib/columnDefinitions"
 /* import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu" */
 import { SortingState, getSortedRowModel, flexRender, getCoreRowModel, useReactTable, ColumnFiltersState, getFilteredRowModel, getPaginationRowModel, ColumnDef, VisibilityState } from "@tanstack/react-table"
-import { IconCashRegister, IconClipboardList, IconDeviceDesktopX, IconTruck, IconTruckOff, IconUser, IconUserOff } from '@tabler/icons-react'
+import { IconCalendar, IconCashRegister, IconClipboardList, IconDeviceDesktopX, IconTruck, IconTruckOff, IconUser, IconUserOff } from '@tabler/icons-react'
 /* import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
  */
 /* import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table" */
@@ -187,7 +187,10 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
             <div className="flex gap-2">
               <Popover open={open}>
                 <PopoverTrigger asChild>
-                  <Button onClick={() => setOpen(!open)}>{selectedDay ? format(selectedDay, "dd/MM/yyyy") : "Elige una fecha"}</Button>
+                  <Button onClick={() => setOpen(!open)} className="flex items-center gap-2">
+                    {!selectedDay && <IconCalendar/>}
+                    {selectedDay ? format(selectedDay, "dd/MM/yyyy") : "Elige una fecha"}
+                  </Button>
                 </PopoverTrigger>
                 <PopoverContent>
                   <Calendar
@@ -373,7 +376,11 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
                           cell.column.id === "currentAmount" && row.original.currentAmount < 0 && "text-red-500",
                           cell.column.id === "total" && row.original.total < 0 && "text-red-500",
                           cell.column.id === "status" && row.original.status === "canceled" && "text-red-500",
-                          cell.column.id === "spentAmount" && row.original.spentAmount < 0 && "text-red-500"
+                          cell.column.id === "spentAmount" && row.original.spentAmount < 0 && "text-red-500",
+                          cell.column.id === "stock" && Number(row.original.stock) < 10 && "text-yellow-500",
+                          cell.column.id === "stock" && Number(row.original.stock) <= 5 && "text-red-500",
+                          cell.column.id === "stock" && Number(row.original.stock) >= 30 && "text-green-500",
+
                         )}>
                           {(
                             cell.column.id === "price" ||

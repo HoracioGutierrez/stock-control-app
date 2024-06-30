@@ -17,7 +17,7 @@ async function BalancePage() {
       <PageHeader title="Balance" actions={
         <CustomButton tooltip="Ingresar dinero manualmente a la caja actual" dialogType="manual-income" className="truncate" icon={<ArrowUpDown className="group-hover:text-green-500" />}>
           <span className="md:block hidden">
-            Ingreso/Egreso Manual
+            Ingreso/Retiro Manual
           </span>
         </CustomButton>
       } />

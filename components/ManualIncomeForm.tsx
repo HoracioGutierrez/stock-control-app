@@ -52,6 +52,7 @@ function ManualIncomeForm({ userId }: Props) {
   }
 
   const onSubmit = (data: any) => {
+    console.log("test")
     handleSaveManualOperation(data.amount, data.reason, data.operationType)
   }
 
@@ -91,12 +92,12 @@ function ManualIncomeForm({ userId }: Props) {
                 Ingreso
               </SelectItem>
               <SelectItem value="egreso">
-                Egreso
+                Retiro
               </SelectItem>
             </SelectContent>
           </Select>
         </div>
-        <CustomButton isLoading={loading}>Confirmar</CustomButton>
+        <CustomButton isLoading={loading} type="submit">Confirmar</CustomButton>
       </form>
     </div>
   )

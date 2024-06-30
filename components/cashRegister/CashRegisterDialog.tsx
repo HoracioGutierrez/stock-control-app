@@ -24,7 +24,7 @@ const CashRegisterDialog = ({ data, userId }: Props) => {
     "delete-cash-register-delete": "Borrar Caja",
     "activate-cash-register-delete": "Reactivar Caja",
     "edit-cash-register": "Editar Caja",
-    "manual-income": "Ingreso/Egreso Manual"
+    "manual-income": "Ingreso/Retiro Manual"
   }
 
   return (

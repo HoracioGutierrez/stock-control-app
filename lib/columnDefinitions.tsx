@@ -423,7 +423,7 @@ export const ordersColumns: ColumnDef<any>[] = [
   },
   {
     header: "Registro de Caja",
-    accessorKey: ".label",
+    accessorKey: "label",
   },
   {
     header: "Cliente",

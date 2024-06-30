@@ -22,16 +22,16 @@ function CashRegisterTable({ data, isAdmin }: Props) {
       actions={(rowData: any) => {
         return (
           <>
-            <CustomButton tooltip={rowData.openedById === null ? "Abrir caja" : "Cerrar caja"} data={rowData.id} variant="ghost" className="aspect-square p-0 group" dialogType={rowData.openedById === null ? "activate-cash-register-close" : "delete-cash-register-close"}>
-              {rowData.openedById === null ? <IconDeviceDesktopCheck className="p-0 aspect-square group-hover:text-green-400" /> : <IconDeviceDesktopOff className="p-0 aspect-square group-hover:text-red-400" />}
+            <CustomButton tooltip={rowData.openedById === null ? "Abrir caja" : "Cerrar caja"} data={rowData.id} variant="ghost" className="p-0 aspect-square group" dialogType={rowData.openedById === null ? "activate-cash-register-close" : "delete-cash-register-close"}>
+              {rowData.openedById === null ? <IconDeviceDesktopCheck className="group-hover:text-green-400 p-0 aspect-square" /> : <IconDeviceDesktopOff className="group-hover:text-red-400 p-0 aspect-square" />}
             </CustomButton>
             {isAdmin && (
-              <CustomButton variant="ghost" className="p-0 group aspect-square" tooltip="Borrar caja" dialogType="delete-cash-register-delete" data={rowData.id}>
-                {rowData.active ? <Trash2 className="p-0 text-muted-foreground group-hover:text-red-400 aspect-square" /> : <UndoDot className="p-0 text-muted-foreground group-hover:text-green-400 aspect-square" />}
+              <CustomButton variant="ghost" className="p-0 aspect-square group" tooltip={rowData.active ? "Borrar caja" : "Reactivar caja"} dialogType={rowData.active ? "delete-cash-register-delete" : "activate-cash-register-delete"} data={rowData.id}>
+                {rowData.active ? <Trash2 className="group-hover:text-red-400 p-0 text-muted-foreground aspect-square" /> : <UndoDot className="group-hover:text-green-400 p-0 text-muted-foreground aspect-square" />}
               </CustomButton>
             )}
-            {isAdmin && <CustomButton variant="ghost" className="p-0 group aspect-square" tooltip="Editar caja" dialogType="edit-cash-register" data={rowData.id}>
-              <Edit className="p-0 text-muted-foreground group-hover:text-yellow-400 aspect-square" />
+            {isAdmin && <CustomButton variant="ghost" className="p-0 aspect-square group" tooltip="Editar caja" dialogType="edit-cash-register" data={rowData.id}>
+              <Edit className="group-hover:text-yellow-400 p-0 text-muted-foreground aspect-square" />
             </CustomButton>}
           </>
         )

@@ -41,14 +41,14 @@ function SideBar({ session }: SideBarProps) {
 
 
   return (
-    <div id="sidebar" className={cn("fixed top-0 -left-full md:static md:flex flex-col justify-between h-full", session && "border-r border-accent bg-primary-foreground w-4/5 z-10 md:w-auto md:bg-primary-foreground md:dark:bg-[rgba(0,0,0,0.5)] transition-all", isOpen && "left-0", collapsed && "!w-fit")}>
+    <div id="sidebar" className={cn("overflow-auto fixed top-0 -left-full md:static md:flex flex-col justify-between h-full", session && "border-r border-accent bg-primary-foreground w-4/5 z-10 md:w-auto md:bg-primary-foreground md:dark:bg-[rgba(0,0,0,0.5)] transition-all", isOpen && "left-0", collapsed && "!w-fit")}>
       <div className={cn("transition-all", collapsed && "w-fit")}>
-        <div className={cn("flex flex-col justify-between items-center gap-4 p-4 transition-all", collapsed && "py-4 px-2")}>
+        <div className={cn("flex flex-col justify-between items-center gap-4 p-4 transition-all", collapsed && "py-4 px-2 pt-10")}>
           <div className="relative flex flex-col items-center text-2xl">
             <PackageOpen width={40} height={40} />
             <span className={cn("font-bold text-3xl text-center", collapsed && "hidden")}>Control de Stock</span>
           </div>
-          <X className="top-2 right-2 absolute md:hidden cursor-pointer" onClick={handleClick} />
+          <X className={cn("top-2 right-2 absolute md:hidden cursor-pointer", collapsed && "right-50")} onClick={handleClick} />
           {collapsed ? <ArrowRightToLine onClick={handleCollapse} className="cursor-pointer" /> : <ArrowLeftToLine onClick={handleCollapse} className="cursor-pointer" />}
         </div>
         <div>

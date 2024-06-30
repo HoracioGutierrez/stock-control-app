@@ -168,6 +168,7 @@ export type ProductInputValues = EditProductInputValues & {
 export type PageTitleProps = {
   title: string
   backButton?: boolean
+  subtitle?: string
 }
 
 export type ProductVariantFormProps = {

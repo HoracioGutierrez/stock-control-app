@@ -10,8 +10,9 @@ import * as yup from "yup"
 import { Button } from "../ui/button"
 import { editById } from "@/actions/editById"
 import { toast } from "../ui/use-toast"
-import { Check, Loader } from "lucide-react"
+import { Check, Edit2Icon, Loader } from "lucide-react"
 import CustomButton from "../layout/CustomButton"
+import { IconKey, IconPassword } from "@tabler/icons-react"
 
 type Props = {
   user: any
@@ -98,9 +99,9 @@ function AccountEditForm({ user }: Props) {
             </div>
             <div className="flex justify-center gap-4 mt-8">
               {!edit && (
-                <Button className="" onClick={toggleEdit} type="button">
+                <CustomButton className="" onClick={toggleEdit} icon={<Edit2Icon/>} >
                   Editar
-                </Button>
+                </CustomButton>
               )}
               {edit && (
                 <Button className="" type="submit">
@@ -108,7 +109,7 @@ function AccountEditForm({ user }: Props) {
                   Guardar cambios
                 </Button>
               )}
-              <CustomButton dialogType="change-password">modificar contraseña</CustomButton>
+              <CustomButton dialogType="change-password" icon={<IconKey/>}>modificar contraseña</CustomButton>
             </div>
           </form>
         </CardContent>

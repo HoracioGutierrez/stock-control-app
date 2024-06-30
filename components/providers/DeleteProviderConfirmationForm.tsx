@@ -93,9 +93,9 @@ function DeleteProviderConfirmationForm({ entityType,
         </p>
         <p>¿Está seguro de que desea continuar?</p>
       </div>
-      <Button className="self-center group" onClick={handleClick} disabled={loading}>
+      <Button className="group self-center" onClick={handleClick} disabled={loading}>
         {loading ? <Loader
-          className="animated-spin" /> : type === "delete-provider" ? <Check className="p-0 size-6 text-muted-foreground group-hover:text-green-500 aspect-square" /> : <X className="p-0 size-6 text-muted-foreground group-hover:text-green-500 aspect-square" />}
+          className="animated-spin" /> : type === "delete-provider" ? <Check className="group-hover:text-green-500 p-0 text-muted-foreground aspect-square size-6" /> : <X className="group-hover:text-green-500 p-0 text-muted-foreground aspect-square size-6" />}
         <span className="text-muted-foreground">{type === "delete-provider" ? "Si, Eliminar." : "Si, Reactivar."}</span>
       </Button>
     </div>

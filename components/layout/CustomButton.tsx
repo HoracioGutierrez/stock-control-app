@@ -19,9 +19,10 @@ type Props = {
   tooltip?: string,
   dialogType?: string,
   variant?: "default" | "outline" | "ghost" | "link" | "destructive" | "secondary",
+  type?: "button" | "submit",
 }
 
-function CustomButton({ children, className, icon, text = "Trigger Dialog", data, disabled = false, onClick, isLoading = false, tooltip, dialogType, href, variant }: Props) {
+function CustomButton({ children, className, icon, text = "Trigger Dialog", data, disabled = false, onClick, isLoading = false, tooltip, dialogType, href, variant ,type = "button" }: Props) {
 
   const { setOpen } = useDialogStore((state: any) => state)
 
@@ -38,7 +39,7 @@ function CustomButton({ children, className, icon, text = "Trigger Dialog", data
 
   const ButtonEl = ({ children, className, icon, text = "Trigger Dialog", disabled = false, onClick, isLoading = false, variant, ...props }: Props) => {
     return (
-      <Button variant={variant} className={cn("text-muted-foreground flex gap-2", className)} onClick={onClick} disabled={disabled} type="button">
+      <Button variant={variant} className={cn("text-muted-foreground flex md:gap-2 max-sm:px-2 max-sm:py-1", className)} onClick={onClick} disabled={disabled} type={type}>
         {isLoading && <Loader className="animate-spin" />}
         {!isLoading && icon ? icon : null}
         <span>{children ? children : text ? text : "Trigger Dialog"}</span>
@@ -51,7 +52,7 @@ function CustomButton({ children, className, icon, text = "Trigger Dialog", data
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button variant={variant} className={cn("text-muted-foreground flex gap-2", className)} onClick={handleClick} disabled={disabled} asChild={href ? true : false}>
+            <Button variant={variant} className={cn("text-muted-foreground flex md:gap-2 max-sm:px-2 max-sm:py-1", className)} onClick={handleClick} disabled={disabled} asChild={href ? true : false} type={type}>
               {href ? (
                 <Link href={href}>
                   {isLoading && <Loader className="animate-spin" />}
@@ -77,7 +78,7 @@ function CustomButton({ children, className, icon, text = "Trigger Dialog", data
 
   if (href) {
     return (
-      <Button variant={variant} className={cn("text-muted-foreground flex gap-2", className)} onClick={handleClick} disabled={disabled} asChild={href ? true : false}>
+      <Button variant={variant} className={cn("text-muted-foreground flex md:gap-2 max-sm:px-2 max-sm:py-1", className)} onClick={handleClick} disabled={disabled} asChild={href ? true : false} type={type}>
         {href ? (
           <Link href={href}>
             {isLoading && <Loader className="animate-spin" />}
@@ -96,7 +97,7 @@ function CustomButton({ children, className, icon, text = "Trigger Dialog", data
   }
 
   return (
-    <ButtonEl className={className} onClick={handleClick} disabled={disabled} href={href} isLoading={isLoading} tooltip={tooltip} dialogType={dialogType} data={data} icon={icon} text={text} variant={variant}>
+    <ButtonEl className={className} onClick={handleClick} disabled={disabled} href={href} isLoading={isLoading} tooltip={tooltip} dialogType={dialogType} data={data} icon={icon} text={text} variant={variant} type={type}>
       {children ? children : text ? text : "Trigger Dialog"}
     </ButtonEl>
   )

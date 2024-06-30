@@ -303,7 +303,7 @@ function EditForm({ entityType, loading, register, errors, data, formForVariant,
                             <CustomButton onClick={isVariantLinking ? handleConfirmLinkVariant : handleVariantLink} disabled={loadingLink}>
                                 <div className="flex items-center group">
                                     {loadingLink ? <Loader className="animate-spin" /> : <IconPlugConnected className="group-hover:text-green-500 text-muted-foreground aspect-square size-8" />}
-                                    <span className="text-muted-foreground">{isVariantLinking ? "Confirmar" : "Vincular variante"}</span>
+                                    <span className="sm:block hidden text-muted-foreground">{isVariantLinking ? "Confirmar" : "Vincular variante"}</span>
                                 </div>
                             </CustomButton>
                             {isVariantLinking && (
@@ -317,9 +317,9 @@ function EditForm({ entityType, loading, register, errors, data, formForVariant,
                         </>
                     )}
                     {!isVariantUnlinking && !isVariantLinking && (
-                        <Button form={entityConfig[entityType].formId} className="flex items-center group" disabled={loading}>
+                        <Button form={entityConfig[entityType].formId} className="flex items-center max-sm:px-2 group" disabled={loading}>
                             {loading && <Loader className="animate-spin" /> || <IconDeviceFloppy className="group-hover:text-green-500 text-muted-foreground aspect-square size-8" />}
-                            {<span className="text-muted-foreground">Guardar {entityResolved}</span>}
+                            {<span className="sm:block hidden text-muted-foreground">Guardar {entityResolved}</span>}
                         </Button>
                     )}
                 </div>

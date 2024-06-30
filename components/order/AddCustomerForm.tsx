@@ -11,6 +11,7 @@ import { Label } from "../ui/label"
 import { Input } from "../ui/input"
 import { createNewCustomer } from "@/actions/createNewCustomer"
 import { Loader } from "lucide-react"
+import { IconCheck, IconUserPlus, IconX } from "@tabler/icons-react"
 
 
 type AddCustomerFormProps = {
@@ -115,7 +116,7 @@ function AddCustomerForm({ userId }: AddCustomerFormProps) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <p className="mb-8 text-muted-foreground text-sm">Aca podrás agregar un cliente a la orden</p>
+      <p className="mb-8 text-muted-foreground text-sm">Aca podrás agregar un cliente a la orden seleccionandolo de la siguiente lista, o bien creando uno nuevo haciendo click en el boton &quot;Crear nuevo cliente&quot;</p>
       <div className="flex flex-col gap-4">
         {!isNewCustomerForm ? (
           <Select onValueChange={handleSetClient}>
@@ -136,12 +137,23 @@ function AddCustomerForm({ userId }: AddCustomerFormProps) {
             <Input type="text" placeholder="Nombre" onChange={handleSetName} />
           </div>
         )}
-        {!isNewCustomerForm && <Button>Agregar cliente</Button>}
-        <Button type="button" onClick={isNewCustomerForm ? handleSaveNewCustomer : toggleOpenNewCustomerForm}>
+        {!isNewCustomerForm && (
+          <Button className="group">
+            <IconCheck className="group-hover:text-green-500 p-0 text-muted-foreground aspect-square" />
+            Si, agregar a la orden
+          </Button>
+        )}
+        <Button type="button" onClick={isNewCustomerForm ? handleSaveNewCustomer : toggleOpenNewCustomerForm} className="flex items-center gap-2 group">
           {loading && <Loader className="animate-spin" />}
+          {!loading && <IconUserPlus className="group-hover:text-green-500 p-0 text-muted-foreground aspect-square" />}
           {isNewCustomerForm ? "Confirmar" : "Crear nuevo cliente"}
         </Button>
-        {isNewCustomerForm && <Button type="button" onClick={toggleCloseNewCustomerForm}>Cancelar</Button>}
+        {isNewCustomerForm && (
+          <Button type="button" onClick={toggleCloseNewCustomerForm} className="flex items-center gap-2 group">
+            <IconX className="group-hover:text-red-500 p-0 text-muted-foreground aspect-square" />
+            Cancelar
+          </Button>
+        )}
       </div>
     </form>
   )

@@ -14,7 +14,7 @@ function BalanceTable({ data }: BalanceTableProps) {
       data={data}
       type="balance"
       pageSize={10}
-      filterColumn="operationType"
+      filterColumn="Tipo de operación"
       filterKey="operationType"
     />
   )

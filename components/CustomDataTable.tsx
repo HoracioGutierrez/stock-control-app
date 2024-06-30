@@ -2,7 +2,7 @@
 import { historyColumns, productsColumns, providersColumns, customersColumns, cashRegistersColumns, ordersColumns, usersColumns } from "@/lib/columnDefinitions"
 /* import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu" */
 import { SortingState, getSortedRowModel, flexRender, getCoreRowModel, useReactTable, ColumnFiltersState, getFilteredRowModel, getPaginationRowModel, ColumnDef, VisibilityState } from "@tanstack/react-table"
-import { IconCashRegister, IconClipboardList, IconDeviceDesktopX, IconTruck, IconTruckOff, IconUser, IconUserOff } from '@tabler/icons-react'
+import { IconCalendar, IconCashRegister, IconClipboardList, IconDeviceDesktopX, IconTruck, IconTruckOff, IconUser, IconUserOff } from '@tabler/icons-react'
 /* import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
  */
 /* import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table" */
@@ -173,21 +173,24 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
   return (
     <div className="flex flex-col grow">
       {!noFilter && (
-        <div className="flex justify-between items-center py-4">
+        <div className="flex sm:flex-row flex-col-reverse sm:justify-between gap-1 py-4">
           <Input
             placeholder={`Filtrar por ${filterColumn ?? "nombre"}`}
             value={(table.getColumn(filterKey || "name")?.getFilterValue() as string) ?? ""}
             onChange={(event) => {
               return table.getColumn(filterKey || "name")?.setFilterValue(event.target.value)
             }}
-            className="max-w-sm"
+            className="sm:max-w-sm"
           />
 
           {dateFilter && (
             <div className="flex gap-2">
               <Popover open={open}>
                 <PopoverTrigger asChild>
-                  <Button onClick={() => setOpen(!open)}>{selectedDay ? format(selectedDay, "dd/MM/yyyy") : "Elige una fecha"}</Button>
+                  <Button onClick={() => setOpen(!open)} className="flex items-center gap-2">
+                    {!selectedDay && <IconCalendar/>}
+                    {selectedDay ? format(selectedDay, "dd/MM/yyyy") : "Elige una fecha"}
+                  </Button>
                 </PopoverTrigger>
                 <PopoverContent>
                   <Calendar
@@ -201,13 +204,13 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
             </div>
           )}
 
-          <div className="flex items-center gap-2">
+          <div className="flex justify-between items-center gap-2">
             <TooltipProvider>
               <DropdownMenu>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" className="ml-auto">
+                      <Button variant="ghost" className="">
                         <Filter className="p-0 aspect-square" />
                       </Button>
                     </DropdownMenuTrigger>
@@ -373,7 +376,11 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
                           cell.column.id === "currentAmount" && row.original.currentAmount < 0 && "text-red-500",
                           cell.column.id === "total" && row.original.total < 0 && "text-red-500",
                           cell.column.id === "status" && row.original.status === "canceled" && "text-red-500",
-                          cell.column.id === "spentAmount" && row.original.spentAmount < 0 && "text-red-500"
+                          cell.column.id === "spentAmount" && row.original.spentAmount < 0 && "text-red-500",
+                          cell.column.id === "stock" && Number(row.original.stock) < 10 && "text-yellow-500",
+                          cell.column.id === "stock" && Number(row.original.stock) <= 5 && "text-red-500",
+                          cell.column.id === "stock" && Number(row.original.stock) >= 30 && "text-green-500",
+
                         )}>
                           {(
                             cell.column.id === "price" ||

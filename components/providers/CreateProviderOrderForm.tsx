@@ -174,6 +174,7 @@ function CreateProviderOrderForm({ userId }: Props) {
     <div>
       <p className="text-muted-foreground">Seleccione de la lista de productos que deseas comprar de este proveedor</p>
       <div ref={tableContainerRef} style={{ overflow: "auto", position: "relative", height: "500px" }} className="relative my-10 w-full">
+        <div className="overflow-auto">
         <Table style={{ display: "grid" }}>
           <TableHeader style={{ display: "grid", position: "sticky", top: "0px", zIndex: "1" }} className="bg-primary-foreground">
             {table.getHeaderGroups().map((headerGroup) => (
@@ -263,6 +264,7 @@ function CreateProviderOrderForm({ userId }: Props) {
             </TableRow>
           </TableFooter>
         </Table>
+        </div>
       </div>
       <div className="flex justify-center items-center gap-8">
         <Button className="flex items-center gap-2 text-white dark:text-primary-foreground group" onClick={handleSubmit}>

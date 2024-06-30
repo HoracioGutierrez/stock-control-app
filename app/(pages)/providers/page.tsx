@@ -15,7 +15,7 @@ async function ProvidersPage() {
       <PageHeader title="Proveedores" actions={
         <>
           <CustomButton className="group" icon={<IconAmbulance className="group-hover:text-green-500 w-7 h-7" />} tooltip="Crear Proveedor" dialogType="new-provider" >
-            <span className="text-muted-foreground">Crear Proveedor</span>
+            <span className="md:block hidden text-muted-foreground">Crear Proveedor</span>
           </CustomButton>
         </>
       } />

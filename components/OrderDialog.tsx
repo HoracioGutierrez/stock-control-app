@@ -29,7 +29,7 @@ const OrderDialog = ({ userId, data, cashRegisters }: Props) => {
     "manual-scan": "Escaneo Manual",
     "add-customer": "Agregar Cliente",
     "pay-with": "Pagar con",
-    "manual-income": "Ingreso/Egreso Manual"
+    "manual-income": "Ingreso/Retiro Manual"
   }
 
   useEffect(() => {

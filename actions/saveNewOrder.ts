@@ -113,7 +113,7 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
           balance: generalBalanceFromDb[0].balance,
           balanceWithDebt: String(Number(generalBalanceFromDb[0].balanceWithDebt) + total),
           operationType: "save-order-debt",
-          detail: "Nueva compra de " + total + " con deuda/fiado",
+          detail: "Nueva compra de $" + total + " con deuda/fiado",
           isDebt: true,
           userId: userId
         })
@@ -126,7 +126,7 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
           balance: generalBalanceFromDb[0].balance,
           balanceWithDebt: String(Number(generalBalanceFromDb[0].balanceWithDebt) + total),
           operationType: "save-order-credit",
-          detail: "Nueva compra de " + total + " con crédito",
+          detail: "Nueva compra de $" + total + " con crédito",
           isDebt: true,
           userId: userId,
         })
@@ -138,7 +138,7 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
           balance: generalBalanceFromDb[0].balance,
           balanceWithDebt: String(Number(generalBalanceFromDb[0].balanceWithDebt) + total),
           operationType: "save-order-debit",
-          detail: "Nueva compra de " + total + " con débito",
+          detail: "Nueva compra de $" + total + " con débito",
           isDebt: true,
           userId: userId
         })
@@ -150,7 +150,7 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
           balance: generalBalanceFromDb[0].balance,
           balanceWithDebt: String(Number(generalBalanceFromDb[0].balanceWithDebt) + total),
           operationType: "save-order-transfer",
-          detail: "Nueva compra de " + total + " con transferencia",
+          detail: "Nueva compra de $" + total + " con transferencia",
           isDebt: true,
           userId: userId
         })
@@ -162,7 +162,7 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
           balance: generalBalanceFromDb[0].balance,
           balanceWithDebt: String(Number(generalBalanceFromDb[0].balanceWithDebt) + total),
           operationType: "save-order-mercadopago",
-          detail: "Nueva compra de " + total + " con mercadopago",
+          detail: "Nueva compra de $" + total + " con mercadopago",
           isDebt: true,
           userId: userId
         })
@@ -174,7 +174,7 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
           balance: generalBalanceFromDb[0].balance,
           balanceWithDebt: String(Number(generalBalanceFromDb[0].balanceWithDebt) + total),
           operationType: "save-order-other",
-          detail: "Nueva compra de " + total + " con otro método de pago",
+          detail: "Nueva compra de $" + total + " con otro método de pago",
           isDebt: true,
           userId: userId
         })

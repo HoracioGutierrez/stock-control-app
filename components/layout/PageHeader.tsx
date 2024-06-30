@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation"
 import PageTitle from "../PageTitle"
 import CustomButton from "./CustomButton"
 import { ArrowLeft } from "lucide-react"
+import DrawerToggleButton from "../DrawerToggleButton"
 
 type PageHeaderProps = {
   title: string,
@@ -20,20 +21,24 @@ const PageHeader = ({ title = "Demo Title", actions, subtitle, goBack = false }:
   }
 
   return (
-    <div className="align-top flex justify-between mb-8">
+    <header className="align-top flex justify-between mb-4 lg:mb-8">
       <div>
-        {goBack && (
-          <CustomButton variant="ghost" tooltip="Volver" onClick={handleGoBack} className="p-0 aspect-square">
-            <ArrowLeft/>
-          </CustomButton>
-        )}
-        {subtitle && <p className="text-muted-foreground">Cajero : {subtitle}</p>}
-        <PageTitle title={title} />
+        <div className="flex items-center gap-2">
+          <DrawerToggleButton />
+          {goBack && (
+            <CustomButton variant="ghost" tooltip="Volver" onClick={handleGoBack} className="p-0 aspect-square">
+              <ArrowLeft />
+            </CustomButton>
+          )}
+        </div>
+        <PageTitle title={title} subtitle={subtitle} />
       </div>
-      <div className="flex gap-4">
-        {actions && actions}
-      </div>
-    </div>
+      {actions && (
+        <div className="flex gap-4">
+          {actions}
+        </div>
+      )}
+    </header>
   )
 }
 export default PageHeader

@@ -1,10 +1,27 @@
 import { Button } from "@/components/ui/button"
 import { HistoryType, ProductType, CustomerType, ProviderType, CashRegisterType } from "@/schema"
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown, TrendingDown, TrendingUp } from "lucide-react"
+import { ArrowUpDown, History, TrendingDown, TrendingUp } from "lucide-react"
 import { Checkbox } from "@/components/ui/checkbox"
 import { IconTruckLoading } from "@tabler/icons-react"
 import { RadioGroupItem } from "@/components/ui/radio-group"
+const operationConversion: Record<string, string> = {
+  "pay-customer-debt-all": "Pago de deuda total",
+  "pay-customer-debt-manual": "Pago de deuda manual",
+  "save-order-debt": "Nueva compra de deuda/fiado",
+  "save-order-cash": "Nueva compra efectivo",
+  "save-order-credit": "Nueva compra crédito",
+  "save-order-debit": "Nueva compra débito",
+  "save-order-transfer": "Nueva compra transferencia",
+  "save-order-mercadopago": "Nueva compra mercadopago",
+  "save-order-other": "Nueva compra otro",
+  "save-purchase-order": "Nueva orden de compra a proveedor",
+  "save-manual-income": "Ingreso/Retiro Manual",
+  "save-manual-expense": "Ingreso/Retiro Manual",
+  "refund-customer": "Reembolso cliente / Compra Cancelada",
+  "open-cash-register": "Apertura caja",
+  "close-cash-register": "Cierre caja",
+}
 
 export const productsColumns: ColumnDef<ProductType>[] = [
   {
@@ -85,6 +102,14 @@ export const historyColumns: ColumnDef<HistoryType>[] = [
       )
     },
     accessorKey: "createdAt",
+    cell: ({ row }) => {
+      return (
+        <div className="flex items-center gap-2">
+          <History />
+          {row.original.createdAt ? row.original.createdAt.toLocaleString("es-ES") : "Sin fecha"}
+        </div>
+      )
+    },
   },
   {
     header: "Tipo de movimiento",
@@ -444,8 +469,21 @@ export const ordersColumns: ColumnDef<any>[] = [
       return "Sin cliente"
     },
     filterFn: (row, id, value) => {
-      const name = row.original.name + ", " + row.original.lastName.toLowerCase()
-      return name.toLowerCase().includes(value.toLowerCase())
+      if (row.original.customerName && !row.original.customerLastName) {
+        return row.original.customerName.toLowerCase().includes(value.toLowerCase())
+      }
+
+      if (row.original.customerName && row.original.customerLastName) {
+
+        return (row.original.customerName.toLowerCase() + ", " + row.original.customerLastName.toLowerCase()).includes(value.toLowerCase())
+      }
+
+      if (!row.original.customerName && row.original.customerLastName) {
+        return row.original.customerLastName.toLowerCase().includes(value.toLowerCase())
+      }
+
+      return false
+
     }
   },
   {
@@ -559,67 +597,24 @@ export const balanceColumns: ColumnDef<any>[] = [
     accessorKey: "operationType",
     cell: ({ row }) => {
 
-      if (row.original.operationType === "pay-customer-debt-all") {
-        return "Saldo deuda total"
-      }
 
-      if (row.original.operationType === "pay-customer-debt-manual") {
-        return "Saldo deuda manual"
-      }
+      return operationConversion[row.original.operationType]
 
-      if (row.original.operationType === "save-order-debt") {
-        return "Nueva compra deuda/fiado"
-      }
 
-      if (row.original.operationType === "save-order-cash") {
-        return "Nueva compra efectivo"
-      }
+    },
+    filterFn: (row, id, value) => {
 
-      if (row.original.operationType === "save-order-credit") {
-        return "Nueva compra crédito"
-      }
 
-      if (row.original.operationType === "save-order-debit") {
-        return "Nueva compra débito"
-      }
 
-      if (row.original.operationType === "save-order-transfer") {
-        return "Nueva compra transferencia"
-      }
+      const operationType = Object.keys(operationConversion).filter((key) => {
+        return operationConversion[key].toLowerCase().includes(value.toLowerCase())
+      })
 
-      if (row.original.operationType === "save-order-mercadopago") {
-        return "Nueva compra mercadopago"
+      if (operationType) {
+        return operationType.includes(row.original.operationType)
+      } else {
+        return false
       }
-
-      if (row.original.operationType === "save-order-other") {
-        return "Nueva compra otro"
-      }
-
-      if (row.original.operationType === "save-purchase-order") {
-        return "Nueva orden de compra a proveedor"
-      }
-
-      if (row.original.operationType === "save-manual-income") {
-        return "Ingreso manual"
-      }
-
-      if (row.original.operationType === "save-manual-expense") {
-        return "Egreso manual"
-      }
-
-      if (row.original.operationType === "refund-customer") {
-        return "Reembolso cliente / Compra Cancelada"
-      }
-
-      if (row.original.operationType === "open-cash-register") {
-        return "Apertura caja"
-      }
-
-      if (row.original.operationType === "close-cash-register") {
-        return "Cierre caja"
-      }
-
-      return row.original.operationType
 
     }
   },
@@ -633,18 +628,28 @@ export const balanceColumns: ColumnDef<any>[] = [
     cell: ({ row }) => {
 
       const debtTypes = ["save-order-debt", "refund-customer", "save-manual-expense", "save-purchase-order"]
+
+      if (row.original.operationType == "open-cash-register" || row.original.operationType == "close-cash-register") {
+        return (
+          <>
+            <ArrowUpDown className="p-0 text-yellow-400 aspect-square" />
+            <span className="ml-2">$ {Number(row.original.incomingAmount).toFixed(2)}</span>
+          </>
+        )
+      }
+
       if (debtTypes.includes(row.original.operationType)) {
         return (
           <>
             <TrendingDown className="p-0 text-red-400 aspect-square" />
-            <span className="ml-2">$ {row.original.incomingAmount}</span>
+            <span className="ml-2">$ {Number(row.original.incomingAmount).toFixed(2)}</span>
           </>
         )
       } else {
         return (
           <>
             <TrendingUp className="p-0 text-green-400 aspect-square" />
-            <span className="ml-2">$ {row.original.incomingAmount}</span>
+            <span className="ml-2">$ {Number(row.original.incomingAmount).toFixed(2)}</span>
           </>
         )
       }
@@ -654,14 +659,14 @@ export const balanceColumns: ColumnDef<any>[] = [
     header: "Balance Efectivo",
     accessorKey: "balance",
     cell: ({ row }) => {
-      return "$" + row.original.balance
+      return "$" + Number(row.original.balance).toFixed(2)
     },
   },
   {
     header: "Balance Total",
     accessorKey: "balanceWithDebt",
     cell: ({ row }) => {
-      return "$" + row.original.balanceWithDebt
+      return "$" + Number(row.original.balanceWithDebt).toFixed(2)
     },
   }
 ]
@@ -795,6 +800,9 @@ export const purchaseOrdersProviderColumns: ColumnDef<any>[] = [
   {
     header: "Total",
     accessorKey: "total",
+    cell: ({ row }) => {
+      return Number(row.original.total).toFixed(2)
+    },
   },
   {
     header: "Cant. de productos",
@@ -834,14 +842,14 @@ export const variantColumns: ColumnDef<any>[] = [
     meta: {
       name: "Descripción"
     },
-    cell : ({ row }) => {
+    cell: ({ row }) => {
       return (
         <div className="max-w-sm">
           {row.original.description}
         </div>
       )
     },
-    size : 300
+    size: 300
   },
   {
     header: "Precio",

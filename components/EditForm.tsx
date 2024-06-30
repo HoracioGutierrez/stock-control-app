@@ -65,7 +65,7 @@ function EditForm({ entityType, loading, register, errors, data, formForVariant,
             {!isVariantUnlinking && (
                 <div className="flex justify-center items-center">
                     {hasDetails === false &&
-                        <div className="grid grid-cols-1 gap-4 py-4 ">
+                        <div className="gap-4 grid grid-cols-1 py-4">
                             <Card className="bg-primary-foreground p-4">
                                 <CardHeader>
                                     <CardTitle>
@@ -223,7 +223,7 @@ function EditForm({ entityType, loading, register, errors, data, formForVariant,
                     {(isVariant && !isVariantUnlinking && entityType === "product") &&
                         <CustomButton onClick={handleVariantUnlink}>{
                             <div className="flex items-center group">
-                                <IconPlugConnectedX className="group-hover:text-red-500 size-8 text-muted-foreground aspect-square" />
+                                <IconPlugConnectedX className="group-hover:text-red-500 text-muted-foreground aspect-square size-8" />
                                 <span className="text-muted-foreground">Desvincular variante</span>
                             </div>
                         }</CustomButton>
@@ -232,13 +232,13 @@ function EditForm({ entityType, loading, register, errors, data, formForVariant,
                         <>
                             <CustomButton onClick={cancelVariantUnlink}>
                                 <div className="flex items-center group">
-                                    <X className="group-hover:text-red-500 size-6 text-muted-foreground aspect-square" />
+                                    <X className="group-hover:text-red-500 text-muted-foreground aspect-square size-6" />
                                     <span className="text-muted-foreground">Cancelar</span>
                                 </div>
                             </CustomButton>
                             <CustomButton isLoading={loadingUnlink} onClick={handleVariantUnlinkConfirm}>
                                 <div className="flex items-center group">
-                                    <Check className="group-hover:text-green-500 size-6 text-muted-foreground aspect-square" />
+                                    <Check className="group-hover:text-green-500 text-muted-foreground aspect-square size-6" />
                                     <span className="text-muted-foreground">Confirmar</span>
                                 </div>
                             </CustomButton>
@@ -246,13 +246,13 @@ function EditForm({ entityType, loading, register, errors, data, formForVariant,
                     )}
                     {!isVariant && entityType === "product" && <CustomButton>
                         <div className="flex items-center group">
-                            <IconPlugConnected className="group-hover:text-green-500 size-8 text-muted-foreground aspect-square" />
+                            <IconPlugConnected className="group-hover:text-green-500 text-muted-foreground aspect-square size-8" />
                             <span className="text-muted-foreground">Vincular variante</span>
                         </div>
                     </CustomButton>}
                     {!isVariantUnlinking && (
                         <Button form={entityConfig[entityType].formId} className="flex items-center group" disabled={loading}>
-                            {loading && <Loader className="animate-spin" /> || <IconDeviceFloppy className="size-8 text-muted-foreground group-hover:text-green-500 aspect-square" />}
+                            {loading && <Loader className="animate-spin" /> || <IconDeviceFloppy className="group-hover:text-green-500 text-muted-foreground aspect-square size-8" />}
                             {<span className="text-muted-foreground">Guardar {entityResolved}</span>}
                         </Button>
                     )}

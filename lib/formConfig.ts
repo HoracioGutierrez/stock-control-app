@@ -83,7 +83,7 @@ export const formNamesVariants: {
             name: "label",
             label: "Nombre de la caja",
             inputType: "text"
-        },
+        }/* ,
         currentAmount: {
             name: "currentAmount",
             label: "Cantidad",
@@ -93,7 +93,7 @@ export const formNamesVariants: {
             name: "totalAmount",
             label: "Total",
             inputType: "text"
-        }
+        } */
     },
     customerDebt: {
         payAll: {

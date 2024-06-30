@@ -1,14 +1,14 @@
 "use server"
 import { GeneralResponse } from "@/lib/types"
 import { db, products } from "@/schema"
-import { eq } from "drizzle-orm"
+import { and, eq } from "drizzle-orm"
 
 export const getProductByBarcode = async (barcode: string): Promise<GeneralResponse> => {
   "use server"
 
   try {
 
-    const product = await db.select().from(products).where(eq(products.barcode, barcode))
+    const product = await db.select().from(products).where(and(eq(products.barcode, barcode), eq(products.active, true)))
 
     if (product.length === 0) throw new Error("Producto no encontrado")
 

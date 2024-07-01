@@ -81,8 +81,8 @@ function DeleteProductConfirmationForm({ barcode, type, userId }: DeleteProductC
         <p>Esto {type === "delete-product" ? "eliminará" : "activará"} el producto en su inventario.</p>
         <p>¿Está seguro de que desea continuar?</p>
       </div>
-      <Button className="self-center group" onClick={handleClick} disabled={loading}>
-        {loading ? <Loader className="animate-spin" /> : type === "delete-product" ? <X className="p-0 size-6 text-muted-foreground group-hover:text-green-500 aspect-square" /> : <Check className="p-0 size-6 text-muted-foreground group-hover:text-green-500 aspect-square" />}
+      <Button className="group self-center" onClick={handleClick} disabled={loading}>
+        {loading ? <Loader className="animate-spin" /> : type === "delete-product" ? <X className="group-hover:text-red-500 p-0 text-muted-foreground aspect-square size-6" /> : <Check className="group-hover:text-green-500 p-0 text-muted-foreground aspect-square size-6" />}
         {type === "delete-product" ? "Si, Eliminar." : "Si, Reactivar."}
       </Button>
     </div>

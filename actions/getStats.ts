@@ -1,6 +1,6 @@
 import { GeneralResponse } from "@/lib/types";
-import { db, orders, products } from "@/schema";
-import { count, eq, gt, sql, sum } from "drizzle-orm";
+import { customers, db, orders, products } from "@/schema";
+import { asc, count, desc, eq, gt, lt, sql, sum } from "drizzle-orm";
 
 export const getStats = async (): Promise<GeneralResponse> => {
 
@@ -19,6 +19,7 @@ export const getStats = async (): Promise<GeneralResponse> => {
       `
 
     const salesAmount = await db.execute(salesAmountQuery)
+    const customersWithDebt = await db.select().from(customers).where(lt(customers.currentAmount, 0)).limit(2).orderBy(asc(customers.currentAmount))
 
     if (salesStats.length === 0 || productsCount.length === 0) throw new Error("Error al obtener los datos")
 
@@ -26,7 +27,8 @@ export const getStats = async (): Promise<GeneralResponse> => {
       data: {
         salesStats: salesStats[0],
         productsCount: productsCount[0],
-        salesFromDB: salesAmount
+        salesFromDB: salesAmount,
+        customersWithDebt: customersWithDebt
       },
       error: null,
       message: "Datos obtenidos correctamente"

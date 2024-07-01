@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { LogOut, ShoppingBasket, ShoppingCart } from "lucide-react";
 import CustomButton from "@/components/layout/CustomButton";
+import SidebarLogoutButton from "@/components/layout/SidebarLogoutButton";
 
 export default async function Home() {
 
@@ -15,8 +16,8 @@ export default async function Home() {
   return (
     <>
       <PageHeader title="Inicio" />
-      <section className="place-items-start gap-10 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6">
-        <Card className="col-span-1 xl:col-span-2 bg-primary-foreground w-full">
+      <section className="place-items-start gap-10 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6 h-full">
+        <Card className="col-span-1 xl:col-span-2 bg-primary-foreground w-full h-full">
           <CardHeader>
             <CardTitle>Información general</CardTitle>
           </CardHeader>
@@ -49,19 +50,45 @@ export default async function Home() {
                 <ShoppingCart/>
             </CustomButton>
 
-            <CustomButton href="/logout" tooltip="Cerrar sesión">
-                <LogOut/>
-            </CustomButton>
+            <SidebarLogoutButton />
 
           </CardContent>
         </Card>
-        <div></div>
-        <Card className="md:col-span-2 2xl:col-span-3 xl:col-span-2 row-start-2 bg-primary-foreground w-full">
+        <Card className="2xl:col-span-2 xl:col-span-1 bg-primary-foreground w-full h-full">
+            <CardHeader>
+                <CardTitle>Ultimas Deudas</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {data?.customersWithDebt.length > 0 ? (
+                <div className="flex flex-col gap-4">
+                  {data?.customersWithDebt.map((customer: any) => (
+                    <div className="flex flex-col" key={customer.id}>
+                      <p className="text-muted-foreground text-sm">Nombre: {customer.name}{`${customer.lastName ? ", " : ""}${customer.lastName ? customer.lastName : ""}`}</p>
+                      <p className="text-muted-foreground text-sm">Saldo: ${customer.currentAmount}</p>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-muted-foreground">No hay clientes con deuda</p>
+              )}
+            </CardContent>
+        </Card>
+        <Card className="md:col-span-2 2xl:col-span-3 xl:col-span-2 row-start-2 bg-primary-foreground w-full h-full">
           <CardHeader>
             <CardTitle>Ventas</CardTitle>
           </CardHeader>
           <CardContent>
             <OrderChart data={data?.salesFromDB} />
+          </CardContent>
+        </Card>
+        <Card className="2xl:col-span-3 xl:col-span-3 bg-primary-foreground w-full h-full">
+          <CardHeader>
+            <CardTitle>Bloque en construcción</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-muted-foreground">
+              Esta sección aun no está disponible, pero lo esperamos pronto.
+            </p>
           </CardContent>
         </Card>
       </section>

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { LogOut, ShoppingBasket, ShoppingCart } from "lucide-react";
 import CustomButton from "@/components/layout/CustomButton";
+import SidebarLogoutButton from "@/components/layout/SidebarLogoutButton";
 
 export default async function Home() {
 
@@ -49,9 +50,7 @@ export default async function Home() {
                 <ShoppingCart/>
             </CustomButton>
 
-            <CustomButton href="/logout" tooltip="Cerrar sesión">
-                <LogOut/>
-            </CustomButton>
+            <SidebarLogoutButton />
 
           </CardContent>
         </Card>

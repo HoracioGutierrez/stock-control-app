@@ -41,7 +41,7 @@ function CancelOrderForm({ userId, orderId }: Props) {
         return toast({
           variant: "destructive",
           title: "Error al cancelar la orden",
-          description: error.message
+          description: "Error al cancelar la orden, intente nuevamente o contacte al desarrollador."
         })
       })
       .finally(() => {

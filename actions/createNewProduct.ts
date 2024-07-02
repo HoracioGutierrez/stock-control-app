@@ -7,71 +7,81 @@ import { revalidatePath } from "next/cache";
 export const createNewProduct = async (userId: string, data: ProductType, variants: any[] | undefined): Promise<GeneralResponse> => {
   "use server"
   try {
-    const product = await db.insert(products).values({
-      name: data.name,
-      description: data.description,
-      price: data.price,
-      quantity: data.quantity,
-      barcode: data.barcode,
-      stock: data.stock,
-      userId: userId,
-      isVariant: false,
-      active: true,
-      hasVariants: variants && variants.length > 0 ? true : false
-    }).returning({
-      insertedId: products.id
-    })
 
-    if (variants) {
-      for (const variant of variants) {
-        const productVariant = await db.insert(products).values({
-          name: variant.name,
-          description: data.description,
-          price: variant.price,
-          quantity: variant.quantity,
-          barcode: variant.barcode,
-          stock: variant.stock,
-          userId: userId,
-          productId: product[0].insertedId,
-          isVariant: true,
-          active: true,
-          hasVariants: false
-        }).returning({
-          insertedId: products.id
-        })
+    const res = await db.transaction(async (tx) => {
 
-        await db.insert(history).values({
-          userId: userId,
-          actionType: "create-product-variant",
-          products: [productVariant[0].insertedId],
-          orderId: null,
-          customerId: null,
-          ip: null,
-          userAgent: null,
-        })
+      const product = await tx.insert(products).values({
+        name: data.name,
+        description: data.description,
+        price: data.price,
+        quantity: data.quantity,
+        barcode: data.barcode,
+        stock: data.stock,
+        userId: userId,
+        isVariant: false,
+        active: true,
+        hasVariants: variants && variants.length > 0 ? true : false
+      }).returning({
+        insertedId: products.id
+      })
+
+      if (variants) {
+        for (const variant of variants) {
+          const productVariant = await tx.insert(products).values({
+            name: variant.name,
+            description: data.description,
+            price: variant.price,
+            quantity: variant.quantity,
+            barcode: variant.barcode,
+            stock: variant.stock,
+            userId: userId,
+            productId: product[0].insertedId,
+            isVariant: true,
+            active: true,
+            hasVariants: false
+          }).returning({
+            insertedId: products.id
+          })
+
+          await tx.insert(history).values({
+            userId: userId,
+            actionType: "create-product-variant",
+            products: [productVariant[0].insertedId],
+            orderId: null,
+            customerId: null,
+            ip: null,
+            userAgent: null,
+          })
+        }
+
       }
 
-    }
+      if (product.length === 0) {
+        tx.rollback()
+        throw new Error("Error al crear el producto")
+      }
 
-    if (product.length === 0) throw new Error("Error al crear el producto")
+      await tx.insert(history).values({
+        userId: userId,
+        actionType: "create-product",
+        products: [product[0].insertedId],
+        orderId: null,
+        customerId: null,
+        ip: null,
+        userAgent: null,
+      })
 
-    await db.insert(history).values({
-      userId: userId,
-      actionType: "create-product",
-      products: [product[0].insertedId],
-      orderId: null,
-      customerId: null,
-      ip: null,
-      userAgent: null,
+
+      revalidatePath("/products")
+      return {
+        data: product[0],
+        error: null,
+        message: "Producto creado correctamente"
+      }
+
     })
 
-
-    revalidatePath("/products")
-    return {
-      data: product[0],
-      error: null,
-      message: "Producto creado correctamente"
-    }
+    return res
 
   } catch (error) {
     if (error instanceof Error) {

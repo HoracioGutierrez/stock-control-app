@@ -81,7 +81,7 @@ function LinkProductToVariantTable({ userId, providerId, setProductId }: Props) 
         return toast({
           variant: "destructive",
           title: "Error al obtener los productos",
-          description: error.message
+          description: "Ha ocurrido un error al obtener los productos, intente nuevamente o contacte al desarrollador."
         })
       })
   }, [])

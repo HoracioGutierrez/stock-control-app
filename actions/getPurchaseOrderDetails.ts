@@ -45,15 +45,15 @@ export const getPurchaseOrderDetails = async (purchaseOrderId: string): Promise<
   } catch (error) {
     if (error instanceof Error) {
       return {
-        data: null,
+        data: {},
         error: error.message,
-        message: "Error al obtener la orden de compra"
+        message: error.message
       }
     }
 
     return {
-      data: null,
-      error: "Error al obtener la orden de compra",
+      data: {},
+      error : "Error al obtener la orden de compra",
       message: "Error al obtener la orden de compra"
     }
   }

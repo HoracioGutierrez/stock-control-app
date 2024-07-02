@@ -16,13 +16,13 @@ export const getGeneralBalance = async (): Promise<GeneralResponse> => {
   } catch (error) {
     if (error instanceof Error) {
       return {
-        data: null,
+        data: [],
         error: error.message,
-        message: "Error al obtener el balance general"
+        message: error.message
       }
     }
     return {
-      data: null,
+      data: [],
       error: "Error al obtener el balance general",
       message: "Error al obtener el balance general"
     }

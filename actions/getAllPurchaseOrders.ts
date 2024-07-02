@@ -30,15 +30,15 @@ export const getAllPurchaseOrders = async (): Promise<GeneralResponse> => {
   } catch (error) {
     if (error instanceof Error) {
       return {
-        data: null,
+        data: [],
         error: error.message,
-        message: "Error al obtener las ordenes de compra"
+        message: error.message
       }
     }
 
     return {
-      data: null,
-      error: "Error al obtener las ordenes de compra",
+      data: [],
+      error : "Error al obtener las ordenes de compra",
       message: "Error al obtener las ordenes de compra"
     }
   }

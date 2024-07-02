@@ -64,7 +64,7 @@ function AccountEditForm({ user }: Props) {
         return toast({
           variant: "destructive",
           title: "Error al actualizar los datos",
-          description: error.message
+          description: "Error al actualizar los datos, intente nuevamente o contacte al desarrollador."
         })
       })
       .finally(() => {

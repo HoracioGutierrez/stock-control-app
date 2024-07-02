@@ -105,7 +105,7 @@ function EditPricesForm({ barcode, userId, setIsFullWidth }: any) {
           toast({
             variant: "destructive",
             title: "Error al obtener los productos",
-            description: "Error al obtener los productos"
+            description: "Error al obtener los productos, intente nuevamente o contacte al desarrollador."
           })  
         })
     } else {
@@ -138,7 +138,7 @@ function EditPricesForm({ barcode, userId, setIsFullWidth }: any) {
         return toast({
           variant: "destructive",
           title: "Error al actualizar los precios",
-          description: error.message
+          description: "Error al actualizar los precios, intente nuevamente o contacte al desarrollador."
         })
       })
       .finally(() => {

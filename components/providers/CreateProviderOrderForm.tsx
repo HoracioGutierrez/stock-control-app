@@ -79,7 +79,7 @@ function CreateProviderOrderForm({ userId }: Props) {
         toast({
           variant: "destructive",
           title: "Error al obtener los productos",
-          description: "Error al obtener los productos"
+          description: "Error al obtener los productos, intente nuevamente o contacte al desarrollador."
         })
       })
   }, [])
@@ -158,7 +158,7 @@ function CreateProviderOrderForm({ userId }: Props) {
         return toast({
           variant: "destructive",
           title: "Error al guardar la orden",
-          description: error.message
+          description: "Error al guardar la orden, intente nuevamente o contacte al desarrollador."
         })
       })
       .finally(() => {

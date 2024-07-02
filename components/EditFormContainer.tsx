@@ -79,7 +79,7 @@ function EditFormContainer({ entityType, barcode, entityId, hasVariants, userId,
                 toast({
                     variant: "destructive",
                     title: `Error al editar el ${entityResolved}`,
-                    description: error.message
+                    description: `Error al editar el ${entityResolved}, intente nuevamente o contacte al desarrollador.`
                 })
             })
             .finally(() => {

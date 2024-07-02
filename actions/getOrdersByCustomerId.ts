@@ -17,11 +17,11 @@ export const getOrdersByCustomerId = async (customerId: string): Promise<General
       createdAt: orders.createdAt,
       itemCount: sql<number>`sum(${productOrders.quantity})`.as("itemCount"),
     })
-    .from(orders)
-    .where(eq(orders.customerId, customerId))
-    .orderBy(orders.createdAt)
-    .innerJoin(productOrders, eq(productOrders.orderId, orders.id))
-    .groupBy(orders.id)
+      .from(orders)
+      .where(eq(orders.customerId, customerId))
+      .orderBy(orders.createdAt)
+      .innerJoin(productOrders, eq(productOrders.orderId, orders.id))
+      .groupBy(orders.id)
 
     if (ordersFromDB.length === 0) throw new Error("No se encontraron compras realizadas por este cliente")
 
@@ -33,13 +33,13 @@ export const getOrdersByCustomerId = async (customerId: string): Promise<General
   } catch (error) {
     if (error instanceof Error) {
       return {
-        data: null,
+        data: [],
         error: error.message,
-        message: "Error al obtener las compras realizadas por este cliente"
+        message: error.message
       }
     }
     return {
-      data: null,
+      data: [],
       error: "Error al obtener las compras realizadas por este cliente",
       message: "Error al obtener las compras realizadas por este cliente"
     }

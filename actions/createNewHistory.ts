@@ -17,27 +17,37 @@ type CreateNewHistoryProps = {
 export const createNewHistory = async ({ userId, actionType, products, orderId, customerId, ip, userAgent }: CreateNewHistoryProps): Promise<GeneralResponse> => {
   "use server"
   try {
-    const historyNew = await db.insert(history).values({
-      userId: userId,
-      actionType: actionType,
-      products: products,
-      orderId: orderId,
-      customerId: customerId,
-      ip: ip,
-      userAgent: userAgent,
-    }).returning({
-      insertedId: history.id
+
+    const res = await db.transaction(async (tx) => {
+
+      const historyNew = await tx.insert(history).values({
+        userId: userId,
+        actionType: actionType,
+        products: products,
+        orderId: orderId,
+        customerId: customerId,
+        ip: ip,
+        userAgent: userAgent,
+      }).returning({
+        insertedId: history.id
+      })
+
+      if (historyNew.length === 0) {
+        tx.rollback()
+        throw new Error("Error al crear el historial")
+      }
+
+      revalidatePath("/movements")
+
+      return {
+        data: historyNew[0],
+        error: null,
+        message: "Historial creado correctamente"
+      }
+
     })
 
-    if (historyNew.length === 0) throw new Error("Error al crear el historial")
-
-    revalidatePath("/movements")
-
-    return {
-      data: historyNew[0],
-      error: null,
-      message: "Historial creado correctamente"
-    }
+    return res
   } catch (error) {
     if (error instanceof Error) {
       return {

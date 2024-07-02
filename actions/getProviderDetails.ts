@@ -69,7 +69,7 @@ export const getProviderDetails = async (providerId: string): Promise<GeneralRes
           purchaseOrderProducts: []
         },
         error: error.message,
-        message: "Error al obtener los proveedores"
+        message: error.message
       }
     }
 

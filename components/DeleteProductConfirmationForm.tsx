@@ -40,7 +40,7 @@ function DeleteProductConfirmationForm({ barcode, type, userId }: DeleteProductC
           return toast({
             variant: "destructive",
             title: "Error al eliminar el producto",
-            description: "Error al eliminar el producto",
+            description: "Error al eliminar el producto, intente nuevamente o contacte al desarrollador."
           })
         })
     } else {
@@ -65,7 +65,7 @@ function DeleteProductConfirmationForm({ barcode, type, userId }: DeleteProductC
           return toast({
             variant: "destructive",
             title: "Error al reactivar el producto",
-            description: "Error al reactivar el producto",
+            description: "Error al reactivar el producto, intente nuevamente o contacte al desarrollador."
           })
         })
     }

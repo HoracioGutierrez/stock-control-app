@@ -21,14 +21,14 @@ export const getProductByBarcode = async (barcode: string): Promise<GeneralRespo
   } catch (error) {
     if (error instanceof Error) {
       return {
-        data: null,
+        data: {},
         error: error.message,
-        message: "Error al obtener el producto"
+        message : error.message
       }
     }
 
     return {
-      data: null,
+      data: {},
       error: "Error al obtener el producto",
       message: "Error al obtener el producto"
     }

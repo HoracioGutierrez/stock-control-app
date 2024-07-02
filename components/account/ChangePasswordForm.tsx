@@ -53,7 +53,7 @@ function ChangePasswordForm({ user }: Props) {
         return toast({
           variant: "destructive",
           title: "Error al cambiar la contraseña",
-          description: error.message
+          description: "Ha ocurrido un error al cambiar la contraseña, intente nuevamente o contacte al desarrollador."
         })
       })
       .finally(() => {

@@ -17,15 +17,15 @@ export const getAllPossibleVariantProducts = async (barcode: string): Promise<Ge
   } catch (error) {
     if (error instanceof Error) {
       return {
-        data: null,
+        data: [],
         error: error.message,
-        message: "Error al obtener los productos"
+        message: error.message
       }
     }
     return {
-      data: null,
-      error: "Error al obtener los productos",
-      message: "Error al obtener los productos"
+      data: [],
+      error: "Error al obtener los productos posibles",
+      message: "Error al obtener los productos posibles"
     }
   }
 }

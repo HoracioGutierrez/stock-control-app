@@ -12,39 +12,44 @@ export const editById = async (entityType: string, entityId: string, data: any, 
     "use server"
     const entityNameResolve = entityName[entityType as keyof EntityName]
     try {
-        const entitySchema = entitiesPropsById[entityType as keyof Entity]
-        const entityHistory = entitiesPropsById["history"]
 
-        /* if (entityType === "product" && data) {
-            const hasVariants = await db.select().from(products).where(eq(products.productId, entityId))
-            if (hasVariants.length > 0) throw new Error("No se puede editar un producto con variantes")
-        } */
+        const res = await db.transaction(async (tx) => {
 
-        const response = await db.update(entitySchema).set(data).where(eq(entitySchema.id, entityId)).returning({
-            insertedId: entitySchema.id
-        })
-        if (response.length === 0) throw new Error(`${entityNameResolve} no encontrado`)
+            const entitySchema = entitiesPropsById[entityType as keyof Entity]
+            const entityHistory = entitiesPropsById["history"]
 
-
-        if (entityType != "cashRegister") {
-            await db.insert(entityHistory).values({
-                userId: userId,
-                actionType: `${entityNameResolve} editado`,
-                products: [data.lastName ? data.lastName + " " + data.name : ""],
-                orderId: null,
-                customerId: null,
-                ip: null,
-                userAgent: null,
+            const response = await tx.update(entitySchema).set(data).where(eq(entitySchema.id, entityId)).returning({
+                insertedId: entitySchema.id
             })
-        }
+            if (response.length === 0) {
+                tx.rollback()
+                throw new Error(`${entityNameResolve} no encontrado`)
+            }
 
 
-        revalidatePath(`/${entityType}s`)
-        return {
-            data: response[0],
-            error: null,
-            message: `${entityNameResolve} actualizado correctamente`
-        }
+            if (entityType != "cashRegister") {
+                await tx.insert(entityHistory).values({
+                    userId: userId,
+                    actionType: `${entityNameResolve} editado`,
+                    products: [data.lastName ? data.lastName + " " + data.name : ""],
+                    orderId: null,
+                    customerId: null,
+                    ip: null,
+                    userAgent: null,
+                })
+            }
+
+
+            revalidatePath(`/${entityType}s`)
+            return {
+                data: response[0],
+                error: null,
+                message: `${entityNameResolve} actualizado correctamente`
+            }
+
+        })
+
+        return res
     } catch (error) {
         if (error instanceof Error) {
             return {

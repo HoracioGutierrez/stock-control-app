@@ -8,36 +8,44 @@ import { GeneralResponse } from "@/lib/types"
 export const unlinkVariant = async (barcode: string, userId: string): Promise<GeneralResponse> => {
   "use server"
   try {
-    const product = await db.select().from(products).where(eq(products.barcode, barcode))
 
-    if (product.length === 0) throw new Error("Producto no encontrado")
+    const res = await db.transaction(async (tx) => {
 
-    await db.update(products).set({ productId: null, isVariant: false }).where(eq(products.id, product[0].id))
+      const product = await tx.select().from(products).where(eq(products.barcode, barcode))
 
-    const hasVariants = await db.select().from(products).where(eq(products.productId, product[0].id))
+      if (product.length === 0) {
+        tx.rollback()
+        throw new Error("Producto no encontrado")
+      }
 
-    if (hasVariants.length === 0) {
-      await db.update(products).set({ hasVariants: false }).where(eq(products.id, product[0].productId))
-    }
+      await tx.update(products).set({ productId: null, isVariant: false }).where(eq(products.id, product[0].id))
 
-    await db.insert(history).values({
-      userId: userId,
-      actionType: "unlink-variant",
-      products: [product[0].id],
-      orderId: null,
-      customerId: null,
-      ip: null,
-      userAgent: null,
+      const hasVariants = await tx.select().from(products).where(eq(products.productId, product[0].id))
+
+      if (hasVariants.length === 0) {
+        await tx.update(products).set({ hasVariants: false }).where(eq(products.id, product[0].productId))
+      }
+
+      await tx.insert(history).values({
+        userId: userId,
+        actionType: "unlink-variant",
+        products: [product[0].id],
+        orderId: null,
+        customerId: null,
+        ip: null,
+        userAgent: null,
+      })
+
+      revalidatePath("/products")
+
+      return {
+        data: null,
+        error: null,
+        message: "Variante eliminada correctamente"
+      }
     })
 
-    revalidatePath("/products")
-
-    return {
-      data: null,
-      error: null,
-      message: "Variante eliminada correctamente"
-    }
-
+    return res
   } catch (error) {
     if (error instanceof Error) {
       return {

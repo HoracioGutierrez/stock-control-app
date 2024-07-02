@@ -62,7 +62,7 @@ function OpenCashRegisterForm({ userId, data }: OpenCashRegisterFormProps) {
         toast({
           variant: "destructive",
           title: "Error al abrir la caja",
-          description: error.message
+          description: "Ha ocurrido un error al abrir la caja, intente nuevamente o contacte al desarrollador."
         })
         setLoading(false)
         setClose()

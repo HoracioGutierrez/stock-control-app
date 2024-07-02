@@ -14,14 +14,14 @@ export const getAllHistoryMovements = async (userId: string): Promise<GeneralRes
   } catch (error) {
     if (error instanceof Error) {
       return {
-        data: null,
+        data: [],
         error: error.message,
-        message: "Error al obtener el historial"
+        message: error.message
       }
     }
 
     return {
-      data: null,
+      data: [],
       error: "Error al obtener el historial",
       message: "Error al obtener el historial"
     }

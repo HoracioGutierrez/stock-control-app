@@ -6,7 +6,6 @@ import { asc, eq } from "drizzle-orm"
 export const getAllProducts = async (inactive = false): Promise<GeneralResponse> => {
   "use server"
   try {
-    //const productsFromDb = await db.select().from(products).orderBy(asc(products.name))
     let productsFromDb: any
     if (inactive) {
       productsFromDb = await db.select().from(products).orderBy(asc(products.name))
@@ -17,22 +16,22 @@ export const getAllProducts = async (inactive = false): Promise<GeneralResponse>
     return {
       data: productsFromDb,
       error: null,
-      message: "Products found"
+      message: "Productos encontrados"
     }
   } catch (error) {
     if (error instanceof Error) {
       return {
         data: null,
         error: error.message,
-        message: "Error getting products"
+        message: error.message
       }
     }
 
 
     return {
-      data: null,
-      error: "Error getting products",
-      message: "Error getting products"
+      data: [],
+      error: "Error al obtener los productos",
+      message: "Error al obtener los productos"
     }
   }
 }

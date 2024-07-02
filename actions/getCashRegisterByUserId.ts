@@ -22,16 +22,16 @@ export const getCashRegisterByUserId = async (userId: string): Promise<GeneralRe
   } catch (error) {
     if (error instanceof Error) {
       return {
-        data: null,
+        data: {},
         error: error.message,
         message: error.message
       }
     }
 
     return {
-      data: null,
+      data: {},
       error: "Error al obtener las cajas",
-      message: "Error al obtener las cajas"
+      message: "Error al obtener las cajas abiertas"
     }
   }
 }

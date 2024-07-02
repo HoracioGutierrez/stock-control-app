@@ -47,7 +47,7 @@ function DeleteProviderConfirmationForm({ entityType,
           return toast({
             variant: "destructive",
             title: "Error al eliminar el proveedor.",
-            description: "No se pudo eliminar el proveedor."
+            description: "No se pudo eliminar el proveedor. Intente nuevamente o contacte al desarrollador."
           })
         })
     } else {
@@ -76,7 +76,7 @@ function DeleteProviderConfirmationForm({ entityType,
           return toast({
             variant: "destructive",
             title: "Error al reactivar el proveedor.",
-            description: "No se pudo reactivar el proveedor."
+            description: "No se pudo reactivar el proveedor. Intente nuevamente o contacte al desarrollador."
           })
         })
     }

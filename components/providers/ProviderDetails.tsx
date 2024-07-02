@@ -84,7 +84,7 @@ function ProviderDetails({ userId, providerId }: Props) {
         return toast({
           variant: "destructive",
           title: "Error al obtener los proveedores",
-          description: error.message
+          description: "Ha ocurrido un error al obtener los proveedores, intente nuevamente o contacte al desarrollador."
         })
       })
   }, [])

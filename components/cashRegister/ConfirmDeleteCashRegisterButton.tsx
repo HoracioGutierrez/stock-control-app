@@ -42,7 +42,7 @@ function ConfirmDeleteCashRegisterButton({ cashRegisters, userId }: ConfirmDelet
         toast({
           variant: "destructive",
           title: "Error al eliminar la caja",
-          description: "Error al eliminar la caja",
+          description: "Error al eliminar la caja, intente nuevamente o contacte al desarrollador."
         })
       })
       .finally(() => {

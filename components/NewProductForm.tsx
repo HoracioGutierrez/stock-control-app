@@ -81,7 +81,7 @@ function NewProductForm({ userId }: NewProductFormProps) {
         toast({
           variant: "destructive",
           title: "Error al crear el producto",
-          description: error.message
+          description: "Ha ocurrido un error al crear el producto, intente nuevamente o contacte al desarrollador."
         })
       })
       .finally(() => {

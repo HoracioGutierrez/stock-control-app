@@ -67,7 +67,7 @@ function NewCustomerForm() {
                 toast({
                     variant: "destructive",
                     title: "Error al crear el cliente",
-                    description: error.message
+                    description: "Ha ocurrido un error al crear el cliente, intente nuevamente o contacte al desarrollador."
                 })
             })
             .finally(() => {

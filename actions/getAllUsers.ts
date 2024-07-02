@@ -6,7 +6,6 @@ import { asc, eq } from "drizzle-orm"
 export const getAllUsers = async (inactive = false): Promise<GeneralResponse> => {
   "use server"
   try {
-    //const usersFromDb = await db.select().from(users).orderBy(asc(users.name))
     let usersFromDb: any
     if (inactive) {
       usersFromDb = await db.select().from(users).orderBy(asc(users.name))
@@ -17,21 +16,21 @@ export const getAllUsers = async (inactive = false): Promise<GeneralResponse> =>
     return {
       data: usersFromDb,
       error: null,
-      message: "Users found"
+      message: "Usuarios encontrados"
     }
   } catch (error) {
     if (error instanceof Error) {
       return {
-        data: null,
+        data: [],
         error: error.message,
-        message: "Error getting users"
+        message: error.message
       }
     }
 
     return {
-      data: null,
-      error: "Error getting users",
-      message: "Error getting users"
+      data: [],
+      error: "Error al obtener los usuarios",
+      message: "Error al obtener los usuarios"
     }
   }
 }

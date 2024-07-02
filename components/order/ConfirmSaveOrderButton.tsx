@@ -51,7 +51,7 @@ function ConfirmSaveOrderButton({ cashRegisters, userId }: Props) {
         return toast({
           variant: "destructive",
           title: "Error al guardar la orden",
-          description: error.message
+          description: "Error al guardar la orden, intente nuevamente o contacte al desarrollador."
         })
       })
       .finally(() => {

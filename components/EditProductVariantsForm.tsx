@@ -93,7 +93,7 @@ function EditProductVariantsForm({ barcode, userId }: EditProductVariantsFormPro
         toast({
           variant: "destructive",
           title: "Error al editar el producto",
-          description: error.message
+          description: "Error al editar el producto, intente nuevamente o contacte al desarrollador."
         })
       })
       .finally(() => {
@@ -140,7 +140,7 @@ function EditProductVariantsForm({ barcode, userId }: EditProductVariantsFormPro
         return toast({
           variant: "destructive",
           title: "Error al eliminar la variante",
-          description: "Error al eliminar la variante",
+          description: "Error al eliminar la variante, intente nuevamente o contacte al desarrollador."
         })
       })
   }

@@ -39,7 +39,7 @@ function DeleteUserConfirmationForm({ userId, type }: DeleteUserProps) {
           return toast({
             variant: "destructive",
             title: "Error al eliminar el usuario",
-            description: "Error al eliminar el usuario",
+            description: "Error al eliminar el usuario intente nuevamente o contacte al desarrollador."
           })
         })
         .finally(() => {
@@ -68,7 +68,7 @@ function DeleteUserConfirmationForm({ userId, type }: DeleteUserProps) {
           return toast({
             variant: "destructive",
             title: "Error al reactivar el usuario",
-            description: "Error al reactivar el usuario",
+            description: "Error al reactivar el usuario, intente nuevamente o contacte al desarrollador."
           })
         })
     }

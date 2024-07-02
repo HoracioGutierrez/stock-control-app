@@ -39,7 +39,7 @@ function ConfirmReactivateCashRegisterButton({ cashRegisters, userId }: ConfirmR
         return toast({
           variant: "destructive",
           title: "Error al reactivar la caja",
-          description: error.message
+          description: "Error al reactivar la caja, intente nuevamente o contacte al desarrollador."
         })
       })
       .finally(() => {

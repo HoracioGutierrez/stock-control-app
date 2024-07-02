@@ -61,7 +61,7 @@ function CreateProviderForm({ userId }: CreateProviderFormProps) {
         toast({
           variant: "destructive",
           title: "Error al crear el proveedor",
-          description: error.message
+          description: "Ha ocurrido un error al crear el proveedor, intente nuevamente o contacte al desarrollador."
         })
       })
       .finally(() => {

@@ -136,7 +136,7 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
         return toast({
           variant: "destructive",
           title: "Error al obtener los productos",
-          description: error.message
+          description: "Ha ocurrido un error al obtener los productos, intente nuevamente o contacte al desarrollador."
         })
       })
   }
@@ -163,7 +163,7 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
         return toast({
           variant: "destructive",
           title: "Error al obtener los productos",
-          description: error.message
+          description: "Ha ocurrido un error al obtener los productos, intente nuevamente o contacte al desarrollador."
         })
       })
   }

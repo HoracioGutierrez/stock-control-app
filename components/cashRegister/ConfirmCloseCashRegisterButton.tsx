@@ -42,7 +42,7 @@ const ConfirmCloseCashRegisterButton = ({ cashRegisters, userId }: ConfirmCloseC
         toast({
           variant: "destructive",
           title: "Error al cerrar la caja",
-          description: error.message
+          description: "Ha ocurrido un error al cerrar la caja, intente nuevamente o contacte al desarrollador."
         })
         setLoading(false)
         setClose()

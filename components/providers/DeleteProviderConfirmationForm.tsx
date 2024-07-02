@@ -47,7 +47,7 @@ function DeleteProviderConfirmationForm({ entityType,
           return toast({
             variant: "destructive",
             title: "Error al eliminar el proveedor.",
-            description: "No se pudo eliminar el proveedor."
+            description: "No se pudo eliminar el proveedor. Intente nuevamente o contacte al desarrollador."
           })
         })
     } else {
@@ -76,7 +76,7 @@ function DeleteProviderConfirmationForm({ entityType,
           return toast({
             variant: "destructive",
             title: "Error al reactivar el proveedor.",
-            description: "No se pudo reactivar el proveedor."
+            description: "No se pudo reactivar el proveedor. Intente nuevamente o contacte al desarrollador."
           })
         })
     }
@@ -95,7 +95,7 @@ function DeleteProviderConfirmationForm({ entityType,
       </div>
       <Button className="group self-center" onClick={handleClick} disabled={loading}>
         {loading ? <Loader
-          className="animated-spin" /> : type === "delete-provider" ? <Check className="group-hover:text-green-500 p-0 text-muted-foreground aspect-square size-6" /> : <X className="group-hover:text-green-500 p-0 text-muted-foreground aspect-square size-6" />}
+          className="animated-spin" /> : type !== "delete-provider" ? <Check className="group-hover:text-green-500 p-0 text-muted-foreground aspect-square size-6" /> : <X className="group-hover:text-red-500 p-0 text-muted-foreground aspect-square size-6" />}
         <span className="text-muted-foreground">{type === "delete-provider" ? "Si, Eliminar." : "Si, Reactivar."}</span>
       </Button>
     </div>

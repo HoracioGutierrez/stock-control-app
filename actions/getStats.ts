@@ -37,25 +37,16 @@ export const getStats = async (): Promise<GeneralResponse> => {
   } catch (error) {
     if (error instanceof Error) {
       return {
-        data: null,
+        data: {},
         error: error.message,
-        message: "Error al obtener los datos"
+        message: error.message
       }
     }
 
     return {
-      data: null,
+      data: {},
       error: "Error al obtener los datos",
       message: "Error al obtener los datos"
     }
-  }
-
-  return {
-    data: {
-      productsLength: 10,
-      ordersLength: 10
-    },
-    error: null,
-    message: "Stats obtenido correctamente"
   }
 }

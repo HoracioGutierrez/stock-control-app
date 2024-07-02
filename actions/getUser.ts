@@ -3,7 +3,7 @@ import { GeneralResponse } from "@/lib/types"
 import { db, users } from "@/schema"
 import { eq, or } from "drizzle-orm"
 
-export const getUser = async (username: string) : Promise<GeneralResponse> => {
+export const getUser = async (username: string): Promise<GeneralResponse> => {
   "use server"
   try {
     const usersFromDb = await db.select().from(users).where(or(eq(users.username, username), eq(users.email, username)))
@@ -11,21 +11,21 @@ export const getUser = async (username: string) : Promise<GeneralResponse> => {
     return {
       data: usersFromDb[0],
       error: null,
-      message: "User found"
+      message: "Usuario encontrado"
     }
   } catch (error) {
     if (error instanceof Error) {
       return {
-        data: null,
+        data: {},
         error: error.message,
-        message: "Error getting user"
+        message: error.message
       }
     }
 
     return {
-      data: null,
-      error: "Error getting user",
-      message: "Error getting user"
+      data: {},
+      error: "Error al obtener el usuario",
+      message: "Error al obtener el usuario"
     }
   }
 }

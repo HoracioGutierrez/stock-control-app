@@ -61,7 +61,7 @@ function UpdateCustomerDebtForm({ type, userId }: Props) {
         toast({
           variant: "destructive",
           title: "Error al pagar la deuda",
-          description: error.message
+          description: "Error al pagar la deuda, intente nuevamente o contacte al desarrollador."
         })
       })
       .finally(() => {

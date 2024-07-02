@@ -61,7 +61,7 @@ function NewUserForm({ userId }: NewUserFormProps) {
         toast({
           variant: "destructive",
           title: "Error al crear el usuario",
-          description: error.message
+          description: "Ha ocurrido un error al crear el usuario, intente nuevamente o contacte al desarrollador."
         })
       })
       .finally(() => {

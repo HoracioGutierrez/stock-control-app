@@ -29,7 +29,7 @@ export const getAllProviders = async (inactive = false): Promise<GeneralResponse
         .groupBy(purchaseOrders.providerId)
         .as('pop_totals');
 
-     providersFromDb = await db.select({
+      providersFromDb = await db.select({
         id: providers.id,
         name: providers.name,
         lastName: providers.lastName,
@@ -46,7 +46,7 @@ export const getAllProviders = async (inactive = false): Promise<GeneralResponse
         .leftJoin(subPO, eq(subPO.providerId, providers.id))
         .leftJoin(subPOproducts, eq(subPOproducts.providerId, providers.id))
         .orderBy(providers.name);
-        
+
     } else {
 
       const subPO = db
@@ -98,15 +98,15 @@ export const getAllProviders = async (inactive = false): Promise<GeneralResponse
 
     if (error instanceof Error) {
       return {
-        data: null,
+        data: [],
         error: error.message,
-        message: "Error al obtener los proveedores"
+        message: error.message
       }
     }
 
 
     return {
-      data: null,
+      data: [],
       error: "Error al obtener los proveedores",
       message: "Error al obtener los proveedores"
     }

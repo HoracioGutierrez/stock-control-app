@@ -7,28 +7,37 @@ import { revalidatePath } from "next/cache"
 export const changeUserPassword = async (userId: string, newPassword: string): Promise<GeneralResponse> => {
   "use server"
   try {
-    const userFromDB = await db.select().from(users).where(eq(users.id, userId))
 
-    if (userFromDB.length === 0) throw new Error("El usuario no existe")
+    const res = await db.transaction(async (tx) => {
+      const userFromDB = await tx.select().from(users).where(eq(users.id, userId))
 
-    await db.update(users).set({ password: newPassword }).where(eq(users.id, userId))
+      if (userFromDB.length === 0) {
+        tx.rollback()
+        throw new Error("El usuario no existe")
+      }
 
-    await db.insert(history).values({
-      userId: userId,
-      actionType: "Cambio de contraseña",
-      products: [],
-      orderId: null,
-      customerId: null,
-      ip: null,
-      userAgent: null,
+      await tx.update(users).set({ password: newPassword }).where(eq(users.id, userId))
+
+      await tx.insert(history).values({
+        userId: userId,
+        actionType: "Cambio de contraseña",
+        products: [],
+        orderId: null,
+        customerId: null,
+        ip: null,
+        userAgent: null,
+      })
+
+      revalidatePath("/account")
+      return {
+        data: null,
+        error: null,
+        message: "Contraseña cambiada correctamente"
+      }
+
     })
 
-    revalidatePath("/account")
-    return {
-      data: null,
-      error: null,
-      message: "Contraseña cambiada correctamente"
-    }
+    return res
   } catch (error) {
     if (error instanceof Error) {
       return {

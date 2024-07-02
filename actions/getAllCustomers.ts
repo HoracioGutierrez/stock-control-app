@@ -16,22 +16,21 @@ export const getAllCustomers = async (inactive = false): Promise<GeneralResponse
         return {
             data: customersFromDb,
             error: null,
-            message: "Customers found"
+            message: "Clientes encontrados"
         }
     } catch (error) {
         if (error instanceof Error) {
             return {
-                data: null,
+                data: [],
                 error: error.message,
-                message: "Error getting customers"
+                message: error.message
             }
         }
 
-
         return {
-            data: null,
-            error: "Error getting customers",
-            message: "Error getting customers"
+            data: [],
+            error: "Error al obtener los clientes",
+            message: "Error al obtener los clientes"
         }
     }
 }

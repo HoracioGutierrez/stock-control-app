@@ -58,7 +58,7 @@ function EditForm({ entityType, loading, register, errors, data, formForVariant,
                 return toast({
                     variant: "destructive",
                     title: "Error al eliminar la variante",
-                    description: "Error al eliminar la variante",
+                    description: "Error al eliminar la variante, intente nuevamente o contacte al desarrollador."
                 })
             })
             .finally(() => {
@@ -93,8 +93,8 @@ function EditForm({ entityType, loading, register, errors, data, formForVariant,
                 }
                 toast({
                     variant: "destructive",
-                    title: `Error al vincular la variante`,
-                    description: error.message
+                    title: "Error al vincular la variante",
+                    description: "Error al vincular la variante, intente nuevamente o contacte al desarrollador."
                 })
             })
             .finally(() => {

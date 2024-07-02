@@ -19,58 +19,65 @@ export const updatePrices = async (applyToAll: boolean, selectedColumns: string[
   }
 
   try {
-    if (applyToAll) {
-      await db
-        .update(products)
-        .set({
-          price: operationQueries[operationType][unitType]
-        })
-        .returning({
-          updatedId: products.id
-        })
 
-      await db.insert(history).values({
-        userId: userId,
-        actionType: "update-prices-all",
-        products: [],
-        orderId: null,
-        customerId: null,
-        ip: null,
-        userAgent: null,
-      })
+    const res = await db.transaction(async (tx) => {
 
-    } else {
-      selectedColumns.forEach(async (column: string) => {
-        await db
+      if (applyToAll) {
+        await tx
           .update(products)
           .set({
             price: operationQueries[operationType][unitType]
           })
-          .where(eq(products.id, column))
           .returning({
             updatedId: products.id
           })
-      })
 
-      await db.insert(history).values({
-        userId: userId,
-        actionType: "update-prices-some",
-        products: selectedColumns,
-        orderId: null,
-        customerId: null,
-        ip: null,
-        userAgent: null,
-      })
-    }
+        await tx.insert(history).values({
+          userId: userId,
+          actionType: "update-prices-all",
+          products: [],
+          orderId: null,
+          customerId: null,
+          ip: null,
+          userAgent: null,
+        })
+
+      } else {
+        selectedColumns.forEach(async (column: string) => {
+          await tx
+            .update(products)
+            .set({
+              price: operationQueries[operationType][unitType]
+            })
+            .where(eq(products.id, column))
+            .returning({
+              updatedId: products.id
+            })
+        })
+
+        await tx.insert(history).values({
+          userId: userId,
+          actionType: "update-prices-some",
+          products: selectedColumns,
+          orderId: null,
+          customerId: null,
+          ip: null,
+          userAgent: null,
+        })
+      }
 
 
-    revalidatePath("/products")
+      revalidatePath("/products")
 
-    return {
-      data: null,
-      error: null,
-      message: "Precios actualizados correctamente"
-    }
+      return {
+        data: null,
+        error: null,
+        message: "Precios actualizados correctamente"
+      }
+
+    })
+
+    return res
 
   } catch (error) {
     if (error instanceof Error) {

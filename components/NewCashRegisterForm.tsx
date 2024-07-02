@@ -60,7 +60,7 @@ function NewCashRegisterForm({ userId }: NewCashRegisterFormProps) {
         toast({
           variant: "destructive",
           title: "Error al crear la caja",
-          description: error.message
+          description: "Ha ocurrido un error al crear la caja, intente nuevamente o contacte al desarrollador."
         })
       })
       .finally(() => {

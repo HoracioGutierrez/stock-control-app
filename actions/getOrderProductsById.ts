@@ -51,15 +51,15 @@ export const getOrderProductsById = async (orderId: string): Promise<GeneralResp
   } catch (error) {
     if (error instanceof Error) {
       return {
-        data: null,
+        data: {},
         error: error.message,
-        message: "Error al obtener los productos"
+        message: error.message
       }
     }
 
     return {
-      data: null,
-      error: "Error al obtener los productos",
+      data: {},
+      error : "Error al obtener los productos",
       message: "Error al obtener los productos"
     }
   }

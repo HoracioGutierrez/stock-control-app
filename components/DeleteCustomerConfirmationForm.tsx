@@ -41,7 +41,7 @@ function DeleteCustomerConfirmationForm({ entityType, entityId, type, userId, ha
                     return toast({
                         variant: "destructive",
                         title: "Error al bloquear el cliente",
-                        description: "Error al bloquear el cliente",
+                        description: "Error al bloquear el cliente, intente nuevamente o contacte al desarrollador."
                     })
                 })
         } else {
@@ -66,7 +66,7 @@ function DeleteCustomerConfirmationForm({ entityType, entityId, type, userId, ha
                     return toast({
                         variant: "destructive",
                         title: "Error al habilitar el cliente",
-                        description: "Error al habilitar el cliente",
+                        description: "Error al habilitar el cliente, intente nuevamente o contacte al desarrollador."
                     })
                 })
         }
@@ -82,8 +82,8 @@ function DeleteCustomerConfirmationForm({ entityType, entityId, type, userId, ha
                 <p>Esto {type === "delete-customer" ? "bloqueará" : "habilitará"} el cliente.</p>
                 <p>¿Está seguro de que desea continuar?</p>
             </div>
-            <Button className="self-center group" onClick={handleClick} disabled={loading}>
-                {loading ? <Loader className="animate-spin" /> : type === "delete-customer" ? <X className="text-muted-foreground group-hover:text-red-500 aspect-square" /> : <Check className="text-muted-foreground group-hover:text-green-500 aspect-square" />}
+            <Button className="group self-center" onClick={handleClick} disabled={loading}>
+                {loading ? <Loader className="animate-spin" /> : type === "delete-customer" ? <X className="group-hover:text-red-500 text-muted-foreground aspect-square" /> : <Check className="group-hover:text-green-500 text-muted-foreground aspect-square" />}
                 {type === "delete-customer" ? <span className="text-muted-foreground">Si, Bloquear.</span> : <span className="text-muted-foreground">Si, Habilitar.</span>}
             </Button>
         </div>

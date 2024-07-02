@@ -11,28 +11,40 @@ export const deleteById = async ({ entityType, entityId, userId }: DeleteByIdPro
   "use server"
   const entityNameResolve = entityName[entityType as keyof EntityName]
   try {
-    const entitySchema = entitiesPropsById[entityType as keyof Entity]
-    const entityHistory = entitiesPropsById["history"]
-    const data = await db.select().from(entitySchema).where(eq(entitySchema.id, entityId))
-    if (data.length === 0) throw new Error(`No se encontró el ${entityNameResolve} con el id ${entityId}`)
-    await db.update(entitySchema).set({ active: false }).where(eq(entitySchema.id, entityId))
 
-    await db.insert(entityHistory).values({
-      userId: userId,
-      actionType: `${entityNameResolve} eliminado`,
-      products: [data[0].lastName ? data[0].lastName + " " + data[0].name : ""],
-      orderId: null,
-      customerId: null,
-      ip: null,
-      userAgent: null,
+    const res = await db.transaction(async (tx) => {
+
+      const entitySchema = entitiesPropsById[entityType as keyof Entity]
+      const entityHistory = entitiesPropsById["history"]
+      const data = await tx.select().from(entitySchema).where(eq(entitySchema.id, entityId))
+
+      if (data.length === 0) {
+        tx.rollback()
+        throw new Error(`No se encontró el ${entityNameResolve} con el id ${entityId}`)
+      }
+
+      await tx.update(entitySchema).set({ active: false }).where(eq(entitySchema.id, entityId))
+
+      await tx.insert(entityHistory).values({
+        userId: userId,
+        actionType: `${entityNameResolve} eliminado`,
+        products: [data[0].lastName ? data[0].lastName + " " + data[0].name : ""],
+        orderId: null,
+        customerId: null,
+        ip: null,
+        userAgent: null,
+      })
+
+      revalidatePath(`/${entityType}s`)
+      return {
+        data: data[0],
+        error: null,
+        message: `${entityNameResolve} eliminado correctamente`
+      }
+
     })
 
-    revalidatePath(`/${entityType}s`)
-    return {
-      data: data[0],
-      error: null,
-      message: `${entityNameResolve} eliminado correctamente`
-    }
+    return res
   } catch (error) {
     if (error instanceof Error) {
       return {

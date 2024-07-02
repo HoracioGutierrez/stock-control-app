@@ -64,7 +64,7 @@ function ManualScan() {
         toast({
           variant: "destructive",
           title: "Error al obtener el producto",
-          description: error.message
+          description: "Ha ocurrido un error al obtener el producto, intente nuevamente o contacte al desarrollador."
         })
         return setError(error.message)
       })

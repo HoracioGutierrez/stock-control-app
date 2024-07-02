@@ -76,16 +76,16 @@ export const getAllOrders = async (startDate?: string, endDate?: string): Promis
   } catch (error) {
     if (error instanceof Error) {
       return {
-        data: null,
+        data: [],
         error: error.message,
-        message: "Error getting orders"
+        message: error.message
       }
     }
 
     return {
-      data: null,
-      error: "Error getting orders",
-      message: "Error getting orders"
+      data: [],
+      error: "Error al obtener las compras",
+      message: "Error al obtener las compras"
     }
   }
 }

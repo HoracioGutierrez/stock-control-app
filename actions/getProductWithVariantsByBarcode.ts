@@ -29,15 +29,15 @@ export const getProductWithVariantsByBarcode = async (barcode: string): Promise<
   } catch (error) {
     if (error instanceof Error) {
       return {
-        data: null,
+        data: {},
         error: error.message,
-        message: "Error al obtener el producto"
+        message: error.message
       }
     }
 
     return {
-      data: null,
-      error: "Error al obtener el producto",
+      data: {},
+      error : "Error al obtener el producto",
       message: "Error al obtener el producto"
     }
   }

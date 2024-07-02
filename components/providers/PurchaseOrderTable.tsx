@@ -13,7 +13,7 @@ function PurchaseOrderTable({ data }: Props) {
     <CustomDataTable
       data={data}
       type="purchase-orders"
-      dateFilter
+      noFilter
       actions={(rowData: any) => {
         return (
           <>

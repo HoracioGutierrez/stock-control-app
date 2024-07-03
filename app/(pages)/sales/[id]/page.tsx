@@ -5,7 +5,7 @@ import PageHeader from "@/components/layout/PageHeader"
 import { Card, CardContent } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 import { IconCash, IconCreditCard, IconCreditCardFilled, IconQuestionMark, IconTransferIn } from "@tabler/icons-react"
-import { HandCoins } from "lucide-react"
+import { HandCoins, ShoppingBasket } from "lucide-react"
 
 type OrderDetailPageProps = {
   params: {
@@ -19,7 +19,7 @@ async function OrderDetailPage({ params: { id } }: OrderDetailPageProps) {
 
   return (
     <>
-      <PageHeader title="Detalles de la Compra" goBack />
+      <PageHeader title="Detalles de la Compra" goBack icon={<ShoppingBasket className="w-5 lg:w-7 h-5 lg:h-7 text-muted-foreground" />} />
       {data && (
         <section>
           <Card className="bg-transparent p-0 border-none">

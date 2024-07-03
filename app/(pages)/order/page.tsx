@@ -8,6 +8,7 @@ import PageHeader from "@/components/layout/PageHeader"
 import OrderScanner from "@/components/order/OrderScanner"
 import OrderDialog from "@/components/OrderDialog"
 import { auth } from "@/auth"
+import { ShoppingBasket } from "lucide-react"
 
 async function OrderPage() {
 
@@ -25,6 +26,8 @@ async function OrderPage() {
       <PageHeader
         title={`Nueva Orden ${data ? `: ${data.label}` : ""}`}
         subtitle={data ? data.openedById : ""}
+        goBack
+        icon={<ShoppingBasket className="w-5 lg:w-7 h-5 lg:h-7 text-muted-foreground" />}
       />
       {data && <OrderScanner data={data} />}
       {!data && (

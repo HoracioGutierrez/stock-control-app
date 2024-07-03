@@ -4,6 +4,7 @@ import CustomDataTable from "@/components/CustomDataTable"
 import CustomerDetailsTable from "@/components/customer/CustomerDetailsTable"
 import PageHeader from "@/components/layout/PageHeader"
 import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card"
+import { UserRound } from "lucide-react"
 
 type Props = {
   params: {
@@ -18,7 +19,7 @@ async function CustomerDetailsPage({ params: { id } }: Props) {
 
   return (
     <>
-      <PageHeader title="Detalles del Cliente" goBack />
+      <PageHeader title="Detalles del Cliente" goBack icon={<UserRound className="w-5 lg:w-7 h-5 lg:h-7 text-muted-foreground" />} />
       {(!data || data.length == 0) && (
         <div className="place-items-center border-slate-400 grid border border-dashed rounded grow">
           <div className="max-w-sm text-center">

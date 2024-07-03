@@ -4,7 +4,7 @@ import CustomButton from "@/components/layout/CustomButton"
 import PageHeader from "@/components/layout/PageHeader"
 import UsersDialog from "@/components/users/UsersDialog"
 import UsersTable from "@/components/users/UsersTable"
-import { UserPlus } from "lucide-react"
+import { UserPlus, Users } from "lucide-react"
 
 async function page() {
 
@@ -13,12 +13,10 @@ async function page() {
 
   return (
     <>
-      <PageHeader title="Usuarios" actions={
+      <PageHeader title="Usuarios" goBack icon={<Users className="w-5 lg:w-7 h-5 lg:h-7 text-muted-foreground" />} actions={
         <>
-          <CustomButton icon={<UserPlus />} tooltip="Crear Usuario" dialogType="new-user">
-            <span className="md:block hidden">
-              Crear Usuario
-            </span>
+          <CustomButton tooltip="Crear Usuario" dialogType="new-user" variant="ghost" className="p-2 group">
+            <UserPlus />
           </CustomButton>
         </>
       } />

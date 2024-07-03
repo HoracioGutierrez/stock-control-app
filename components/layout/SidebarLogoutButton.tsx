@@ -6,7 +6,7 @@ import { signOut } from "next-auth/react"
 
 function SidebarLogoutButton() {
   return (
-    <CustomButton tooltip="Cerrar sesión" onClick={signOut}>
+    <CustomButton tooltip="Cerrar sesión" onClick={signOut} className="h-full" variant="outline">
       <LogOut />
     </CustomButton>
   )

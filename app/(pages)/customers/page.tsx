@@ -4,7 +4,7 @@ import CustomersTable from "@/components/CustomersTable"
 import PageHeader from "@/components/layout/PageHeader"
 import { auth } from "@/auth"
 import CustomButton from "@/components/layout/CustomButton"
-import { UserRoundPlusIcon } from "lucide-react"
+import { UserRound, UserRoundPlusIcon } from "lucide-react"
 
 async function CustomersPage() {
 
@@ -15,13 +15,10 @@ async function CustomersPage() {
 
   return (
     <>
-      <PageHeader title="Clientes" actions={
+      <PageHeader title="Clientes" goBack icon={<UserRound className="w-5 lg:w-7 h-5 lg:h-7 text-muted-foreground" />} actions={
         <>
-          <CustomButton className="group"
-            dialogType="create-customer"
-            icon={<UserRoundPlusIcon
-              className="group-hover:text-green-500" />}>
-            <span className="md:block hidden text-muted-foreground">Crear cliente</span>
+          <CustomButton className="p-2 group" dialogType="create-customer" variant="ghost">
+            <UserRoundPlusIcon className="group-hover:text-green-500" />
           </CustomButton>
         </>
       } />

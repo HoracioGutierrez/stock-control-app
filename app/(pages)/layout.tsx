@@ -12,7 +12,7 @@ async function PageLayout({ children }: PageLayoutProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-[max-content_1fr] grow">
       <SideBar session={session} />
-      <main id="content" className="flex flex-col dark:bg-transparent bg-gradient-to-br from-accent dark:from-transparent via-accent dark:via-transparent to-primary-foreground dark:to-transparent p-4 md:p-8 overflow-auto">
+      <main id="content" className="flex flex-col dark:bg-transparent dark:from-transparent dark:via-transparent to-primary-foreground dark:to-transparent p-4 overflow-auto">
         {children}
       </main>
     </div>

@@ -27,14 +27,14 @@ function SideBar({ session }: SideBarProps) {
     <aside id="sidebar" /* className={cn("overflow-auto  md:flex flex-col justify-between", session && "border-r border-accent bg-primary-foreground w-4/5 z-10 md:w-auto transition-all", isOpen && "left-0", collapsed && "!w-fit")} */ className={cn(
       "h-[calc(100%_-_2rem)] self-center w-[calc(100%_-_2rem)] justify-self-center rounded-lg bg-primary-foreground md:bg-primary-foreground md:dark:bg-[rgba(0,0,0,0.7)] fixed md:static top-0 -left-full md:flex md:flex-col md:justify-between"
     )}>
-      <div className={cn("transition-all", collapsed && "w-fit")}>
+      <div className={cn("transition-all", collapsed && "w-full")}>
         <div className={cn("flex flex-col justify-between items-center gap-4 p-4 py-10 transition-all", collapsed && "py-4 px-2 pt-10")}>
           <div className="relative flex items-center gap-2">
             <PackageOpen width={25} height={25} />
             <span className={cn("font-bold text-xl text-center", collapsed && "hidden")}>Stock Control</span>
           </div>
           <X className={cn("top-2 right-2 absolute md:hidden cursor-pointer", collapsed && "right-50")} onClick={handleClick} />
-          {/* {collapsed ? <ArrowRightToLine onClick={handleCollapse} className="cursor-pointer" /> : <ArrowLeftToLine onClick={handleCollapse} className="cursor-pointer" />} */}
+          {collapsed ? <ArrowRightToLine onClick={handleCollapse} className="cursor-pointer" /> : <ArrowLeftToLine onClick={handleCollapse} className="cursor-pointer" />}
         </div>
         <div className="flex flex-col gap-2 p-4">
           <NavLink href="/" onClick={handleClick}>
@@ -43,7 +43,7 @@ function SideBar({ session }: SideBarProps) {
           </NavLink>
           <Accordion type="single" collapsible className="flex flex-col gap-2" defaultValue="item-1">
             <AccordionItem value="item-1" className="border-none">
-              <AccordionTrigger className="p-3 text-muted-foreground">
+              <AccordionTrigger className={cn("p-3 text-muted-foreground",collapsed && "pl-2")}>
                 <div className="flex items-center gap-2">
                   <Computer width={22} height={22} />
                   <span className={cn(collapsed && "hidden")}>Cajas</span>
@@ -61,7 +61,7 @@ function SideBar({ session }: SideBarProps) {
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-2" className="border-none">
-              <AccordionTrigger className="p-3 text-muted-foreground">
+              <AccordionTrigger className={cn("p-3 text-muted-foreground",collapsed && "pl-2")}>
                 <div className="flex items-center gap-2">
                   <Truck width={22} height={22} />
                   <span className={cn(collapsed && "hidden")}>Proveedores</span>
@@ -79,7 +79,7 @@ function SideBar({ session }: SideBarProps) {
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-3" className="border-none">
-              <AccordionTrigger className="p-3 text-muted-foreground">
+              <AccordionTrigger className={cn("p-3 text-muted-foreground",collapsed && "pl-2")}>
                 <div className="flex items-center gap-2">
                   <Store width={22} height={22} />
                   <span className={cn(collapsed && "hidden")}>Tienda</span>
@@ -105,7 +105,7 @@ function SideBar({ session }: SideBarProps) {
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-4" className="border-none">
-              <AccordionTrigger className="p-3 text-muted-foreground">
+              <AccordionTrigger className={cn("p-3 text-muted-foreground",collapsed && "pl-2")}>
                 <div className="flex items-center gap-2">
                   <UserCircle2Icon />
                   <span className={cn(collapsed && "hidden")}>Cuenta</span>
@@ -134,7 +134,7 @@ function SideBar({ session }: SideBarProps) {
         </div>
       </div>
       <div>
-        <div className="place-items-center grid grid-cols-2 px-4">
+        <div className={cn("place-items-center grid grid-cols-2 px-4",collapsed && "grid-cols-1")}>
           {session && <LogoutButton collapsed={collapsed} />}
           <ModeToggle />
         </div>

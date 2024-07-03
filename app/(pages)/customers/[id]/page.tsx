@@ -4,7 +4,8 @@ import CustomDataTable from "@/components/CustomDataTable"
 import CustomerDetailsTable from "@/components/customer/CustomerDetailsTable"
 import PageHeader from "@/components/layout/PageHeader"
 import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card"
-import { UserRound } from "lucide-react"
+import { IconCash, IconId, IconMail } from "@tabler/icons-react"
+import { Home, Phone, User2Icon, UserRound } from "lucide-react"
 
 type Props = {
   params: {
@@ -28,51 +29,69 @@ async function CustomerDetailsPage({ params: { id } }: Props) {
           </div>
         </div>
       )}
-      {data && (
-        <section>
-          <Card className="bg-transparent p-0 border-none">
-            <CardHeader className="p-0 pb-8">
-              <CardDescription className="text-muted-foreground">Detalles del Cliente</CardDescription>
-            </CardHeader>
-            <CardContent className="gap-4 grid p-0">
-              <div className="gap-2 gap-y-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-                <div>
-                  <p className="text-muted-foreground">Nombre</p>
-                  <p>{data.name}</p>
+      <div className="gap-4 xl:gap-10 grid grid-cols-1 xl:grid-cols-[max-content_1fr] grid-rows-[auto_1fr] xl:grid-rows-1 grow">
+        {data && (
+          <section>
+            <Card className="shadow-none border-none h-full">
+              <CardHeader>
+                <CardDescription className="text-muted-foreground">Informacion Generales</CardDescription>
+              </CardHeader>
+              <CardContent className="gap-6 grid grid-cols-2 xl:grid-cols-1">
+                <div className="items-center place-content-center gap-4 grid grid-cols-[65px_1fr]">
+                  <div className="flex flex-col justify-center items-center text-muted-foreground text-sm">
+                    <User2Icon className="w-5 h-5" />
+                    nombre
+                  </div>
+                  <p>
+                    {data.name ? data.name : "Sin Nombre"}
+                    {data.lastName && ", "}
+                    {data.lastName ? data.lastName : "Sin Apellido"}
+                  </p>
                 </div>
-                <div>
-                  <p className="text-muted-foreground">Apellido</p>
-                  <p>{data.lastName ? data.lastName : "Sin Apellido"}</p>
-                </div>
-                <div>
-                  <p className="text-muted-foreground">Teléfono</p>
+                <div className="items-center place-content-center gap-4 grid grid-cols-[65px_1fr]">
+                  <div className="flex flex-col justify-center items-center text-muted-foreground text-sm">
+                    <Phone className="w-5 h-5" />
+                    teléfono
+                  </div>
                   <p>{data.phone ? data.phone : "Sin Teléfono"}</p>
                 </div>
-                <div>
-                  <p className="text-muted-foreground">Email</p>
-                  <p>{data.email ? data.email : "Sin Email"}</p>
+                <div className="items-center place-content-center gap-4 grid grid-cols-[65px_1fr]">
+                  <div className="flex flex-col justify-center items-center text-muted-foreground text-sm">
+                    <IconMail className="w-5 h-5" />
+                    email
+                  </div>
+                  <p className="truncate">{data.email ? data.email : "Sin Email"}</p>
                 </div>
-                <div>
-                  <p className="text-muted-foreground">Dirección</p>
+                <div className="items-center place-content-center gap-4 grid grid-cols-[65px_1fr]">
+                  <div className="flex flex-col justify-center items-center text-muted-foreground text-sm">
+                    <Home className="w-5 h-5" />
+                    dirección
+                  </div>
                   <p>{data.address ? data.address : "Sin Dirección"}</p>
                 </div>
-                <div>
-                  <p className="text-muted-foreground">Nombre de la compañía</p>
-                  <p>{data.legalName ? data.legalName : "Sin Nombre de la Compañía"}</p>
+                <div className="items-center place-content-center gap-4 grid grid-cols-[65px_1fr]">
+                  <div className="flex flex-col justify-center items-center text-muted-foreground text-sm">
+                    <IconId className="w-5 h-5" />
+                    cuit/cuil
+                  </div>
+                  <p>{data.cuitCuil ? data.cuitCuil : "Sin Cuit/CUIL"}</p>
                 </div>
-                <div>
-                  <p className="text-muted-foreground">CUIT/CUIL</p>
-                  <p>{data.cuitCuil ? data.cuitCuil : "Sin CUIT/CUIL"}</p>
+                <div className="items-center place-content-center gap-4 grid grid-cols-[65px_1fr]">
+                  <div className="flex flex-col justify-center items-center text-muted-foreground text-sm">
+                    <IconCash className="w-5 h-5" />
+                    gastado
+                  </div>
+                  <p>{data.spentAmount ? "$" + Number(data.spentAmount).toFixed(2) : "Sin Gasto"}</p>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </section>
+        )}
+        <section className="flex flex-col pt-6">
+          <p className="mb-8 text-muted-foreground text-sm">Compras realizadas por este cliente</p>
+          <CustomerDetailsTable orders={orders} />
         </section>
-      )}
-      <section className="my-16">
-        <p className="text-muted-foreground">Compras realizadas por este cliente</p>
-        <CustomerDetailsTable orders={orders} />
-      </section>
+      </div>
     </>
   )
 }

@@ -35,7 +35,7 @@ const ProviderDetailsPage = async ({ params: { id } }: Props) => {
               <CardContent className="gap-6 grid grid-cols-2 xl:grid-cols-1">
                 <div className="items-center place-content-center gap-4 grid grid-cols-[65px_1fr]">
                   <div className="flex flex-col justify-center items-center text-muted-foreground text-sm">
-                    <User2Icon className="w-5 h-5"/>
+                    <User2Icon className="w-5 h-5" />
                     nombre
                   </div>
                   <p>
@@ -46,35 +46,35 @@ const ProviderDetailsPage = async ({ params: { id } }: Props) => {
                 </div>
                 <div className="items-center place-content-center gap-4 grid grid-cols-[65px_1fr]">
                   <div className="flex flex-col justify-center items-center text-muted-foreground text-sm">
-                    <Phone className="w-5 h-5"/>
+                    <Phone className="w-5 h-5" />
                     teléfono
                   </div>
                   <p>{data.provider.phone ? data.provider.phone : "Sin Teléfono"}</p>
                 </div>
                 <div className="items-center place-content-center gap-4 grid grid-cols-[65px_1fr]">
                   <div className="flex flex-col justify-center items-center text-muted-foreground text-sm">
-                    <IconMail className="w-5 h-5"/>
+                    <IconMail className="w-5 h-5" />
                     email
                   </div>
                   <p className="truncate">{data.provider.email ? data.provider.email : "Sin Email"}</p>
                 </div>
                 <div className="items-center place-content-center gap-4 grid grid-cols-[65px_1fr]">
                   <div className="flex flex-col justify-center items-center text-muted-foreground text-sm">
-                    <Home className="w-5 h-5"/>
+                    <Home className="w-5 h-5" />
                     dirección
                   </div>
                   <p>{data.provider.address ? data.provider.address : "Sin Dirección"}</p>
                 </div>
                 <div className="items-center place-content-center gap-4 grid grid-cols-[65px_1fr]">
                   <div className="flex flex-col justify-center items-center text-muted-foreground text-sm">
-                    <IconId className="w-5 h-5"/>
+                    <IconId className="w-5 h-5" />
                     cuit/cuil
                   </div>
                   <p>{data.provider.cuitCuil ? data.provider.cuitCuil : "Sin Cuit/CUIL"}</p>
                 </div>
                 <div className="items-center place-content-center gap-4 grid grid-cols-[65px_1fr]">
                   <div className="flex flex-col justify-center items-center text-muted-foreground text-sm">
-                    <Warehouse className="w-5 h-5"/>
+                    <Warehouse className="w-5 h-5" />
                     Empresa
                   </div>
                   <p>{data.provider.companyName ? data.provider.companyName : "Sin Empresa"}</p>

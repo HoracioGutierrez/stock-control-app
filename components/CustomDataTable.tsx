@@ -16,7 +16,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip"
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
 import { TooltipProvider } from "@radix-ui/react-tooltip"
-import { ArrowLeft, ArrowRight, FileX2, Filter, MoreHorizontal, Package, PackageX, SearchCodeIcon } from "lucide-react"
+import { ArrowLeft, ArrowRight, FileX2, Filter, MoreHorizontal, Package, PackageX, SearchCodeIcon, SearchIcon } from "lucide-react"
 import { getAllOrders } from "@/actions/getAllOrders"
 import { Input } from "@/components/ui/input"
 import { useEffect, useState } from "react"
@@ -178,27 +178,27 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
           <div className="flex md:justify-between items-center gap-2">
 
 
-            <Select onValueChange={handlePageChange}>
-              <SelectTrigger className="px-4 w-fit text-muted-foreground">
-                <SelectValue placeholder={`Cant. de resultados`} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="5">5</SelectItem>
-                <SelectItem value="10">10</SelectItem>
-                <SelectItem value="15">15</SelectItem>
-                <SelectItem value="20">20</SelectItem>
-                <SelectItem value="30">30</SelectItem>
-                <SelectItem value="50">50</SelectItem>
-                <SelectItem value="100">100</SelectItem>
-              </SelectContent>
-            </Select>
+
+            <label htmlFor="search-input" className="relative items-center gap-2 border-input grid grid-cols-[auto_1fr] bg-card border rounded-md cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 pl-2">
+              <SearchIcon /* onClick={() => setOpenSearch(!openSearch)} */ className="z-10 p-0 text-muted-foreground aspect-square" />
+              <Input
+                placeholder={`Filtrar por ${filterColumn ?? "nombre"}`}
+                value={(table.getColumn(filterKey || "name")?.getFilterValue() as string) ?? ""}
+                onChange={(event) => {
+                  return table.getColumn(filterKey || "name")?.setFilterValue(event.target.value)
+                }}
+                className="border-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                /* className={cn("p-0 border-none w-0 sm:max-w-sm transition-[width,opacity] outline-none ring-0 focus-visible:ring-0 focus-within:ring-0 ring-offset-0 focus-visible:ring-offset-0", openSearch && "w-full sm:max-w-sm opacity-100 px-2")} */
+                id="search-input"
+              />
+            </label>
 
             <TooltipProvider>
               <DropdownMenu>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" className="p-2 text-muted-foreground">
+                      <Button variant="outline" className="p-2 text-muted-foreground">
                         <Filter className="p-0 aspect-square" />
                       </Button>
                     </DropdownMenuTrigger>
@@ -245,20 +245,20 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
               </DropdownMenu>
             </TooltipProvider>
 
-            <label htmlFor="search-input" className="relative items-center gap-2 grid grid-cols-[auto_1fr] cursor-pointer">
-              <CustomButton variant="ghost" className="p-2 group" tooltip="Buscar...">
-                <SearchCodeIcon onClick={() => setOpenSearch(!openSearch)} className="z-10 p-0 text-muted-foreground aspect-square" />
-              </CustomButton>
-              <Input
-                placeholder={`Filtrar por ${filterColumn ?? "nombre"}`}
-                value={(table.getColumn(filterKey || "name")?.getFilterValue() as string) ?? ""}
-                onChange={(event) => {
-                  return table.getColumn(filterKey || "name")?.setFilterValue(event.target.value)
-                }}
-                className={cn("p-0 border-none w-0 sm:max-w-sm transition-[width,opacity] outline-none ring-0 focus-visible:ring-0 focus-within:ring-0 ring-offset-0 focus-visible:ring-offset-0", openSearch && "w-full sm:max-w-sm opacity-100 px-2")}
-                id="search-input"
-              />
-            </label>
+            <Select onValueChange={handlePageChange}>
+              <SelectTrigger className="px-4 w-fit text-muted-foreground">
+                <SelectValue placeholder={`5`} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="5">5</SelectItem>
+                <SelectItem value="10">10</SelectItem>
+                <SelectItem value="15">15</SelectItem>
+                <SelectItem value="20">20</SelectItem>
+                <SelectItem value="30">30</SelectItem>
+                <SelectItem value="50">50</SelectItem>
+                <SelectItem value="100">100</SelectItem>
+              </SelectContent>
+            </Select>
 
           </div>
 
@@ -267,7 +267,7 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
             <div className="flex gap-2">
               <Popover open={open}>
                 <PopoverTrigger asChild>
-                  <Button onClick={() => setOpen(!open)} className="flex items-center gap-2">
+                  <Button onClick={() => setOpen(!open)} className="flex items-center gap-2 text-muted-foreground" variant="outline">
                     {!selectedDay && <IconCalendar />}
                     {selectedDay ? format(selectedDay, "dd/MM/yyyy") : "Elige una fecha"}
                   </Button>

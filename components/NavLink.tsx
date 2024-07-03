@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils"
 function NavLink({ href, children, activeClassName, className = "", onClick, ...props }: any) {
   const pathname = usePathname()
 
-  const active = pathname === href
+  const active = "/" + pathname.split("/")[1] === href
 
   return (
     <Link href={href} {...props} className={cn(

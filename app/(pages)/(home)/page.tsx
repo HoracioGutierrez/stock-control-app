@@ -17,7 +17,7 @@ export default async function Home() {
     <>
       <PageHeader title="Inicio" icon={<HomeIcon className="w-5 lg:w-7 h-5 lg:h-7 text-muted-foreground" />} goBack />
       <section className="place-items-start gap-10 grid grid-cols-6 2xl:grid-cols-8">
-        
+
         <Card className="col-span-6 sm:col-span-3 2xl:col-span-3 bg-primary-foreground dark:bg-card w-full h-full transition-transform hover:scale-[1.02]">
           <CardHeader className="p-3 md:p-4 md:pb-0">
             <CardTitle className="font-light text-base text-muted-foreground">Información general</CardTitle>
@@ -29,7 +29,7 @@ export default async function Home() {
             <div className="gap-4 grid grid-cols-1 md:grid-cols-2 pt-4">
               <div className="border-muted-foreground p-2 border rounded-sm">
                 <p className="flex items-center gap-2 text-muted-foreground text-sm">
-                  <div className="bg-accent rounded-full w-1 h-1"></div>
+                  <span className="bg-accent rounded-full w-1 h-1"></span>
                   <span className="truncate">
                     Productos en inventario
                   </span>
@@ -38,7 +38,7 @@ export default async function Home() {
               </div>
               <div className="border-muted-foreground p-2 border rounded-sm">
                 <p className="flex items-center gap-2 text-muted-foreground text-sm">
-                  <div className="bg-accent rounded-full w-1 h-1"></div>
+                  <span className="bg-accent rounded-full w-1 h-1"></span>
                   <span className="truncate">
                     Compras hechas
                   </span>
@@ -86,7 +86,7 @@ export default async function Home() {
                   {data?.customersWithDebt.map((customer: any) => (
                     <div className="flex flex-col" key={customer.id}>
                       <p className="flex items-center gap-2 text-muted-foreground text-sm">
-                        <div className="bg-accent rounded-full w-1 h-1"></div>
+                        <span className="bg-accent rounded-full w-1 h-1"></span>
                         <span className="truncate">
                           {customer.name}{`${customer.lastName ? ", " : ""}${customer.lastName ? customer.lastName : ""}`}
                         </span>

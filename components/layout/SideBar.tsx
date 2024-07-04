@@ -1,5 +1,5 @@
 "use client"
-import { ArrowLeftToLine, ArrowRightToLine, Barcode, History, Home, LineChart, PackageOpen, ShoppingBasket, Truck, UserCogIcon, UserRound, Users, X, Computer, Store, Settings, UserCircle2Icon } from "lucide-react"
+import { ArrowLeftToLine, ArrowRightToLine, Barcode, History, Home, LineChart, PackageOpen, ShoppingBasket, Truck, UserCogIcon, UserRound, Users, X, Computer, Store, Settings, UserCircle2Icon, HelpCircle } from "lucide-react"
 import { IconChartHistogram, IconDeviceDesktopDollar, IconEngine, IconTruckLoading, IconHelpCircleFilled, IconHelpCircle } from '@tabler/icons-react'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, } from "@/components/ui/accordion"
 import { useDrawerStore } from "@/stores/drawerStore"
@@ -159,6 +159,10 @@ function SideBar({ session }: SideBarProps) {
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
+            <NavLink href="/help" onClick={handleClick}>
+              <HelpCircle width={22} height={22} />
+              <span className={cn(collapsed && "hidden")}>Ayuda</span>
+            </NavLink>
           </div>
         </div>
         <div>

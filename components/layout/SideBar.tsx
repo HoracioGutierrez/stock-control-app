@@ -1,6 +1,6 @@
 "use client"
 import { ArrowLeftToLine, ArrowRightToLine, Barcode, History, Home, LineChart, PackageOpen, ShoppingBasket, Truck, UserCogIcon, UserRound, Users, X, Computer, Store, Settings, UserCircle2Icon } from "lucide-react"
-import { IconChartHistogram, IconDeviceDesktopDollar, IconEngine, IconTruckLoading } from '@tabler/icons-react'
+import { IconChartHistogram, IconDeviceDesktopDollar, IconEngine, IconTruckLoading, IconHelpCircleFilled, IconHelpCircle } from '@tabler/icons-react'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, } from "@/components/ui/accordion"
 import { useDrawerStore } from "@/stores/drawerStore"
 import { ModeToggle } from "../ModeToggle"
@@ -51,7 +51,7 @@ function SideBar({ session }: SideBarProps) {
         onClick={handleClick}
       ></div>
       <aside id="sidebar" className={cn(
-        "h-full md:h-[calc(100%_-_2rem)] self-center w-5/6 md:w-[calc(100%_-_2rem)] justify-self-center md:rounded-lg bg-primary-foreground md:bg-primary-foreground md:dark:bg-[rgba(0,0,0,0.7)] fixed md:static top-0 -left-full md:flex md:flex-col md:justify-between transition-all sm:w-3/5",
+        "h-full md:h-[calc(100%_-_2rem)] self-center w-5/6 md:w-[calc(100%_-_2rem)] justify-self-center md:rounded-lg bg-primary-foreground md:bg-primary-foreground dark:bg-card fixed md:static top-0 -left-full md:flex md:flex-col md:justify-between transition-all sm:w-3/5",
         isOpen && "left-0 z-20"
       )}>
 

@@ -1,6 +1,6 @@
 "use client"
 import { ArrowLeftToLine, ArrowRightToLine, Barcode, History, Home, LineChart, PackageOpen, ShoppingBasket, Truck, UserCogIcon, UserRound, Users, X, Computer, Store, Settings, UserCircle2Icon } from "lucide-react"
-import { IconChartHistogram, IconDeviceDesktopDollar, IconEngine, IconTruckLoading } from '@tabler/icons-react'
+import { IconChartHistogram, IconDeviceDesktopDollar, IconEngine, IconTruckLoading, IconHelpCircleFilled, IconHelpCircle } from '@tabler/icons-react'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, } from "@/components/ui/accordion"
 import { useDrawerStore } from "@/stores/drawerStore"
 import { ModeToggle } from "../ModeToggle"
@@ -8,9 +8,13 @@ import { SideBarProps } from "@/lib/types"
 import LogoutButton from "../LogoutButton"
 import NavLink from "../NavLink"
 import { cn } from "@/lib/utils"
+import { usePathname } from "next/navigation"
 
 
 function SideBar({ session }: SideBarProps) {
+
+  const pathname = usePathname()
+
 
   const { isOpen, setOpen, collapsed, setCollapsed } = useDrawerStore((state: any) => state)
 
@@ -25,7 +29,7 @@ function SideBar({ session }: SideBarProps) {
 
   return (
     <aside id="sidebar" /* className={cn("overflow-auto  md:flex flex-col justify-between", session && "border-r border-accent bg-primary-foreground w-4/5 z-10 md:w-auto transition-all", isOpen && "left-0", collapsed && "!w-fit")} */ className={cn(
-      "h-[calc(100%_-_2rem)] self-center w-[calc(100%_-_2rem)] justify-self-center rounded-lg bg-primary-foreground md:bg-primary-foreground md:dark:bg-[rgba(0,0,0,0.7)] fixed md:static top-0 -left-full md:flex md:flex-col md:justify-between"
+      "min-h-[calc(100%_-_2rem)] self-center w-[calc(100%_-_2rem)] justify-self-center rounded-lg bg-primary-foreground md:bg-primary-foreground md:dark:bg-[rgba(0,0,0,0.7)] fixed md:static top-0 -left-full md:flex md:flex-col md:justify-between transition-all"
     )}>
       <div className={cn("transition-all", collapsed && "w-fit")}>
         <div className={cn("flex flex-col justify-between items-center gap-4 p-4 py-10 transition-all", collapsed && "py-4 px-2 pt-10")}>
@@ -131,6 +135,10 @@ function SideBar({ session }: SideBarProps) {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
+          <NavLink href="/help">
+            {pathname === "/help" ? <IconHelpCircleFilled /> : <IconHelpCircle />}
+            <span className={cn(collapsed && "hidden")}>Ayuda</span>
+          </NavLink>
         </div>
       </div>
       <div>

@@ -175,7 +175,7 @@ function SideBar({ session }: SideBarProps) {
               <p className="text-center text-muted-foreground">Desarrollado por:</p>
               <p className="text-center text-muted-foreground">@horagutierrez - @ArturoGabrielRamirez</p>
             </div>
-            <p className="text-muted-foreground">Stock Control - version 1.3.0</p>
+            <p className="text-muted-foreground">Stock Control - version 1.3.1</p>
           </div>
         </div>
       </aside>

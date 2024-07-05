@@ -5,6 +5,7 @@ import { auth } from "@/auth"
 import ProviderDialog from "@/components/providers/ProviderDialog"
 import { IconAmbulance } from "@tabler/icons-react"
 import CustomButton from "@/components/layout/CustomButton"
+import { Truck } from "lucide-react"
 
 async function ProvidersPage() {
 
@@ -12,10 +13,10 @@ async function ProvidersPage() {
   const { data, error } = await getAllProviders()
   return (
     <>
-      <PageHeader title="Proveedores" actions={
+      <PageHeader title="Proveedores" goBack icon={<Truck className="w-5 lg:w-7 h-5 lg:h-7 text-muted-foreground" />} actions={
         <>
-          <CustomButton className="group" icon={<IconAmbulance className="group-hover:text-green-500 w-7 h-7" />} tooltip="Crear Proveedor" dialogType="new-provider" >
-            <span className="md:block hidden text-muted-foreground">Crear Proveedor</span>
+          <CustomButton variant="ghost" className="p-2 group" tooltip="Crear Proveedor" dialogType="new-provider" >
+            <IconAmbulance className="group-hover:text-green-500 w-7 h-7" />
           </CustomButton>
         </>
       } />

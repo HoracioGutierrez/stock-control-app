@@ -362,6 +362,9 @@ export const purchaseOrdersColumns: ColumnDef<any>[] = [
   {
     header: "Total",
     accessorKey: "total",
+    cell: ({ row }) => {
+      return Number(row.original.total).toFixed(2)
+    },
   },
   {
     header: "Cant. de productos",

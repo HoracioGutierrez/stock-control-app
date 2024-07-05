@@ -1,14 +1,16 @@
 "use client"
-import { cn } from "@/lib/utils"
-import { LogOut } from "lucide-react"
+import { IconPower } from "@tabler/icons-react"
 import { signOut } from "next-auth/react"
+import CustomButton from "./layout/CustomButton"
 
 function LogoutButton({ collapsed }: { collapsed: boolean }) {
   return (
-    <button onClick={() => signOut()} className="flex items-center gap-2 hover:bg-accent p-3 w-full hover:font-bold text-muted-foreground text-sm hover:text-accent-foreground transition-colors hover:cursor-pointer">
-      <LogOut />
-      <span className={cn(collapsed && "hidden")}>Cerrar Sesión</span>
-    </button>
+    <div className="flex flex-col justify-center items-center gap-2 py-4 w-full">
+      <CustomButton variant="ghost" className="p-2 h-fit" onClick={() => signOut()}>
+        <IconPower />
+      </CustomButton>
+      <p className="text-muted-foreground text-sm">Salir</p>
+    </div>
   )
 }
 export default LogoutButton 

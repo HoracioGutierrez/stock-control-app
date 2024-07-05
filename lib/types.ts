@@ -169,6 +169,7 @@ export type PageTitleProps = {
   title: string
   backButton?: boolean
   subtitle?: string
+  icon?: JSX.Element
 }
 
 export type ProductVariantFormProps = {
@@ -203,7 +204,7 @@ export type NewProductFormProps = {
 
 export type ModeToggleProps = {
   theme?: string | undefined
-  setTheme: (theme: string) => void
+  setTheme?: (theme: string) => void
   themeName?: string,
   collapsed?: boolean
   cn?: any

@@ -109,5 +109,6 @@
 }
 
 .dark #sidebar {
-  box-shadow: 16px 0px 20px rgba(0, 0, 0, 0.4);
+  /* box-shadow: 16px 0px 20px rgba(0, 0, 0, 0.4); */
+  box-shadow: 7px 7px 4px rgba(0, 0, 0, 0.4);
 }

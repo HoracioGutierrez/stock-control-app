@@ -1,10 +1,9 @@
 import { getAllCashRegisters } from "@/actions/getAllCashRegisters"
-import DialogTriggerButton from "@/components/DialogTriggerButton"
 import PageHeader from "@/components/layout/PageHeader"
 import { auth } from "@/auth"
 import CashRegisterTable from "@/components/cashRegister/CashRegisterTable"
 import CashRegisterDialog from "@/components/cashRegister/CashRegisterDialog"
-import { IconDeviceDesktopPlus } from '@tabler/icons-react'
+import { IconDeviceDesktopDollar, IconDeviceDesktopPlus } from '@tabler/icons-react'
 import CustomButton from "@/components/layout/CustomButton"
 import { ArrowUpDown } from "lucide-react"
 
@@ -15,15 +14,16 @@ async function StockPage() {
 
   return (
     <>
-      <PageHeader title="Cajas" actions={session?.user.isAdmin
+      <PageHeader icon={<IconDeviceDesktopDollar className="w-5 lg:w-7 h-5 lg:h-7 text-muted-foreground" />} goBack title="Cajas" actions={session?.user.isAdmin
         ? (
           <>
-            <CustomButton tooltip="Ingresar dinero manualmente a la caja actual" dialogType="manual-income" className="truncate group" icon={<ArrowUpDown className="group-hover:text-green-500" />}>
-              <span className="md:block hidden">
-                Ingreso/Egreso Manual
-              </span>
+            <CustomButton variant="ghost" className="p-2 group" dialogType="manual-income" tooltip="Ingresar dinero manualmente a la caja actual">
+              <ArrowUpDown className="group-hover:text-green-500" />
             </CustomButton>
-            <DialogTriggerButton className="group" dialogType="new-cash-register" text="Crear Caja" icon={<IconDeviceDesktopPlus className="group-hover:text-green-500" />} />
+            
+            <CustomButton variant="ghost" className="p-2 group" dialogType="new-cash-register" tooltip="Crear una nueva caja">
+              <IconDeviceDesktopPlus className="group-hover:text-green-500" />
+            </CustomButton>
           </>
         )
         : null

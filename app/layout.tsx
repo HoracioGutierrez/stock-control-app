@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" suppressHydrationWarning>
-      <body className={cn(inter.className, "min-h-dvh flex flex-col bg-gradient-to-br dark:from-background dark:to-secondary from-primary-foreground")}>
+      <body className={cn(inter.className, "min-h-dvh flex flex-col dark:bg-gradient-to-br dark:from-background dark:to-secondary from-primary-foreground")}>
         <SessionProvider>
           <ThemeProvider
             attribute="class"

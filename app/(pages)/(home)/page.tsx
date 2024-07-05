@@ -5,7 +5,7 @@ import { Line, LineChart } from "recharts"
 import OrderChart from "@/components/home/OrderChart";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { LogOut, ShoppingBasket, ShoppingCart } from "lucide-react";
+import { ArrowUpDown, HomeIcon, LogOut, ShoppingBasket, ShoppingCart } from "lucide-react";
 import CustomButton from "@/components/layout/CustomButton";
 import SidebarLogoutButton from "@/components/layout/SidebarLogoutButton";
 
@@ -15,82 +15,113 @@ export default async function Home() {
 
   return (
     <>
-      <PageHeader title="Inicio" />
-      <section className="place-items-start gap-10 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6 h-full">
-        <Card className="col-span-1 xl:col-span-2 bg-primary-foreground w-full h-full">
-          <CardHeader>
-            <CardTitle>Información general</CardTitle>
+      <PageHeader title="Inicio" icon={<HomeIcon className="w-5 lg:w-7 h-5 lg:h-7 text-muted-foreground" />} goBack />
+      <section className="place-items-start gap-10 grid grid-cols-6 2xl:grid-cols-8">
+
+        <Card className="col-span-6 sm:col-span-3 2xl:col-span-3 bg-primary-foreground dark:bg-card w-full h-full transition-transform hover:scale-[1.02]">
+          <CardHeader className="p-3 md:p-4 md:pb-0">
+            <CardTitle className="font-light text-base text-muted-foreground">Información general</CardTitle>
           </CardHeader>
-          <CardContent>
-            {!error && (
-              <>
-                <p className="text-muted-foreground">
-                  <span className="font-bold text-2xl text-primary">{data?.productsCount.count}</span> Productos en tu lista de productos
+          <CardContent className="flex flex-col justify-between p-3 md:p-4 h-[calc(100%_-_2.5rem)]">
+            <p className="flex flex-col text-muted-foreground">
+              <span className="font-bold text-4xl text-primary">${data?.salesStats.value ?? 0}</span> Total de ventas
+            </p>
+            <div className="gap-4 grid grid-cols-1 md:grid-cols-2 pt-4">
+              <div className="border-muted-foreground p-2 border rounded-sm">
+                <p className="flex items-center gap-2 text-muted-foreground text-sm">
+                  <span className="bg-accent rounded-full w-1 h-1"></span>
+                  <span className="truncate">
+                    Productos en inventario
+                  </span>
                 </p>
-                <p className="text-muted-foreground">
-                  <span className="font-bold text-2xl text-primary">{data?.salesStats.count}</span> Ordenes en tu inventario
+                <p className="font-bold text-2xl text-primary">{data?.productsCount.count}</p>
+              </div>
+              <div className="border-muted-foreground p-2 border rounded-sm">
+                <p className="flex items-center gap-2 text-muted-foreground text-sm">
+                  <span className="bg-accent rounded-full w-1 h-1"></span>
+                  <span className="truncate">
+                    Compras hechas
+                  </span>
                 </p>
-                <p className="text-muted-foreground">
-                  <span className="font-bold text-2xl text-primary">${data?.salesStats.value}</span> Total de ventas
-                </p>
-              </>
-            )}
+                <p className="font-bold text-2xl text-primary">{data?.salesStats.count}</p>
+              </div>
+            </div>
           </CardContent>
         </Card>
-        <Card className="flex flex-col xl:col-span-1 2xl:col-span-2 bg-primary-foreground w-full h-full">
-          <CardHeader>
-            <CardTitle>Accesos Directos</CardTitle>
+
+        <Card className="flex flex-col col-span-6 sm:col-span-3 lg:col-span-2 bg-primary-foreground dark:bg-card w-full h-full transition-transform hover:scale-[1.02]">
+          <CardHeader className="p-3 md:p-4">
+            <CardTitle className="font-light text-base text-muted-foreground">Accesos Directos</CardTitle>
           </CardHeader>
-          <CardContent className="flex justify-center items-center gap-4 grow">
-            <CustomButton href="/order" tooltip="Ver ordenes">
-                <ShoppingBasket/>
+          <CardContent className="justify-center items-center gap-4 grid grid-cols-2 grow">
+
+            <CustomButton href="/order" tooltip="Ver ordenes" className="h-full" variant="outline">
+              <ShoppingBasket />
             </CustomButton>
 
-            <CustomButton href="/providers" tooltip="Ver proveedores">
-                <ShoppingCart/>
+            <CustomButton href="/providers" tooltip="Ver proveedores" className="h-full" variant="outline">
+              <ShoppingCart />
             </CustomButton>
 
             <SidebarLogoutButton />
 
+            <CustomButton tooltip="Ingreso/Retiro Manual" className="h-full" variant="outline">
+              <ArrowUpDown />
+            </CustomButton>
+
           </CardContent>
         </Card>
-        <Card className="2xl:col-span-2 xl:col-span-1 bg-primary-foreground w-full h-full">
-            <CardHeader>
-                <CardTitle>Ultimas Deudas</CardTitle>
-            </CardHeader>
-            <CardContent>
+
+        <Card className="col-span-6 sm:col-span-3 md:col-span-2 bg-primary-foreground dark:bg-card w-full h-full transition-transform hover:scale-[1.02]">
+          <CardHeader className="p-3 md:p-4">
+            <CardTitle className="font-light text-base text-muted-foreground">Ultimas Deudas</CardTitle>
+          </CardHeader>
+          <CardContent className="gap-3 grid grid-cols-2 p-3 md:p-4">
+            <p className="flex flex-col text-muted-foreground">
+              <span className="font-bold text-4xl text-primary">${200}</span> Total de deuda
+            </p>
+            <div>
               {data?.customersWithDebt.length > 0 ? (
                 <div className="flex flex-col gap-4">
                   {data?.customersWithDebt.map((customer: any) => (
                     <div className="flex flex-col" key={customer.id}>
-                      <p className="text-muted-foreground text-sm">Nombre: {customer.name}{`${customer.lastName ? ", " : ""}${customer.lastName ? customer.lastName : ""}`}</p>
-                      <p className="text-muted-foreground text-sm">Saldo: ${customer.currentAmount}</p>
+                      <p className="flex items-center gap-2 text-muted-foreground text-sm">
+                        <span className="bg-accent rounded-full w-1 h-1"></span>
+                        <span className="truncate">
+                          {customer.name}{`${customer.lastName ? ", " : ""}${customer.lastName ? customer.lastName : ""}`}
+                        </span>
+                      </p>
+                      <p className="font-bold text-base text-red-400">${customer.currentAmount}</p>
                     </div>
                   ))}
                 </div>
               ) : (
                 <p className="text-muted-foreground">No hay clientes con deuda</p>
               )}
-            </CardContent>
+            </div>
+          </CardContent>
         </Card>
-        <Card className="md:col-span-2 2xl:col-span-3 xl:col-span-2 row-start-2 bg-primary-foreground w-full h-full">
-          <CardHeader>
-            <CardTitle>Ventas</CardTitle>
+
+
+        <Card className="col-span-6 lg:col-span-4 xl:col-span-3 row-start-2 bg-primary-foreground dark:bg-card w-full h-full transition-transform hover:scale-[1.02]">
+          <CardHeader className="p-3 md:p-4">
+            <CardTitle className="font-light text-base text-muted-foreground">Ventas</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-3 md:p-4">
             <OrderChart data={data?.salesFromDB} />
           </CardContent>
         </Card>
-        <Card className="2xl:col-span-3 xl:col-span-3 bg-primary-foreground w-full h-full">
-          <CardHeader>
-            <CardTitle>Bloque en construcción</CardTitle>
+        {/* 
+        <Card className="2xl:col-span-3 xl:col-span-3 bg-primary-foreground dark:bg-card w-full h-full transition-transform hover:scale-[1.02]">
+          <CardHeader className="p-3 md:p-4">
+            <CardTitle className="font-light text-base text-muted-foreground">Bloque en construcción</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-3 md:p-4">
             <p className="text-muted-foreground">
               Esta sección aun no está disponible, pero lo esperamos pronto.
             </p>
           </CardContent>
-        </Card>
+        </Card> */}
       </section>
     </>
   );

@@ -16,7 +16,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip"
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
 import { TooltipProvider } from "@radix-ui/react-tooltip"
-import { FileX2, Filter, MoreHorizontal, Package, PackageX } from "lucide-react"
+import { ArrowLeft, ArrowRight, FileX2, Filter, MoreHorizontal, Package, PackageX, SearchCodeIcon, SearchIcon } from "lucide-react"
 import { getAllOrders } from "@/actions/getAllOrders"
 import { Input } from "@/components/ui/input"
 import { useEffect, useState } from "react"
@@ -168,49 +168,37 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
       })
   }
 
+  const [openSearch, setOpenSearch] = useState(false)
 
 
   return (
     <div className="flex flex-col grow">
       {!noFilter && (
         <div className="flex sm:flex-row flex-col-reverse sm:justify-between gap-1 py-4">
-          <Input
-            placeholder={`Filtrar por ${filterColumn ?? "nombre"}`}
-            value={(table.getColumn(filterKey || "name")?.getFilterValue() as string) ?? ""}
-            onChange={(event) => {
-              return table.getColumn(filterKey || "name")?.setFilterValue(event.target.value)
-            }}
-            className="sm:max-w-sm"
-          />
+          <div className="flex md:justify-between items-center gap-2">
 
-          {dateFilter && (
-            <div className="flex gap-2">
-              <Popover open={open}>
-                <PopoverTrigger asChild>
-                  <Button onClick={() => setOpen(!open)} className="flex items-center gap-2">
-                    {!selectedDay && <IconCalendar/>}
-                    {selectedDay ? format(selectedDay, "dd/MM/yyyy") : "Elige una fecha"}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent>
-                  <Calendar
-                    mode="single"
-                    onSelect={handleDateSelect}
-                    selected={selectedDay}
-                  />
-                </PopoverContent>
-              </Popover>
-              {selectedDay && <CustomButton onClick={handleCancelDateFilter}>cancelar</CustomButton>}
-            </div>
-          )}
 
-          <div className="flex justify-between items-center gap-2">
+
+            <label htmlFor="search-input" className="relative items-center gap-2 border-input grid grid-cols-[auto_1fr] bg-card border rounded-md cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 pl-2">
+              <SearchIcon /* onClick={() => setOpenSearch(!openSearch)} */ className="z-10 p-0 text-muted-foreground aspect-square" />
+              <Input
+                placeholder={`Filtrar por ${filterColumn ?? "nombre"}`}
+                value={(table.getColumn(filterKey || "name")?.getFilterValue() as string) ?? ""}
+                onChange={(event) => {
+                  return table.getColumn(filterKey || "name")?.setFilterValue(event.target.value)
+                }}
+                className="border-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                /* className={cn("p-0 border-none w-0 sm:max-w-sm transition-[width,opacity] outline-none ring-0 focus-visible:ring-0 focus-within:ring-0 ring-offset-0 focus-visible:ring-offset-0", openSearch && "w-full sm:max-w-sm opacity-100 px-2")} */
+                id="search-input"
+              />
+            </label>
+
             <TooltipProvider>
               <DropdownMenu>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" className="">
+                      <Button variant="outline" className="p-2 text-muted-foreground">
                         <Filter className="p-0 aspect-square" />
                       </Button>
                     </DropdownMenuTrigger>
@@ -258,8 +246,8 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
             </TooltipProvider>
 
             <Select onValueChange={handlePageChange}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Cant. de resultados" />
+              <SelectTrigger className="px-4 w-fit text-muted-foreground">
+                <SelectValue placeholder={`5`} />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="5">5</SelectItem>
@@ -271,7 +259,32 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
                 <SelectItem value="100">100</SelectItem>
               </SelectContent>
             </Select>
+
           </div>
+
+
+          {dateFilter && (
+            <div className="flex gap-2">
+              <Popover open={open}>
+                <PopoverTrigger asChild>
+                  <Button onClick={() => setOpen(!open)} className="flex items-center gap-2 text-muted-foreground" variant="outline">
+                    {!selectedDay && <IconCalendar />}
+                    {selectedDay ? format(selectedDay, "dd/MM/yyyy") : "Elige una fecha"}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent>
+                  <Calendar
+                    mode="single"
+                    onSelect={handleDateSelect}
+                    selected={selectedDay}
+                  />
+                </PopoverContent>
+              </Popover>
+              {selectedDay && <CustomButton onClick={handleCancelDateFilter}>cancelar</CustomButton>}
+            </div>
+          )}
+
+
         </div>
       )}
       <div className="overflow-auto grow">
@@ -417,9 +430,9 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
           </TableBody>
         </Table>
       </div >
-      <div className="flex justify-end items-center space-x-2 py-4">
+      <div className="flex justify-center items-center space-x-2 py-4">
         <Button
-          variant="outline"
+          variant="ghost"
           size="sm"
           onClick={() => {
             setPageIndex(pageIndex - 1)
@@ -427,10 +440,24 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
           }}
           disabled={!table.getCanPreviousPage()}
         >
-          Previous
+          <ArrowLeft className="w-5 lg:w-7 h-5 lg:h-7" />
         </Button>
+        {Array.from({ length: table.getPageCount() }, (_, i) => (
+          <Button
+            key={i}
+            variant="ghost"
+            size="sm"
+            className={cn(i === pageIndex && "bg-accent text-primary font-bold")}
+            onClick={() => {
+              setPageIndex(i)
+              table.setPageIndex(i)
+            }}
+          >
+            {i + 1}
+          </Button>
+        ))}
         <Button
-          variant="outline"
+          variant="ghost"
           size="sm"
           onClick={() => {
             setPageIndex(pageIndex + 1)
@@ -438,7 +465,7 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
           }}
           disabled={!table.getCanNextPage()}
         >
-          Next
+          <ArrowRight className="w-5 lg:w-7 h-5 lg:h-7" />
         </Button>
       </div>
     </div >

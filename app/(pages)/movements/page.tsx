@@ -2,6 +2,7 @@ import { getAllHistoryMovements } from "@/actions/getAllHistoryMovements"
 import MovementsTable from "@/components/MovementsTable"
 import PageHeader from "@/components/layout/PageHeader"
 import { auth } from "@/auth"
+import { History } from "lucide-react"
 
 async function MovementsPage() {
 
@@ -13,7 +14,7 @@ async function MovementsPage() {
 
   return (
     <>
-      <PageHeader title="Movimientos" />
+      <PageHeader title="Movimientos" goBack icon={<History className="w-5 lg:w-7 h-5 lg:h-7 text-muted-foreground" />} />
       {(!data || data.length == 0) && (
         <div className="place-items-center border-slate-400 grid border border-dashed rounded grow">
           <div className="max-w-sm text-center">

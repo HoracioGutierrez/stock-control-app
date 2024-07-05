@@ -1,9 +1,9 @@
 import { getProviderDetails } from "@/actions/getProviderDetails"
-import CustomDataTable from "@/components/CustomDataTable"
 import PageHeader from "@/components/layout/PageHeader"
 import PurchaseOrderTable from "@/components/providers/PurchaseOrderTable"
 import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
+import { IconId, IconMail } from "@tabler/icons-react"
+import { Home, Phone, Truck, User2Icon, Warehouse } from "lucide-react"
 
 type Props = {
   params: {
@@ -16,7 +16,7 @@ const ProviderDetailsPage = async ({ params: { id } }: Props) => {
 
   return (
     <>
-      <PageHeader title="Detalles del Proveedor" goBack />
+      <PageHeader title="Detalles del Proveedor" goBack icon={<Truck className="w-5 lg:w-7 h-5 lg:h-7 text-muted-foreground" />} />
       {(!data || data.length == 0) && (
         <div className="place-items-center border-slate-400 grid border border-dashed rounded grow">
           <div className="max-w-sm text-center">
@@ -25,53 +25,69 @@ const ProviderDetailsPage = async ({ params: { id } }: Props) => {
           </div>
         </div>
       )}
-      {data && (
-        <section>
-          <Card className="bg-transparent p-0 border-none">
-            {/* <CardHeader className="p-0 pb-8">
-              <CardDescription className="text-muted-foreground">Detalles del Proveedor</CardDescription>
-            </CardHeader> */}
-            <CardContent className="gap-4 grid p-0">
-              <div className="gap-2 gap-y-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-                <div>
-                  <p className="text-muted-foreground">Nombre</p>
-                  <p>{data.provider.name}</p>
+      <div className="gap-4 xl:gap-10 grid grid-cols-1 xl:grid-cols-[max-content_1fr] grid-rows-[auto_1fr] xl:grid-rows-1 grow">
+        {data && (
+          <section>
+            <Card className="shadow-none border-none h-full">
+              <CardHeader>
+                <CardDescription className="text-muted-foreground">Informacion Generales</CardDescription>
+              </CardHeader>
+              <CardContent className="gap-6 grid grid-cols-2 xl:grid-cols-1">
+                <div className="items-center place-content-center gap-4 grid grid-cols-[65px_1fr]">
+                  <div className="flex flex-col justify-center items-center text-muted-foreground text-sm">
+                    <User2Icon className="w-5 h-5" />
+                    nombre
+                  </div>
+                  <p>
+                    {data.provider.name ? data.provider.name : "Sin Nombre"}
+                    {data.provider.lastName && ", "}
+                    {data.provider.lastName ? data.provider.lastName : "Sin Apellido"}
+                  </p>
                 </div>
-                <div>
-                  <p className="text-muted-foreground">Apellido</p>
-                  <p>{data.provider.lastName ? data.provider.lastName : "Sin Apellido"}</p>
-                </div>
-                <div>
-                  <p className="text-muted-foreground">Teléfono</p>
+                <div className="items-center place-content-center gap-4 grid grid-cols-[65px_1fr]">
+                  <div className="flex flex-col justify-center items-center text-muted-foreground text-sm">
+                    <Phone className="w-5 h-5" />
+                    teléfono
+                  </div>
                   <p>{data.provider.phone ? data.provider.phone : "Sin Teléfono"}</p>
                 </div>
-                <div>
-                  <p className="text-muted-foreground">Email</p>
-                  <p>{data.provider.email ? data.provider.email : "Sin Email"}</p>
+                <div className="items-center place-content-center gap-4 grid grid-cols-[65px_1fr]">
+                  <div className="flex flex-col justify-center items-center text-muted-foreground text-sm">
+                    <IconMail className="w-5 h-5" />
+                    email
+                  </div>
+                  <p className="truncate">{data.provider.email ? data.provider.email : "Sin Email"}</p>
                 </div>
-                <div>
-                  <p className="text-muted-foreground">Dirección</p>
+                <div className="items-center place-content-center gap-4 grid grid-cols-[65px_1fr]">
+                  <div className="flex flex-col justify-center items-center text-muted-foreground text-sm">
+                    <Home className="w-5 h-5" />
+                    dirección
+                  </div>
                   <p>{data.provider.address ? data.provider.address : "Sin Dirección"}</p>
                 </div>
-                <div>
-                  <p className="text-muted-foreground">Cuit/CUIL</p>
+                <div className="items-center place-content-center gap-4 grid grid-cols-[65px_1fr]">
+                  <div className="flex flex-col justify-center items-center text-muted-foreground text-sm">
+                    <IconId className="w-5 h-5" />
+                    cuit/cuil
+                  </div>
                   <p>{data.provider.cuitCuil ? data.provider.cuitCuil : "Sin Cuit/CUIL"}</p>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+                <div className="items-center place-content-center gap-4 grid grid-cols-[65px_1fr]">
+                  <div className="flex flex-col justify-center items-center text-muted-foreground text-sm">
+                    <Warehouse className="w-5 h-5" />
+                    Empresa
+                  </div>
+                  <p>{data.provider.companyName ? data.provider.companyName : "Sin Empresa"}</p>
+                </div>
+              </CardContent>
+            </Card>
+          </section>
+        )}
+        <section className="flex flex-col pt-6">
+          <p className="mb-8 text-muted-foreground text-sm">Ordenes de compra</p>
+          <PurchaseOrderTable data={data.purchaseOrders} />
         </section>
-      )}
-      {/* <Separator className="my-8" /> */}
-      <section className="my-16">
-        <p className="text-muted-foreground">Ordenes de compra</p>
-        {/* <CustomDataTable
-          data={data.purchaseOrders}
-          type="purchase-orders"
-          noFilter
-        /> */}
-        <PurchaseOrderTable data={data.purchaseOrders} />
-      </section>
+      </div>
     </>
   )
 }

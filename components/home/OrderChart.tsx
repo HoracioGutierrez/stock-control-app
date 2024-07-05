@@ -1,7 +1,7 @@
 "use client"
 import dynamic from 'next/dynamic';
 import 'chart.js/auto';
-const Line = dynamic(() => import('react-chartjs-2').then((mod) => mod.Bar), {
+const Line = dynamic(() => import('react-chartjs-2').then((mod) => mod.Line), {
   ssr: false,
 });
 
@@ -16,7 +16,7 @@ function OrderChart({ data }: Props) {
 
   const getDays = (data: any) => {
     const days: string[] = []
-    if(!data) return days
+    if (!data) return days
     data.forEach((item: any) => {
       const day = new Date(item.date.split("-").join("/"))
       days.push(daysInWords[day.getDay()])
@@ -30,9 +30,10 @@ function OrderChart({ data }: Props) {
       {
         label: "Total",
         data: data?.map((item: any) => item.total) ?? [],
-        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 0.2)',
       }
-    ]
+    ],
+    responsive: true
   }
 
   return (

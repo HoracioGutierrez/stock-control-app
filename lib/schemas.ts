@@ -10,7 +10,7 @@ export const productSchema = yup.object().shape({
   description: yup.string(),
   //price: yup.number().required("El precio del producto es obligatorio").positive("El precio del producto debe ser mayor a cero"),
   price: yup.number().moreThan(0, "El precio del producto debe ser mayor a cero"),
-  barcode: yup.string().required("El código de barras del producto es obligatorio").min(1, "El código de barras del producto debe tener al menos un caracter"),
+  barcode: yup.string().min(3, "El código de barras del producto debe tener al menos un caracter").nullable().transform((curr, orig) => (orig === "" ? null : curr)).matches(/^\S+$/, "El código de barras del producto no puede tener espacios"),
   stock: yup.number().required("El stock del producto es obligatorio").positive("El stock del producto debe ser mayor a cero"),
   variants: yup.array().of(
     yup.object().shape({
@@ -18,7 +18,7 @@ export const productSchema = yup.object().shape({
       //price: yup.number().required("El precio de la variante es obligatorio").positive("El precio de la variante debe ser mayor a cero"),
       price: yup.number().moreThan(0, "El precio de la variante debe ser mayor a cero"),
       stock: yup.number().required("El stock de la variante es obligatorio").positive("El stock de la variante debe ser mayor a cero"),
-      barcode: yup.string().required("El código de barras de la variante es obligatorio").min(1, "El código de barras de la variante debe tener al menos un caracter")
+      barcode: yup.string().min(3, "El código de barras del producto debe tener al menos un caracter").nullable().transform((curr, orig) => (orig === "" ? null : curr)).matches(/^\S+$/, "El código de barras del producto no puede tener espacios")
     })
   )
 })
@@ -28,7 +28,7 @@ export const editProductSchema = yup.object().shape({
   description: yup.string(),
   //price: yup.number().required("El precio del producto es obligatorio").positive("El precio del producto debe ser mayor a cero"),
   price: yup.number().moreThan(0, "El precio del producto debe ser mayor a cero"),
-  barcode: yup.string().required("El código de barras del producto es obligatorio").min(1, "El código de barras del producto debe tener al menos un caracter"),
+  barcode: yup.string().min(3, "El código de barras del producto debe tener al menos un caracter").nullable().transform((curr, orig) => (orig === "" ? null : curr)).matches(/^\S+$/, "El código de barras del producto no puede tener espacios"),
   stock: yup.number().required("El stock del producto es obligatorio").positive("El stock del producto debe ser mayor a cero"),
 })
 

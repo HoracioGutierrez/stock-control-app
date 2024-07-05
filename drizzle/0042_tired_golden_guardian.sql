@@ -1,0 +1,1 @@
+ALTER TABLE "stock-control-app_product" ALTER COLUMN "barcode" DROP NOT NULL;

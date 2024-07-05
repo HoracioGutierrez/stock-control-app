@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table"
 import { getProductByBarcode } from "@/actions/getProductByBarcode"
-import { ArrowDown, ArrowUp, Barcode, ScanBarcode, Trash2 } from "lucide-react"
+import { ArrowDown, ArrowUp, Barcode, ScanBarcode, Search, Trash2 } from "lucide-react"
 import { useOrderStore } from "@/stores/orderStore"
 import { useEffect, useState } from "react"
 import { Button } from "../ui/button"
@@ -110,6 +110,10 @@ function OrderScanner({ data }: OrderScannerProps) {
     setCamScan(false)
   }
 
+  const handleSearch = () => {
+    setOpen("search")
+  }
+
   return (
     <section className="flex flex-col h-full">
       <div className="gap-4 grid grid-cols-1 lg:grid-cols-2 mt-4 mb-4">
@@ -152,12 +156,22 @@ function OrderScanner({ data }: OrderScannerProps) {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
+                  <Button onClick={handleSearch}>
+                    <Search />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Busqueda de producto</p>
+                </TooltipContent>
+              </Tooltip>
+              <Tooltip>
+                <TooltipTrigger asChild>
                   <Button onClick={handleManualScan}>
                     <Barcode />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Escaneo Manual</p>
+                  <p>Codigo Manual</p>
                 </TooltipContent>
               </Tooltip>
               <Tooltip>

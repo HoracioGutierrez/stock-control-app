@@ -136,7 +136,7 @@ export const products: any = pgTable(
     description: text("description"),
     price: numeric("price").notNull(),
     quantity: numeric("quantity"),
-    barcode: text("barcode").notNull(),
+    barcode: text("barcode"),
     stock: numeric("stock").notNull(),
     userId: text("userId")
       .notNull()

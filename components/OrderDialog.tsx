@@ -10,6 +10,7 @@ import ManualScan from "./order/ManualScan"
 import AddCustomerForm from "./order/AddCustomerForm"
 import PayWithForm from "./order/PayWithForm"
 import ManualIncomeForm from "./ManualIncomeForm"
+import SearchProductForm from "./order/SearchProductForm"
 
 type Props = {
   userId: string
@@ -32,7 +33,8 @@ const OrderDialog = ({ userId, data, cashRegisters }: Props) => {
     "manual-scan": "Escaneo Manual",
     "add-customer": "Agregar Cliente",
     "pay-with": "Pagar con",
-    "manual-income": "Ingreso/Retiro Manual"
+    "manual-income": "Ingreso/Retiro Manual",
+    "search": "Buscar Producto"
   }
 
   useEffect(() => {
@@ -63,6 +65,9 @@ const OrderDialog = ({ userId, data, cashRegisters }: Props) => {
       )}
       {type === "manual-income" && (
         <ManualIncomeForm userId={userId} />
+      )}
+      {type === "search" && (
+        <SearchProductForm userId={userId} />
       )}
     </CustomDialog>
   )

@@ -16,7 +16,7 @@ async function OrderPage() {
   const { data, error } = await getCashRegisterByUserId(session?.user.id as string)
   let cashRegisters = []
 
-  if (!data) {
+  if (!data.openedById) {
     const { data } = await getAllCashRegisters()
     cashRegisters = data
   }
@@ -25,13 +25,13 @@ async function OrderPage() {
   return (
     <>
       <PageHeader
-        title={`Nueva Orden ${data ? `: ${data.label}` : ""}`}
-        subtitle={data ? data.openedById : ""}
+        title={`Nueva Orden ${data.openedById ? `: ${data.label}` : ""}`}
+        subtitle={data.openedById ? data.openedById : ""}
         goBack
         icon={<ShoppingBasket className="w-5 lg:w-7 h-5 lg:h-7 text-muted-foreground" />}
       />
-      {data && <OrderScanner data={data} />}
-      {!data && (
+      {data.openedById && <OrderScanner data={data} />}
+      {!data.openedById && (
         <div className="place-items-center border-slate-400 grid border border-dashed rounded grow">
           <div className="max-w-sm text-center">
             <p className="font-bold text-xl">No hay cajas abiertas</p>

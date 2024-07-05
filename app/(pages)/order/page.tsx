@@ -29,7 +29,7 @@ async function OrderPage() {
         goBack
         icon={<ShoppingBasket className="w-5 lg:w-7 h-5 lg:h-7 text-muted-foreground" />}
       />
-      {data && <OrderScanner data={data} />}
+      {data.openedById && <OrderScanner data={data} />}
       {!data && (
         <div className="place-items-center border-slate-400 grid border border-dashed rounded grow">
           <div className="max-w-sm text-center">

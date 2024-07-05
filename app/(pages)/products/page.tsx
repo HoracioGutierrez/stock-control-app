@@ -17,11 +17,11 @@ async function ProductsPage() {
     <>
       <PageHeader title="Productos" goBack icon={<Barcode className="w-5 lg:w-7 h-5 lg:h-7 text-muted-foreground" />} actions={
         <>
-          <CustomButton className="p-2 group" tooltip="Edita precio de productos" dialogType="edit-prices" variant="ghost">
-            <Edit2Icon className="group-hover:text-green-500" />
+          <CustomButton className="p-2 group" tooltip="Edita precio de productos" dialogType="edit-prices" variant="ghost" icon={<Edit2Icon className="group-hover:text-green-500" />}>
+            <span className="md:block hidden">Editar Precios</span>
           </CustomButton>
-          <CustomButton className="p-2 group" tooltip="Crear producto" dialogType="new-product" variant="ghost">
-            <PackagePlus className="group-hover:text-green-500" />
+          <CustomButton className="p-2 group" tooltip="Crear producto" dialogType="new-product" variant="ghost" icon={<PackagePlus className="group-hover:text-green-500" />}>
+            <span className="md:block hidden">Crear Producto</span>
           </CustomButton>
         </>
       } />

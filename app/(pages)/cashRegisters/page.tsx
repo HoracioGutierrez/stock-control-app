@@ -17,12 +17,12 @@ async function StockPage() {
       <PageHeader icon={<IconDeviceDesktopDollar className="w-5 lg:w-7 h-5 lg:h-7 text-muted-foreground" />} goBack title="Cajas" actions={session?.user.isAdmin
         ? (
           <>
-            <CustomButton variant="ghost" className="p-2 group" dialogType="manual-income" tooltip="Ingresar dinero manualmente a la caja actual">
-              <ArrowUpDown className="group-hover:text-green-500" />
+            <CustomButton variant="ghost" className="p-2 group" dialogType="manual-income" tooltip="Ingresar dinero manualmente a la caja actual" icon={<ArrowUpDown className="group-hover:text-green-500" />}>
+              <span className="md:block hidden">Ingreso/Retiro Manual</span>
             </CustomButton>
-            
-            <CustomButton variant="ghost" className="p-2 group" dialogType="new-cash-register" tooltip="Crear una nueva caja">
-              <IconDeviceDesktopPlus className="group-hover:text-green-500" />
+
+            <CustomButton variant="ghost" className="p-2 group" dialogType="new-cash-register" tooltip="Crear una nueva caja" icon={<IconDeviceDesktopPlus className="group-hover:text-green-500" />}>
+              <span className="md:block hidden">Crear Caja</span>
             </CustomButton>
           </>
         )

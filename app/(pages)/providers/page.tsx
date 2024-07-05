@@ -15,8 +15,8 @@ async function ProvidersPage() {
     <>
       <PageHeader title="Proveedores" goBack icon={<Truck className="w-5 lg:w-7 h-5 lg:h-7 text-muted-foreground" />} actions={
         <>
-          <CustomButton variant="ghost" className="p-2 group" tooltip="Crear Proveedor" dialogType="new-provider" >
-            <IconAmbulance className="group-hover:text-green-500 w-7 h-7" />
+          <CustomButton variant="ghost" className="p-2 group" tooltip="Crear Proveedor" dialogType="new-provider" icon={<IconAmbulance className="group-hover:text-green-500 w-7 h-7" />}>
+            <span className="md:block hidden">Crear Proveedor</span>
           </CustomButton>
         </>
       } />

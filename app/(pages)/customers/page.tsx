@@ -17,8 +17,8 @@ async function CustomersPage() {
     <>
       <PageHeader title="Clientes" goBack icon={<UserRound className="w-5 lg:w-7 h-5 lg:h-7 text-muted-foreground" />} actions={
         <>
-          <CustomButton className="p-2 group" dialogType="create-customer" variant="ghost">
-            <UserRoundPlusIcon className="group-hover:text-green-500" />
+          <CustomButton className="p-2 group" dialogType="create-customer" variant="ghost" icon={<UserRoundPlusIcon className="group-hover:text-green-500" />}>
+            <span className="md:block hidden">Crear Cliente</span>
           </CustomButton>
         </>
       } />

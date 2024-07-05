@@ -16,8 +16,8 @@ async function BalancePage() {
   return (
     <>
       <PageHeader title="Balance" goBack icon={<IconChartHistogram className="w-5 lg:w-7 h-5 lg:h-7 text-muted-foreground" />} actions={
-        <CustomButton tooltip="Ingresar dinero manualmente a la caja actual" dialogType="manual-income" className="p-2 group" variant="ghost">
-          <ArrowUpDown className="group-hover:text-green-500" />
+        <CustomButton tooltip="Ingresar dinero manualmente a la caja actual" dialogType="manual-income" className="p-2 group" variant="ghost" icon={<ArrowUpDown className="group-hover:text-green-500" />}>
+          <span className="md:block hidden">Ingreso/Retiro Manual</span>
         </CustomButton>
       } />
       {(!data || data.length == 0) && (

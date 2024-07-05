@@ -20,7 +20,8 @@ async function OrderPage() {
     const { data } = await getAllCashRegisters()
     cashRegisters = data
   }
-
+  
+  console.log(data)
   return (
     <>
       <PageHeader

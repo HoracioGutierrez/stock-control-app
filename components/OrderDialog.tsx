@@ -19,6 +19,9 @@ type Props = {
 
 const OrderDialog = ({ userId, data, cashRegisters }: Props) => {
 
+  console.log({data})
+  console.log({cashRegisters})
+
   const [title, setTitle] = useState<string>("Abrir Caja")
   const { type } = useDialogStore((state: any) => state)
 

@@ -16,7 +16,7 @@ async function OrderPage() {
   const { data, error } = await getCashRegisterByUserId(session?.user.id as string)
   let cashRegisters = []
 
-  if (!data) {
+  if (!data.openedById) {
     const { data } = await getAllCashRegisters()
     cashRegisters = data
   }

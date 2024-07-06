@@ -20,6 +20,9 @@ export const getStats = async (): Promise<GeneralResponse> => {
 
     const salesAmount = await db.execute(salesAmountQuery)
     const customersWithDebt = await db.select().from(customers).where(lt(customers.currentAmount, 0)).limit(2).orderBy(asc(customers.currentAmount))
+    const getTotalDebt = await db.select({ total : sql`sum(${orders.total})` }).from(orders).where(eq(orders.paymentMethod, "debt"))
+    const topCustomers = await db.select().from(customers).where(lt(customers.currentAmount, 0)).limit(5).orderBy(asc(customers.currentAmount))
+    const outOfStockProducts = await db.select().from(products).where(lt(products.stock, 10)).orderBy(asc(products.stock)).limit(4)
 
     if (salesStats.length === 0 || productsCount.length === 0) throw new Error("Error al obtener los datos")
 
@@ -28,7 +31,10 @@ export const getStats = async (): Promise<GeneralResponse> => {
         salesStats: salesStats[0],
         productsCount: productsCount[0],
         salesFromDB: salesAmount,
-        customersWithDebt: customersWithDebt
+        customersWithDebt: customersWithDebt,
+        totalDebt: getTotalDebt[0].total || 0,
+        topCustomers: topCustomers || [],
+        outOfStockProducts: outOfStockProducts || []
       },
       error: null,
       message: "Datos obtenidos correctamente"

@@ -9,6 +9,7 @@ import LogoutButton from "../LogoutButton"
 import NavLink from "../NavLink"
 import { cn } from "@/lib/utils"
 import { usePathname } from "next/navigation"
+import * as packageConfig from "../../lib/package"
 
 
 function SideBar({ session }: SideBarProps) {
@@ -175,7 +176,7 @@ function SideBar({ session }: SideBarProps) {
               <p className="text-center text-muted-foreground">Desarrollado por:</p>
               <p className="text-center text-muted-foreground">@horagutierrez - @ArturoGabrielRamirez</p>
             </div>
-            <p className="text-muted-foreground">Stock Control - version 1.3.3</p>
+            <p className="text-muted-foreground">Stock Control - version {packageConfig.default.env.version}</p>
           </div>
         </div>
       </aside>

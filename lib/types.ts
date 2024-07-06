@@ -70,9 +70,9 @@ export type EditCustomerInputValues = CustomerInputValues & {
 export type EditProductInputValues = {
   name: string
   description?: string
-  price?: number
-  barcode: string
-  stock: number
+  price: number | null | undefined | any
+  barcode?: string | null | undefined | any
+  stock: number | null | undefined | any
 }
 
 export type EditProviderInputValues = {
@@ -86,7 +86,7 @@ export type EditProviderInputValues = {
 }
 
 export type EditProductVariantsFormProps = {
-  barcode: string
+  barcode: string 
   userId: string
 }
 

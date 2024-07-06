@@ -9,7 +9,7 @@ export const productSchema = yup.object().shape({
   name: yup.string().required("El nombre del producto es obligatorio"),
   description: yup.string(),
   //price: yup.number().required("El precio del producto es obligatorio").positive("El precio del producto debe ser mayor a cero"),
-  price: yup.number().moreThan(0, "El precio del producto debe ser mayor a cero"),
+  price: yup.number().moreThan(0, "El precio del producto debe ser mayor a cero").required("El precio del producto es obligatorio"),
   barcode: yup.string().min(3, "El código de barras del producto debe tener al menos un caracter").nullable().transform((curr, orig) => (orig === "" ? null : curr)).matches(/^\S+$/, "El código de barras del producto no puede tener espacios"),
   stock: yup.number().required("El stock del producto es obligatorio").positive("El stock del producto debe ser mayor a cero"),
   variants: yup.array().of(

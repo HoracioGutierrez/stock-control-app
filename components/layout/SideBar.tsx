@@ -51,7 +51,7 @@ function SideBar({ session }: SideBarProps) {
         onClick={handleClick}
       ></div>
       <aside id="sidebar" className={cn(
-        "h-full md:h-[calc(100%_-_2rem)] self-center w-5/6 md:w-[calc(100%_-_2rem)] justify-self-center md:rounded-lg bg-primary-foreground md:bg-primary-foreground dark:bg-card fixed md:static top-0 -left-full md:flex md:flex-col md:justify-between transition-all sm:w-3/5",
+        "h-full md:h-full self-center w-5/6 md:w-full justify-self-center md:rounded-lg bg-primary-foreground md:bg-primary-foreground dark:bg-card fixed md:static top-0 -left-full md:flex md:flex-col md:justify-between transition-all sm:w-3/5",
         isOpen && "left-0 z-20"
       )}>
 

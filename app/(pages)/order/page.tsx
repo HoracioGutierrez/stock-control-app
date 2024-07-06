@@ -21,7 +21,6 @@ async function OrderPage() {
     cashRegisters = data
   }
   
-  console.log(data)
   return (
     <>
       <PageHeader

@@ -5,7 +5,6 @@ import { sql } from "drizzle-orm"
 
 export const getProductByName = async (productName: string): Promise<GeneralResponse> => {
   "use server"
-  console.log(productName)
   try {
 
     const productsFromDB = await db.execute(sql`

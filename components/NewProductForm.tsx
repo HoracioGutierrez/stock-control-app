@@ -132,21 +132,21 @@ function NewProductForm({ userId }: NewProductFormProps) {
             <div className="gap-2 grid">
               <div>
                 <Label htmlFor="price" className="text-muted-foreground">Precio</Label>
-                {errors.price && <p className="font-bold text-red-500 text-sm">{errors.price.message}</p>}
+                {errors.price && <p className="font-bold text-red-500 text-sm">{errors.price.message as string}</p>}
               </div>
               <Input type="number" placeholder="Precio" {...register("price")} disabled={isLoading} />
             </div>
             <div className="gap-2 grid">
               <div>
                 <Label htmlFor="stock" className="text-muted-foreground">Stock</Label>
-                {errors.stock && <p className="font-bold text-red-500 text-sm">{errors.stock.message}</p>}
+                {errors.stock && <p className="font-bold text-red-500 text-sm">{errors.stock.message as string}</p>}
               </div>
               <Input type="number" placeholder="Stock" {...register("stock")} disabled={isLoading} />
             </div>
             <div className="gap-2 grid">
               <div>
                 <Label htmlFor="barcode" className="text-muted-foreground">Código de barras</Label>
-                {errors.barcode && <p className="font-bold text-red-500 text-sm">{errors.barcode.message}</p>}
+                {errors.barcode && <p className="font-bold text-red-500 text-sm">{errors.barcode.message as string}</p>}
               </div>
               <Input type="text" placeholder="Código de barras" {...register("barcode")} disabled={isLoading} />
             </div>

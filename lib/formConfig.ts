@@ -158,7 +158,7 @@ export const formDetailsVariants: {
             inputType: "text"
         },
         address: {
-            name: "direction",
+            name: "address",
             label: "Dirección",
             inputType: "text"
         },

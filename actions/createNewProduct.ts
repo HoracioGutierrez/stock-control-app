@@ -7,7 +7,6 @@ import { revalidatePath } from "next/cache";
 export const createNewProduct = async (userId: string, data: ProductType, variants: any[] | undefined): Promise<GeneralResponse> => {
   "use server"
   try {
-
     const res = await db.transaction(async (tx) => {
 
       const product = await tx.insert(products).values({

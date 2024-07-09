@@ -31,7 +31,7 @@ function NewProductForm({ userId }: NewProductFormProps) {
   const [mainName, setMainName] = useState<string>("")
   const { setIsLoading, isLoading } = useNewProductStore((state: any) => ({ isLoading: state.isLoading, setIsLoading: state.setIsLoading }))
   const { setClose } = useDialogStore((state: any) => state)
-  const { control, register, handleSubmit, formState: { errors }, getValues } = useForm<ProductInputValues>({
+  const { control, register, handleSubmit, formState: { errors, dirtyFields, isDirty }, getValues } = useForm<ProductInputValues>({
     defaultValues: {
       name: "",
       description: "",
@@ -49,15 +49,18 @@ function NewProductForm({ userId }: NewProductFormProps) {
   })
 
   const onSubmit: SubmitHandler<ProductInputValues> = (data: ProductInputValues) => {
+
+    if (!isDirty) return
     setIsLoading(true)
-    createNewProduct(userId, {
-      barcode: data.barcode,
-      description: data.description,
-      name: data.name,
-      price: `${data.price}`,
-      stock: `${data.stock}`,
-      userId: userId
-    }, getValues("variants"))
+
+    const dataFull: any = data;
+    const dataDirty = Object.keys(dirtyFields).reduce((acc: any, key: any) => {
+      return { ...acc, [key]: dataFull[key] };
+    }, {});
+
+    console.log(dataDirty)
+
+    createNewProduct(userId, dataDirty, getValues("variants"))
       .then((data) => {
         if (data?.error) {
           throw new Error(data.error)
@@ -191,7 +194,7 @@ function NewProductForm({ userId }: NewProductFormProps) {
             )}
           </CardContent>
         </Card>
-        <Button form="new-product-form" disabled={isLoading} className="flex items-center gap-2 mx-auto mt-8 group" onClick={handleSubmit(onSubmit)}>
+        <Button form="new-product-form" disabled={isLoading || !isDirty} className="flex items-center gap-2 mx-auto mt-8 group" onClick={handleSubmit(onSubmit)}>
           {isLoading ? <Loader className="animate-spin" /> : <Check className="group-hover:text-green-500 text-muted-foreground aspect-square" />}
           <span className="text-muted-foreground">Guardar Producto</span>
         </Button>

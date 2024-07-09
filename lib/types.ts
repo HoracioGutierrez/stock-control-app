@@ -125,6 +125,7 @@ export type FormEditProps = {
   hasVariants: boolean
   hasDetails: boolean
   userId: string
+  isDirty: boolean
 }
 
 export type FormValues =

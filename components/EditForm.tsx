@@ -18,7 +18,7 @@ import { useDialogStore } from "@/stores/generalDialog"
 
 
 
-function EditForm({ entityType, loading, register, errors, data, formForVariant, formForName, formForDetails, entityConfig, entityResolved, isVariant, handleMainNameChange, handleAddVariant, fields, hasVariants = false, hasDetails = false, userId }: FormEditProps) {
+function EditForm({ entityType, loading, register, errors, data, formForVariant, formForName, formForDetails, entityConfig, entityResolved, isVariant, handleMainNameChange, handleAddVariant, fields, hasVariants = false, hasDetails = false, userId , isDirty }: FormEditProps) {
 
     const [isVariantUnlinking, setIsVariantUnlinking] = useState<boolean>(false)
     const [isVariantLinking, setIsVariantLinking] = useState<boolean>(false)
@@ -317,7 +317,7 @@ function EditForm({ entityType, loading, register, errors, data, formForVariant,
                         </>
                     )}
                     {!isVariantUnlinking && !isVariantLinking && (
-                        <Button form={entityConfig[entityType].formId} className="flex items-center max-sm:px-2 group" disabled={loading}>
+                        <Button form={entityConfig[entityType].formId} className="flex items-center max-sm:px-2 group" disabled={loading || !isDirty}>
                             {loading && <Loader className="animate-spin" /> || <IconDeviceFloppy className="group-hover:text-green-500 text-muted-foreground aspect-square size-8" />}
                             {<span className="sm:block hidden text-muted-foreground">Guardar {entityResolved}</span>}
                         </Button>

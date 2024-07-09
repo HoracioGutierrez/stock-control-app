@@ -33,7 +33,7 @@ function EditFormContainer({ entityType, barcode, entityId, hasVariants, userId,
 
     const { setClose } = useDialogStore((state: any) => state)
 
-    const { control, register, handleSubmit, formState: { errors }, getValues } = useForm<FormValues>({
+    const { control, register, handleSubmit, formState: { errors , isDirty , dirtyFields }, getValues } = useForm<FormValues>({
         defaultValues: async () => {
             setLoading(true)
             const { data, error } = await getById(entityType, entityId, barcode)
@@ -54,8 +54,15 @@ function EditFormContainer({ entityType, barcode, entityId, hasVariants, userId,
     })
 
     const onSubmit: SubmitHandler<InputValues> = async (data: InputValues) => {
+        if (!isDirty) return
         setLoading(true)
-        editById(entityType, idResolve, data, userId)
+
+        const dataFull: any = data;
+        const dataDirty = Object.keys(dirtyFields).reduce((acc: any, key: any) => {
+            return { ...acc, [key]: dataFull[key] };
+        }, {});
+
+        editById(entityType, idResolve, dataDirty, userId)
             .then((data) => {
                 if (data?.error) {
                     throw new Error(data.error)
@@ -84,7 +91,6 @@ function EditFormContainer({ entityType, barcode, entityId, hasVariants, userId,
             })
             .finally(() => {
                 setLoading(false)
-
             })
     }
 
@@ -116,7 +122,8 @@ function EditFormContainer({ entityType, barcode, entityId, hasVariants, userId,
         fields,
         hasVariants,
         hasDetails,
-        userId
+        userId,
+        isDirty
     }
 
     return (

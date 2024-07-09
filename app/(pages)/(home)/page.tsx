@@ -117,7 +117,7 @@ export default async function Home() {
             <div className="flex flex-col gap-4 h-full">
               {data?.topCustomers?.map((customer: any) => {
                 return (
-                  <article className="border-muted-foreground p-2 border rounded-md">
+                  <article className="border-muted-foreground p-2 border rounded-md" key={customer.id}>
                     <div className="flex justify-between gap-2 pb-2 w-full">
                       <div className="flex items-center gap-2">
                         <p className="flex items-center gap-2 font-bold text-lg">
@@ -150,7 +150,7 @@ export default async function Home() {
             <CardContent className="flex flex-col gap-4 p-3 md:p-4">
               {data?.outOfStockProducts?.map((product: any) => {
                 return (
-                  <article className="border-muted-foreground p-2 border rounded-md">
+                  <article className="border-muted-foreground p-2 border rounded-md" key={product.id}>
                     <div className="flex justify-between items-center gap-2 pb-2 w-full">
                       <div className="flex items-center gap-2">
                         <p className="flex items-center gap-2 font-bold text-lg text-red-400">

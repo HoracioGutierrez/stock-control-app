@@ -1,18 +1,12 @@
 "use client"
 import { useDialogStore } from "@/stores/generalDialog"
 import CustomDialog from "../CustomDialog"
-import FirstSteps from "./FirstStep"
-import CustomerManagement from "./CustomerManagement"
-import ProductManagement from "./ProductManagement"
-import OrderManagement from "./OrderManagement"
-import CancelOrder from "./CancelOrder"
-import PaymentManagement from "./PaymentManagement"
-import HistoryManagement from "./HistoryManagement"
-import CashManagement from "./CashManagement"
-import PriceManagement from "./PriceManagement"
+import { popUpData } from "./dataForHelp"
+import PopUpList from "./PopUpList"
 
-function HelpDialog( ) {
+function HelpDialog() {
   const { type } = useDialogStore((state: any) => state)
+
 
   const config: Record<string, { title: string, fullWidth?: boolean }> = {
     "first-steps": {
@@ -53,18 +47,29 @@ function HelpDialog( ) {
     },
   }
 
+  const propsConfig: Record<string, string> = {
+    "first-steps": "firstSteps",
+    "customer-management": "customerManagement",
+    "product-management": "productManagement",
+    "order-management": "orderManagement",
+    "cancel-order": "cancelOrder",
+    "payment-management": "paymentManagement",
+    "history-management": "historyManagement",
+    "cash-management": "cashManagement",
+    "price-management": "priceManagement",
+  }
+
+  const data = popUpData[propsConfig[type]] as any
+
+  const props = {
+    data,
+    typeProp: type,
+  }
+
   return (
     <>
       <CustomDialog title={type ? config[type].title : "Custom Dialog"} fullWidth={type ? config[type].fullWidth : false} >
-          {type === "first-steps" && <FirstSteps />}
-          {type === "customer-management" && <CustomerManagement />}
-          {type === "product-management" && <ProductManagement />}
-          {type === "order-management" && <OrderManagement />}
-          {type === "cancel-order" && <CancelOrder />}
-          {type === "payment-management" && <PaymentManagement />}
-          {type === "history-management" && <HistoryManagement />}
-          {type === "cash-management" && <CashManagement />}
-          {type === "price-management" && <PriceManagement />}
+        <PopUpList {...props} />
       </CustomDialog>
 
     </>

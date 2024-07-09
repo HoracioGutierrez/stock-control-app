@@ -1,7 +1,7 @@
 /* import { auth } from "@/auth" */
 import PageHeader from "@/components/layout/PageHeader"
 import { HelpCircle } from "lucide-react"
-import HelpContent from "@/components/help/HelpContent"
+import HelpList from "@/components/help/HelpList"
 import HelpSearchBar from "@/components/help/HelpSearchBar"
 import HelpDialog from "@/components/help/HelpDialog"
 
@@ -23,7 +23,7 @@ export default async function HelpPage() {
             <HelpSearchBar />
           </div>
         </div>
-        <HelpContent />
+        <HelpList />
       </div>
       <HelpDialog />
     </>)

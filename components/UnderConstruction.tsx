@@ -1,7 +1,6 @@
 import { IconPick } from "@tabler/icons-react"
 
-function PriceManagement() {
-
+function UnderConstruction() {
   return (
     <div className="flex gap-4 flex-col justify-center items-center min-h-[600px]">
       <div className="flex flex-col gap-4 text-center">
@@ -16,4 +15,4 @@ function PriceManagement() {
     </div>
   )
 }
-export default PriceManagement
+export default UnderConstruction

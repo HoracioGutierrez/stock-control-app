@@ -78,39 +78,48 @@ export const dataForHelp = [
 
 ]
 
-type PopUpData = {
-  [key: string]: {
-    content: {
-      classNameVar?: string,
-      icon?: JSX.Element | string,
-      title1?: string,
-      title2?: string | JSX.Element,
-      text1?: string | null,
-      text2?: string | null,
-      src?: StaticImageData,
-      alt?: string,
-      width?: number,
-      height?: number,
-      warning?: string | null,
-      warningText?: string | null
-    }[],
-  }
+export interface Data {
+  uniqueId: string,
+  titlePopUp?: string,
+  classNameVar?: string,
+  icon?: JSX.Element | string,
+  title1?: string,
+  title2?: string | JSX.Element,
+  text1?: string | null,
+  text2?: string | null,
+  src?: StaticImageData,
+  alt?: string,
+  width?: number,
+  height?: number,
+  warning?: string | null,
+  warningText?: string | null
 }
+
+type ArrayData = {
+  [key: string]: Array<Data>,
+}
+
+
+export type PopUpData = {
+  [key: string]: ArrayData,
+}
+
 
 export const popUpData: PopUpData = {
   firstSteps: {
-    content: [
-
+    firstAccordion: [
       {
-        classNameVar: "px-4 p-2 border-l border-t border-primary-foreground",
-        icon: <IconSettingsQuestion className="size-10" />,
-        title1: "Veamos cómo funciona.",
-        text1: `En esta sección veremos cómo funcionan los aspectos básicos de la aplicación para poder comenzar a operar con ella de un modo más eficiente.`,
-        title2: "Crear una cuenta.",
-        text2: `En primer lugar, para comenzar a utilizar la aplicación correctamente. Es necesario que cada empleado, empleador o supervisor tenga su propia cuenta en la aplicación, esto permite tener un control total sobre sus datos y operaciones en todo momento y en todos los dispositivos.`
+        uniqueId: "createAcount",
       },
       {
-        classNameVar: "mx-4 border-r p-2 pl-8",
+        uniqueId: "1",
+        titlePopUp: "Crear una cuenta.",
+        classNameVar: "px-4 p-2",
+        text1: `En primer lugar, para comenzar a utilizar la aplicación correctamente. Es necesario que cada empleado, empleador o supervisor tenga su propia cuenta en la aplicación, esto permite tener un control total sobre sus datos y operaciones en todo momento y en todos los dispositivos.`
+      },
+      {
+        uniqueId: "2",
+        classNameVar: "mx-4 = p-2 pl-8 ",
         icon: <IconCircleNumber1 className="size-10" />,
         text1: `Primero, presione la sección "Cuentas" en la barra lateral izquierda.`,
         src: firstStepsNewUser1,
@@ -119,7 +128,8 @@ export const popUpData: PopUpData = {
         height: 750
       },
       {
-        classNameVar: "mx-4 border-l p-2 pl-8",
+        uniqueId: "3",
+        classNameVar: "mx-4 p-2 pl-8",
         icon: <IconCircleNumber2 className="size-10" />,
         text1: `Luego, haga clic en la sección "Usuarios" en la barra lateral izquierda.`,
         src: firstStepsNewUser2,
@@ -128,16 +138,18 @@ export const popUpData: PopUpData = {
         height: 750
       },
       {
-        classNameVar: "mx-4 border-r p-2 pl-8",
+        uniqueId: "4",
+        classNameVar: "mx-4 p-2 pl-8",
         icon: <IconCircleNumber3 className="size-10" />,
-        text1: `Una vez estes en la pagina "Usuarios", haga clic en el botón superior derecho "Nuevo Usuario" para crear un nuevo usuario.`,
+        text1: `Una vez en la página "Usuarios", haga clic en el botón superior derecho "Nuevo Usuario" para crear un nuevo usuario.`,
         src: firstStepsNewUser3,
         alt: "Paso 3",
         width: 700,
         height: 700
       },
       {
-        classNameVar: "mx-4 border-l border-b p-2 pl-8 text-start",
+        uniqueId: "5",
+        classNameVar: "mx-4 p-2 pl-8 text-start",
         icon: <IconCircleNumber4 className="size-10" />,
         text1: `Una vez llenaste los campos con los datos del usuario, haga clic en el botón "Guardar Usuario".`,
         src: firstStepsNewUser4,
@@ -145,16 +157,23 @@ export const popUpData: PopUpData = {
         width: 500,
         height: 500,
         warning: "A tener en cuenta:",
-        warningText: `Las cuentas creadas como administrador tendran el acceso a todas las funcionalidades de la aplicación. Por lo que es recomendable que se cree una cuenta como administrador solo para usuarios de confianza, en caso de necesitar un seguimiento seguro de un empleado, desmarque la casilla "Es administrador" y creará una cuenta con acceso restringido a la funcionalidad de seguimiento, cancelacion de compras, ingreso/retiro de dinero, etc.`
+        warningText: `Las cuentas creadas como administrador tendran el acceso a todas las funcionalidades de la aplicación. Por lo que es recomendable que se cree una cuenta como administrador solo para usuarios de confianza, en caso de necesitar un seguimiento mas riguroso de los ingresos y perdidas que pueda llegar a tener su empresa.`
+      },
+    ],
+    secondAccordion: [
+      {
+        uniqueId: "cashAmount",
       },
       {
-        classNameVar: "mx-4 border-l border-t p-2 pt-6 pl-8 text-start",
-        title1: "Ingreso y retiro de dinero",
+          uniqueId: "6",
+        titlePopUp: "Ingreso y retiro de dinero",
+        classNameVar: "px-4 p-2",
         text1: `Para ingresar y retirar dinero, se debe tener en cuenta que solo las cuentas a las que hemos concedido permisos de administrador podran hacerlo.`
       },
       {
+        uniqueId: "7",
         icon: <IconCircleNumber1 className="size-10" />,
-        classNameVar: "mx-4 border-r p-2 pl-8",
+        classNameVar: "mx-4 p-2 pl-8",
         text1: `Primero, presione la sección "Tienda" en la barra lateral izquierda.`,
         src: cashAmount1,
         alt: "Paso 1",
@@ -162,7 +181,8 @@ export const popUpData: PopUpData = {
         height: 750
       },
       {
-        classNameVar: "mx-4 border-l p-2 pl-8",
+          uniqueId: "8",
+        classNameVar: "mx-4 p-2 pl-8",
         icon: <IconCircleNumber2 className="size-10" />,
         text1: `Luego, haga clic en la sección "Balance" en la barra lateral izquierda.`,
         src: cashAmount2,
@@ -171,7 +191,8 @@ export const popUpData: PopUpData = {
         height: 750
       },
       {
-        classNameVar: "mx-4 border-l p-2 pl-8",
+          uniqueId: "9",
+        classNameVar: "mx-4 p-2 pl-8",
         icon: <IconCircleNumber3 className="size-10" />,
         text1: `Una vez en la página "Balance", haga clic en el botón superior derecho "Ingreso/Retiro Manual".`,
         src: cashAmount3,
@@ -180,7 +201,8 @@ export const popUpData: PopUpData = {
         height: 700
       },
       {
-        classNameVar: "mx-4 border-l p-2 pl-8",
+          uniqueId: "10",
+        classNameVar: "mx-4 p-2 pl-8 ",
         icon: <IconCircleNumber4 className="size-10" />,
         text1: `Ingresá el monto que desea ingresar o retirar. Si fuera necesario, en el segundo campo, puede ingresar el motivo del ingreso o retiro para mantener un registro mas claro.`,
         text2: `Una vez ingresado el monto y el motivo, escoja el tipo de operación que desea realizar (ingreso o retiro) y haga clic en el botón "Confirmar".`,
@@ -193,4 +215,18 @@ export const popUpData: PopUpData = {
       }
     ],
   },
+}
+
+export const dataForHeaders: PopUpData = {
+  firstSteps: {
+    header: [
+      { 
+        uniqueId: "1",
+        classNameVar: "px-4 p-2",
+        icon: <IconSettingsQuestion className="size-10" />,
+        title1: "Veamos cómo funciona.",
+        text1: `En esta sección veremos cómo funcionan los aspectos básicos de la aplicación para poder comenzar a operar con ella de un modo más eficiente.`,
+      },
+    ],
+  }
 }

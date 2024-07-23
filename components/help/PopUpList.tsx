@@ -8,13 +8,11 @@ import PopUpItems from "./PopUpItems"
 
 
 function PopUpList(props: any) {
-  const { data, dataHeader } = props
-
-  console.log(dataHeader.header, "dataHeader")
+  const { dataHeader } = props
 
   return (
     <>
-      {data ?
+      {dataHeader?.header?.length > 0 ?
         <div className={` flex flex-col gap-6 bg-primary-foreground dark:bg-card dark:bg-gradient-to-b from-card to-black pb-6 to-80% rounded-lg pt-4 pl-6`}>
           <div className="flex flex-col">
             <span className="rounded-full bg-accent dark:bg-primary-foreground shadow-md w-16 h-16 flex justify-center items-center">
@@ -29,7 +27,6 @@ function PopUpList(props: any) {
               {dataHeader.header[0].text1}
             </p>
           </div>
-
           <PopUpItems {...props} />
         </div>
         :

@@ -17,7 +17,6 @@ const config: Record<string, { title: string }> = {
   "price-management": { title: "Gestión de precios" },
 }
 
-
 const propsConfig: Record<string, string> = {
   "first-steps": "firstSteps",
   "customer-management": "customerManagement",
@@ -33,7 +32,7 @@ const propsConfig: Record<string, string> = {
 function HelpDialog() {
   const { type } = useDialogStore((state: any) => state)
   const [dataAccordion, setDataAccordion] = useState<any>({}) as any
-  const [dataHeader, setDataHeader] = useState<any>({})
+  const [dataHeader, setDataHeader] = useState<any>({}) as any
 
   const openedItem = propsConfig[type]
 
@@ -42,16 +41,13 @@ function HelpDialog() {
     const accordionData = popUpData[propsConfig[type]] as any
     const headerData = dataForHeaders[propsConfig[type]] as any
 
-    if (type === type && accordionData) {
-      setDataAccordion(accordionData)
-      setDataHeader(headerData)
-    }
+    setDataAccordion(accordionData)
+    setDataHeader(headerData)
+
   }, [type])
 
-  console.log(type)
-
   const props = {
-    data: dataAccordion,
+    dataAccordion,
     dataHeader,
     openedItem
   }

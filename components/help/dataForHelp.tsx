@@ -79,7 +79,7 @@ export const dataForHelp = [
 ]
 
 export interface Data {
-  uniqueId: string,
+  uniqueId?: string,
   titlePopUp?: string,
   classNameVar?: string,
   icon?: JSX.Element | string,
@@ -108,17 +108,17 @@ export type PopUpData = {
 export const popUpData: PopUpData = {
   firstSteps: {
     firstAccordion: [
+      /*       {
+              uniqueId: "createAcount",
+            }, */
       {
-        uniqueId: "createAcount",
-      },
-      {
-        uniqueId: "1",
+        uniqueId: "firstSteps-firstAccordion-1",
         titlePopUp: "Crear una cuenta.",
         classNameVar: "px-4 p-2",
         text1: `En primer lugar, para comenzar a utilizar la aplicación correctamente. Es necesario que cada empleado, empleador o supervisor tenga su propia cuenta en la aplicación, esto permite tener un control total sobre sus datos y operaciones en todo momento y en todos los dispositivos.`
       },
       {
-        uniqueId: "2",
+        uniqueId: "firstSteps-firstAccordion-2",
         classNameVar: "mx-4 = p-2 pl-8 ",
         icon: <IconCircleNumber1 className="size-10" />,
         text1: `Primero, presione la sección "Cuentas" en la barra lateral izquierda.`,
@@ -128,7 +128,7 @@ export const popUpData: PopUpData = {
         height: 750
       },
       {
-        uniqueId: "3",
+        uniqueId: "firstSteps-firstAccordion-3",
         classNameVar: "mx-4 p-2 pl-8",
         icon: <IconCircleNumber2 className="size-10" />,
         text1: `Luego, haga clic en la sección "Usuarios" en la barra lateral izquierda.`,
@@ -138,7 +138,7 @@ export const popUpData: PopUpData = {
         height: 750
       },
       {
-        uniqueId: "4",
+        uniqueId: "firstSteps-firstAccordion-4",
         classNameVar: "mx-4 p-2 pl-8",
         icon: <IconCircleNumber3 className="size-10" />,
         text1: `Una vez en la página "Usuarios", haga clic en el botón superior derecho "Nuevo Usuario" para crear un nuevo usuario.`,
@@ -148,7 +148,7 @@ export const popUpData: PopUpData = {
         height: 700
       },
       {
-        uniqueId: "5",
+        uniqueId: "firstSteps-firstAccordion-5",
         classNameVar: "mx-4 p-2 pl-8 text-start",
         icon: <IconCircleNumber4 className="size-10" />,
         text1: `Una vez llenaste los campos con los datos del usuario, haga clic en el botón "Guardar Usuario".`,
@@ -161,17 +161,17 @@ export const popUpData: PopUpData = {
       },
     ],
     secondAccordion: [
+      /*       {
+              uniqueId: "cashAmount",
+            }, */
       {
-        uniqueId: "cashAmount",
-      },
-      {
-          uniqueId: "6",
-        titlePopUp: "Ingreso y retiro de dinero",
+        uniqueId: "firstSteps-secondAccordion-1",
+        titlePopUp: "Ingreso y retiro de dinero.",
         classNameVar: "px-4 p-2",
         text1: `Para ingresar y retirar dinero, se debe tener en cuenta que solo las cuentas a las que hemos concedido permisos de administrador podran hacerlo.`
       },
       {
-        uniqueId: "7",
+        uniqueId: "firstSteps-secondAccordion-2",
         icon: <IconCircleNumber1 className="size-10" />,
         classNameVar: "mx-4 p-2 pl-8",
         text1: `Primero, presione la sección "Tienda" en la barra lateral izquierda.`,
@@ -181,7 +181,7 @@ export const popUpData: PopUpData = {
         height: 750
       },
       {
-          uniqueId: "8",
+        uniqueId: "firstSteps-secondAccordion-3",
         classNameVar: "mx-4 p-2 pl-8",
         icon: <IconCircleNumber2 className="size-10" />,
         text1: `Luego, haga clic en la sección "Balance" en la barra lateral izquierda.`,
@@ -191,7 +191,7 @@ export const popUpData: PopUpData = {
         height: 750
       },
       {
-          uniqueId: "9",
+        uniqueId: "firstSteps-secondAccordion-4",
         classNameVar: "mx-4 p-2 pl-8",
         icon: <IconCircleNumber3 className="size-10" />,
         text1: `Una vez en la página "Balance", haga clic en el botón superior derecho "Ingreso/Retiro Manual".`,
@@ -201,7 +201,7 @@ export const popUpData: PopUpData = {
         height: 700
       },
       {
-          uniqueId: "10",
+        uniqueId: "firstSteps-secondAccordion-5",
         classNameVar: "mx-4 p-2 pl-8 ",
         icon: <IconCircleNumber4 className="size-10" />,
         text1: `Ingresá el monto que desea ingresar o retirar. Si fuera necesario, en el segundo campo, puede ingresar el motivo del ingreso o retiro para mantener un registro mas claro.`,
@@ -220,8 +220,8 @@ export const popUpData: PopUpData = {
 export const dataForHeaders: PopUpData = {
   firstSteps: {
     header: [
-      { 
-        uniqueId: "1",
+      {
+        uniqueId: "firstSteps-header-1",
         classNameVar: "px-4 p-2",
         icon: <IconSettingsQuestion className="size-10" />,
         title1: "Veamos cómo funciona.",

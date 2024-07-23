@@ -24,7 +24,7 @@ export default async function Home() {
           </CardHeader>
           <CardContent className="flex flex-col justify-between p-3 md:p-4 h-[calc(100%_-_2.5rem)]">
             <p className="flex flex-col text-muted-foreground">
-              <span className="font-bold text-4xl text-primary">${data?.salesStats.value ?? 0}</span> Total de ventas
+              <span className="font-bold text-4xl text-primary">${data?.salesStats?.value ?? 0}</span> Total de ventas
             </p>
             <div className="gap-4 grid grid-cols-1 md:grid-cols-2 pt-4">
               <div className="border-muted-foreground p-2 border rounded-sm">
@@ -34,7 +34,7 @@ export default async function Home() {
                     Productos en inventario
                   </span>
                 </p>
-                <p className="font-bold text-2xl text-primary">{data?.productsCount.count}</p>
+                <p className="font-bold text-2xl text-primary">{data?.productsCount?.count}</p>
               </div>
               <div className="border-muted-foreground p-2 border rounded-sm">
                 <p className="flex items-center gap-2 text-muted-foreground text-sm">
@@ -43,7 +43,7 @@ export default async function Home() {
                     Compras hechas
                   </span>
                 </p>
-                <p className="font-bold text-2xl text-primary">{data?.salesStats.count}</p>
+                <p className="font-bold text-2xl text-primary">{data?.salesStats?.count}</p>
               </div>
             </div>
           </CardContent>
@@ -81,7 +81,7 @@ export default async function Home() {
               <span className="font-bold text-4xl text-primary">${200}</span> Total de deuda
             </p>
             <div>
-              {data?.customersWithDebt.length > 0 ? (
+              {data?.customersWithDebt?.length > 0 ? (
                 <div className="flex flex-col gap-4">
                   {data?.customersWithDebt.map((customer: any) => (
                     <div className="flex flex-col" key={customer.id}>

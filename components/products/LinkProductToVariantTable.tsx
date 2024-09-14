@@ -140,7 +140,7 @@ function LinkProductToVariantTable({ setProductId }: Props) {
           </TableBody>
           <TableFooter style={{ display: "grid", position: "sticky", bottom: "0px", zIndex: "1" }} className="bg-primary-foreground">
             <TableRow className="flex justify-center w-full">
-
+              {/* TODO: Check this line */}
             </TableRow>
           </TableFooter>
         </Table>

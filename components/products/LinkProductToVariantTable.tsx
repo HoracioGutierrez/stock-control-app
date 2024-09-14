@@ -1,20 +1,12 @@
 "use client"
-import { getProviderDetails } from "@/actions/getProviderDetails"
-import { getAllProducts } from "@/actions/getAllProducts"
-import { providerOrdersColumns, purchaseOrdersColumns, variantColumns } from "@/lib/columnDefinitions"
+import { variantColumns } from "@/lib/columnDefinitions"
 import { Row, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table"
 import { useEffect, useRef, useState } from "react"
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "../ui/table"
-import { Button } from "../ui/button"
-import { Check, Loader, Minus, Plus } from "lucide-react"
 import { useVirtualizer } from '@tanstack/react-virtual'
-import { createNewPurchaseOrder } from "@/actions/createNewPurchaseOrder"
 import { useDialogStore } from "@/stores/generalDialog"
-import { Checkbox } from "@/components/ui/checkbox"
 import { toast } from "../ui/use-toast"
 import { getAllPossibleVariantProducts } from "@/actions/getAllPossibleVariantProducts"
-import { RadioGroup } from "../ui/radio-group"
-import CustomButton from "../layout/CustomButton"
 
 
 type Props = {
@@ -22,17 +14,12 @@ type Props = {
   providerId?: string
   setProductId?: any
 }
-function LinkProductToVariantTable({ userId, providerId, setProductId }: Props) {
+function LinkProductToVariantTable({ setProductId }: Props) {
 
   const [variants, setVariants] = useState<any[]>([])
-  const [loading, setLoading] = useState<boolean>(false)
-  const [order, setOrder] = useState<any>({})
-  const [units, setUnits] = useState<number>(0)
-  const [total, setTotal] = useState<number>(0)
   const [pinnedRow, setPinnedRow] = useState<any>({ top: [], bottom: [] })
   const tableContainerRef = useRef<HTMLDivElement>(null)
-  const [increment, setIncrement] = useState<boolean>(true)
-  const { id, setClose } = useDialogStore((state: any) => state)
+  const { id } = useDialogStore((state: any) => state)
 
   const table = useReactTable({
     data: variants,
@@ -51,9 +38,8 @@ function LinkProductToVariantTable({ userId, providerId, setProductId }: Props) 
 
   const rowVirtualizer = useVirtualizer({
     count: rows.length,
-    estimateSize: () => 20, //estimate row height for accurate scrollbar dragging
+    estimateSize: () => 20,
     getScrollElement: () => tableContainerRef.current,
-    //measure dynamic row height, except in firefox because it measures table border height incorrectly
     measureElement:
       typeof window !== 'undefined' &&
         navigator.userAgent.indexOf('Firefox') === -1
@@ -96,7 +82,6 @@ function LinkProductToVariantTable({ userId, providerId, setProductId }: Props) 
   return (
     <div>
       <p className="text-muted-foreground">Esta es una lista de ordenes de compras hechas para este proveedor</p>
-      {/* <RadioGroup> */}
       <div ref={tableContainerRef} style={{ overflow: "auto", position: "relative", height: "500px" }} className="relative my-10 w-full">
         <Table style={{ display: "grid" }}>
           <TableHeader style={{ display: "grid", position: "sticky", top: "0px", zIndex: "1" }} className="bg-primary-foreground">
@@ -155,12 +140,11 @@ function LinkProductToVariantTable({ userId, providerId, setProductId }: Props) 
           </TableBody>
           <TableFooter style={{ display: "grid", position: "sticky", bottom: "0px", zIndex: "1" }} className="bg-primary-foreground">
             <TableRow className="flex justify-center w-full">
-              
+
             </TableRow>
           </TableFooter>
         </Table>
       </div>
-      {/* </RadioGroup> */}
     </div>
   )
 }

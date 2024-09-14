@@ -3,3 +3,5 @@ profile:
   name: qodana.recommended
 
 linter: jetbrains/qodana-js:latest
+
+fixesStrategy: apply

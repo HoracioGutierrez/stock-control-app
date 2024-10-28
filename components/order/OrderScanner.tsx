@@ -34,8 +34,6 @@ function OrderScanner({ data }: OrderScannerProps) {
   const { products, setScannedProduct, increment, decrement, total, remove, setProduct, scannedProduct, customer } = useOrderStore((state: any) => state)
   const scannerRef = useRef<HTMLDivElement | null>(null)
 
-
-
   let barcode = ""
 
   useEffect(() => {
@@ -124,9 +122,16 @@ function OrderScanner({ data }: OrderScannerProps) {
     setScanning(false)
   }
 
-  useHotkeys("ctrl+z", handleSearch)
-  useHotkeys("ctrl+x", handleManualScan)
-  useHotkeys("ctrl+c", handleCamScan)
+  useHotkeys("alt+b", handleSearch)
+  useHotkeys("alt+m", handleManualScan)
+  useHotkeys("alt+c", handleCamScan)
+  useHotkeys("alt+i", () => { setOpen("manual-income") })
+  useHotkeys("alt+q", () => { setOpen("close-cash-register") })
+  useHotkeys("alt+v", () => { if (products.length > 0) { handlePayWith() } })
+  useHotkeys("alt+n", () => { if (products.length > 0) { handleAddCustomer() } })
+  useHotkeys("alt+g", () => { setOpen("save-order") })
+
+
 
   return (
     <section className="flex flex-col h-full" ref={scannerRef}>
@@ -167,13 +172,13 @@ function OrderScanner({ data }: OrderScannerProps) {
             <p className="text-muted-foreground">
               {scanning ? "Escaneando..." : "Esperando ingreso..."}
             </p>
-            <CustomButton onClick={handleSearch} tooltip="Busqueda de producto (ctrl + f2)">
+            <CustomButton onClick={handleSearch} tooltip="Busqueda de producto (alt + b)">
               <Search />
             </CustomButton>
-            <CustomButton onClick={handleManualScan} tooltip="Codigo Manual (ctrl + f3)">
+            <CustomButton onClick={handleManualScan} tooltip="Codigo Manual (alt + m)">
               <Barcode />
             </CustomButton>
-            <CustomButton onClick={handleCamScan} tooltip="Escaneo con Camara (ctrl + f4)">
+            <CustomButton onClick={handleCamScan} tooltip="Escaneo con Camara (alt + c)">
               <ScanBarcode />
             </CustomButton>
           </CardFooter>
@@ -227,19 +232,20 @@ function OrderScanner({ data }: OrderScannerProps) {
       </div>
 
       <div className="justify-center gap-4 grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6">
-        <CustomButton onClick={handlePayWith} disabled={products.length === 0} tooltip="Calcula el vuelto de la orden ingresando el monto con el cual desea pagar">
+        <CustomButton onClick={handlePayWith} disabled={products.length === 0} tooltip="Calcula el vuelto de la orden ingresando el monto con el cual desea pagar (alt + v)">
           Calcular Vuelto
         </CustomButton>
-        <CustomButton onClick={handleAddCustomer} disabled={products.length === 0} tooltip="Agrega un cliente existente o crea uno nuevo para agregar a la orden">
+        <CustomButton onClick={handleAddCustomer} disabled={products.length === 0} tooltip="Agrega un cliente existente o crea uno nuevo para agregar a la orden (alt + n)">
           Agregar Cliente
         </CustomButton>
-        <CustomButton tooltip="Ingresar dinero manualmente a la caja actual" dialogType="manual-income" className="truncate">
+        <CustomButton tooltip="Ingresar dinero manualmente a la caja actual (alt + i)" dialogType="manual-income" className="truncate">
           Ingreso/Retiro Manual
         </CustomButton>
         <CloseCashRegisterButton />
         <CancelOrderButton />
         <OrderButton />
       </div>
+
       {camScan && (
         <div>
           <CustomButton className="top-2 right-2 z-20 fixed" onClick={handleCloseScanner}>
@@ -247,7 +253,7 @@ function OrderScanner({ data }: OrderScannerProps) {
           </CustomButton>
           <BarcodeScanner
             onCapture={handleCapture}
-            onLoad={()=>{console.log("error")}}
+            onLoad={() => { console.log("error") }}
             className="top-0 left-0 z-10 fixed w-screen h-screen"
             options={{
               formats: ["code_128", "code_39", "code_93", "codabar", "ean_13", "ean_8", "itf", "qr_code", "upc_a", "upc_e"]

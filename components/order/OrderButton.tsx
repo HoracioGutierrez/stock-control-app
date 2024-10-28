@@ -18,7 +18,7 @@ function OrderButton() {
       disabled={products.length === 0}
       onClick={handleClick}
       className="bg-green-500 text-secondary-foreground"
-      tooltip="Terminar la compra y guardar la orden"
+      tooltip="Terminar la compra y guardar la orden (alt + g)"
     >
       Guardar Orden
     </CustomButton>

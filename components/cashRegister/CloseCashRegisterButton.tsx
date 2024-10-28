@@ -16,7 +16,7 @@ const CloseCashRegisterButton = ({ }: CloseCashRegisterButtonProps) => {
   }
 
   return (
-    <CustomButton onClick={handleClick} icon={<X/>} tooltip="Cerrar la caja actual y dejar de poder realizar nuevas compras">
+    <CustomButton onClick={handleClick} icon={<X/>} tooltip="Cerrar la caja actual y dejar de poder realizar nuevas compras (alt + q)">
       Cerrar Caja
     </CustomButton>
   )

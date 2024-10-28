@@ -129,9 +129,7 @@ function OrderScanner({ data }: OrderScannerProps) {
   useHotkeys("alt+q", () => { setOpen("close-cash-register") })
   useHotkeys("alt+v", () => { if (products.length > 0) { handlePayWith() } })
   useHotkeys("alt+n", () => { if (products.length > 0) { handleAddCustomer() } })
-  useHotkeys("alt+g", () => { setOpen("save-order") })
-
-
+  useHotkeys("alt+g", () => { if (products.length > 0) { setOpen("save-order") } })
 
   return (
     <section className="flex flex-col h-full" ref={scannerRef}>

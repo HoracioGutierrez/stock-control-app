@@ -2,18 +2,23 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table"
-import { getProductByBarcode } from "@/actions/getProductByBarcode"
-import { ArrowDown, ArrowUp, Barcode, ScanBarcode, Search, Trash2 } from "lucide-react"
-import { useOrderStore } from "@/stores/orderStore"
-import { useEffect, useState } from "react"
-import { Button } from "../ui/button"
-import { useDialogStore } from "@/stores/generalDialog"
+import { ArrowDown, ArrowUp, Barcode, ScanBarcode, Search, Trash2, X } from "lucide-react"
 import CloseCashRegisterButton from "../cashRegister/CloseCashRegisterButton"
-import CancelOrderButton from "./CancelOrderButton"
-import OrderButton from "./OrderButton"
 import { BarcodeScanner, DetectedBarcode } from 'react-barcode-scanner'
-import "react-barcode-scanner/polyfill"
+import { getProductByBarcode } from "@/actions/getProductByBarcode"
+/* import { useHotkeys } from '@react-hook/hotkey' */
+import { useDialogStore } from "@/stores/generalDialog"
+import CancelOrderButton from "./CancelOrderButton"
+import { useOrderStore } from "@/stores/orderStore"
 import CustomButton from "../layout/CustomButton"
+import { useEffect, useRef, useState } from "react"
+import "react-barcode-scanner/polyfill"
+import OrderButton from "./OrderButton"
+import { Button } from "../ui/button"
+import { useHotkeys } from 'react-hotkeys-hook'
+/* import { ErrorBoundary, ErrorComponent } from "next/dist/client/components/error-boundary" */
+import { ErrorBoundary } from "react-error-boundary";
+
 
 type OrderScannerProps = {
   data: any
@@ -22,12 +27,14 @@ type OrderScannerProps = {
 function OrderScanner({ data }: OrderScannerProps) {
 
   const [hasEvent, setHasEvent] = useState<boolean>(false)
-  const [scannedBarcode, setScannedBarcode] = useState<string>("")
   const [error, setError] = useState<string>("")
   const [scanning, setScanning] = useState<boolean>(false)
   const { setOpen } = useDialogStore((state: any) => state)
   const [camScan, setCamScan] = useState<boolean>(false)
   const { products, setScannedProduct, increment, decrement, total, remove, setProduct, scannedProduct, customer } = useOrderStore((state: any) => state)
+  const scannerRef = useRef<HTMLDivElement | null>(null)
+
+
 
   let barcode = ""
 
@@ -66,7 +73,6 @@ function OrderScanner({ data }: OrderScannerProps) {
   }, [])
 
   const handleScan = (barcode: string) => {
-    setScannedBarcode(barcode)
     getProductByBarcode(barcode)
       .then((data) => {
         if (data?.error) {
@@ -105,7 +111,6 @@ function OrderScanner({ data }: OrderScannerProps) {
   }
 
   const handleCapture = (barcode: DetectedBarcode) => {
-    //alert(barcode.rawValue)
     handleScan(barcode.rawValue)
     setCamScan(false)
   }
@@ -114,8 +119,17 @@ function OrderScanner({ data }: OrderScannerProps) {
     setOpen("search")
   }
 
+  const handleCloseScanner = () => {
+    setCamScan(false)
+    setScanning(false)
+  }
+
+  useHotkeys("ctrl+z", handleSearch)
+  useHotkeys("ctrl+x", handleManualScan)
+  useHotkeys("ctrl+c", handleCamScan)
+
   return (
-    <section className="flex flex-col h-full">
+    <section className="flex flex-col h-full" ref={scannerRef}>
       <div className="gap-4 grid grid-cols-1 lg:grid-cols-2 mt-4 mb-4">
         <Card className="bg-accent">
           <CardHeader className="max-sm:p-2 max-sm:pb-0">
@@ -153,38 +167,15 @@ function OrderScanner({ data }: OrderScannerProps) {
             <p className="text-muted-foreground">
               {scanning ? "Escaneando..." : "Esperando ingreso..."}
             </p>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button onClick={handleSearch}>
-                    <Search />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Busqueda de producto</p>
-                </TooltipContent>
-              </Tooltip>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button onClick={handleManualScan}>
-                    <Barcode />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Codigo Manual</p>
-                </TooltipContent>
-              </Tooltip>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button onClick={handleCamScan}>
-                    <ScanBarcode />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Escaneo con Camara</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <CustomButton onClick={handleSearch} tooltip="Busqueda de producto (ctrl + f2)">
+              <Search />
+            </CustomButton>
+            <CustomButton onClick={handleManualScan} tooltip="Codigo Manual (ctrl + f3)">
+              <Barcode />
+            </CustomButton>
+            <CustomButton onClick={handleCamScan} tooltip="Escaneo con Camara (ctrl + f4)">
+              <ScanBarcode />
+            </CustomButton>
           </CardFooter>
         </Card>
       </div>
@@ -250,15 +241,19 @@ function OrderScanner({ data }: OrderScannerProps) {
         <OrderButton />
       </div>
       {camScan && (
-        <>
+        <div>
+          <CustomButton className="top-2 right-2 z-20 fixed" onClick={handleCloseScanner}>
+            <X />
+          </CustomButton>
           <BarcodeScanner
             onCapture={handleCapture}
+            onLoad={()=>{console.log("error")}}
             className="top-0 left-0 z-10 fixed w-screen h-screen"
             options={{
               formats: ["code_128", "code_39", "code_93", "codabar", "ean_13", "ean_8", "itf", "qr_code", "upc_a", "upc_e"]
             }}
           />
-        </>
+        </div>
       )}
     </section>
   )

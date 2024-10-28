@@ -18,7 +18,7 @@ export function ModeToggle({ collapsed }: ModeToggleProps) {
       <div className="place-content-center grid h-[40px]">
         <Switch onCheckedChange={(value) => setTheme(value ? "dark" : "light")} />
       </div>
-      <p className="text-muted-foreground text-sm">{modes[theme as string || "dark"]}</p>
+      <p className="text-muted-foreground text-sm" suppressHydrationWarning>{modes[theme as string || "dark"]}</p>
     </div>
   )
 }

@@ -83,17 +83,7 @@ export const formNamesVariants: {
             name: "label",
             label: "Nombre de la caja",
             inputType: "text"
-        }/* ,
-        currentAmount: {
-            name: "currentAmount",
-            label: "Cantidad",
-            inputType: "text"
-        },
-        totalAmount: {
-            name: "totalAmount",
-            label: "Total",
-            inputType: "text"
-        } */
+        }
     },
     customerDebt: {
         payAll: {
@@ -196,7 +186,7 @@ export const formDetailsVariants: {
         }
     },
     user: {
-        isAdmin : {
+        isAdmin: {
             name: "isAdmin",
             label: "Es admin",
             inputType: "checkbox"

@@ -116,7 +116,6 @@ function EditProductVariantsForm({ barcode, userId }: EditProductVariantsFormPro
 
   const handleUnlinkVariant = (index: number, barcode: string) => {
     update(index, { isUnlinking: true })
-    //editById("product", id, { productId: null, isVariant: false }, userId)
     unlinkVariant(barcode, userId)
       .then((data) => {
         if (data?.error) {
@@ -126,7 +125,6 @@ function EditProductVariantsForm({ barcode, userId }: EditProductVariantsFormPro
           title: "Variante eliminada correctamente",
           description: "La variante se ha eliminado correctamente de la base de datos",
         })
-        //update(index, { isUnlinking: false })
         remove(index)
       })
       .catch((error) => {

@@ -68,7 +68,7 @@ function ManualIncomeForm({ userId }: Props) {
             <Label htmlFor="amount">Monto a ingresar</Label>
             {errors.amount && <p className="text-red-500 text-sm">{errors.amount.message as string}</p>}
           </div>
-          <Input type="number" placeholder="Monto a ingresar" {...register("amount")} />
+          <Input type="number" placeholder="Monto a ingresar" {...register("amount")} step="any" />
         </div>
         <div className="flex flex-col gap-2">
           <div>

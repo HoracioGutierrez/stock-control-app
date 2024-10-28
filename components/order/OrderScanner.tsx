@@ -1,12 +1,10 @@
 "use client"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table"
 import { ArrowDown, ArrowUp, Barcode, ScanBarcode, Search, Trash2, X } from "lucide-react"
 import CloseCashRegisterButton from "../cashRegister/CloseCashRegisterButton"
 import { BarcodeScanner, DetectedBarcode } from 'react-barcode-scanner'
 import { getProductByBarcode } from "@/actions/getProductByBarcode"
-/* import { useHotkeys } from '@react-hook/hotkey' */
 import { useDialogStore } from "@/stores/generalDialog"
 import CancelOrderButton from "./CancelOrderButton"
 import { useOrderStore } from "@/stores/orderStore"
@@ -16,8 +14,6 @@ import "react-barcode-scanner/polyfill"
 import OrderButton from "./OrderButton"
 import { Button } from "../ui/button"
 import { useHotkeys } from 'react-hotkeys-hook'
-/* import { ErrorBoundary, ErrorComponent } from "next/dist/client/components/error-boundary" */
-import { ErrorBoundary } from "react-error-boundary";
 
 
 type OrderScannerProps = {
@@ -251,7 +247,6 @@ function OrderScanner({ data }: OrderScannerProps) {
           </CustomButton>
           <BarcodeScanner
             onCapture={handleCapture}
-            onLoad={() => { console.log("error") }}
             className="top-0 left-0 z-10 fixed w-screen h-screen"
             options={{
               formats: ["code_128", "code_39", "code_93", "codabar", "ean_13", "ean_8", "itf", "qr_code", "upc_a", "upc_e"]

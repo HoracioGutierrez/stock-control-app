@@ -47,9 +47,8 @@ function CreateProviderOrderForm({ userId }: Props) {
 
   const rowVirtualizer = useVirtualizer({
     count: rows.length,
-    estimateSize: () => 20, //estimate row height for accurate scrollbar dragging
+    estimateSize: () => 20,
     getScrollElement: () => tableContainerRef.current,
-    //measure dynamic row height, except in firefox because it measures table border height incorrectly
     measureElement:
       typeof window !== 'undefined' &&
         navigator.userAgent.indexOf('Firefox') === -1
@@ -68,14 +67,12 @@ function CreateProviderOrderForm({ userId }: Props) {
       })
       .catch((error) => {
         if (error instanceof Error) {
-          //return setError(error.message)
           toast({
             variant: "destructive",
             title: "Error al obtener los productos",
             description: error.message
           })
         }
-        //setError("Error al obtener los productos")
         toast({
           variant: "destructive",
           title: "Error al obtener los productos",
@@ -175,95 +172,95 @@ function CreateProviderOrderForm({ userId }: Props) {
       <p className="text-muted-foreground">Seleccione de la lista de productos que deseas comprar de este proveedor</p>
       <div ref={tableContainerRef} style={{ overflow: "auto", position: "relative", height: "500px" }} className="relative my-10 w-full">
         <div className="overflow-auto">
-        <Table style={{ display: "grid" }}>
-          <TableHeader style={{ display: "grid", position: "sticky", top: "0px", zIndex: "1" }} className="bg-primary-foreground">
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id} style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-                {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id} colSpan={header.colSpan} style={{ width: header.getSize(), display: "flex", alignItems: "center" }} onMouseDown={header.getResizeHandler()} className="hover:cursor-col-resize" >
-                    <span key={header.id} className="hover:cursor-pointer">{header.isPlaceholder
-                      ? null
-                      : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}</span>
-                  </TableHead>
-                ))}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody style={{
-            display: "grid",
-            height: `${rowVirtualizer.getTotalSize()}px`,
-            position: "relative",
-          }}>
-            {rowVirtualizer.getVirtualItems().map(virtualRow => {
-              const row = rows[virtualRow.index] as Row<any>
+          <Table style={{ display: "grid" }}>
+            <TableHeader style={{ display: "grid", position: "sticky", top: "0px", zIndex: "1" }} className="bg-primary-foreground">
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id} style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
+                  {headerGroup.headers.map((header) => (
+                    <TableHead key={header.id} colSpan={header.colSpan} style={{ width: header.getSize(), display: "flex", alignItems: "center" }} onMouseDown={header.getResizeHandler()} className="hover:cursor-col-resize" >
+                      <span key={header.id} className="hover:cursor-pointer">{header.isPlaceholder
+                        ? null
+                        : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}</span>
+                    </TableHead>
+                  ))}
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody style={{
+              display: "grid",
+              height: `${rowVirtualizer.getTotalSize()}px`,
+              position: "relative",
+            }}>
+              {rowVirtualizer.getVirtualItems().map(virtualRow => {
+                const row = rows[virtualRow.index] as Row<any>
 
-              return (
-                <TableRow
-                  key={row.id}
-                  data-index={virtualRow.index}
-                  ref={node => rowVirtualizer.measureElement(node)}
-                  style={{
-                    display: "flex",
-                    position: "absolute",
-                    transform: `translateY(${virtualRow.start}px)`,
-                    width: "100%",
-                    justifyContent: "space-between"
-                  }}
-                >
-                  {row.getVisibleCells().map((cell) => {
-                    if (cell.column.id === "actions") {
+                return (
+                  <TableRow
+                    key={row.id}
+                    data-index={virtualRow.index}
+                    ref={node => rowVirtualizer.measureElement(node)}
+                    style={{
+                      display: "flex",
+                      position: "absolute",
+                      transform: `translateY(${virtualRow.start}px)`,
+                      width: "100%",
+                      justifyContent: "space-between"
+                    }}
+                  >
+                    {row.getVisibleCells().map((cell) => {
+                      if (cell.column.id === "actions") {
+                        return (
+                          <TableCell className="" key={cell.id} style={{ display: "flex", width: cell.column.getSize() }}>
+                            <div className="flex items-center gap-4">
+                              <Button variant={"outline"} className="p-0 aspect-square" onClick={() => {
+                                handleRemoveProduct(row.original)
+                              }}>
+                                <Minus />
+                              </Button>
+                              <p className="font-bold text-lg">
+                                {order[row.original.id] ? order[row.original.id].count : 0}
+                              </p>
+                              <Button variant={"outline"} className="p-0 aspect-square" onClick={() => {
+                                handleAddProduct(row.original)
+                                row.pin("top")
+                              }}>
+                                <Plus />
+                              </Button>
+                            </div>
+                          </TableCell>
+                        )
+                      }
+
                       return (
-                        <TableCell className="" key={cell.id} style={{ display: "flex", width: cell.column.getSize() }}>
-                          <div className="flex items-center gap-4">
-                            <Button variant={"outline"} className="p-0 aspect-square" onClick={() => {
-                              handleRemoveProduct(row.original)
-                            }}>
-                              <Minus />
-                            </Button>
-                            <p className="font-bold text-lg">
-                              {order[row.original.id] ? order[row.original.id].count : 0}
-                            </p>
-                            <Button variant={"outline"} className="p-0 aspect-square" onClick={() => {
-                              handleAddProduct(row.original)
-                              row.pin("top")
-                            }}>
-                              <Plus />
-                            </Button>
+                        <TableCell key={cell.id} style={{ display: "flex", width: cell.column.getSize() }}>
+                          <div className="place-content-center gap-2 grid grid-cols-[max-content_1fr]">
+                            {cell.column.id === "price" && <span>$</span>}
+                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                            {cell.column.id === "stock" && <span className="w-full grow"> unidades</span>}
                           </div>
                         </TableCell>
                       )
-                    }
 
-                    return (
-                      <TableCell key={cell.id} style={{ display: "flex", width: cell.column.getSize() }}>
-                        <div className="place-content-center gap-2 grid grid-cols-[max-content_1fr]">
-                          {cell.column.id === "price" && <span>$</span>}
-                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                          {cell.column.id === "stock" && <span className="w-full grow"> unidades</span>}
-                        </div>
-                      </TableCell>
-                    )
-
-                  })}
-                </TableRow>
-              )
-            })}
-          </TableBody>
-          <TableFooter style={{ display: "grid", position: "sticky", bottom: "0px", zIndex: "1" }} className="bg-primary-foreground">
-            <TableRow className="flex justify-between w-full">
-              <TableCell colSpan={1} className="flex flex-col justify-center h-24">
-                <p className="text-muted-foreground">{Object.keys(order).length} productos en tu orden</p>
-                <p className="text-muted-foreground">{units} unidades</p>
-              </TableCell>
-              <TableCell colSpan={1} className="flex flex-col justify-end h-24">
-                <p className="font-bold text-xl">${total.toFixed(2)} total</p>
-              </TableCell>
-            </TableRow>
-          </TableFooter>
-        </Table>
+                    })}
+                  </TableRow>
+                )
+              })}
+            </TableBody>
+            <TableFooter style={{ display: "grid", position: "sticky", bottom: "0px", zIndex: "1" }} className="bg-primary-foreground">
+              <TableRow className="flex justify-between w-full">
+                <TableCell colSpan={1} className="flex flex-col justify-center h-24">
+                  <p className="text-muted-foreground">{Object.keys(order).length} productos en tu orden</p>
+                  <p className="text-muted-foreground">{units} unidades</p>
+                </TableCell>
+                <TableCell colSpan={1} className="flex flex-col justify-end h-24">
+                  <p className="font-bold text-xl">${total.toFixed(2)} total</p>
+                </TableCell>
+              </TableRow>
+            </TableFooter>
+          </Table>
         </div>
       </div>
       <div className="flex justify-center items-center gap-8">

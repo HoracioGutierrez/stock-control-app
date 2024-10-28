@@ -29,16 +29,9 @@ const schema = yup.object().shape({
 function EditPricesForm({ barcode, userId, setIsFullWidth }: any) {
 
   const [products, setProducts] = useState<any[]>([])
-  //const [loading, setLoading] = useState<boolean>(false)
-  const [order, setOrder] = useState<any>({})
-  const [units, setUnits] = useState<number>(0)
-  const [total, setTotal] = useState<number>(0)
   const [pinnedRow, setPinnedRow] = useState<any>({ top: [], bottom: [] })
   const tableContainerRef = useRef<HTMLDivElement>(null)
-  const [increment, setIncrement] = useState<boolean>(true)
   const { id, setClose } = useDialogStore((state: any) => state)
-
-  const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState<boolean>(false)
   const [operationType, setOperationType] = useState<string>("add")
   const [applyToAll, setApplyToAll] = useState<boolean>(true)
@@ -55,7 +48,6 @@ function EditPricesForm({ barcode, userId, setIsFullWidth }: any) {
 
   const table = useReactTable({
     data: products,
-    //columns: providerOrdersColumns,
     columns: priceColumns,
     getCoreRowModel: getCoreRowModel(),
     enableRowPinning: true,
@@ -71,9 +63,8 @@ function EditPricesForm({ barcode, userId, setIsFullWidth }: any) {
 
   const rowVirtualizer = useVirtualizer({
     count: rows.length,
-    estimateSize: () => 20, //estimate row height for accurate scrollbar dragging
+    estimateSize: () => 20,
     getScrollElement: () => tableContainerRef.current,
-    //measure dynamic row height, except in firefox because it measures table border height incorrectly
     measureElement:
       typeof window !== 'undefined' &&
         navigator.userAgent.indexOf('Firefox') === -1
@@ -94,19 +85,17 @@ function EditPricesForm({ barcode, userId, setIsFullWidth }: any) {
         })
         .catch((error) => {
           if (error instanceof Error) {
-            //return setError(error.message)
             toast({
               variant: "destructive",
               title: "Error al obtener los productos",
               description: error.message
             })
           }
-          //setError("Error al obtener los productos")
           toast({
             variant: "destructive",
             title: "Error al obtener los productos",
             description: "Error al obtener los productos, intente nuevamente o contacte al desarrollador."
-          })  
+          })
         })
     } else {
       setIsFullWidth(false)

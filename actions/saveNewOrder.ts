@@ -10,7 +10,6 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
   try {
 
     const res = await db.transaction(async (tx) => {
-      //Create Order
       const order = await tx.insert(orders).values({
         userId: userId,
         total: total,
@@ -24,13 +23,11 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
         insertedId: orders.id
       })
 
-      //Check if order was created
       if (order.length === 0) {
         tx.rollback()
         throw new Error("Error al crear la orden")
       }
 
-      //Create Product Orders for each product in the order
       data.forEach(async (product: any) => {
         const productOrder = await tx.insert(productOrders).values({
           orderId: order[0].insertedId,
@@ -40,25 +37,21 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
           insertedId: productOrders.id
         })
 
-        //Check if product order was created
         if (productOrder.length === 0) {
           tx.rollback()
           throw new Error("Error al crear la orden")
         }
 
-        //Decrease stock of the product
         const stockDecrease = await tx.update(products).set({ stock: sql`${products.stock} - ${product.count}` }).where(eq(products.id, product.id)).returning({
           updatedId: products.id
         })
 
-        //Check if stock was decremented
         if (stockDecrease.length === 0) {
           tx.rollback()
           throw new Error("Error al decrementar el stock")
         }
       })
 
-      //Increase amount of cash register
       let updatedCashRegister: any;
       if (paymentMethod === "cash") {
         updatedCashRegister = await tx.update(cashRegisterSchema).set({
@@ -69,14 +62,12 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
         })
       } else {
         updatedCashRegister = await tx.update(cashRegisterSchema).set({
-          //currentAmount: sql`${cashRegisterSchema.currentAmount} - ${total}`,
           totalAmount: sql`${cashRegisterSchema.totalAmount} + ${total}`,
         }).where(eq(cashRegisterSchema.openedById, userId)).returning({
           updatedId: cashRegisterSchema.id
         })
       }
 
-      //Check if cash register was updated
       if (paymentMethod === "debt") {
         if (updatedCashRegister.length === 0) {
           tx.rollback()
@@ -84,7 +75,6 @@ export const saveNewOrder = async (userId: string, data: any, cashRegister: any,
         }
       }
 
-      //check if clientID exists and update the spentAmount
       if (clientId) {
         const customerId = clientId
 

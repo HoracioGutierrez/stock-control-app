@@ -326,11 +326,9 @@ export const providerOrdersColumns: ColumnDef<any>[] = [
       )
     },
     accessorKey: "name",
-    /* cell: */
   },
   {
     header: ({ column }) => {
-      //price
       return (
         <Button
           variant="link"
@@ -381,7 +379,6 @@ export const purchaseOrdersColumns: ColumnDef<any>[] = [
 ]
 
 export const ordersColumns: ColumnDef<any>[] = [
-  //createdAt
   {
     header: ({ column }) => {
       return (
@@ -539,11 +536,9 @@ export const priceColumns: ColumnDef<any>[] = [
     },
     accessorKey: "name",
     id: "name",
-    /* cell: */
   },
   {
     header: ({ column }) => {
-      //price
       return (
         <Button
           variant="link"
@@ -823,7 +818,7 @@ export const variantColumns: ColumnDef<any>[] = [
     id: "select",
     header: "Seleccionar",
     cell: ({ row, table }) => (
-      <input type="radio" name="variant" value={row.original.id} onChange={(e: any) => {
+      <input title="Seleccionar" type="radio" name="variant" value={row.original.id} onChange={(e: any) => {
         table.toggleAllPageRowsSelected(false)
         row.toggleSelected(e.target.value)
       }} />

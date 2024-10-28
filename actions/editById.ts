@@ -9,7 +9,6 @@ import { revalidatePath } from "next/cache"
 
 
 export const editById = async (entityType: string, entityId: string, data: any, userId: string): Promise<GeneralResponse> => {
-    console.log(data)
     "use server"
     const entityNameResolve = entityName[entityType as keyof EntityName]
     try {
@@ -19,12 +18,6 @@ export const editById = async (entityType: string, entityId: string, data: any, 
             const entitySchema = entitiesPropsById[entityType as keyof Entity]
             const entityHistory = entitiesPropsById["history"]
 
-
-            const test = {...data}
-            console.log(test)
-            console.log(tx.update(entitySchema).set(data).where(eq(entitySchema.id, entityId)).returning({
-                insertedId: entitySchema.id
-            }).toSQL())
 
             const response = await tx.update(entitySchema).set(data).where(eq(entitySchema.id, entityId)).returning({
                 insertedId: entitySchema.id
@@ -59,7 +52,6 @@ export const editById = async (entityType: string, entityId: string, data: any, 
 
         return res
     } catch (error) {
-        console.log(error)
         if (error instanceof Error) {
             return {
                 data: null,

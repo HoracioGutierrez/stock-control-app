@@ -46,9 +46,8 @@ function ProviderDetails({ userId, providerId }: Props) {
 
   const rowVirtualizer = useVirtualizer({
     count: rows.length,
-    estimateSize: () => 20, //estimate row height for accurate scrollbar dragging
+    estimateSize: () => 20,
     getScrollElement: () => tableContainerRef.current,
-    //measure dynamic row height, except in firefox because it measures table border height incorrectly
     measureElement:
       typeof window !== 'undefined' &&
         navigator.userAgent.indexOf('Firefox') === -1
@@ -150,8 +149,6 @@ function ProviderDetails({ userId, providerId }: Props) {
           <TableFooter style={{ display: "grid", position: "sticky", bottom: "0px", zIndex: "1" }} className="bg-primary-foreground">
             <TableRow className="flex justify-between w-full">
               <TableCell colSpan={1} className="flex flex-col justify-center h-24">
-                {/* <p className="text-muted-foreground">{Object.keys(order).length} productos en tu orden</p>
-                <p className="text-muted-foreground">{units} unidades</p> */}
               </TableCell>
               <TableCell colSpan={1} className="flex flex-col justify-end h-24">
                 <p className="font-bold text-xl">${total.toFixed(2)} total</p>

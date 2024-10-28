@@ -58,8 +58,6 @@ function NewProductForm({ userId }: NewProductFormProps) {
       return { ...acc, [key]: dataFull[key] };
     }, {});
 
-    console.log(dataDirty)
-
     createNewProduct(userId, dataDirty, getValues("variants"))
       .then((data) => {
         if (data?.error) {

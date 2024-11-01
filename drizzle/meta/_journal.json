@@ -302,6 +302,48 @@
       "when": 1720209821153,
       "tag": "0042_tired_golden_guardian",
       "breakpoints": true
+    },
+    {
+      "idx": 43,
+      "version": "7",
+      "when": 1730137906622,
+      "tag": "0043_flat_overlord",
+      "breakpoints": true
+    },
+    {
+      "idx": 44,
+      "version": "7",
+      "when": 1730140425667,
+      "tag": "0044_friendly_malcolm_colcord",
+      "breakpoints": true
+    },
+    {
+      "idx": 45,
+      "version": "7",
+      "when": 1730140685804,
+      "tag": "0045_noisy_devos",
+      "breakpoints": true
+    },
+    {
+      "idx": 46,
+      "version": "7",
+      "when": 1730142490269,
+      "tag": "0046_bright_champions",
+      "breakpoints": true
+    },
+    {
+      "idx": 47,
+      "version": "7",
+      "when": 1730142746001,
+      "tag": "0047_past_whistler",
+      "breakpoints": true
+    },
+    {
+      "idx": 48,
+      "version": "7",
+      "when": 1730321733306,
+      "tag": "0048_damp_hobgoblin",
+      "breakpoints": true
     }
   ]
 }

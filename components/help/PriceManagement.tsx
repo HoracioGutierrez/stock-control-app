@@ -1,4 +1,4 @@
-import { IconPick } from "@tabler/icons-react"
+/* import { IconPick } from "@tabler/icons-react"
 
 function PriceManagement() {
 
@@ -16,4 +16,4 @@ function PriceManagement() {
     </div>
   )
 }
-export default PriceManagement
+export default PriceManagement */

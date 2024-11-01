@@ -1,4 +1,6 @@
 import { IconClockQuestion, IconSettingsQuestion, IconUserQuestion, IconShoppingCartQuestion, IconRestore, IconCurrencyDollarOff, IconPackages, IconTruck, IconAdjustmentsUp } from "@tabler/icons-react"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { useHelpContext } from "./HelpContext"
 
 const config: Record<string, JSX.Element> = {
   IconClockQuestion: <IconClockQuestion />,
@@ -11,12 +13,23 @@ const config: Record<string, JSX.Element> = {
   IconTruck: <IconTruck />,
   IconAdjustmentsUp: <IconAdjustmentsUp />,
 }
-function PopUpListHeader({ headerData }: any) {
+function PopUpListHeader({ headerData, accordionData }: any) {
 
-  console.log("headerData", headerData)
+  const { accordionId, setAccordionId } = useHelpContext()
+
+  console.log("accordionData", accordionData)
+
+/*   const prevAccordionId = accordionData[0]?.id */ // Quizas dependa de esto cuando se traiga todos los acordeones.
+
+  const handleAccordionClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const id = accordionData[0]?.id
+    if (id) setAccordionId(id)
+      console.log(accordionId)
+  }
+
   return (
     <div className="flex flex-col gap-2 p-2">
-      <div className="flex flex-col gap-4 w-full">
+      <div className="">
         <div className="flex flex-col gap-4 bg-primary-foreground dark:bg-card dark:bg-gradient-to-b from-transparent to-black p-4 rounded-lg w-full">
           <h2 className="text-xl">
             {headerData[0]?.title}
@@ -27,7 +40,26 @@ function PopUpListHeader({ headerData }: any) {
           <p className="text-muted-foreground tracking-tight">
             {headerData[0]?.description}
           </p>
+
         </div>
+        <Accordion className="w-full" type="single" collapsible /* defaultValue={accordionId} */ >
+          <AccordionItem value={accordionId} >
+            <AccordionTrigger>
+              <div className="flex flex-col gap-4 bg-primary-foreground dark:bg-card dark:bg-gradient-to-t from-transparent to-black p-4 rounded-lg w-full" onClick={handleAccordionClick}>
+                <h2 className="text-xl">
+                  {accordionData[0]?.title}
+                </h2>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent >
+              <div className="flex flex-col gap-4 bg-primary-foreground dark:bg-card dark:bg-gradient-to-b from-transparent to-black p-4 rounded-lg w-full">
+                <p className="text-muted-foreground tracking-tight">
+                  {accordionData[0]?.description}
+                </p>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </div>
     </div>
   )

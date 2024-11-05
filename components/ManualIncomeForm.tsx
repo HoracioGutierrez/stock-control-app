@@ -23,8 +23,9 @@ type Props = {
 function ManualIncomeForm({ userId }: Props) {
 
   const [loading, setLoading] = useState<boolean>(false)
+  const [operationType, setOperationType] = useState<string>("ingreso")
   const { setClose } = useDialogStore((state: any) => state)
-  const { handleSubmit, register, formState: { errors }, setValue } = useForm<any>({
+  const { handleSubmit, register, formState: { errors }, setValue , getValues } = useForm<any>({
     defaultValues: {
       amount: 0,
       reason: "Ingreso Manual",
@@ -57,7 +58,9 @@ function ManualIncomeForm({ userId }: Props) {
 
   const handleChange = (value: string) => {
     setValue("operationType", value)
+    setOperationType(value)
   }
+
 
   return (
     <div>
@@ -65,17 +68,17 @@ function ManualIncomeForm({ userId }: Props) {
       <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-2">
           <div>
-            <Label htmlFor="amount">Monto a ingresar</Label>
+            <Label htmlFor="amount">Monto a {operationType === "ingreso" ? "ingresar" : "egresar"}</Label>
             {errors.amount && <p className="text-red-500 text-sm">{errors.amount.message as string}</p>}
           </div>
-          <Input type="number" placeholder="Monto a ingresar" {...register("amount")} step="any" />
+          <Input type="number" placeholder={"Monto a " + operationType === "ingreso" ? "ingresar" : "egresar"} {...register("amount")} step="any" />
         </div>
         <div className="flex flex-col gap-2">
           <div>
-            <Label htmlFor="reason">Razón del ingreso</Label>
+            <Label htmlFor="reason">Razón del {operationType === "ingreso" ? "ingreso" : "egreso"}</Label>
             {errors.reason && <p className="text-red-500 text-sm">{errors.reason.message as string}</p>}
           </div>
-          <Input type="text" placeholder="Razón del ingreso" {...register("reason")} />
+          <Input type="text" placeholder={"Razón del " + operationType === "ingreso" ? "ingreso" : "egreso"} {...register("reason")} />
         </div>
         <div className="flex flex-col gap-2">
           <div>

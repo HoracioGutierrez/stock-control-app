@@ -26,8 +26,6 @@ function OpenCashRegisterForm({ userId, data }: OpenCashRegisterFormProps) {
   const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<CashRegisterInputValues>({
     defaultValues: {
       label: "",
-      /* currentAmount: 0,
-      totalAmount: 0 */
     },
     resolver: yupResolver(cashRegisterSchema)
   })
@@ -88,11 +86,6 @@ function OpenCashRegisterForm({ userId, data }: OpenCashRegisterFormProps) {
             </SelectContent>
           </Select>
         </div>
-        {/* <div className="flex flex-col gap-4">
-          <Label htmlFor="currentAmount">Monto de apertura</Label>
-          <Input type="text" placeholder="Monto Actual" {...register("currentAmount")} />
-          {errors.currentAmount && <p className="text-red-500">{errors.currentAmount.message}</p>}
-        </div> */}
         <Button className="flex gap-2 w-full text-white dark:text-primary-foreground">
           {loading ? <Loader className="animate-spin" /> : <ShoppingBasket />}
           Abrir Caja

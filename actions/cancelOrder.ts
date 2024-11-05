@@ -8,13 +8,11 @@ export const cancelOrder = async (orderId: string, userId: string): Promise<Gene
   "use server"
   try {
 
-    //Buscar la orden
     const res = await db.transaction(async (tx) => {
 
 
       const orderFromDB = await tx.select().from(orders).where(eq(orders.id, orderId))
 
-      //Si no existe la orden tiro un error
       if (orderFromDB.length === 0) {
         tx.rollback()
         throw new Error("La orden no existe")
@@ -25,29 +23,23 @@ export const cancelOrder = async (orderId: string, userId: string): Promise<Gene
         throw new Error("La orden ya fue cancelada")
       }
 
-      //Actualizar el estado de la orden 
       await tx.update(orders).set({ status: "canceled" }).where(eq(orders.id, orderId))
 
-      //Incrementar el stock de los productos de la orden
       const orderProducts = await tx.select().from(productOrders).where(eq(productOrders.orderId, orderId))
 
       orderProducts.forEach(async (product: any) => {
 
-        //Revisar si el producto existe
         const productFromDB = await tx.select().from(products).where(eq(products.id, product.productId))
 
-        //Si no existe el producto tiro un error
         if (productFromDB.length === 0) {
           tx.rollback()
           throw new Error("El producto no existe")
         }
 
-        //Incrementar el stock del producto
         await tx.update(products).set({ stock: sql`${products.stock} + ${product.quantity}` }).where(eq(products.id, product.productId)).returning({
           updatedId: products.id
         })
 
-        //Registrar el incremento del stock en el historial
         await tx.insert(history).values({
           userId: userId,
           actionType: "refund-increment-stock",
@@ -59,16 +51,13 @@ export const cancelOrder = async (orderId: string, userId: string): Promise<Gene
         })
       })
 
-      //Buscar el usuario 
       const userFromDB = await tx.select().from(users).where(eq(users.id, userId))
 
-      //Si el usuario no existe tiro un error
       if (userFromDB.length === 0) {
         tx.rollback()
         throw new Error("El usuario no existe")
       }
 
-      //Buscar la caja abierta del usuario
       const cashRegisterFromDB = await tx.select().from(cashRegister).where(eq(cashRegister.openedById, userId))
 
       if (cashRegisterFromDB.length === 0 && !userFromDB[0].isAdmin) {
@@ -88,7 +77,6 @@ export const cancelOrder = async (orderId: string, userId: string): Promise<Gene
           }).where(eq(cashRegister.id, cashRegisterFromDB[0].id))
         }
 
-        //Registrar el reembolso en el historial
         await tx.insert(history).values({
           userId: userId,
           actionType: "refund-cash-register",
@@ -108,7 +96,6 @@ export const cancelOrder = async (orderId: string, userId: string): Promise<Gene
 
       const generalBalanceFromDb = await tx.select().from(generalBalance).limit(1).orderBy(desc(generalBalance.createdAt))
 
-      //actualizar balance general con el reembolso del cliente descontando el total de la orden al saldo general
       if (customerFromDB && customerFromDB.length > 0) {
 
         await tx.insert(generalBalance).values({

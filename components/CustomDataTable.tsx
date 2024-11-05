@@ -1,22 +1,14 @@
 "use client"
-import { historyColumns, productsColumns, providersColumns, customersColumns, cashRegistersColumns, ordersColumns, usersColumns } from "@/lib/columnDefinitions"
-/* import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu" */
-import { SortingState, getSortedRowModel, flexRender, getCoreRowModel, useReactTable, ColumnFiltersState, getFilteredRowModel, getPaginationRowModel, ColumnDef, VisibilityState } from "@tanstack/react-table"
+import { SortingState, getSortedRowModel, flexRender, getCoreRowModel, useReactTable, ColumnFiltersState, getFilteredRowModel, getPaginationRowModel, VisibilityState } from "@tanstack/react-table"
 import { IconCalendar, IconCashRegister, IconClipboardList, IconDeviceDesktopX, IconTruck, IconTruckOff, IconUser, IconUserOff } from '@tabler/icons-react'
-/* import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
- */
-/* import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table" */
-import { CustomerType, HistoryType, ProductType, ProviderType, UserType } from "@/schema"
+import { HistoryType, ProductType } from "@/schema"
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-/* import { SortingState, getSortedRowModel, flexRender, getCoreRowModel, useReactTable, ColumnFiltersState, getFilteredRowModel, getPaginationRowModel, VisibilityState } from "@tanstack/react-table" */
-/* import { IconCashRegister, IconDeviceDesktopX, IconTruck, IconTruckOff, IconUser, IconUserOff } from '@tabler/icons-react' */
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-/* import { HistoryType, ProductType } from "@/schema" */
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip"
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
 import { TooltipProvider } from "@radix-ui/react-tooltip"
-import { ArrowLeft, ArrowRight, FileX2, Filter, MoreHorizontal, Package, PackageX, SearchCodeIcon, SearchIcon } from "lucide-react"
+import { ArrowLeft, ArrowRight, FileX2, Filter, Package, PackageX, SearchIcon } from "lucide-react"
 import { getAllOrders } from "@/actions/getAllOrders"
 import { Input } from "@/components/ui/input"
 import { useEffect, useState } from "react"
@@ -179,8 +171,8 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
 
 
 
-            <label htmlFor="search-input" className="relative items-center gap-2 border-input grid grid-cols-[auto_1fr] bg-card border rounded-md cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 pl-2">
-              <SearchIcon /* onClick={() => setOpenSearch(!openSearch)} */ className="z-10 p-0 text-muted-foreground aspect-square" />
+            <label htmlFor="search-input" className="relative items-center gap-2 border-input grid grid-cols-[auto_1fr] bg-card pl-2 border rounded-md cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+              <SearchIcon className="z-10 p-0 text-muted-foreground aspect-square" />
               <Input
                 placeholder={`Filtrar por ${filterColumn ?? "nombre"}`}
                 value={(table.getColumn(filterKey || "name")?.getFilterValue() as string) ?? ""}
@@ -188,7 +180,6 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
                   return table.getColumn(filterKey || "name")?.setFilterValue(event.target.value)
                 }}
                 className="border-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
-                /* className={cn("p-0 border-none w-0 sm:max-w-sm transition-[width,opacity] outline-none ring-0 focus-visible:ring-0 focus-within:ring-0 ring-offset-0 focus-visible:ring-offset-0", openSearch && "w-full sm:max-w-sm opacity-100 px-2")} */
                 id="search-input"
               />
             </label>
@@ -236,7 +227,6 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
                             column.toggleVisibility(!!value)
                           }
                         >
-                          {/* {column.columnDef.meta ? column.columnDef.meta.name : column.id} */}
                           {column.id}
                         </DropdownMenuCheckboxItem>
                       )
@@ -346,17 +336,7 @@ function CustomDataTable({ data, type, filterColumn, filterKey, actions, manualF
                     if (cell.column.id === "actions") {
                       return (
                         <TableCell key={cell.id} className="flex items-center gap-2">
-                          {/* <MoreHorizontal/> */}
                           {actions && actions(row.original)}
-                          {/* <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <MoreHorizontal className="p-0 text-muted-foreground aspect-square" />
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                              <DropdownMenuLabel>Acciones</DropdownMenuLabel>
-                              {actions && actions(row.original)}
-                            </DropdownMenuContent>
-                          </DropdownMenu> */}
                         </TableCell>
                       )
                     }

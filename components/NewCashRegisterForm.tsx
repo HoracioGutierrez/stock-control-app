@@ -25,8 +25,6 @@ function NewCashRegisterForm({ userId }: NewCashRegisterFormProps) {
   const { register, handleSubmit, formState: { errors }, reset } = useForm<CashRegisterInputValues>({
     defaultValues: {
       label: "",
-      /* currentAmount: 0,
-      totalAmount: 0 */
     },
     resolver: yupResolver(cashRegisterSchema)
   })
@@ -75,7 +73,6 @@ function NewCashRegisterForm({ userId }: NewCashRegisterFormProps) {
       <div className="self-stretch">
         <Card className="bg-transparent border-none h-full">
           <CardHeader className="p-0 pb-8">
-            {/* <CardTitle>Detalles</CardTitle> */}
             <CardDescription>Estos detalles son obligatorios para que la caja pueda crearse correctamente.</CardDescription>
           </CardHeader>
           <CardContent className="gap-4 grid p-0">
@@ -84,16 +81,7 @@ function NewCashRegisterForm({ userId }: NewCashRegisterFormProps) {
               <Input type="text" placeholder="Label" {...register("label")} />
               {errors.label && <p className="text-red-500">{errors.label.message}</p>}
             </div>
-            {/* <div className="gap-2 grid">
-              <Label htmlFor="currentAmount">Monto Actual</Label>
-              <Input type="text" placeholder="Monto Actual" {...register("currentAmount")} />
-              {errors.currentAmount && <p className="text-red-500">{errors.currentAmount.message}</p>}
-            </div>
-            <div className="gap-2 grid">
-              <Label htmlFor="totalAmount">Monto Total</Label>
-              <Input type="text" placeholder="Monto Total" {...register("totalAmount")} />
-              {errors.totalAmount && <p className="text-red-500">{errors.totalAmount.message}</p>}
-            </div> */}
+
           </CardContent>
         </Card>
       </div>

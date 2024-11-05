@@ -33,7 +33,6 @@ export default function RootLayout({
           >
             {children}
             <Toaster />
-            {/* <CustomTour/> */}
           </ThemeProvider>
         </SessionProvider>
       </body>

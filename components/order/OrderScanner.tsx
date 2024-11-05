@@ -1,19 +1,20 @@
 "use client"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table"
-import { getProductByBarcode } from "@/actions/getProductByBarcode"
-import { ArrowDown, ArrowUp, Barcode, ScanBarcode, Search, Trash2 } from "lucide-react"
-import { useOrderStore } from "@/stores/orderStore"
-import { useEffect, useState } from "react"
-import { Button } from "../ui/button"
-import { useDialogStore } from "@/stores/generalDialog"
+import { ArrowDown, ArrowUp, Barcode, ScanBarcode, Search, Trash2, X } from "lucide-react"
 import CloseCashRegisterButton from "../cashRegister/CloseCashRegisterButton"
-import CancelOrderButton from "./CancelOrderButton"
-import OrderButton from "./OrderButton"
 import { BarcodeScanner, DetectedBarcode } from 'react-barcode-scanner'
-import "react-barcode-scanner/polyfill"
+import { getProductByBarcode } from "@/actions/getProductByBarcode"
+import { useDialogStore } from "@/stores/generalDialog"
+import CancelOrderButton from "./CancelOrderButton"
+import { useOrderStore } from "@/stores/orderStore"
 import CustomButton from "../layout/CustomButton"
+import { useEffect, useRef, useState } from "react"
+import "react-barcode-scanner/polyfill"
+import OrderButton from "./OrderButton"
+import { Button } from "../ui/button"
+import { useHotkeys } from 'react-hotkeys-hook'
+
 
 type OrderScannerProps = {
   data: any
@@ -22,12 +23,12 @@ type OrderScannerProps = {
 function OrderScanner({ data }: OrderScannerProps) {
 
   const [hasEvent, setHasEvent] = useState<boolean>(false)
-  const [scannedBarcode, setScannedBarcode] = useState<string>("")
   const [error, setError] = useState<string>("")
   const [scanning, setScanning] = useState<boolean>(false)
   const { setOpen } = useDialogStore((state: any) => state)
   const [camScan, setCamScan] = useState<boolean>(false)
   const { products, setScannedProduct, increment, decrement, total, remove, setProduct, scannedProduct, customer } = useOrderStore((state: any) => state)
+  const scannerRef = useRef<HTMLDivElement | null>(null)
 
   let barcode = ""
 
@@ -66,7 +67,6 @@ function OrderScanner({ data }: OrderScannerProps) {
   }, [])
 
   const handleScan = (barcode: string) => {
-    setScannedBarcode(barcode)
     getProductByBarcode(barcode)
       .then((data) => {
         if (data?.error) {
@@ -105,7 +105,6 @@ function OrderScanner({ data }: OrderScannerProps) {
   }
 
   const handleCapture = (barcode: DetectedBarcode) => {
-    //alert(barcode.rawValue)
     handleScan(barcode.rawValue)
     setCamScan(false)
   }
@@ -114,8 +113,22 @@ function OrderScanner({ data }: OrderScannerProps) {
     setOpen("search")
   }
 
+  const handleCloseScanner = () => {
+    setCamScan(false)
+    setScanning(false)
+  }
+
+  useHotkeys("alt+b", handleSearch)
+  useHotkeys("alt+m", handleManualScan)
+  useHotkeys("alt+c", handleCamScan)
+  useHotkeys("alt+i", () => { setOpen("manual-income") })
+  useHotkeys("alt+q", () => { setOpen("close-cash-register") })
+  useHotkeys("alt+v", () => { if (products.length > 0) { handlePayWith() } })
+  useHotkeys("alt+n", () => { if (products.length > 0) { handleAddCustomer() } })
+  useHotkeys("alt+g", () => { if (products.length > 0) { setOpen("save-order") } })
+
   return (
-    <section className="flex flex-col h-full">
+    <section className="flex flex-col h-full" ref={scannerRef}>
       <div className="gap-4 grid grid-cols-1 lg:grid-cols-2 mt-4 mb-4">
         <Card className="bg-accent">
           <CardHeader className="max-sm:p-2 max-sm:pb-0">
@@ -153,38 +166,15 @@ function OrderScanner({ data }: OrderScannerProps) {
             <p className="text-muted-foreground">
               {scanning ? "Escaneando..." : "Esperando ingreso..."}
             </p>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button onClick={handleSearch}>
-                    <Search />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Busqueda de producto</p>
-                </TooltipContent>
-              </Tooltip>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button onClick={handleManualScan}>
-                    <Barcode />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Codigo Manual</p>
-                </TooltipContent>
-              </Tooltip>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button onClick={handleCamScan}>
-                    <ScanBarcode />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Escaneo con Camara</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <CustomButton onClick={handleSearch} tooltip="Busqueda de producto (alt + b)">
+              <Search />
+            </CustomButton>
+            <CustomButton onClick={handleManualScan} tooltip="Codigo Manual (alt + m)">
+              <Barcode />
+            </CustomButton>
+            <CustomButton onClick={handleCamScan} tooltip="Escaneo con Camara (alt + c)">
+              <ScanBarcode />
+            </CustomButton>
           </CardFooter>
         </Card>
       </div>
@@ -236,21 +226,25 @@ function OrderScanner({ data }: OrderScannerProps) {
       </div>
 
       <div className="justify-center gap-4 grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6">
-        <CustomButton onClick={handlePayWith} disabled={products.length === 0} tooltip="Calcula el vuelto de la orden ingresando el monto con el cual desea pagar">
+        <CustomButton onClick={handlePayWith} disabled={products.length === 0} tooltip="Calcula el vuelto de la orden ingresando el monto con el cual desea pagar (alt + v)">
           Calcular Vuelto
         </CustomButton>
-        <CustomButton onClick={handleAddCustomer} disabled={products.length === 0} tooltip="Agrega un cliente existente o crea uno nuevo para agregar a la orden">
+        <CustomButton onClick={handleAddCustomer} disabled={products.length === 0} tooltip="Agrega un cliente existente o crea uno nuevo para agregar a la orden (alt + n)">
           Agregar Cliente
         </CustomButton>
-        <CustomButton tooltip="Ingresar dinero manualmente a la caja actual" dialogType="manual-income" className="truncate">
+        <CustomButton tooltip="Ingresar dinero manualmente a la caja actual (alt + i)" dialogType="manual-income" className="truncate">
           Ingreso/Retiro Manual
         </CustomButton>
         <CloseCashRegisterButton />
         <CancelOrderButton />
         <OrderButton />
       </div>
+
       {camScan && (
-        <>
+        <div>
+          <CustomButton className="top-2 right-2 z-20 fixed" onClick={handleCloseScanner}>
+            <X />
+          </CustomButton>
           <BarcodeScanner
             onCapture={handleCapture}
             className="top-0 left-0 z-10 fixed w-screen h-screen"
@@ -258,7 +252,7 @@ function OrderScanner({ data }: OrderScannerProps) {
               formats: ["code_128", "code_39", "code_93", "codabar", "ean_13", "ean_8", "itf", "qr_code", "upc_a", "upc_e"]
             }}
           />
-        </>
+        </div>
       )}
     </section>
   )

@@ -51,9 +51,8 @@ function LinkProductToVariantTable({ userId, providerId, setProductId }: Props) 
 
   const rowVirtualizer = useVirtualizer({
     count: rows.length,
-    estimateSize: () => 20, //estimate row height for accurate scrollbar dragging
+    estimateSize: () => 20,
     getScrollElement: () => tableContainerRef.current,
-    //measure dynamic row height, except in firefox because it measures table border height incorrectly
     measureElement:
       typeof window !== 'undefined' &&
         navigator.userAgent.indexOf('Firefox') === -1
@@ -96,7 +95,6 @@ function LinkProductToVariantTable({ userId, providerId, setProductId }: Props) 
   return (
     <div>
       <p className="text-muted-foreground">Esta es una lista de ordenes de compras hechas para este proveedor</p>
-      {/* <RadioGroup> */}
       <div ref={tableContainerRef} style={{ overflow: "auto", position: "relative", height: "500px" }} className="relative my-10 w-full">
         <Table style={{ display: "grid" }}>
           <TableHeader style={{ display: "grid", position: "sticky", top: "0px", zIndex: "1" }} className="bg-primary-foreground">
@@ -155,12 +153,11 @@ function LinkProductToVariantTable({ userId, providerId, setProductId }: Props) 
           </TableBody>
           <TableFooter style={{ display: "grid", position: "sticky", bottom: "0px", zIndex: "1" }} className="bg-primary-foreground">
             <TableRow className="flex justify-center w-full">
-              
+
             </TableRow>
           </TableFooter>
         </Table>
       </div>
-      {/* </RadioGroup> */}
     </div>
   )
 }

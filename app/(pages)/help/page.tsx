@@ -19,10 +19,10 @@ export default async function HelpPage() {
       <HelpProvider>
         <PageHeader title="Ayuda" icon={<HelpCircle className="text-muted-foreground" />} goBack />
         <div className="flex flex-col justify-center items-center p-2">
-          <div className="flex flex-col p-2 bg-primary-foreground dark:bg-card rounded-lg">
-            <h3 className="text-2xl font-medium pl-4 pb-1">Bienvenido a la sección de ayuda.</h3>
+          <div className="flex flex-col bg-primary-foreground dark:bg-card p-2 rounded-lg">
+            <h3 className="pb-1 pl-4 font-medium text-2xl">Bienvenido a la sección de ayuda.</h3>
             <div className="flex flex-col justify-center items-center">
-              <p className="text-muted-foreground text-sm p-2">
+              <p className="p-2 text-muted-foreground text-sm">
                 En esta sección encontrarás información sobre cómo utilizar la aplicación y cómo funciona. También encontrarás consejos y trucos para mejorar tu experiencia con la aplicación.
               </p>
               <HelpSearchBar />

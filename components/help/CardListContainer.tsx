@@ -6,9 +6,6 @@ import CardList from "./CardList"
 import { useHelpContext } from "./HelpContext"
 
 function CardListContainer({ cardsData }: any) {
-  const { cardId, headerCardsData, errorHeaderCards, isLoading, getCardsHeaders } = useHelpContext()
-
-  console.log("headerCardsData", headerCardsData, cardsData)
 
   return (
     <>

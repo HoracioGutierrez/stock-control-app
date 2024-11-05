@@ -1,6 +1,6 @@
 "use server";
 
-import { db, helpCardsAccordion, helpCards } from "@/schema";
+import { db, helpCardsAccordion } from "@/schema";
 import { eq } from "drizzle-orm";
 
 export const getHelpAccordion = async (helpCardId: string): Promise<any> => {
@@ -23,8 +23,6 @@ export const getHelpAccordion = async (helpCardId: string): Promise<any> => {
           })
         .from(helpCardsAccordion)
         .where(eq(helpCardsAccordion.helpCardId, helpCardId))
-
-      console.log(accordionData[0], helpCardId)
 
       return {
         accordionData,

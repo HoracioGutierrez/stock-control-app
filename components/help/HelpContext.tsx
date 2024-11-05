@@ -2,6 +2,7 @@
 import { createContext, useContext, useEffect, useState } from "react"
 import { getHelpCardsHeader } from "@/actions/help/getHelpCardsHeader"
 import { getHelpAccordion } from "@/actions/help/getHelpAccordion"
+import { getAccordionContent } from "@/actions/help/getAccordionContent"
 
 const HelpContext = createContext<any>(null)
 
@@ -10,6 +11,8 @@ export const HelpProvider = ({ children }: any) => {
   const [accordionId, setAccordionId] = useState<string | undefined>(undefined)
   const [headerCardsData, setHeaderCardsData] = useState<any>([])
   const [accordionData, setAccordionData] = useState<any>([])
+  const [contentData, setContentData] = useState<any>([])
+  const [isOpen, setIsOpen] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [errorHeaderCards, setErrorHeaderCards] = useState<string | null>(null)
   const [errorAccordion, setErrorAccordion] = useState<string | null>(null)
@@ -19,24 +22,66 @@ export const HelpProvider = ({ children }: any) => {
     setErrorHeaderCards(null)
     try {
       const { headerCardsData, error } = await getHelpCardsHeader(cardId)
-      const { accordionData, accordionError } = await getHelpAccordion(cardId)
-      if (error) throw new Error(error || accordionError)
+
+      if (error) throw new Error(error)
       setHeaderCardsData(headerCardsData)
-      setAccordionData(accordionData)
     } catch (err: any) {
       setErrorHeaderCards(err.message)
+
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const getHelpAccordions = async (cardId: string) => {
+    setIsLoading(true)
+    setErrorAccordion(null)
+    try {
+      const { accordionData, error } = await getHelpAccordion(cardId)
+      if (error) throw new Error(error)
+      setAccordionData(accordionData)
+    } catch (err: any) {
       setErrorAccordion(err.message)
     } finally {
       setIsLoading(false)
     }
   }
 
+  const getAccordionsContent = async (accordionId: string) => {
+    setIsLoading(true)
+    setErrorAccordion(null)
+    try {
+      const { contentData, error } = await getAccordionContent(accordionId)
+      if (error) throw new Error(error)
+      setContentData(contentData)
+    } catch (err: any) {
+      setErrorAccordion(err.message)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  
+
+
   useEffect(() => {
     if (cardId) {
       getCardsHeaders(cardId)
-      console.log("headerCardsData", headerCardsData)
+      getHelpAccordions(cardId)
     }
   }, [cardId])
+
+  useEffect(() => {
+    if (accordionId) {
+      getAccordionsContent(accordionId)
+    }
+  }, [accordionId])
+/* 
+  useEffect(() => {
+    if (accordionData.length > 0) {
+      setIsOpen(true)
+    }
+  }, [accordionData]) */
 
   return (
     <HelpContext.Provider value={{
@@ -46,7 +91,12 @@ export const HelpProvider = ({ children }: any) => {
       errorHeaderCards,
       isLoading,
       getCardsHeaders,
+      getHelpAccordions,
+      getAccordionsContent,
       accordionData,
+      contentData,
+      isOpen,
+      setIsOpen,
       errorAccordion,
       accordionId,
       setAccordionId

@@ -3,6 +3,7 @@ import { useHelpContext } from "./HelpContext"
 import { useDialogStore } from "@/stores/generalDialog"
 import PopUpListHeader from "./PopUpListHeader"
 import CustomDialog from "../CustomDialog"
+import PopUpAccordion from "./PopUpAccordion"
 
 const config: Record<string, { title: string, fullWidth?: boolean }> = {
   "first-steps": {
@@ -46,14 +47,13 @@ const config: Record<string, { title: string, fullWidth?: boolean }> = {
 
 function HelpDialog() {
   const { type } = useDialogStore((state: any) => state)
-  const { cardId, getCardsHeaders, headerCardsData, isLoading, accordionData } = useHelpContext()
+  const { isLoading } = useHelpContext()
 
   return (
     <>
       <CustomDialog title={type ? config[type].title : "Custom Dialog"} fullWidth={type ? config[type].fullWidth : false} >
-
-        <PopUpListHeader headerData={headerCardsData} accordionData={accordionData} />
-
+        <PopUpListHeader />
+        <PopUpAccordion />
       </CustomDialog>
     </>
   )

@@ -6,7 +6,7 @@ import { useHelpContext } from "./HelpContext";
 function CardList({ cardsData }: any) {
 
   const { setOpen } = useDialogStore((state: any) => state)
-  const { setCardId } = useHelpContext()
+  const { setCardId, isLoading} = useHelpContext()
 
   const config: Record<string, JSX.Element> = {
     IconClockQuestion: <IconClockQuestion />,

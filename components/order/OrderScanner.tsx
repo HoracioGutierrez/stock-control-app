@@ -241,7 +241,7 @@ function OrderScanner({ data }: OrderScannerProps) {
       </div>
 
       {camScan && (
-        <div>
+        <div className="top-0 left-0 z-10 fixed bg-black/50 backdrop-blur-sm w-screen h-screen">
           <CustomButton className="top-2 right-2 z-20 fixed" onClick={handleCloseScanner}>
             <X />
           </CustomButton>

@@ -137,7 +137,7 @@ function OrderScanner({ data }: OrderScannerProps) {
           <CardContent className="max-sm:p-2 max-sm:pt-0">
             <CardDescription className="font-bold text-2xl text-primary lg:text-5xl">${total}</CardDescription>
             <CardDescription className="flex flex-col text-lg text-muted-foreground">
-              {customer.id && <span>Cliente: {customer.name}</span>}
+              {customer.id && <span>Cliente: {customer.name} {customer.lastName}</span>}
               {customer.currentAmount < 0 && <span className="font-bold text-red-400">Balance actual : ${customer.currentAmount}</span>}
             </CardDescription>
           </CardContent>

@@ -12,7 +12,7 @@ import postgres from "postgres"
 import { drizzle } from "drizzle-orm/postgres-js"
 import type { AdapterAccountType } from "next-auth/adapters"
 import { act } from "react"
-import { sql } from "drizzle-orm"
+import { desc, sql } from "drizzle-orm"
 
 const connectionString = process.env.DATABASE_URL || ""
 const pool = postgres(connectionString, { max: 1, ssl: { rejectUnauthorized: false } })
@@ -332,12 +332,84 @@ export const generalBalance = pgTable(
       .references(() => users.id, { onDelete: "cascade" }),
     incomingAmount: numeric("incomingAmount").notNull(),
     balance: numeric("balance").notNull(),
-    balanceWithDebt : numeric("balanceWithDebt").notNull(),
+    balanceWithDebt: numeric("balanceWithDebt").notNull(),
     createdAt: timestamp("createdAt", { mode: "date" }).defaultNow(),
     operationType: text("operationType").notNull(),
     updatedAt: timestamp("updatedAt", { mode: "date" }).defaultNow(),
-    detail : text("detail").notNull().default(""),
+    detail: text("detail").notNull().default(""),
     isDebt: boolean("isDebt").notNull().default(false),
+  }
+)
+
+export const helpCards = pgTable(
+  tablePrefix + "help",
+  {
+    id: text("id")
+      .notNull()
+      .unique()
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    icon: text("icon").notNull(),
+    title: text("title").notNull(),
+    description: text("description").notNull(),
+    createdAt: timestamp("createdAt", { mode: "date" }).defaultNow(),
+  }
+)
+
+export const helpCardsHeader = pgTable(
+  tablePrefix + "help_header",
+  {
+    id: text("id")
+      .notNull()
+      .unique()
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    helpCardId: text("helpCardId")
+      .notNull()
+      .references(() => helpCards.id),
+    icon: text("icon").notNull(),
+    title: text("title").notNull(),
+    description: text("description").notNull(),
+    createdAt: timestamp("createdAt", { mode: "date" }).defaultNow(),
+  }
+)
+
+export const helpCardsAccordion = pgTable(
+  tablePrefix + "help_accordion",
+  {
+    id: text("id")
+      .notNull()
+      .unique()
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    helpCardId: text("helpCardId")
+      .notNull()
+      .references(() => helpCards.id),
+    title: text("title").notNull(),
+    description: text("description").notNull(),
+    createdAt: timestamp("createdAt", { mode: "date" }).defaultNow(),
+  }
+)
+
+export const helpCardsContent = pgTable(
+  tablePrefix + "help_content",
+  {
+    id: text("id")
+      .notNull()
+      .unique()
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    helpAccordionId: text("helpAccordionId")
+      .notNull()
+      .references(() => helpCardsAccordion.id),
+    icon: text("icon").notNull(),
+    description: text("description").notNull(),
+    subDescription: text("subDescription"),
+    image: text("image").notNull(),
+    warning: text("warning"),
+    subWarning: text("subWarning"),
+    warningDescription: text("warningDescription"),
+    createdAt: timestamp("createdAt", { mode: "date" }).defaultNow(),
   }
 )
 
@@ -351,5 +423,6 @@ export type CashRegisterOpenningType = typeof cashRegistersOpennings.$inferInser
 export type PurchaseOrderType = typeof purchaseOrders.$inferInsert
 export type PurchaseOrderProductType = typeof purchaseOrderProducts.$inferInsert
 export type UserType = typeof users.$inferInsert
-
-
+export type HelpCards = typeof helpCards.$inferInsert
+export type HelpCardsHeader = typeof helpCardsHeader.$inferInsert
+export type HelpCardsContent = typeof helpCardsContent.$inferInsert

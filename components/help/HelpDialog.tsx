@@ -47,15 +47,12 @@ const config: Record<string, { title: string, fullWidth?: boolean }> = {
 
 function HelpDialog() {
   const { type } = useDialogStore((state: any) => state)
-  const { isLoading } = useHelpContext()
 
   return (
-    <>
-      <CustomDialog title={type ? config[type].title : "Custom Dialog"} fullWidth={type ? config[type].fullWidth : false} >
-        <PopUpListHeader />
-        <PopUpAccordion />
-      </CustomDialog>
-    </>
+    <CustomDialog title={type ? config[type].title : "Custom Dialog"} fullWidth={type ? config[type].fullWidth : false}>
+      <PopUpListHeader />
+      <PopUpAccordion />
+    </CustomDialog>
   )
 }
 

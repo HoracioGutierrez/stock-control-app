@@ -20,6 +20,7 @@ export const HelpProvider = ({ children }: any) => {
   const getCardsHeaders = async (cardId: string) => {
     setIsLoading(true)
     setErrorHeaderCards(null)
+    setHeaderCardsData([])
     try {
       const { headerCardsData, error } = await getHelpCardsHeader(cardId)
 
@@ -36,6 +37,7 @@ export const HelpProvider = ({ children }: any) => {
   const getHelpAccordions = async (cardId: string) => {
     setIsLoading(true)
     setErrorAccordion(null)
+    setAccordionData([])
     try {
       const { accordionData, error } = await getHelpAccordion(cardId)
       if (error) throw new Error(error)
@@ -50,6 +52,7 @@ export const HelpProvider = ({ children }: any) => {
   const getAccordionsContent = async (accordionId: string) => {
     setIsLoading(true)
     setErrorAccordion(null)
+    setContentData([])
     try {
       const { contentData, error } = await getAccordionContent(accordionId)
       if (error) throw new Error(error)
@@ -60,9 +63,6 @@ export const HelpProvider = ({ children }: any) => {
       setIsLoading(false)
     }
   }
-
-  
-
 
   useEffect(() => {
     if (cardId) {
@@ -76,12 +76,7 @@ export const HelpProvider = ({ children }: any) => {
       getAccordionsContent(accordionId)
     }
   }, [accordionId])
-/* 
-  useEffect(() => {
-    if (accordionData.length > 0) {
-      setIsOpen(true)
-    }
-  }, [accordionData]) */
+
 
   return (
     <HelpContext.Provider value={{

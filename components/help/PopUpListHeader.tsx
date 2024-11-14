@@ -16,8 +16,7 @@ const config: Record<string, JSX.Element> = {
 function PopUpListHeader() {
 
   const { headerCardsData } = useHelpContext()
-
-  /*   const prevAccordionId = accordionData[0]?.id */ // Quizas dependa de esto cuando se traiga todos los acordeones.
+  
   return (
     <>
       {headerCardsData.length > 0 &&

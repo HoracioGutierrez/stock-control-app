@@ -2,7 +2,6 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { useHelpContext } from "./HelpContext"
 import PopUpAccordionContent from "./PopUpAccordionContent"
 import { IconPick } from "@tabler/icons-react"
-import CustomLoader from "../layout/CustomLoader"
 import { Loader } from "lucide-react"
 
 

@@ -25,7 +25,7 @@ export default async function HelpPage() {
               <p className="p-2 text-muted-foreground text-sm">
                 En esta sección encontrarás información sobre cómo utilizar la aplicación y cómo funciona. También encontrarás consejos y trucos para mejorar tu experiencia con la aplicación.
               </p>
-              <HelpSearchBar />
+              <HelpSearchBar cardsData={cardsData} />
             </div>
           </div>
           <CardListContainer cardsData={cardsData} />

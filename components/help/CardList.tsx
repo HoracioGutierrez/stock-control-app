@@ -27,7 +27,7 @@ function CardList({ cardsData }: any) {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
-      {cardsData.map((item: any) => (
+      {cardsData !== null && cardsData.map((item: any) => (
         <div key={item.id} className="col-span-1 bg-primary-foreground dark:bg-card dark:bg-gradient-to-br from-transparent to-black shadow-md hover:shadow-lg pr-6 pl-6 rounded-lg max-w-sm transition-transform hover:scale-[1.01] active:scale-[0.98] duration-10 cursor-pointer" onClick={() => handleClick(item.id)}>
           <div className="gap-2 pb-2 w-full" >
             <div className="flex flex-col grow">

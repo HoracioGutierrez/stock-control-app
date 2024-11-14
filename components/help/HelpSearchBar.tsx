@@ -4,13 +4,19 @@ import { Button } from "../ui/button"
 import { IconZoomQuestion } from "@tabler/icons-react"
 import { useState } from "react"
 
+interface CardData {
+  id: string;
+  title: string;
+  description: string;
+}
+
 interface HelpSearchBarProps {
-  cardsData: Array<{ id: string; title: string; description: string }>;
+  cardsData: CardData[];
 }
 
 function HelpSearchBar({ cardsData }: HelpSearchBarProps) {
-  const [filteredData, setFilteredData] = useState(cardsData);
-  const [query, setQuery] = useState("");
+  const [filteredData, setFilteredData] = useState<CardData[]>([]);
+  const [query, setQuery] = useState("")
 
   const highlightMatches = (text: string, query: string) => {
     if (!query) return text;
@@ -31,8 +37,8 @@ function HelpSearchBar({ cardsData }: HelpSearchBarProps) {
           )
         )}
       </span>
-    );
-  };
+    )
+  }
 
   const handleSearch = (query: string) => {
     setQuery(query);

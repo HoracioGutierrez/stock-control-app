@@ -6,7 +6,7 @@ import { Loader } from "lucide-react"
 
 
 function PopUpAccordion() {
-  const { accordionId, setAccordionId, accordionData, cardId, contentData, isLoading, headerCardsData } = useHelpContext()
+  const { accordionId, setAccordionId, accordionData, isLoading, headerCardsData } = useHelpContext()
 
   const handleAccordionClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const id = accordionId === e.currentTarget.id ? null : e.currentTarget.id

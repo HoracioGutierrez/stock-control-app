@@ -1,11 +1,11 @@
 "use server";
 
-/* import { HelpResponse } from "@/lib/types"; */
+import { HelpData } from "@/components/help/types";
 import { db, helpCards, helpCardsAccordion, helpCardsContent, helpCardsHeader } from "@/schema";
 import { eq, desc, asc } from "drizzle-orm";
 
-export const getHelpData = async (): Promise<any> => {
-  "use server";
+
+export const getHelpData = async (): Promise<{ data: HelpData[]; error: string | null; message: string }> => {
   try {
     const data = await db
       .select({
@@ -31,24 +31,11 @@ export const getHelpData = async (): Promise<any> => {
       .leftJoin(helpCardsHeader, eq(helpCardsHeader.helpCardId, helpCards.id))
       .leftJoin(helpCardsAccordion, eq(helpCardsAccordion.helpCardId, helpCards.id))
       .leftJoin(helpCardsContent, eq(helpCardsContent.helpAccordionId, helpCardsAccordion.id))
-      .orderBy(helpCards.createdAt ? asc(helpCardsContent.id) : desc(helpCardsHeader.id))
+      .orderBy(asc(helpCards.createdAt));
 
-      
-    return { data, error: null, message: "success" };
-
+    return { data, error: null, message: "Datos obtenidos con éxito" };
   } catch (error) {
-    if (error instanceof Error) {
-      return {
-        data: null,
-        error: error.message,
-        message: error.message,
-      };
-    }
-
-    return {
-      data: null,
-      error: "Error al obtener los datos de ayuda",
-      message: "Error al obtener los datos de ayuda",
-    };
+    const errorMsg = error instanceof Error ? error.message : "Error al obtener datos de ayuda";
+    return { data: [], error: errorMsg, message: errorMsg };
   }
 };

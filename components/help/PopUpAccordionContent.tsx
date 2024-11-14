@@ -12,11 +12,8 @@ const record: Record<string, StaticImageData> = {
   "firstStepsNewUser4": firstStepsNewUser4
 }
 
-
 function PopUpAccordionContent() {
-
   const { contentData, isLoading } = useHelpContext()
-
 
   return (
     <>

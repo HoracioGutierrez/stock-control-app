@@ -1,5 +1,5 @@
 "use client"
-import { useHelpContext } from "./HelpContext"
+
 import { useDialogStore } from "@/stores/generalDialog"
 import PopUpListHeader from "./PopUpListHeader"
 import CustomDialog from "../CustomDialog"
@@ -44,9 +44,8 @@ const config: Record<string, { title: string, fullWidth?: boolean }> = {
   },
 }
 
-
 function HelpDialog() {
-  const { type } = useDialogStore((state: any) => state)
+  const { type } = useDialogStore((state: any) => state);
 
   return (
     <CustomDialog title={type ? config[type].title : "Custom Dialog"} fullWidth={type ? config[type].fullWidth : false}>

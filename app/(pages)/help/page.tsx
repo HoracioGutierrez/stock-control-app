@@ -1,13 +1,10 @@
 import PageHeader from "@/components/layout/PageHeader"
 import { HelpCircle } from "lucide-react"
-import HelpSearchBar from "@/components/help/HelpSearchBar"
 import HelpDialog from "@/components/help/HelpDialog"
-import { getHelpData } from "@/actions/help/getHelpData"
-import CardList from "@/components/help/CardList"
 import { getHelpCards } from "@/actions/help/getHelpCards"
-import { getHelpCardsHeader } from "@/actions/help/getHelpCardsHeader"
-import { HelpProvider, useHelpContext } from "@/components/help/HelpContext"
-import CardListContainer from "@/components/help/CardListContainer"
+import { HelpProvider } from "@/components/help/HelpContext"
+import HelpSearchBarFilter from "@/components/help/HelpSearchBarFilter"
+import CardList from "@/components/help/CardList"
 
 
 
@@ -25,10 +22,10 @@ export default async function HelpPage() {
               <p className="p-2 text-muted-foreground text-sm">
                 En esta sección encontrarás información sobre cómo utilizar la aplicación y cómo funciona. También encontrarás consejos y trucos para mejorar tu experiencia con la aplicación.
               </p>
-              <HelpSearchBar cardsData={cardsData} />
+              <HelpSearchBarFilter />
             </div>
           </div>
-          <CardListContainer cardsData={cardsData} />
+          <CardList cardsData={cardsData} />
         </div>
         <HelpDialog />
       </HelpProvider>

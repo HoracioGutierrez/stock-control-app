@@ -1,6 +1,6 @@
 "use server"
 
-import { db, products } from "@/schema"
+import { db, products, users } from "@/schema"
 import { eq } from "drizzle-orm"
 import { Entity, EntityName } from "@/lib/types"
 import { GeneralResponse } from "@/lib/types"
@@ -20,11 +20,13 @@ export const editById = async (entityType: string, entityId: string, data: any, 
             const entityHistory = entitiesPropsById["history"]
 
 
-            const test = {...data}
-            console.log(test)
-            console.log(tx.update(entitySchema).set(data).where(eq(entitySchema.id, entityId)).returning({
-                insertedId: entitySchema.id
-            }).toSQL())
+            if (entityType == "product") {
+                const user = await tx.select().from(users).where(eq(users.id, userId)).limit(1)
+
+                if (user[0].isAdmin == false) {
+                    throw new Error("No tienes permisos para editar este producto")
+                }
+            }
 
             const response = await tx.update(entitySchema).set(data).where(eq(entitySchema.id, entityId)).returning({
                 insertedId: entitySchema.id

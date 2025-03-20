@@ -1,6 +1,6 @@
 "use server"
 import { GeneralResponse, ProductInputValues } from "@/lib/types";
-import { ProductType, db, history, products } from "@/schema";
+import { ProductType, db, history, products, users } from "@/schema";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
@@ -8,6 +8,11 @@ export const createNewProduct = async (userId: string, data: ProductType, varian
   "use server"
   try {
     const res = await db.transaction(async (tx) => {
+
+      const user = await tx.select().from(users).where(eq(users.id, userId)).limit(1)
+      if (user[0].isAdmin == false) {
+        throw new Error("No tienes permisos para crear este producto")
+      }
 
       const product = await tx.insert(products).values({
         name: data.name,

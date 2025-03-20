@@ -1,6 +1,6 @@
 "use server"
 import { GeneralResponse } from "@/lib/types"
-import { db, history, products } from "@/schema"
+import { db, history, products, users } from "@/schema"
 import { eq, sql } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 
@@ -21,6 +21,11 @@ export const updatePrices = async (applyToAll: boolean, selectedColumns: string[
   try {
 
     const res = await db.transaction(async (tx) => {
+
+      const user = await tx.select().from(users).where(eq(users.id, userId)).limit(1)
+      if (user[0].isAdmin == false) {
+        throw new Error("No tienes permisos para editar este producto")
+      }
 
       if (applyToAll) {
         await tx

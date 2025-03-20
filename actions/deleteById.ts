@@ -4,7 +4,7 @@ import { DeleteByIdProps, Entity, EntityName } from "@/lib/types"
 import { GeneralResponse } from "@/lib/types"
 import { revalidatePath } from "next/cache"
 import { eq } from "drizzle-orm"
-import { db, products } from "@/schema"
+import { db, products, users } from "@/schema"
 
 
 export const deleteById = async ({ entityType, entityId, userId }: DeleteByIdProps): Promise<GeneralResponse> => {
@@ -14,6 +14,18 @@ export const deleteById = async ({ entityType, entityId, userId }: DeleteByIdPro
 
     const res = await db.transaction(async (tx) => {
 
+      if (entityType == "product") {
+        
+        if (!userId) {
+          throw new Error("No tienes permisos para eliminar este producto")
+        }
+
+        const user = await tx.select().from(users).where(eq(users.id, userId)).limit(1)
+        if (user[0].isAdmin == false) {
+          throw new Error("No tienes permisos para eliminar este producto")
+        }
+      }
+
       const entitySchema = entitiesPropsById[entityType as keyof Entity]
       const entityHistory = entitiesPropsById["history"]
       const data = await tx.select().from(entitySchema).where(eq(entitySchema.id, entityId))
@@ -22,6 +34,7 @@ export const deleteById = async ({ entityType, entityId, userId }: DeleteByIdPro
         tx.rollback()
         throw new Error(`No se encontró el ${entityNameResolve} con el id ${entityId}`)
       }
+
 
       await tx.update(entitySchema).set({ active: false }).where(eq(entitySchema.id, entityId))
 

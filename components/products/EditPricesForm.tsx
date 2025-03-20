@@ -106,7 +106,7 @@ function EditPricesForm({ barcode, userId, setIsFullWidth }: any) {
             variant: "destructive",
             title: "Error al obtener los productos",
             description: "Error al obtener los productos, intente nuevamente o contacte al desarrollador."
-          })  
+          })
         })
     } else {
       setIsFullWidth(false)
